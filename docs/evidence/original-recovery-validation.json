@@ -1,0 +1,59 @@
+{
+  "session_date": "2026-10-02",
+  "ready_original_mission": false,
+  "models_decoded": 116,
+  "triangle_entries_including_degenerates": 264040,
+  "skinned_models_checked": 6,
+  "skin_vertices_checked": 16555,
+  "max_bind_coordinate_error": 7.1525574e-07,
+  "animation_resources_parsed": 184,
+  "rotation_samples_checked": 245350,
+  "animations_with_uninterpreted_trailing_data": 84,
+  "authored_primary_placements": 1016,
+  "preview_rendered_placements": 1005,
+  "outside_terrain": 5,
+  "omitted_for_material_dependencies": 6,
+  "other_unexpanded_world_objects": 100,
+  "bootstrap_root_chunks": 54,
+  "bootstrap_instructions_executed": 4660,
+  "symbolic_id_registration_calls": 741,
+  "entity_tables": 42,
+  "function_identities_registered": 53,
+  "mission_bodies_executed": 0,
+  "tests": {
+    "rust_unit_viewer": 50,
+    "opt_in_original_asset_integration": 4,
+    "python": 15,
+    "clippy_warnings_denied": "pass",
+    "prototype_original_ground_regression": "pass",
+    "prototype_custom_ground_regression": "pass"
+  },
+  "native_platform": "macOS Metal",
+  "captures": [
+    {
+      "path": "local/analysis/original-SVET.png",
+      "sha256": "3776768e8114752d0b7cdff8fcb9d0ce5ea72eb1c95bb0770195dd4b17ec6d14"
+    },
+    {
+      "path": "local/analysis/original-scene-final.png",
+      "sha256": "83d27badec8f7aee6a1cc32eb9afde1d408dce2e8978138ad0b74513e5937e72"
+    },
+    {
+      "path": "local/analysis/original-scratch.png",
+      "sha256": "c73634349a1e038c33cb785288a368bb6cf2b03f74d900c118f192bcee734af0"
+    },
+    {
+      "path": "local/analysis/original-scratch-playback.png",
+      "sha256": "e90f94db4d2e51420960eca97401ab3c7e74f0382d4a6ba00572d083a3303dac"
+    }
+  ],
+  "limitations": [
+    "No restored mission runtime, original AI or win/lose behavior.",
+    "Experimental rotation-only skin preview has imperfect joint/limb output.",
+    "Translations, root motion, blend flags and animated attachments are unresolved.",
+    "Scene uses authored placements without activation rules; scenery clusters omitted.",
+    "Palette textures and non-diffuse material behavior incomplete.",
+    "World coordinates community-correlated, not independent original-runtime parity.",
+    "No physical controller, Linux or Windows run in this slice."
+  ]
+}

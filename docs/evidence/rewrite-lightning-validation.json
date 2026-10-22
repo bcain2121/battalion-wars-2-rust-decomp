@@ -1,0 +1,45 @@
+{
+  "date": "2026-10-09",
+  "implementation": "Explicitly approved Rust-owned systems; not native engine parity",
+  "library_tests": 189,
+  "selected_integration_tests": 31,
+  "gpu": {
+    "backend": "Metal",
+    "source": 250011650,
+    "rendered": true,
+    "faded": true,
+    "repeated": true,
+    "instance_cleanup_asserted": true,
+    "clean_run_log": "local/analysis/rewrite-lightning-gpu-03.log",
+    "clean_run_errors_or_warnings": false,
+    "prior_failed_run_preserved": "local/analysis/rewrite-lightning-gpu-02.log",
+    "prior_problem": "Slab allocation error during empty-geometry fade; replaced with visibility hiding and managed asset release"
+  },
+  "scene": {
+    "static_registrations": 782,
+    "kinematic_ground_vehicles": 30,
+    "omitted_placements": 100,
+    "outside_terrain": [250009036, 250009037, 550030793, 550035253, 550035279],
+    "isolated_vehicle_motion_tested": true,
+    "unmodified_population_motion_accepted": false,
+    "native_ageia_dynamics": false
+  },
+  "sound_decode": {
+    "bank_samples": 365,
+    "sample": "DE_StaffPower",
+    "pcm_samples": 59648,
+    "sample_rate": 22050,
+    "non_silent": true,
+    "playback_connected": false,
+    "hardware_audio_verified": false
+  },
+  "shared_startup": {
+    "committed": false,
+    "frame": 0,
+    "error": "Gambit_Part_1_Staff_Effect pc 5: Kill: Rewrite effect mBoomSoundBase backend not configured",
+    "whole_tick_rolls_back": true
+  },
+  "original_level_playable": false,
+  "preview_or_main_launcher_changed": false,
+  "publication_or_commit": false
+}

@@ -1,0 +1,19 @@
+{
+  "scope": "Ground-vehicle profile selection and authored physics-node metadata",
+  "tests": {"viewer_library": 126, "integration": 47, "python": 15, "total": 188},
+  "additional_non_viewer_vehicle_tests": 2,
+  "format_check": "passed",
+  "clippy_viewer_all_targets_deny_warnings": "passed",
+  "locked_viewer_builds": "passed",
+  "replacement_battle_restart_regression": "passed",
+  "original_ground_vehicle_bindings": 30,
+  "authored_ode_profiles": 3,
+  "original_ground_vehicle_models": 3,
+  "physics_nodes_with_separate_authored_bounds": 11,
+  "marker_triangles_are_closed_hulls": false,
+  "vehicle_dynamics_configured": false,
+  "original_mission_playable": false,
+  "original_victory_verified": false,
+  "details": "docs/VEHICLE_ASSETS.md",
+  "local_audit": "local/analysis/mission-vehicle-assets-audit.json"
+}

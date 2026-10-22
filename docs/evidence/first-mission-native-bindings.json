@@ -1,0 +1,515 @@
+{
+  "candidates": [
+    {
+      "name": "AttackTarget",
+      "table_address": 2152405616,
+      "name_address": 2152238848,
+      "function_address": 2148447116
+    },
+    {
+      "name": "AllPlayerUnitsDead",
+      "table_address": 2152405624,
+      "name_address": 2152238864,
+      "function_address": 2148376336
+    },
+    {
+      "name": "ClearMessageQueue",
+      "table_address": 2152405640,
+      "name_address": 2152238900,
+      "function_address": 2148360196
+    },
+    {
+      "name": "Despawn",
+      "table_address": 2152405696,
+      "name_address": 2153782056,
+      "function_address": 2148441816
+    },
+    {
+      "name": "EnableControllerItem",
+      "table_address": 2152405704,
+      "name_address": 2152239000,
+      "function_address": 2148372980
+    },
+    {
+      "name": "EnableWeapon",
+      "table_address": 2152405712,
+      "name_address": 2152239024,
+      "function_address": 2148451456
+    },
+    {
+      "name": "EndFrame",
+      "table_address": 2152405720,
+      "name_address": 2152239040,
+      "function_address": 2148345128
+    },
+    {
+      "name": "FollowUnit",
+      "table_address": 2152405760,
+      "name_address": 2152239120,
+      "function_address": 2148352220
+    },
+    {
+      "name": "FollowWaypoint",
+      "table_address": 2152405768,
+      "name_address": 2152239132,
+      "function_address": 2148438584
+    },
+    {
+      "name": "FreezePlayer",
+      "table_address": 2152405776,
+      "name_address": 2152239148,
+      "function_address": 2148355624
+    },
+    {
+      "name": "GetActivity",
+      "table_address": 2152405824,
+      "name_address": 2152239256,
+      "function_address": 2148368012
+    },
+    {
+      "name": "GetHealthPercent",
+      "table_address": 2152405864,
+      "name_address": 2152239340,
+      "function_address": 2148368676
+    },
+    {
+      "name": "GetFriendlyHealthTotals",
+      "table_address": 2152405880,
+      "name_address": 2152239376,
+      "function_address": 2148449464
+    },
+    {
+      "name": "GetEnemyHealthTotals",
+      "table_address": 2152405888,
+      "name_address": 2152239400,
+      "function_address": 2148449680
+    },
+    {
+      "name": "GetNumItemsInMessageQueue",
+      "table_address": 2152405976,
+      "name_address": 2152239640,
+      "function_address": 2148430452
+    },
+    {
+      "name": "GetObjectXPosition",
+      "table_address": 2152406000,
+      "name_address": 2152239712,
+      "function_address": 2148365592
+    },
+    {
+      "name": "GetObjectZPosition",
+      "table_address": 2152406008,
+      "name_address": 2152239732,
+      "function_address": 2148365368
+    },
+    {
+      "name": "GetPlayerUnit",
+      "table_address": 2152406024,
+      "name_address": 2152239776,
+      "function_address": 2148434520
+    },
+    {
+      "name": "GetRandom",
+      "table_address": 2152406032,
+      "name_address": 2152239792,
+      "function_address": 2148356052
+    },
+    {
+      "name": "GetTime",
+      "table_address": 2152406048,
+      "name_address": 2153782064,
+      "function_address": 2148355152
+    },
+    {
+      "name": "GoToArea",
+      "table_address": 2152406064,
+      "name_address": 2152239832,
+      "function_address": 2148352944
+    },
+    {
+      "name": "IsDead",
+      "table_address": 2152406080,
+      "name_address": 2153782072,
+      "function_address": 2148433560
+    },
+    {
+      "name": "IsInArea",
+      "table_address": 2152406088,
+      "name_address": 2152239856,
+      "function_address": 2148433796
+    },
+    {
+      "name": "IsInRange",
+      "table_address": 2152406096,
+      "name_address": 2152239868,
+      "function_address": 2148345484
+    },
+    {
+      "name": "IsUnderPlayerCommand",
+      "table_address": 2152406176,
+      "name_address": 2152240024,
+      "function_address": 2148454924
+    },
+    {
+      "name": "Kill",
+      "table_address": 2152406192,
+      "name_address": 2153782080,
+      "function_address": 2148441256
+    },
+    {
+      "name": "Measure",
+      "table_address": 2152406224,
+      "name_address": 2153782088,
+      "function_address": 2148370000
+    },
+    {
+      "name": "ListScoringUnits",
+      "table_address": 2152406248,
+      "name_address": 2152240136,
+      "function_address": 2148374336
+    },
+    {
+      "name": "OutOfBoundsMessageInfo",
+      "table_address": 2152406280,
+      "name_address": 2152240220,
+      "function_address": 2148359296
+    },
+    {
+      "name": "PhoneMessage",
+      "table_address": 2152406296,
+      "name_address": 2152240260,
+      "function_address": 2148358504
+    },
+    {
+      "name": "PhoneMessageWithObjective",
+      "table_address": 2152406304,
+      "name_address": 2152240276,
+      "function_address": 2148359236
+    },
+    {
+      "name": "StoreSummaryMessage",
+      "table_address": 2152406312,
+      "name_address": 2152240304,
+      "function_address": 2148410604
+    },
+    {
+      "name": "PlayEffect",
+      "table_address": 2152406320,
+      "name_address": 2152240324,
+      "function_address": 2148442708
+    },
+    {
+      "name": "PlayerAngleToTarget",
+      "table_address": 2152406328,
+      "name_address": 2152240336,
+      "function_address": 2148443412
+    },
+    {
+      "name": "ReadControllerState",
+      "table_address": 2152406344,
+      "name_address": 2152240368,
+      "function_address": 2148451784
+    },
+    {
+      "name": "RegisterReflectionId",
+      "table_address": 2152406352,
+      "name_address": 2152240388,
+      "function_address": 2148373244
+    },
+    {
+      "name": "SetActive",
+      "table_address": 2152406384,
+      "name_address": 2152240476,
+      "function_address": 2148375672
+    },
+    {
+      "name": "SetHealthPercent",
+      "table_address": 2152406424,
+      "name_address": 2152240576,
+      "function_address": 2148370216
+    },
+    {
+      "name": "SetMissionComplete",
+      "table_address": 2152406448,
+      "name_address": 2152240632,
+      "function_address": 2148444060
+    },
+    {
+      "name": "SetMissionRatings",
+      "table_address": 2152406456,
+      "name_address": 2152240652,
+      "function_address": 2148360400
+    },
+    {
+      "name": "SetMissionMinMaxTime",
+      "table_address": 2152406464,
+      "name_address": 2152240672,
+      "function_address": 2148360656
+    },
+    {
+      "name": "SetMissionTime",
+      "table_address": 2152406472,
+      "name_address": 2152240696,
+      "function_address": 2148360796
+    },
+    {
+      "name": "SetMissionPowerObjectives",
+      "table_address": 2152406480,
+      "name_address": 2152240712,
+      "function_address": 2148360992
+    },
+    {
+      "name": "SetMissionTechObjectives",
+      "table_address": 2152406488,
+      "name_address": 2152240740,
+      "function_address": 2148361144
+    },
+    {
+      "name": "SetArmyAllegianceForScoring",
+      "table_address": 2152406512,
+      "name_address": 2152240808,
+      "function_address": 2148361568
+    },
+    {
+      "name": "StartMusic",
+      "table_address": 2152406520,
+      "name_address": 2152240836,
+      "function_address": 2148444936
+    },
+    {
+      "name": "StopMusic",
+      "table_address": 2152406528,
+      "name_address": 2152240848,
+      "function_address": 2148364020
+    },
+    {
+      "name": "SetMusicVolume",
+      "table_address": 2152406568,
+      "name_address": 2152240896,
+      "function_address": 2148446020
+    },
+    {
+      "name": "SetObjectiveData",
+      "table_address": 2152406576,
+      "name_address": 2152240912,
+      "function_address": 2148455868
+    },
+    {
+      "name": "Spawn",
+      "table_address": 2152406616,
+      "name_address": 2153782112,
+      "function_address": 2148354184
+    },
+    {
+      "name": "StopAndGuard",
+      "table_address": 2152406624,
+      "name_address": 2152240996,
+      "function_address": 2148442244
+    },
+    {
+      "name": "Teleport",
+      "table_address": 2152406632,
+      "name_address": 2152241012,
+      "function_address": 2148354584
+    },
+    {
+      "name": "UnfreezePlayer",
+      "table_address": 2152406656,
+      "name_address": 2152241060,
+      "function_address": 2148355880
+    },
+    {
+      "name": "WaitFor",
+      "table_address": 2152406664,
+      "name_address": 2153782120,
+      "function_address": 2148364228
+    },
+    {
+      "name": "WaitForNoPause",
+      "table_address": 2152406672,
+      "name_address": 2152241076,
+      "function_address": 2148364340
+    },
+    {
+      "name": "SetCamera",
+      "table_address": 2152406720,
+      "name_address": 2152241180,
+      "function_address": 2148348312
+    },
+    {
+      "name": "CameraFade",
+      "table_address": 2152406728,
+      "name_address": 2152241192,
+      "function_address": 2148348572
+    },
+    {
+      "name": "CameraSetTarget",
+      "table_address": 2152406736,
+      "name_address": 2152241208,
+      "function_address": 2148348900
+    },
+    {
+      "name": "CameraSetFOV",
+      "table_address": 2152406744,
+      "name_address": 2152241224,
+      "function_address": 2148349176
+    },
+    {
+      "name": "CameraSetWaypoint",
+      "table_address": 2152406760,
+      "name_address": 2152241252,
+      "function_address": 2148349980
+    },
+    {
+      "name": "SetHudState",
+      "table_address": 2152406784,
+      "name_address": 2152241324,
+      "function_address": 2148350560
+    },
+    {
+      "name": "SetTutorialItemSolid",
+      "table_address": 2152406792,
+      "name_address": 2152241336,
+      "function_address": 2148351036
+    },
+    {
+      "name": "ActivateTutorialWarning",
+      "table_address": 2152406800,
+      "name_address": 2152241360,
+      "function_address": 2148351232
+    },
+    {
+      "name": "ResetCommandBar",
+      "table_address": 2152406816,
+      "name_address": 2152241400,
+      "function_address": 2148351644
+    },
+    {
+      "name": "DeclareVictory",
+      "table_address": 2152406920,
+      "name_address": 2152241668,
+      "function_address": 2148407304
+    },
+    {
+      "name": "DestroyablePlayAnim",
+      "table_address": 2152406944,
+      "name_address": 2152241716,
+      "function_address": 2148409036
+    },
+    {
+      "name": "ForceUnitTransfer",
+      "table_address": 2152407008,
+      "name_address": 2152241876,
+      "function_address": 2148413696
+    },
+    {
+      "name": "SetUnitInvulnerable",
+      "table_address": 2152407016,
+      "name_address": 2152241896,
+      "function_address": 2148414484
+    },
+    {
+      "name": "SetFunctionIndicatorState",
+      "table_address": 2152407048,
+      "name_address": 2152241984,
+      "function_address": 2148415436
+    },
+    {
+      "name": "SetFunctionIndicatorMode",
+      "table_address": 2152407056,
+      "name_address": 2152242012,
+      "function_address": 2148415544
+    },
+    {
+      "name": "SetFunctionIndicatorAction",
+      "table_address": 2152407064,
+      "name_address": 2152242040,
+      "function_address": 2148415632
+    },
+    {
+      "name": "SetFunctionIndicatorPosition",
+      "table_address": 2152407072,
+      "name_address": 2152242068,
+      "function_address": 2148415748
+    },
+    {
+      "name": "SetupPauseTutorialStack",
+      "table_address": 2152407080,
+      "name_address": 2152242104,
+      "function_address": 2148415860
+    },
+    {
+      "name": "SetViewDistanceAdjustment",
+      "table_address": 2152407128,
+      "name_address": 2152242248,
+      "function_address": 2148417004
+    },
+    {
+      "name": "SetWaterRenderEnable",
+      "table_address": 2152407152,
+      "name_address": 2152242336,
+      "function_address": 2148417416
+    },
+    {
+      "name": "ToggleBlankPauseScreen",
+      "table_address": 2152407384,
+      "name_address": 2152243012,
+      "function_address": 2148421716
+    },
+    {
+      "name": "GetCurrentMissionAttempted",
+      "table_address": 2152407400,
+      "name_address": 2152243064,
+      "function_address": 2148396960
+    },
+    {
+      "name": "SetCurrentMissionCompleted",
+      "table_address": 2152407408,
+      "name_address": 2152243092,
+      "function_address": 2148397068
+    },
+    {
+      "name": "GetCurrentMissionCompleted",
+      "table_address": 2152407416,
+      "name_address": 2152243120,
+      "function_address": 2148397132
+    },
+    {
+      "name": "rint",
+      "table_address": 2152407512,
+      "name_address": 2153782144,
+      "function_address": 2148379528
+    },
+    {
+      "name": "IsNetworkHost",
+      "table_address": 2152407568,
+      "name_address": 2152243440,
+      "function_address": 2148362640
+    },
+    {
+      "name": "IsNetworkPlayer",
+      "table_address": 2152407576,
+      "name_address": 2152243456,
+      "function_address": 2148362748
+    },
+    {
+      "name": "DebugOut",
+      "table_address": 2152407624,
+      "name_address": 2152243572,
+      "function_address": 2148356456
+    },
+    {
+      "name": "GetTutorialMode",
+      "table_address": 2152407728,
+      "name_address": 2152243752,
+      "function_address": 2148390356
+    }
+  ],
+  "matched_names": 84,
+  "unmatched_names": [
+    "GRADE",
+    "constant",
+    "netvariable"
+  ],
+  "caveat": "Aligned adjacent data pointers into strings and executable sections; registration semantics require disassembly confirmation."
+}

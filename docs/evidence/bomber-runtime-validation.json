@@ -1,0 +1,40 @@
+{
+  "scope": "Original camp arrival and bomber cinematic prefix; isolated bomber ordnance",
+  "full_mission_accepted": false,
+  "full_cinematic_accepted": false,
+  "native_physics_parity_claimed": false,
+  "original_scripts_modified": false,
+  "progress_forced": false,
+  "viewer_all_target_tests": { "passed": 311, "failed": 0, "ignored": 0, "log": "local/analysis/bomber-full-tests-03.log" },
+  "overlapping_non_viewer_library_tests": { "passed": 185, "failed": 0, "ignored": 0, "log": "local/analysis/bomber-core-tests-02.log" },
+  "clippy": { "passed": true, "warnings_denied": true, "log": "local/analysis/bomber-final-clippy-03.log" },
+  "format_check_passed": true,
+  "build_log": "local/analysis/bomber-final-build-02.log",
+  "original_route": {
+    "test": "original_route_reaches_bomber_ambush_and_preserves_unsupported_call_rollback",
+    "completed_camp_arrival_objective": 550032489,
+    "aircraft_teleport_and_attack_flight": true,
+    "current_boundary": "Gambit_Part_1_Cutscene_Bombed pc 173: AttackTarget: AttackTarget ground weapons not configured",
+    "rollback_checks": ["frame", "all positions", "headings", "projectile release count"],
+    "fixture_dependency": "local/analysis/first-combat-inputs.json"
+  },
+  "isolated_ordnance_fixture": {
+    "test": "source_bomber_teleport_and_guided_impacts_are_real",
+    "mission_progression_evidence": false,
+    "releases": 7,
+    "impacts": 6,
+    "fixture_initial_health": 100000,
+    "fixture_final_health": 99000,
+    "checks": ["authored profile resolution", "teleport and heading", "real impact damage", "invulnerability after first impact", "clip and reload", "repeated orders preserve cooldown", "invalid timestep rollback", "malformed damage rejection"]
+  },
+  "gpu": {
+    "reviewed_captures": ["local/analysis/bomber-cinematic-prefix-02.png", "local/analysis/bomber-combat-regression-02.png"],
+    "logs": ["local/analysis/bomber-cinematic-prefix-02.log", "local/analysis/bomber-combat-regression-02.log"],
+    "error_warning_lines": 0,
+    "synchronized_aircraft_parts": 27,
+    "complete_bombing_or_anti_air_render_acceptance": false
+  },
+  "declared_policies_and_limits": "docs/BOMBER_RUNTIME.md",
+  "user_owned_previews_stopped": false,
+  "published": false
+}

@@ -1,0 +1,32 @@
+{
+  "date": "2026-10-09",
+  "committed": false,
+  "scope": "Bounded explosion setup chain selection; no production Kill backend",
+  "native_range": "0x800bb498..0x800bb4f8",
+  "reference_session": {"name": "native-reference-debug-20261008", "exit": -9, "cause": "unknown", "restarted": false},
+  "checks": {
+    "red": "Compilation failed because initialize_delay was absent",
+    "chain_unit_tests": 6,
+    "viewer_library_tests": 179,
+    "selected_integration_tests": 18,
+    "fmt": "passed",
+    "viewer_all_targets_clippy_deny_warnings": "passed"
+  },
+  "logs": [
+    "local/analysis/chain-setup-red.log",
+    "local/analysis/chain-setup-green.log",
+    "local/analysis/chain-setup-viewer-tests.log",
+    "local/analysis/chain-setup-integration-tests.log",
+    "local/analysis/chain-setup-original-tests.log",
+    "local/analysis/chain-setup-clippy.log",
+    "local/analysis/chain-setup-audit.json"
+  ],
+  "startup_error": "ArtInitialisation pc 3: Kill: Unsupported gameplay call/signature: Kill",
+  "limitations": [
+    "Immediate child spawning remains unsupported and transactional",
+    "Setup method requires an enclosing full-constructor transaction",
+    "Original-data test uses explicit timer/cursor fixtures, not full native replay",
+    "Captured RNG increment attribution is consistent with source but not dynamically proven",
+    "No first shared gameplay tick, original mission victory, or controller hardware acceptance"
+  ]
+}

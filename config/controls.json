@@ -1,0 +1,28 @@
+{
+  "deadzone": 0.18,
+  "turn_sensitivity": 1.0,
+  "mouse_sensitivity": 0.15,
+  "invert_right_stick_y": false,
+  "invert_mouse_y": false,
+  "keyboard": {
+    "forward": ["W"], "back": ["S"], "left": ["A"], "right": ["D"],
+    "turn_left": ["Q", "ArrowLeft"], "turn_right": ["E", "ArrowRight"],
+    "look_up": ["ArrowUp"], "look_down": ["ArrowDown"],
+    "fire": ["Space"], "lock": ["L", "Tab"], "sprint": ["ShiftLeft", "ShiftRight"],
+    "call": ["C", "F"], "send": ["G"], "dismiss": ["X"],
+    "transfer": ["T"], "load_vehicle": ["V"], "unload_vehicle": ["Z"],
+    "next_unit": ["K"], "prev_unit": ["J"],
+    "next_unit_type": ["N"], "prev_unit_type": ["B"],
+    "global_toggle": ["H"], "toggle_map": ["M"],
+    "cycle": ["Tab"], "start": ["Enter"], "pause": ["P"], "restart": ["R"], "quit": ["Escape"]
+  },
+  "gamepad": {
+    "fire": "RightTrigger2", "lock": "LeftTrigger2", "sprint": "LeftThumb",
+    "call": "West", "send": "RightTrigger", "dismiss": "East",
+    "transfer": "RightThumb", "load_vehicle": "DPadUp", "unload_vehicle": "DPadDown",
+    "next_unit": "DPadRight", "prev_unit": "DPadLeft",
+    "next_unit_type": "RightTrigger", "prev_unit_type": "LeftTrigger",
+    "global_toggle": "North", "toggle_map": "Select",
+    "cycle": "LeftTrigger", "start": "South", "pause": "Start", "restart": "North"
+  }
+}

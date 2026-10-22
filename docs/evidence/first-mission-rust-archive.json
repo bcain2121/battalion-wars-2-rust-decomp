@@ -1,0 +1,7505 @@
+{
+  "size": 36674604,
+  "chunk_count": 603,
+  "chunk_types": {
+    "DNOS": 1,
+    "FEQT": 247,
+    "LDOM": 116,
+    "MINA": 184,
+    "PRCS": 54,
+    "RXET": 1
+  },
+  "entries": [
+    {
+      "tag": "RXET",
+      "offset": 0,
+      "size": 20239318,
+      "name": "SP_0.1_Level"
+    },
+    {
+      "tag": "DNOS",
+      "offset": 20239326,
+      "size": 5607238,
+      "name": null
+    },
+    {
+      "tag": "LDOM",
+      "offset": 25846572,
+      "size": 693,
+      "name": "GenericRubble"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 25847273,
+      "size": 38965,
+      "name": "C4SNCLIFFFACE04_H"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 25886246,
+      "size": 27349,
+      "name": "C4SNCLIFFFACE05_H"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 25913603,
+      "size": 27617,
+      "name": "C4SNROCKNEROCITE01_H"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 25941228,
+      "size": 15113,
+      "name": "C4SMWALLEND4_RUNIED_H"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 25956349,
+      "size": 9922,
+      "name": "C4SNROCKSHARP01_H"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 25966279,
+      "size": 12287,
+      "name": "C4SNROCKSHARP02_H"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 25978574,
+      "size": 1449,
+      "name": "C4SNTHORNYBUSH"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 25980031,
+      "size": 75396,
+      "name": "C4SMTOWERHIGH_H"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26055435,
+      "size": 26962,
+      "name": "C4SMWALL20M_A_H"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26082405,
+      "size": 77221,
+      "name": "C4SMTOWERENTRANCE"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26159634,
+      "size": 690,
+      "name": "SFXdummyRoot"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26160332,
+      "size": 42923,
+      "name": "C4SNTREEGENERIC"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26203263,
+      "size": 24463,
+      "name": "C4SNTREEGNARLED"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26227734,
+      "size": 6581,
+      "name": "ILSMTENTSMALL"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26234323,
+      "size": 11288,
+      "name": "ILSMTENTMID"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26245619,
+      "size": 5386,
+      "name": "C4SNFUNGIA"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26251013,
+      "size": 5769,
+      "name": "C4SNMUSHROOM"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26256790,
+      "size": 3796,
+      "name": "C4SNMUSHROOMB"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26260594,
+      "size": 66661,
+      "name": "C4SMTOWERLOW_H"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26327263,
+      "size": 1039,
+      "name": "C4SNROCKSHARP03_H"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26328310,
+      "size": 7575,
+      "name": "C4SNCLIFFLEDGE_H"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26335893,
+      "size": 54189,
+      "name": "C4SMBIGGATEWINCH_H"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26390090,
+      "size": 16592,
+      "name": "C4SMWALL20M_A_H"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26406690,
+      "size": 21541,
+      "name": "C4SNTALLCLIFF01_H"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26428239,
+      "size": 84067,
+      "name": "C4SNCLIFFARCH_H"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26512314,
+      "size": 44012,
+      "name": "C4SNCLIFFFACE2_H"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26556334,
+      "size": 57931,
+      "name": "C4SNCLIFFFACE_H"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26614273,
+      "size": 32911,
+      "name": "C4SMFORTWALL20M_C_H"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26647192,
+      "size": 27626,
+      "name": "C4SMBRIDGEIRONMID02"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26674826,
+      "size": 37769,
+      "name": "C4SMBRIDGEIRONMID01"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26712603,
+      "size": 28619,
+      "name": "C4SMFORTWALL20M_A_H"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26741230,
+      "size": 26667,
+      "name": "C4SMFORTWALL20M_B_H"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26767905,
+      "size": 21073,
+      "name": "C3SMTENTLARGE"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26788986,
+      "size": 957,
+      "name": "SFXobjmark"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26789951,
+      "size": 959,
+      "name": "SFXobjmark2"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26790918,
+      "size": 44880,
+      "name": "C4SMBARBEDWIREHIGH"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26835806,
+      "size": 13656,
+      "name": "C4SMBARBEDWIRELOW"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26849470,
+      "size": 11323,
+      "name": "C4SMWALLEND2_RUNIED_H"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26860801,
+      "size": 31813,
+      "name": "SLOGOsmall"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26892622,
+      "size": 51939,
+      "name": "C4SMWALLVEHICLE20M_A_H"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26944569,
+      "size": 205471,
+      "name": "C4SNCLIFFWATERARCH_H"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 27150048,
+      "size": 23243,
+      "name": "C4SMBRIDGESTONE01END_H"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 27173299,
+      "size": 32571,
+      "name": "C4SMBRIDGESTONE01MID1_H"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 27205878,
+      "size": 21250,
+      "name": "ILSMTENTLARGE"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 27227136,
+      "size": 22584,
+      "name": "C4SMBRIDGEIRONEND"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 27249728,
+      "size": 224562,
+      "name": "C4SMRUINEDABBEY"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 27474298,
+      "size": 116957,
+      "name": "VSHTNK_RUIN_H"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 27591263,
+      "size": 17149,
+      "name": "C4SMBIGGATE_H"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 27608420,
+      "size": 577252,
+      "name": "C4SMIRONTOWER_H"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 28185680,
+      "size": 31482,
+      "name": "C4SNTREESPLIT"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 28217170,
+      "size": 3809,
+      "name": "C4SMIRONTOWERRAMP"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 28220987,
+      "size": 63477,
+      "name": "SG_HI_LOD"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 28284472,
+      "size": 792,
+      "name": "S_BOXLOD"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 28285272,
+      "size": 6265,
+      "name": "SRIFLE"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 28291545,
+      "size": 10118,
+      "name": "SGPACKSTAFF"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 28301671,
+      "size": 2031,
+      "name": "GEN_HealthPickup"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 28303710,
+      "size": 4179,
+      "name": "SKY_C4Gambit"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 28307897,
+      "size": 745,
+      "name": "SFXobjmarkbase"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 28308650,
+      "size": 5076,
+      "name": "SSTAFFOFPOWER_H"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 28313734,
+      "size": 75293,
+      "name": "LG_HI_LOD"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 28389035,
+      "size": 792,
+      "name": "U_BOXLOD"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 28389835,
+      "size": 5995,
+      "name": "L_RIFLE"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 28395838,
+      "size": 5078,
+      "name": "UGPACK"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 28400924,
+      "size": 70123,
+      "name": "LV_HI_LOD"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 28471055,
+      "size": 5877,
+      "name": "L_HOSEGUN"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 28476940,
+      "size": 5846,
+      "name": "L_HOSEHELM"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 28482794,
+      "size": 6101,
+      "name": "L_HOSEPACK"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 28488903,
+      "size": 37584,
+      "name": "C1SMAMMODUMP"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 28526495,
+      "size": 5713,
+      "name": "SGPACK"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 28532216,
+      "size": 227462,
+      "name": "VUGSHPH"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 28759686,
+      "size": 1632,
+      "name": "WF_rocket"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 28761326,
+      "size": 225578,
+      "name": "VUHTNKH"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 28986912,
+      "size": 3692,
+      "name": "VUHTNKH_TRAC_L"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 28990612,
+      "size": 3716,
+      "name": "VUHTNKH_TRAC_R"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 28994336,
+      "size": 1147,
+      "name": "U_grenade"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 28995491,
+      "size": 313841,
+      "name": "VUBSTAH"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 29309340,
+      "size": 1996,
+      "name": "WF_shell"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 29311344,
+      "size": 1865,
+      "name": "U_shell"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 29313217,
+      "size": 2699,
+      "name": "GEN_VRPickup"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 29315924,
+      "size": 137397,
+      "name": "C4SNROCKRUBBLE2_H"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 29453329,
+      "size": 8324,
+      "name": "L_ANTIARMGUN"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 29461661,
+      "size": 6535,
+      "name": "L_ANTIARMHELM"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 29468204,
+      "size": 4937,
+      "name": "L_ANTIARMPACK"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 29473149,
+      "size": 31466,
+      "name": "C4SMSHELLUNEXP_H"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 29504623,
+      "size": 209530,
+      "name": "VSGSHPH"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 29714161,
+      "size": 1630,
+      "name": "S_rocket"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 29715799,
+      "size": 292869,
+      "name": "VUBOMBERH"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 30008676,
+      "size": 82893,
+      "name": "C4SMCASTLERUIN01"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 30091577,
+      "size": 204507,
+      "name": "VSHTNKH"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 30296092,
+      "size": 68571,
+      "name": "SVET"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 30364671,
+      "size": 8466,
+      "name": "SCHAINGUN_H"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 30373145,
+      "size": 4198,
+      "name": "SCHAINHELM"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 30377351,
+      "size": 3276,
+      "name": "SCHAINPACK"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 30380635,
+      "size": 3173,
+      "name": "U_bomb"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 30383816,
+      "size": 2031,
+      "name": "MPB_WF_FLAG"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 30385855,
+      "size": 2029,
+      "name": "MPB_X_FLAG"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 30387892,
+      "size": 2271,
+      "name": "TFlag_H"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 30390171,
+      "size": 2271,
+      "name": "SFlag_H"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 30392450,
+      "size": 2031,
+      "name": "MPB_IL_FLAG"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 30394489,
+      "size": 2029,
+      "name": "MPB_A_FLAG"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 30396526,
+      "size": 39865,
+      "name": "C4FLAGPOLE"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 30436399,
+      "size": 2142,
+      "name": "X_Barrel01"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 30438549,
+      "size": 7174,
+      "name": "SHOSEGUN"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 30445731,
+      "size": 5071,
+      "name": "SHOSEHELM"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 30450810,
+      "size": 4626,
+      "name": "SHOSEPACK"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 30455444,
+      "size": 8718,
+      "name": "SANTAIRGUN"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 30464170,
+      "size": 7124,
+      "name": "SANTAIRHELM"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 30471302,
+      "size": 6919,
+      "name": "SANTAIRPACK"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 30478229,
+      "size": 8504,
+      "name": "SAARMGUN"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 30486741,
+      "size": 8566,
+      "name": "SAARMHELM"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 30495315,
+      "size": 7831,
+      "name": "SAARMPACK"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 30503154,
+      "size": 72772,
+      "name": "C4SMBUNKER03_H"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 30575934,
+      "size": 1994,
+      "name": "X_shell"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 30577936,
+      "size": 44274,
+      "name": "C4SMFORTWALL20M_DEST_H"
+    },
+    {
+      "tag": "LDOM",
+      "offset": 30622218,
+      "size": 36561,
+      "name": "C4SMDEADSTAFFGUY"
+    },
+    {
+      "tag": "MINA",
+      "offset": 30658787,
+      "size": 32211,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 30691006,
+      "size": 24935,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 30715949,
+      "size": 53871,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 30769828,
+      "size": 50047,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 30819883,
+      "size": 21293,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 30841184,
+      "size": 63613,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 30904805,
+      "size": 45213,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 30950026,
+      "size": 24501,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 30974535,
+      "size": 17707,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 30992250,
+      "size": 24720,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 31016978,
+      "size": 33379,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 31050365,
+      "size": 12479,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 31062852,
+      "size": 36684,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 31099544,
+      "size": 52216,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 31151768,
+      "size": 60096,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 31211872,
+      "size": 25160,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 31237040,
+      "size": 25426,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 31262474,
+      "size": 70534,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 31333016,
+      "size": 28730,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 31361754,
+      "size": 35542,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 31397304,
+      "size": 25056,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 31422368,
+      "size": 51684,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 31474060,
+      "size": 37140,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 31511208,
+      "size": 24720,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 31535936,
+      "size": 35765,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 31571709,
+      "size": 19597,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 31591314,
+      "size": 10399,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 31601721,
+      "size": 10401,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 31612130,
+      "size": 10400,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 31622538,
+      "size": 10399,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 31632945,
+      "size": 10401,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 31643354,
+      "size": 10401,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 31653763,
+      "size": 8429,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 31662200,
+      "size": 10402,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 31672610,
+      "size": 10399,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 31683017,
+      "size": 10398,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 31693423,
+      "size": 10399,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 31703830,
+      "size": 10399,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 31714237,
+      "size": 10401,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 31724646,
+      "size": 10399,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 31735053,
+      "size": 10999,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 31746060,
+      "size": 7510,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 31753578,
+      "size": 17642,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 31771228,
+      "size": 10363,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 31781599,
+      "size": 7514,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 31789121,
+      "size": 6350,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 31795479,
+      "size": 6349,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 31801836,
+      "size": 7009,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 31808853,
+      "size": 6687,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 31815548,
+      "size": 9024,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 31824580,
+      "size": 9024,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 31833612,
+      "size": 9326,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 31842946,
+      "size": 9794,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 31852748,
+      "size": 13404,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 31866160,
+      "size": 9275,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 31875443,
+      "size": 9326,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 31884777,
+      "size": 9794,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 31894579,
+      "size": 10397,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 31904984,
+      "size": 62159,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 31967151,
+      "size": 9003,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 31976162,
+      "size": 4743,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 31980913,
+      "size": 7196,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 31988117,
+      "size": 9545,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 31997670,
+      "size": 18352,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32016030,
+      "size": 4847,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32020885,
+      "size": 10999,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32031892,
+      "size": 7604,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32039504,
+      "size": 8295,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32047807,
+      "size": 4107,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32051922,
+      "size": 10067,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32061997,
+      "size": 8130,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32070135,
+      "size": 13790,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32083933,
+      "size": 13790,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32097731,
+      "size": 6638,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32104377,
+      "size": 8596,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32112981,
+      "size": 12479,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32125468,
+      "size": 9463,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32134939,
+      "size": 17723,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32152670,
+      "size": 11187,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32163865,
+      "size": 17361,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32181234,
+      "size": 16777,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32198019,
+      "size": 2765,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32200792,
+      "size": 2765,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32203565,
+      "size": 2765,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32206338,
+      "size": 8520,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32214866,
+      "size": 9000,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32223874,
+      "size": 48002,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32271884,
+      "size": 48000,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32319892,
+      "size": 6560,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32326460,
+      "size": 3750,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32330218,
+      "size": 3602,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32333828,
+      "size": 3601,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32337437,
+      "size": 3602,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32341047,
+      "size": 41998,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32383053,
+      "size": 8660,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32391721,
+      "size": 8660,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32400389,
+      "size": 11729,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32412126,
+      "size": 31233,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32443367,
+      "size": 11729,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32455104,
+      "size": 14961,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32470073,
+      "size": 12489,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32482570,
+      "size": 9240,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32491818,
+      "size": 10799,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32502625,
+      "size": 10799,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32513432,
+      "size": 7577,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32521017,
+      "size": 7561,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32528586,
+      "size": 14183,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32542777,
+      "size": 7386,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32550171,
+      "size": 6399,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32556578,
+      "size": 8807,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32565393,
+      "size": 10162,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32575563,
+      "size": 6897,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32582468,
+      "size": 11293,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32593769,
+      "size": 6629,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32600406,
+      "size": 6485,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32606899,
+      "size": 6685,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32613592,
+      "size": 6008,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32619608,
+      "size": 6360,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32625976,
+      "size": 5486,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32631470,
+      "size": 5487,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32636965,
+      "size": 7264,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32644237,
+      "size": 7025,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32651270,
+      "size": 8905,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32660183,
+      "size": 7504,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32667695,
+      "size": 6812,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32674515,
+      "size": 6597,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32681120,
+      "size": 10816,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32691944,
+      "size": 10821,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32702773,
+      "size": 9897,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32712678,
+      "size": 22142,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32734828,
+      "size": 15660,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32750496,
+      "size": 20662,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32771166,
+      "size": 18062,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32789236,
+      "size": 7380,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32796624,
+      "size": 1706,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32798338,
+      "size": 7919,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32806265,
+      "size": 19540,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32825813,
+      "size": 8255,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32834076,
+      "size": 5102,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32839186,
+      "size": 9177,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32848371,
+      "size": 6659,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32855038,
+      "size": 6278,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32861324,
+      "size": 2524,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32863856,
+      "size": 6630,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32870494,
+      "size": 6777,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32877279,
+      "size": 4637,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32881924,
+      "size": 4636,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32886568,
+      "size": 5497,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32892073,
+      "size": 5911,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32897992,
+      "size": 5019,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32903019,
+      "size": 8874,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32911901,
+      "size": 7606,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32919515,
+      "size": 9486,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32929009,
+      "size": 7440,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32936457,
+      "size": 20458,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32956923,
+      "size": 2154,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32959085,
+      "size": 1624,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32960717,
+      "size": 2108,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32962833,
+      "size": 6184,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32969025,
+      "size": 6185,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32975218,
+      "size": 10820,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32986046,
+      "size": 5582,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32991636,
+      "size": 5422,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32997066,
+      "size": 2463,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 32999537,
+      "size": 2457,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 33002002,
+      "size": 2459,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 33004469,
+      "size": 2461,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 33006938,
+      "size": 2459,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 33009405,
+      "size": 2460,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 33011873,
+      "size": 6782,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 33018663,
+      "size": 7503,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 33026174,
+      "size": 7504,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 33033686,
+      "size": 13956,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 33047650,
+      "size": 13396,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 33061054,
+      "size": 18884,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 33079946,
+      "size": 10276,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 33090230,
+      "size": 18884,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 33109122,
+      "size": 7619,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 33116749,
+      "size": 9739,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 33126496,
+      "size": 9737,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 33136241,
+      "size": 29024,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 33165273,
+      "size": 17038,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 33182319,
+      "size": 5057,
+      "name": null
+    },
+    {
+      "tag": "MINA",
+      "offset": 33187384,
+      "size": 6274,
+      "name": null
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33193666,
+      "size": 674,
+      "name": "ArtVariables"
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33194348,
+      "size": 559,
+      "name": "MusicGlobal"
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33194915,
+      "size": 1664,
+      "name": "global_Functions"
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33196587,
+      "size": 1225,
+      "name": "Gambit_Part_1_Controls_Disabled"
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33197820,
+      "size": 999,
+      "name": "Gambit_Part_1_Drained_Weapon"
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33198827,
+      "size": 1279,
+      "name": "Gambit_Part_1_Battalion_Reminder"
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33200114,
+      "size": 839,
+      "name": "Pause_Scoring_Timer"
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33200961,
+      "size": 289,
+      "name": "Gambit_Part_1_Water_Rendering"
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33201258,
+      "size": 3038,
+      "name": "ArtInitialisation"
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33204304,
+      "size": 788,
+      "name": "Gambit_Part_1_Staff_Effect"
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33205100,
+      "size": 1291,
+      "name": "Gambit_Part_1_Stay_Here_Trench"
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33206399,
+      "size": 340,
+      "name": "Gambit_Part_1_Invincibility"
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33206747,
+      "size": 4107,
+      "name": "Gambit_Part_1_SolarBattle"
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33210862,
+      "size": 441,
+      "name": "Gambit_Part_1_Explosions_Repeat"
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33211311,
+      "size": 813,
+      "name": "Gambit_Part_1_Stay_Here"
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33212132,
+      "size": 580,
+      "name": "Gambit_Part_1_Cutscene_PlayerWins"
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33212720,
+      "size": 12011,
+      "name": "Gambit_Part_1_Cutscene_MidGame_5_Tower"
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33224739,
+      "size": 5027,
+      "name": "Gambit_Part_1_Cutscene_MidGame_4_Battlestation"
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33229774,
+      "size": 8246,
+      "name": "Gambit_Part_1_Cutscene_MidGame_3_Gunship"
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33238028,
+      "size": 4319,
+      "name": "Gambit_Part_1_Cutscene_MidGame_2_Infantry"
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33242355,
+      "size": 7247,
+      "name": "Gambit_Part_1_Cutscene_MidGame_1_Tank"
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33249610,
+      "size": 1857,
+      "name": "Gambit_Part_1_Cutscene_PlayerLoses"
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33251475,
+      "size": 512,
+      "name": "Gambit_Part_1_ScoreSettings"
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33251995,
+      "size": 3536,
+      "name": "Gambit_Part_1_WinLose"
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33255539,
+      "size": 991,
+      "name": "Gambit_Part_1_Explosions"
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33256538,
+      "size": 1369,
+      "name": "Gambit_Part_1_MiniBattles"
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33257915,
+      "size": 1298,
+      "name": "Gambit_Part_1_Staff_Bearer_Invincibility"
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33259221,
+      "size": 9129,
+      "name": "Gambit_Part_1_Gameflow"
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33268358,
+      "size": 10016,
+      "name": "Gambit_Part_1_Cutscene_INTRO"
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33278382,
+      "size": 1003,
+      "name": "Gambit_Part_1_Stay_Here_Strike_Team"
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33279393,
+      "size": 1126,
+      "name": "Gambit_Part_1_Stay_Here_Battlestation"
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33280527,
+      "size": 881,
+      "name": "Gambit_Part_1_Controller"
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33281416,
+      "size": 11531,
+      "name": "Gambit_Part_1_Dialog"
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33292955,
+      "size": 2193,
+      "name": "Gambit_Part_1_MainBattle"
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33295156,
+      "size": 1397,
+      "name": "Gambit_Part_1_Bomber"
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33296561,
+      "size": 4638,
+      "name": "Gambit_Part_1_Cutscene_INTRO_Skip"
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33301207,
+      "size": 3208,
+      "name": "MusicInit"
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33304423,
+      "size": 6131,
+      "name": "Gambit_Part_1_Global_Variables"
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33310562,
+      "size": 15349,
+      "name": "ScoreScreen"
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33325919,
+      "size": 16616,
+      "name": "Gambit_Part_1_Gameflow_2"
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33342543,
+      "size": 265,
+      "name": "Gambit_Part_1_TESTING"
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33342816,
+      "size": 316,
+      "name": "Gambit_Part_1_Cutscene_PlayerWins_Skip"
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33343140,
+      "size": 1240,
+      "name": "Gambit_Part_1_Cutscene_PlayerLoses_Skip"
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33344388,
+      "size": 8908,
+      "name": "Gambit_Part_1_Cutscene_StaffBearer"
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33353304,
+      "size": 5633,
+      "name": "Gambit_Part_1_Cutscene_Bombed"
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33358945,
+      "size": 5393,
+      "name": "Gambit_Part_1_Pause_Tutorial"
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33364346,
+      "size": 7023,
+      "name": "global_Tutorial_Screen"
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33371377,
+      "size": 5358,
+      "name": "Gambit_Part_1_Cutscene_MidGame_1_Tank_Skip"
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33376743,
+      "size": 4265,
+      "name": "Gambit_Part_1_Cutscene_StaffBearer_Skip"
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33381016,
+      "size": 4426,
+      "name": "Gambit_Part_1_Cutscene_Bombed_Skip"
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33385450,
+      "size": 5620,
+      "name": "Gambit_Part_1_Cutscene_MidGame_3_Gunship_Skip"
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33391078,
+      "size": 3804,
+      "name": "Gambit_Part_1_Cutscene_MidGame_4_Battlestation_Skip"
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33394890,
+      "size": 4578,
+      "name": "Gambit_Part_1_Cutscene_MidGame_5_Tower_Skip"
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33399476,
+      "size": 61591,
+      "name": "EntityInitialise"
+    },
+    {
+      "tag": "FEQT",
+      "offset": 33461075,
+      "size": 14727,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 33475810,
+      "size": 6367,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 33482185,
+      "size": 21259,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 33503452,
+      "size": 41161,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 33544621,
+      "size": 9633,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 33554262,
+      "size": 37024,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 33591294,
+      "size": 32143,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 33623445,
+      "size": 63984,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 33687437,
+      "size": 35630,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 33723075,
+      "size": 15127,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 33738210,
+      "size": 18474,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 33756692,
+      "size": 5444,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 33762144,
+      "size": 27568,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 33789720,
+      "size": 9347,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 33799075,
+      "size": 13545,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 33812628,
+      "size": 15930,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 33828566,
+      "size": 13975,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 33842549,
+      "size": 10450,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 33853007,
+      "size": 4365,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 33857380,
+      "size": 5011,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 33862399,
+      "size": 10431,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 33872838,
+      "size": 37355,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 33910201,
+      "size": 19165,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 33929374,
+      "size": 32715,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 33962097,
+      "size": 32697,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 33994802,
+      "size": 14348,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34009158,
+      "size": 6744,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34015910,
+      "size": 10755,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34026673,
+      "size": 8427,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34035108,
+      "size": 17033,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34052149,
+      "size": 5438,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34057595,
+      "size": 14653,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34072256,
+      "size": 9153,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34081417,
+      "size": 19865,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34101290,
+      "size": 9303,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34110601,
+      "size": 21999,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34132608,
+      "size": 28454,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34161070,
+      "size": 11121,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34172199,
+      "size": 35896,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34208103,
+      "size": 30535,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34238646,
+      "size": 5437,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34244091,
+      "size": 5422,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34249521,
+      "size": 7987,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34257516,
+      "size": 35064,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34292588,
+      "size": 18958,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34311554,
+      "size": 7672,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34319234,
+      "size": 6733,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34325975,
+      "size": 6727,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34332710,
+      "size": 6733,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34339451,
+      "size": 6749,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34346208,
+      "size": 22461,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34368677,
+      "size": 21292,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34389977,
+      "size": 22455,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34412440,
+      "size": 44642,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34457090,
+      "size": 4881,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34461979,
+      "size": 6808,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34468795,
+      "size": 5416,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34474219,
+      "size": 19470,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34493697,
+      "size": 17460,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34511165,
+      "size": 30436,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34541609,
+      "size": 29917,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34571534,
+      "size": 11248,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34582790,
+      "size": 48901,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34631699,
+      "size": 15391,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34647098,
+      "size": 25404,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34672510,
+      "size": 11541,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34684059,
+      "size": 32762,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34716829,
+      "size": 25214,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34742051,
+      "size": 5430,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34747489,
+      "size": 31377,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34778874,
+      "size": 11883,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34790765,
+      "size": 5314,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34796087,
+      "size": 9925,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34806020,
+      "size": 23185,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34829213,
+      "size": 11131,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34840352,
+      "size": 6524,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34846884,
+      "size": 10647,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34857539,
+      "size": 15880,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34873427,
+      "size": 6016,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34879451,
+      "size": 5053,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34884512,
+      "size": 13468,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34897988,
+      "size": 6274,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34904270,
+      "size": 5064,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34909342,
+      "size": 21998,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34931348,
+      "size": 5603,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34936959,
+      "size": 11820,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34948787,
+      "size": 7585,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34956380,
+      "size": 4943,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34961331,
+      "size": 6327,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34967666,
+      "size": 13183,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34980857,
+      "size": 10038,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34990903,
+      "size": 6653,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34997564,
+      "size": 5263,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35002835,
+      "size": 3761,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35006604,
+      "size": 9441,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35016053,
+      "size": 9159,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35025220,
+      "size": 9157,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35034385,
+      "size": 13846,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35048239,
+      "size": 9173,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35057420,
+      "size": 3761,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35061189,
+      "size": 4312,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35065509,
+      "size": 4344,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35069861,
+      "size": 4313,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35074182,
+      "size": 19370,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35093560,
+      "size": 4312,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35097880,
+      "size": 4857,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35102745,
+      "size": 4857,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35107610,
+      "size": 4532,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35112150,
+      "size": 12407,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35124565,
+      "size": 6429,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35131002,
+      "size": 4841,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35135851,
+      "size": 6796,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35142655,
+      "size": 6802,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35149465,
+      "size": 4901,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35154374,
+      "size": 5460,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35159842,
+      "size": 5470,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35165320,
+      "size": 4901,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35170229,
+      "size": 5498,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35175735,
+      "size": 16582,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35192325,
+      "size": 5471,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35197804,
+      "size": 10287,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35208099,
+      "size": 10305,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35218412,
+      "size": 7614,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35226034,
+      "size": 6865,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35232907,
+      "size": 37781,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35270696,
+      "size": 11616,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35282320,
+      "size": 24153,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35306481,
+      "size": 15137,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35321626,
+      "size": 4928,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35326562,
+      "size": 11596,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35338166,
+      "size": 8825,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35346999,
+      "size": 274,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35347281,
+      "size": 8249,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35355538,
+      "size": 6452,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35361998,
+      "size": 26137,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35388143,
+      "size": 38055,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35426206,
+      "size": 40038,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35466252,
+      "size": 18680,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35484940,
+      "size": 24527,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35509475,
+      "size": 17333,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35526816,
+      "size": 12850,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35539674,
+      "size": 2246,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35541928,
+      "size": 19313,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35561249,
+      "size": 10176,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35571433,
+      "size": 5500,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35576941,
+      "size": 11717,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35588666,
+      "size": 5042,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35593716,
+      "size": 20654,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35614378,
+      "size": 25572,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35639958,
+      "size": 16878,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35656844,
+      "size": 8432,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35665284,
+      "size": 6072,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35671364,
+      "size": 6402,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35677774,
+      "size": 9030,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35686812,
+      "size": 9029,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35695849,
+      "size": 9602,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35705459,
+      "size": 9030,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35714497,
+      "size": 9028,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35723533,
+      "size": 9029,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35732570,
+      "size": 9600,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35742178,
+      "size": 9028,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35751214,
+      "size": 7307,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35758529,
+      "size": 2602,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35761139,
+      "size": 10176,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35771323,
+      "size": 22090,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35793421,
+      "size": 10247,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35803676,
+      "size": 7614,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35811298,
+      "size": 21780,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35833086,
+      "size": 12461,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35845555,
+      "size": 6374,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35851937,
+      "size": 8786,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35860731,
+      "size": 8984,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35869723,
+      "size": 11883,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35881614,
+      "size": 13221,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35894843,
+      "size": 13535,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35908386,
+      "size": 17402,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35925796,
+      "size": 2534,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35928338,
+      "size": 15676,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35944022,
+      "size": 11091,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35955121,
+      "size": 7494,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35962623,
+      "size": 5956,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35968587,
+      "size": 6675,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35975270,
+      "size": 6677,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35981955,
+      "size": 16852,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35998815,
+      "size": 13913,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36012736,
+      "size": 22569,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36035313,
+      "size": 6405,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36041726,
+      "size": 9570,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36051304,
+      "size": 4412,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36055724,
+      "size": 12274,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36068006,
+      "size": 11146,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36079160,
+      "size": 11245,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36090413,
+      "size": 12848,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36103269,
+      "size": 11118,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36114395,
+      "size": 11727,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36126130,
+      "size": 7486,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36133624,
+      "size": 10940,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36144572,
+      "size": 17058,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36161638,
+      "size": 20581,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36182227,
+      "size": 9686,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36191921,
+      "size": 7459,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36199388,
+      "size": 6379,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36205775,
+      "size": 2388,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36208171,
+      "size": 10809,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36218988,
+      "size": 17474,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36236470,
+      "size": 10538,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36247016,
+      "size": 12044,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36259068,
+      "size": 6877,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36265953,
+      "size": 25578,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36291539,
+      "size": 9108,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36300655,
+      "size": 9743,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36310406,
+      "size": 20580,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36330994,
+      "size": 15707,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36346709,
+      "size": 8305,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36355022,
+      "size": 13781,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36368811,
+      "size": 4629,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36373448,
+      "size": 4076,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36377532,
+      "size": 11916,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36389456,
+      "size": 5106,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36394570,
+      "size": 16048,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36410626,
+      "size": 10275,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36420909,
+      "size": 9738,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36430655,
+      "size": 9530,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36440193,
+      "size": 3188,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36443389,
+      "size": 10082,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36453479,
+      "size": 7765,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36461252,
+      "size": 7767,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36469027,
+      "size": 12243,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36481278,
+      "size": 3511,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36484797,
+      "size": 6645,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36491450,
+      "size": 9720,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36501178,
+      "size": 6356,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36507542,
+      "size": 22018,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36529568,
+      "size": 7232,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36536808,
+      "size": 13181,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36549997,
+      "size": 12981,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36562986,
+      "size": 14355,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36577349,
+      "size": 3301,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36580658,
+      "size": 15689,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36596355,
+      "size": 13138,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36609501,
+      "size": 8829,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36618338,
+      "size": 6072,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36624418,
+      "size": 8947,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36633373,
+      "size": 7209,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36640590,
+      "size": 7597,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36648195,
+      "size": 10680,
+      "name": null
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36658883,
+      "size": 15713,
+      "name": null
+    }
+  ],
+  "textures": [
+    {
+      "name": "HUD_FLAG01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "SFX_clods",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2984
+    },
+    {
+      "name": "SFX_smoke2",
+      "width": 64,
+      "height": 64,
+      "format_tag": "\u0000\u00008I",
+      "payload_size": 5629
+    },
+    {
+      "name": "SFX_spot",
+      "width": 32,
+      "height": 32,
+      "format_tag": "1TXD",
+      "payload_size": 928
+    },
+    {
+      "name": "SFX_watersplash2",
+      "width": 128,
+      "height": 128,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 22541
+    },
+    {
+      "name": "SFX_fireball",
+      "width": 64,
+      "height": 64,
+      "format_tag": "8R8A",
+      "payload_size": 22012
+    },
+    {
+      "name": "SFX_shock",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2984
+    },
+    {
+      "name": "SFX_muzz_shotgun",
+      "width": 32,
+      "height": 32,
+      "format_tag": "1TXD",
+      "payload_size": 928
+    },
+    {
+      "name": "SFX_smark_2",
+      "width": 64,
+      "height": 64,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 6149
+    },
+    {
+      "name": "SFX_radial_wake_dist",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2984
+    },
+    {
+      "name": "SFX_dmg_char",
+      "width": 256,
+      "height": 256,
+      "format_tag": "1TXD",
+      "payload_size": 43960
+    },
+    {
+      "name": "SFX_lava",
+      "width": 64,
+      "height": 64,
+      "format_tag": "\u0000\u00008I",
+      "payload_size": 5629
+    },
+    {
+      "name": "SFX_DISPfisheye",
+      "width": 32,
+      "height": 32,
+      "format_tag": "1TXD",
+      "payload_size": 928
+    },
+    {
+      "name": "SFX_SmokePlume",
+      "width": 128,
+      "height": 128,
+      "format_tag": "\u0000\u00008I",
+      "payload_size": 22021
+    },
+    {
+      "name": "SFX_scorch_mark",
+      "width": 64,
+      "height": 64,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 6149
+    },
+    {
+      "name": "SFX_dust",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2984
+    },
+    {
+      "name": "SFX_smoke",
+      "width": 32,
+      "height": 32,
+      "format_tag": "\u00008AI",
+      "payload_size": 2168
+    },
+    {
+      "name": "SFX_hl_flare",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2984
+    },
+    {
+      "name": "SFX_white_glow",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2984
+    },
+    {
+      "name": "SFX_ash",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2984
+    },
+    {
+      "name": "SFX_white_blob",
+      "width": 16,
+      "height": 16,
+      "format_tag": "1TXD",
+      "payload_size": 408
+    },
+    {
+      "name": "SFX_bigfireadd",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2984
+    },
+    {
+      "name": "SFX_wall_chunks",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "SFX_smoke4",
+      "width": 64,
+      "height": 64,
+      "format_tag": "\u0000\u00008I",
+      "payload_size": 5629
+    },
+    {
+      "name": "SFX_smoke3",
+      "width": 64,
+      "height": 64,
+      "format_tag": "\u0000\u00008I",
+      "payload_size": 5629
+    },
+    {
+      "name": "SFX_waterplume",
+      "width": 128,
+      "height": 128,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 22541
+    },
+    {
+      "name": "SFX_watersplash",
+      "width": 256,
+      "height": 256,
+      "format_tag": "1TXD",
+      "payload_size": 43960
+    },
+    {
+      "name": "SFX_snow",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "SFX_Debris",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2984
+    },
+    {
+      "name": "SFX_ground_bits",
+      "width": 128,
+      "height": 128,
+      "format_tag": "8R8A",
+      "payload_size": 87556
+    },
+    {
+      "name": "SFX_waterring",
+      "width": 64,
+      "height": 64,
+      "format_tag": "\u00008AI",
+      "payload_size": 11090
+    },
+    {
+      "name": "SFX_trails",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 8312
+    },
+    {
+      "name": "SFX_foliage",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "SFX_fireblobanim",
+      "width": 128,
+      "height": 128,
+      "format_tag": "8R8A",
+      "payload_size": 87556
+    },
+    {
+      "name": "SFX_solar_beam",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 8312
+    },
+    {
+      "name": "SFX_letters01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2984
+    },
+    {
+      "name": "SFX_black_spot",
+      "width": 32,
+      "height": 32,
+      "format_tag": "8R8A",
+      "payload_size": 5620
+    },
+    {
+      "name": "SFX_dirt",
+      "width": 64,
+      "height": 64,
+      "format_tag": "8R8A",
+      "payload_size": 22012
+    },
+    {
+      "name": "HUD_PTCHUCKGLOW",
+      "width": 88,
+      "height": 256,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 23168
+    },
+    {
+      "name": "RADAR_EXPLOSION",
+      "width": 32,
+      "height": 32,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 1664
+    },
+    {
+      "name": "ICON_IDtab",
+      "width": 128,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 4216
+    },
+    {
+      "name": "PM_butt2high",
+      "width": 160,
+      "height": 176,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 28800
+    },
+    {
+      "name": "PM_butt2",
+      "width": 160,
+      "height": 176,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 28800
+    },
+    {
+      "name": "POWER_UP_02",
+      "width": 32,
+      "height": 64,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 2688
+    },
+    {
+      "name": "HUD_whiteflag",
+      "width": 32,
+      "height": 32,
+      "format_tag": "\u00008AI",
+      "payload_size": 2168
+    },
+    {
+      "name": "HUD_MPSCORE1",
+      "width": 32,
+      "height": 40,
+      "format_tag": "\u00008AI",
+      "payload_size": 2680
+    },
+    {
+      "name": "HUD_MPSCORE2",
+      "width": 16,
+      "height": 16,
+      "format_tag": "\u00008AI",
+      "payload_size": 632
+    },
+    {
+      "name": "Wii_Abutton",
+      "width": 64,
+      "height": 64,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 6149
+    },
+    {
+      "name": "HUD_Objinner",
+      "width": 16,
+      "height": 32,
+      "format_tag": "\u00008AI",
+      "payload_size": 1144
+    },
+    {
+      "name": "Wii_Abutton_dn",
+      "width": 64,
+      "height": 64,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 4736
+    },
+    {
+      "name": "ICON_HELIPAD",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "SKIPWF_Hub2",
+      "width": 128,
+      "height": 80,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 10880
+    },
+    {
+      "name": "ICON_GLOBE",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "HUD_CAM",
+      "width": 64,
+      "height": 64,
+      "format_tag": "\u00008AI",
+      "payload_size": 11090
+    },
+    {
+      "name": "CURSOR_01",
+      "width": 48,
+      "height": 48,
+      "format_tag": "\u00008AI",
+      "payload_size": 4728
+    },
+    {
+      "name": "HUD_LINEC",
+      "width": 96,
+      "height": 96,
+      "format_tag": "1TXD",
+      "payload_size": 4728
+    },
+    {
+      "name": "HUD_LINEB",
+      "width": 80,
+      "height": 80,
+      "format_tag": "1TXD",
+      "payload_size": 3320
+    },
+    {
+      "name": "PM_Border",
+      "width": 32,
+      "height": 32,
+      "format_tag": "\u00008AI",
+      "payload_size": 2168
+    },
+    {
+      "name": "PM_butt3high",
+      "width": 80,
+      "height": 72,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 6400
+    },
+    {
+      "name": "PM_butt3",
+      "width": 80,
+      "height": 72,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 6400
+    },
+    {
+      "name": "PM_butt1high",
+      "width": 160,
+      "height": 64,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 10880
+    },
+    {
+      "name": "PM_butt1",
+      "width": 160,
+      "height": 64,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 10880
+    },
+    {
+      "name": "HUD_P",
+      "width": 32,
+      "height": 32,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 1664
+    },
+    {
+      "name": "HUD_LINE7",
+      "width": 72,
+      "height": 72,
+      "format_tag": "1TXD",
+      "payload_size": 2712
+    },
+    {
+      "name": "HUD_LINEA",
+      "width": 80,
+      "height": 80,
+      "format_tag": "1TXD",
+      "payload_size": 3320
+    },
+    {
+      "name": "ICON_SPAWNP",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "HUD_P2",
+      "width": 32,
+      "height": 32,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 1664
+    },
+    {
+      "name": "bubblenewback",
+      "width": 64,
+      "height": 88,
+      "format_tag": "1TXD",
+      "payload_size": 2936
+    },
+    {
+      "name": "RET_unlocked",
+      "width": 64,
+      "height": 64,
+      "format_tag": "8R8A",
+      "payload_size": 16504
+    },
+    {
+      "name": "RADAR_Airbase",
+      "width": 32,
+      "height": 32,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 1664
+    },
+    {
+      "name": "RADAR_HQ",
+      "width": 32,
+      "height": 32,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 1664
+    },
+    {
+      "name": "RADAR_Barracks",
+      "width": 32,
+      "height": 32,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 1664
+    },
+    {
+      "name": "RADAR_Factory",
+      "width": 32,
+      "height": 32,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 1664
+    },
+    {
+      "name": "RADAR_Dock",
+      "width": 32,
+      "height": 32,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 1664
+    },
+    {
+      "name": "ICON_IDtab2",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "ICON_Defend",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 8312
+    },
+    {
+      "name": "ICON_Factory1",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 8312
+    },
+    {
+      "name": "ICON_Barracks1",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "ICON_AIRBASE1",
+      "width": 256,
+      "height": 192,
+      "format_tag": "1TXD",
+      "payload_size": 24696
+    },
+    {
+      "name": "ICON_HQ",
+      "width": 192,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 12408
+    },
+    {
+      "name": "ICON_B_all",
+      "width": 80,
+      "height": 80,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 7040
+    },
+    {
+      "name": "ICON_A_all",
+      "width": 80,
+      "height": 80,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 7040
+    },
+    {
+      "name": "DirectionArrow",
+      "width": 64,
+      "height": 64,
+      "format_tag": "8R8A",
+      "payload_size": 16504
+    },
+    {
+      "name": "Icon_Flag",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 8312
+    },
+    {
+      "name": "ICON_MGNEST",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 8312
+    },
+    {
+      "name": "HUD_CONTROLS",
+      "width": 400,
+      "height": 320,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 128640
+    },
+    {
+      "name": "HUD_healthbar",
+      "width": 64,
+      "height": 32,
+      "format_tag": "1TXD",
+      "payload_size": 1144
+    },
+    {
+      "name": "RADAR_blip_small",
+      "width": 16,
+      "height": 16,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 896
+    },
+    {
+      "name": "RADAR_LENSE",
+      "width": 80,
+      "height": 80,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 7040
+    },
+    {
+      "name": "ICON_Invisible",
+      "width": 8,
+      "height": 8,
+      "format_tag": "1TXD",
+      "payload_size": 152
+    },
+    {
+      "name": "ICON_all",
+      "width": 80,
+      "height": 80,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 7040
+    },
+    {
+      "name": "ICON_radwaves",
+      "width": 64,
+      "height": 32,
+      "format_tag": "1TXD",
+      "payload_size": 1144
+    },
+    {
+      "name": "ICON_health",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "HUD_P1",
+      "width": 32,
+      "height": 32,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 1664
+    },
+    {
+      "name": "ICON_fuel",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "ICON_DeathHead",
+      "width": 64,
+      "height": 64,
+      "format_tag": "\u00008AI",
+      "payload_size": 8312
+    },
+    {
+      "name": "ICON_Sentry",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 8312
+    },
+    {
+      "name": "ICON_Move",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 8312
+    },
+    {
+      "name": "ICON_Follow",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 8312
+    },
+    {
+      "name": "ICON_Attack",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 8312
+    },
+    {
+      "name": "HUD_LINE6",
+      "width": 96,
+      "height": 96,
+      "format_tag": "1TXD",
+      "payload_size": 4728
+    },
+    {
+      "name": "POWER_UP_01",
+      "width": 32,
+      "height": 64,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 2688
+    },
+    {
+      "name": "OBJECT_STARS",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "RADAR_BUBBLE",
+      "width": 112,
+      "height": 112,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 13184
+    },
+    {
+      "name": "CODIALOGUEflash",
+      "width": 16,
+      "height": 16,
+      "format_tag": "8R8A",
+      "payload_size": 1144
+    },
+    {
+      "name": "CO_DIALOGUE_left",
+      "width": 80,
+      "height": 80,
+      "format_tag": "\u00008AI",
+      "payload_size": 12920
+    },
+    {
+      "name": "grndret1",
+      "width": 64,
+      "height": 64,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 4736
+    },
+    {
+      "name": "RET_regl",
+      "width": 64,
+      "height": 64,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 4736
+    },
+    {
+      "name": "RET_2nd",
+      "width": 64,
+      "height": 64,
+      "format_tag": "8R8A",
+      "payload_size": 16504
+    },
+    {
+      "name": "RET_lock",
+      "width": 64,
+      "height": 64,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 4736
+    },
+    {
+      "name": "RET_look",
+      "width": 64,
+      "height": 64,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 4736
+    },
+    {
+      "name": "RET_rnge",
+      "width": 64,
+      "height": 64,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 4736
+    },
+    {
+      "name": "SKIPWF_RADARBEZ",
+      "width": 144,
+      "height": 144,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 21376
+    },
+    {
+      "name": "HUD_star",
+      "width": 32,
+      "height": 32,
+      "format_tag": "1TXD",
+      "payload_size": 632
+    },
+    {
+      "name": "MAPKEY",
+      "width": 24,
+      "height": 32,
+      "format_tag": "\u00004AI",
+      "payload_size": 888
+    },
+    {
+      "name": "ICON_MPArmy",
+      "width": 128,
+      "height": 128,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 17024
+    },
+    {
+      "name": "HUD_scope",
+      "width": 64,
+      "height": 64,
+      "format_tag": "8R8A",
+      "payload_size": 16504
+    },
+    {
+      "name": "HUD_missilelock",
+      "width": 8,
+      "height": 8,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 704
+    },
+    {
+      "name": "RET_Enemy",
+      "width": 64,
+      "height": 64,
+      "format_tag": "8R8A",
+      "payload_size": 16504
+    },
+    {
+      "name": "ICON_ENEMY_ANIM",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 8312
+    },
+    {
+      "name": "SKIPXY_Hub1",
+      "width": 64,
+      "height": 40,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 3200
+    },
+    {
+      "name": "SKIPTT_Hub1",
+      "width": 64,
+      "height": 40,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 3200
+    },
+    {
+      "name": "SKIPSE_Hub1",
+      "width": 64,
+      "height": 40,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 3200
+    },
+    {
+      "name": "SKIPUW_Hub1",
+      "width": 64,
+      "height": 40,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 3200
+    },
+    {
+      "name": "SKIPAI_Hub1",
+      "width": 64,
+      "height": 40,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 3200
+    },
+    {
+      "name": "Bubble_Building",
+      "width": 64,
+      "height": 64,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 4736
+    },
+    {
+      "name": "SKIPXY_Hub2",
+      "width": 128,
+      "height": 80,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 10880
+    },
+    {
+      "name": "SKIPTT_Hub2",
+      "width": 128,
+      "height": 80,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 10880
+    },
+    {
+      "name": "SKIPSE_Hub2",
+      "width": 128,
+      "height": 80,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 10880
+    },
+    {
+      "name": "SKIPUW_Hub2",
+      "width": 128,
+      "height": 80,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 10880
+    },
+    {
+      "name": "SKIPAI_Hub2",
+      "width": 128,
+      "height": 80,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 10880
+    },
+    {
+      "name": "Select_stack",
+      "width": 64,
+      "height": 64,
+      "format_tag": "8R8A",
+      "payload_size": 16504
+    },
+    {
+      "name": "ICON_glow",
+      "width": 64,
+      "height": 64,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 4736
+    },
+    {
+      "name": "HUD_hubglow",
+      "width": 64,
+      "height": 64,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 4736
+    },
+    {
+      "name": "SKIPXY_RADARBEZ",
+      "width": 144,
+      "height": 144,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 21376
+    },
+    {
+      "name": "SKIPTT_RADARBEZ",
+      "width": 144,
+      "height": 144,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 21376
+    },
+    {
+      "name": "SKIPSE_RADARBEZ",
+      "width": 144,
+      "height": 144,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 21376
+    },
+    {
+      "name": "SKIPUW_RADARBEZ",
+      "width": 144,
+      "height": 144,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 21376
+    },
+    {
+      "name": "SKIPAI_RADARBEZ",
+      "width": 144,
+      "height": 144,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 21376
+    },
+    {
+      "name": "RADAR_mask",
+      "width": 152,
+      "height": 152,
+      "format_tag": "8R8A",
+      "payload_size": 92536
+    },
+    {
+      "name": "RADAR_N_RING03",
+      "width": 104,
+      "height": 104,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 11456
+    },
+    {
+      "name": "RADAR_blip02",
+      "width": 80,
+      "height": 80,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 7040
+    },
+    {
+      "name": "RADAR_blip_sub",
+      "width": 192,
+      "height": 192,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 37504
+    },
+    {
+      "name": "RADAR_VP",
+      "width": 112,
+      "height": 112,
+      "format_tag": "\u00008AI",
+      "payload_size": 25208
+    },
+    {
+      "name": "ICON_Factory2",
+      "width": 48,
+      "height": 32,
+      "format_tag": "1TXD",
+      "payload_size": 888
+    },
+    {
+      "name": "ICON_Barracks2",
+      "width": 144,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 4728
+    },
+    {
+      "name": "ICON_AIRBASE2",
+      "width": 48,
+      "height": 32,
+      "format_tag": "1TXD",
+      "payload_size": 888
+    },
+    {
+      "name": "ICON_Dock2",
+      "width": 48,
+      "height": 32,
+      "format_tag": "1TXD",
+      "payload_size": 888
+    },
+    {
+      "name": "RADAR_CapFlag",
+      "width": 32,
+      "height": 32,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 1664
+    },
+    {
+      "name": "RADAR_GV",
+      "width": 32,
+      "height": 32,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 1664
+    },
+    {
+      "name": "RADAR_Plane",
+      "width": 32,
+      "height": 32,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 1664
+    },
+    {
+      "name": "RADAR_Chopper",
+      "width": 32,
+      "height": 32,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 1664
+    },
+    {
+      "name": "RADAR_Infantry",
+      "width": 32,
+      "height": 32,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 1664
+    },
+    {
+      "name": "RADAR_Ship",
+      "width": 32,
+      "height": 32,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 1664
+    },
+    {
+      "name": "RADAR_Sub",
+      "width": 32,
+      "height": 32,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 1664
+    },
+    {
+      "name": "RADAR_Spawn",
+      "width": 32,
+      "height": 32,
+      "format_tag": "1TXD",
+      "payload_size": 632
+    },
+    {
+      "name": "RADAR_MG",
+      "width": 32,
+      "height": 32,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 1664
+    },
+    {
+      "name": "RADAR_ANTENNAE",
+      "width": 32,
+      "height": 32,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 1664
+    },
+    {
+      "name": "RADAR_SKYLINE",
+      "width": 32,
+      "height": 32,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 1664
+    },
+    {
+      "name": "Wii_plusbutton",
+      "width": 48,
+      "height": 48,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 2944
+    },
+    {
+      "name": "Wii_bbutton",
+      "width": 64,
+      "height": 64,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 4736
+    },
+    {
+      "name": "HUD_Brackets",
+      "width": 32,
+      "height": 64,
+      "format_tag": "\u00004AI",
+      "payload_size": 2168
+    },
+    {
+      "name": "HUD_WIIMOTEGLOW",
+      "width": 80,
+      "height": 80,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 7040
+    },
+    {
+      "name": "HUD_Stick_Zoom",
+      "width": 140,
+      "height": 140,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 20240
+    },
+    {
+      "name": "PM_over_cont",
+      "width": 80,
+      "height": 104,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 8960
+    },
+    {
+      "name": "PM_over_obj",
+      "width": 80,
+      "height": 72,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 6400
+    },
+    {
+      "name": "PM_over_colog",
+      "width": 120,
+      "height": 80,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 10240
+    },
+    {
+      "name": "PM_separator",
+      "width": 8,
+      "height": 8,
+      "format_tag": "\u00008AI",
+      "payload_size": 248
+    },
+    {
+      "name": "PM_Textbox",
+      "width": 32,
+      "height": 32,
+      "format_tag": "\u00008AI",
+      "payload_size": 2168
+    },
+    {
+      "name": "RADAR_VCONE",
+      "width": 112,
+      "height": 112,
+      "format_tag": "\u00008AI",
+      "payload_size": 25208
+    },
+    {
+      "name": "CO_DIALOG_lft_hi",
+      "width": 80,
+      "height": 80,
+      "format_tag": "\u00008AI",
+      "payload_size": 12920
+    },
+    {
+      "name": "CO_DIALOG_rt",
+      "width": 16,
+      "height": 64,
+      "format_tag": "\u00008AI",
+      "payload_size": 2168
+    },
+    {
+      "name": "CO_DIALOGUE_mid",
+      "width": 8,
+      "height": 64,
+      "format_tag": "\u00008AI",
+      "payload_size": 1144
+    },
+    {
+      "name": "HUD_Objoutline",
+      "width": 16,
+      "height": 32,
+      "format_tag": "\u00008AI",
+      "payload_size": 1144
+    },
+    {
+      "name": "SKIPWF_TIMERPAN",
+      "width": 96,
+      "height": 88,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 9088
+    },
+    {
+      "name": "SKIPXY_TIMERPAN",
+      "width": 96,
+      "height": 88,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 9088
+    },
+    {
+      "name": "SKIPTT_TIMERPAN",
+      "width": 96,
+      "height": 88,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 9088
+    },
+    {
+      "name": "SKIPSE_TIMERPAN",
+      "width": 96,
+      "height": 88,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 9088
+    },
+    {
+      "name": "SKIPUW_TIMERPAN",
+      "width": 96,
+      "height": 88,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 9088
+    },
+    {
+      "name": "SKIPAI_TIMERPAN",
+      "width": 96,
+      "height": 88,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 9088
+    },
+    {
+      "name": "TIMER_DIGITS03",
+      "width": 96,
+      "height": 48,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 5248
+    },
+    {
+      "name": "ICON_all_X",
+      "width": 80,
+      "height": 80,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 7040
+    },
+    {
+      "name": "ICON_all_T",
+      "width": 80,
+      "height": 80,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 7040
+    },
+    {
+      "name": "ICON_all_S",
+      "width": 80,
+      "height": 80,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 7040
+    },
+    {
+      "name": "ICON_all_U",
+      "width": 80,
+      "height": 80,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 7040
+    },
+    {
+      "name": "ICON_all_AI",
+      "width": 80,
+      "height": 80,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 7040
+    },
+    {
+      "name": "ALLIANCE_Hub2",
+      "width": 128,
+      "height": 80,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 10880
+    },
+    {
+      "name": "ALLIANCE_Hub1",
+      "width": 64,
+      "height": 40,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 3200
+    },
+    {
+      "name": "BTN_PAUSE_01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 4736
+    },
+    {
+      "name": "BTN_PAUSE_02",
+      "width": 64,
+      "height": 64,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 4736
+    },
+    {
+      "name": "ICON_Dock1",
+      "width": 192,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 12408
+    },
+    {
+      "name": "RADAR_HEL",
+      "width": 32,
+      "height": 32,
+      "format_tag": "1TXD",
+      "payload_size": 632
+    },
+    {
+      "name": "HUD_missile",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "HUD_torpedo",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "HUD_torpedolock",
+      "width": 64,
+      "height": 64,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 4736
+    },
+    {
+      "name": "HUD_MapCursor",
+      "width": 128,
+      "height": 32,
+      "format_tag": "\u00004AI",
+      "payload_size": 4216
+    },
+    {
+      "name": "HUD_PTZ_DN",
+      "width": 32,
+      "height": 40,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 1920
+    },
+    {
+      "name": "HUD_PTC_DN",
+      "width": 24,
+      "height": 32,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 1408
+    },
+    {
+      "name": "HUD_PTB_DN",
+      "width": 40,
+      "height": 56,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 2880
+    },
+    {
+      "name": "HUD_PTA_DN",
+      "width": 40,
+      "height": 40,
+      "format_tag": "1TXD",
+      "payload_size": 920
+    },
+    {
+      "name": "HUD_PTSTICK",
+      "width": 40,
+      "height": 40,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 2240
+    },
+    {
+      "name": "HUD_PTZ",
+      "width": 32,
+      "height": 40,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 1920
+    },
+    {
+      "name": "HUD_PTWIIMOTE",
+      "width": 216,
+      "height": 304,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 66304
+    },
+    {
+      "name": "HUD_PTPLUS",
+      "width": 24,
+      "height": 24,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 1216
+    },
+    {
+      "name": "HUD_PTMINUS",
+      "width": 24,
+      "height": 24,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 1216
+    },
+    {
+      "name": "HUD_PTCROSS",
+      "width": 48,
+      "height": 48,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 2944
+    },
+    {
+      "name": "HUD_PTCHUCK",
+      "width": 160,
+      "height": 304,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 49280
+    },
+    {
+      "name": "HUD_PTC",
+      "width": 24,
+      "height": 32,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 1408
+    },
+    {
+      "name": "HUD_PTB",
+      "width": 40,
+      "height": 56,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 2880
+    },
+    {
+      "name": "HUD_PTA",
+      "width": 40,
+      "height": 40,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 2240
+    },
+    {
+      "name": "HUD_PT1",
+      "width": 32,
+      "height": 32,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 1664
+    },
+    {
+      "name": "HUD_PTCHUCK_TP",
+      "width": 88,
+      "height": 256,
+      "format_tag": "\u00008AI",
+      "payload_size": 45176
+    },
+    {
+      "name": "HUD_PTCHUCK_TPGL",
+      "width": 256,
+      "height": 256,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 88085
+    },
+    {
+      "name": "HUD_PTCSTICK_TP",
+      "width": 48,
+      "height": 48,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 2944
+    },
+    {
+      "name": "PT_Grunt",
+      "width": 96,
+      "height": 128,
+      "format_tag": "\u00008AI",
+      "payload_size": 24696
+    },
+    {
+      "name": "SFX_statue_shrapnel",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "U_BOMBER01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "U_FTR01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "U_BSTA01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "U_ART01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "U_ANTIARM01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "U_GRUNT01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "U_GSHP01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "U_HTNK01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "U_HOSE01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "U_ANTIAIR01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "U_PARABOLIC01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "U_HMG01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "ICON_Pillbox",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "S_PARABOLIC01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "S_ANTIARM01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "S_GSHP01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "S_ANTIAIR01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "S_HOSE01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "S_HTNK01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "S_GRUNT01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "S_FTR01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "S_HMG01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "S_SUB01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "S_FRIGATE01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "S_BSHP01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "S_DNOUGHT01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "S_TPT01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "S_AA01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "S_ART01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "S_LTNK01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "S_RECO01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2984
+    },
+    {
+      "name": "S_LCRAFT01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "C4TTROCKB",
+      "width": 512,
+      "height": 512,
+      "format_tag": "1TXD",
+      "payload_size": 175040
+    },
+    {
+      "name": "C4SNCLIFFFACE_LM",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "C4SNNEROCITE",
+      "width": 256,
+      "height": 256,
+      "format_tag": "8R8A",
+      "payload_size": 349708
+    },
+    {
+      "name": "C4SNREFMAP",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "ICON_ADump",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "C4SM_WALL03",
+      "width": 512,
+      "height": 512,
+      "format_tag": "1TXD",
+      "payload_size": 175040
+    },
+    {
+      "name": "C4SM_WALL04",
+      "width": 512,
+      "height": 512,
+      "format_tag": "1TXD",
+      "payload_size": 175040
+    },
+    {
+      "name": "C4SNCLIFFFACE",
+      "width": 512,
+      "height": 512,
+      "format_tag": "1TXD",
+      "payload_size": 175040
+    },
+    {
+      "name": "C4SM_WALL01",
+      "width": 512,
+      "height": 512,
+      "format_tag": "1TXD",
+      "payload_size": 175040
+    },
+    {
+      "name": "C4SMXBANNER",
+      "width": 64,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 5704
+    },
+    {
+      "name": "C4SM_WALL02",
+      "width": 512,
+      "height": 512,
+      "format_tag": "1TXD",
+      "payload_size": 175040
+    },
+    {
+      "name": "C4SNROCKSHARP01_LM",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2984
+    },
+    {
+      "name": "C4SNROCKSHARP02_LM",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2984
+    },
+    {
+      "name": "C4SNTHORNYBUSH",
+      "width": 256,
+      "height": 256,
+      "format_tag": "1TXD",
+      "payload_size": 43960
+    },
+    {
+      "name": "C4SM_CASTLE02",
+      "width": 512,
+      "height": 512,
+      "format_tag": "1TXD",
+      "payload_size": 175040
+    },
+    {
+      "name": "C4SMBANNER",
+      "width": 64,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 5704
+    },
+    {
+      "name": "C4SMIRONTOWERSTONE",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "C4SMTOWERENTRANCE",
+      "width": 256,
+      "height": 256,
+      "format_tag": "1TXD",
+      "payload_size": 43960
+    },
+    {
+      "name": "C4SMIRONTOWER",
+      "width": 512,
+      "height": 512,
+      "format_tag": "1TXD",
+      "payload_size": 175040
+    },
+    {
+      "name": "C4SMIRONTOWER2",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "C4SMIRONTOWER2_LM",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "C4SMIRONTOWER_LM",
+      "width": 1024,
+      "height": 1024,
+      "format_tag": "1TXD",
+      "payload_size": 699336
+    },
+    {
+      "name": "C4TTConcrete",
+      "width": 512,
+      "height": 512,
+      "format_tag": "1TXD",
+      "payload_size": 175040
+    },
+    {
+      "name": "SFX_bats",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2984
+    },
+    {
+      "name": "SFX_birds3",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "C4SNGENERICTREE",
+      "width": 512,
+      "height": 512,
+      "format_tag": "1TXD",
+      "payload_size": 175040
+    },
+    {
+      "name": "C4SNgnarledtree",
+      "width": 512,
+      "height": 512,
+      "format_tag": "1TXD",
+      "payload_size": 175040
+    },
+    {
+      "name": "C4SNgnarledtreebranches",
+      "width": 512,
+      "height": 512,
+      "format_tag": "1TXD",
+      "payload_size": 175040
+    },
+    {
+      "name": "C4SNTREEGEN_SHAD",
+      "width": 64,
+      "height": 64,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 4736
+    },
+    {
+      "name": "ILSMTENTSMALL",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "C4SMROPE",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2984
+    },
+    {
+      "name": "C4SMRKT",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2984
+    },
+    {
+      "name": "ILSMTENTMID",
+      "width": 256,
+      "height": 256,
+      "format_tag": "1TXD",
+      "payload_size": 43960
+    },
+    {
+      "name": "C4SNVegetation01",
+      "width": 512,
+      "height": 512,
+      "format_tag": "1TXD",
+      "payload_size": 175040
+    },
+    {
+      "name": "C4TTFUNGI",
+      "width": 256,
+      "height": 256,
+      "format_tag": "1TXD",
+      "payload_size": 43960
+    },
+    {
+      "name": "C4GBP_Rock4x4",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "C4SMBRIDGEIRON01",
+      "width": 256,
+      "height": 256,
+      "format_tag": "1TXD",
+      "payload_size": 43960
+    },
+    {
+      "name": "C4SNCLIFFARCH_LM",
+      "width": 256,
+      "height": 256,
+      "format_tag": "1TXD",
+      "payload_size": 43960
+    },
+    {
+      "name": "C4SNCLIFFFACE2_LM",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "C4SMBRIDGEIRON02",
+      "width": 512,
+      "height": 512,
+      "format_tag": "1TXD",
+      "payload_size": 175040
+    },
+    {
+      "name": "C4TTMUDGRASS",
+      "width": 512,
+      "height": 512,
+      "format_tag": "1TXD",
+      "payload_size": 175040
+    },
+    {
+      "name": "C4GBP_GrassMudA4x4",
+      "width": 256,
+      "height": 256,
+      "format_tag": "1TXD",
+      "payload_size": 32888
+    },
+    {
+      "name": "C4TTBORINGMUD",
+      "width": 512,
+      "height": 512,
+      "format_tag": "1TXD",
+      "payload_size": 175040
+    },
+    {
+      "name": "C4GBP_Mud4x4",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "C3SMSTENTLARGE",
+      "width": 256,
+      "height": 256,
+      "format_tag": "1TXD",
+      "payload_size": 43960
+    },
+    {
+      "name": "SFX_obj_mark",
+      "width": 32,
+      "height": 32,
+      "format_tag": "8R8A",
+      "payload_size": 5620
+    },
+    {
+      "name": "C4SMBARBEDWIRE",
+      "width": 256,
+      "height": 256,
+      "format_tag": "1TXD",
+      "payload_size": 43960
+    },
+    {
+      "name": "ArmyColours",
+      "width": 64,
+      "height": 64,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 6149
+    },
+    {
+      "name": "C4SMBRIDGEST_LM1",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "C4SM_WALL05",
+      "width": 512,
+      "height": 512,
+      "format_tag": "1TXD",
+      "payload_size": 175040
+    },
+    {
+      "name": "C4SMBRIDGEST_LM2",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "ILSMTENTLARGE",
+      "width": 256,
+      "height": 256,
+      "format_tag": "1TXD",
+      "payload_size": 43960
+    },
+    {
+      "name": "C4SM_WALL06",
+      "width": 512,
+      "height": 512,
+      "format_tag": "1TXD",
+      "payload_size": 175040
+    },
+    {
+      "name": "C4SMRUIN_LM",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "C4SMBLASTTEST",
+      "width": 256,
+      "height": 256,
+      "format_tag": "1TXD",
+      "payload_size": 43960
+    },
+    {
+      "name": "C4SMSTONEFLOOR",
+      "width": 512,
+      "height": 512,
+      "format_tag": "1TXD",
+      "payload_size": 175040
+    },
+    {
+      "name": "vsehtnk",
+      "width": 512,
+      "height": 512,
+      "format_tag": "1TXD",
+      "payload_size": 175040
+    },
+    {
+      "name": "VSHTNK_RUIN",
+      "width": 256,
+      "height": 256,
+      "format_tag": "1TXD",
+      "payload_size": 43960
+    },
+    {
+      "name": "ICON_GATE",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "C4TTMUDPUDDLES",
+      "width": 512,
+      "height": 512,
+      "format_tag": "8R8A",
+      "payload_size": 1398292
+    },
+    {
+      "name": "C4SMGIRD",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2984
+    },
+    {
+      "name": "VUHTNK_MAIN",
+      "width": 512,
+      "height": 512,
+      "format_tag": "1TXD",
+      "payload_size": 175040
+    },
+    {
+      "name": "T-HOSEGUN",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "SFX_spawn_tank",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "C4SNsplittree",
+      "width": 512,
+      "height": 512,
+      "format_tag": "1TXD",
+      "payload_size": 175040
+    },
+    {
+      "name": "C4SNfungus2",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "C4SNfungus1",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "C4TTPATHA",
+      "width": 512,
+      "height": 512,
+      "format_tag": "1TXD",
+      "payload_size": 175040
+    },
+    {
+      "name": "C4TTROCKA",
+      "width": 512,
+      "height": 512,
+      "format_tag": "1TXD",
+      "payload_size": 175040
+    },
+    {
+      "name": "SG_BOD_DIFF",
+      "width": 256,
+      "height": 256,
+      "format_tag": "1TXD",
+      "payload_size": 43960
+    },
+    {
+      "name": "SG_HELM_DIFF",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2984
+    },
+    {
+      "name": "boxlod",
+      "width": 16,
+      "height": 16,
+      "format_tag": "1TXD",
+      "payload_size": 408
+    },
+    {
+      "name": "SRIFLE",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "SG_BAG_DIFF",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "S_staff",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2984
+    },
+    {
+      "name": "SFX_footprint",
+      "width": 32,
+      "height": 32,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 1664
+    },
+    {
+      "name": "SFX_forcefieldb",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "SFX_sandstorm",
+      "width": 128,
+      "height": 128,
+      "format_tag": "8R8A",
+      "payload_size": 87556
+    },
+    {
+      "name": "SFX_wirespark",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "SFX_bubble",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2984
+    },
+    {
+      "name": "GEN_HealthPickUp",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2984
+    },
+    {
+      "name": "SFX_spot_grey",
+      "width": 32,
+      "height": 32,
+      "format_tag": "1TXD",
+      "payload_size": 632
+    },
+    {
+      "name": "blobshad",
+      "width": 32,
+      "height": 32,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 1664
+    },
+    {
+      "name": "SKY_C4Gambit02",
+      "width": 1024,
+      "height": 1024,
+      "format_tag": "1TXD",
+      "payload_size": 524408
+    },
+    {
+      "name": "SKY_C4Gambit03",
+      "width": 1024,
+      "height": 1024,
+      "format_tag": "1TXD",
+      "payload_size": 524408
+    },
+    {
+      "name": "SKY_C4Gambit04",
+      "width": 1024,
+      "height": 1024,
+      "format_tag": "1TXD",
+      "payload_size": 524408
+    },
+    {
+      "name": "SKY_C4Gambit01",
+      "width": 1024,
+      "height": 1024,
+      "format_tag": "1TXD",
+      "payload_size": 524408
+    },
+    {
+      "name": "Water_XARTTEST",
+      "width": 128,
+      "height": 128,
+      "format_tag": "\u00008AI",
+      "payload_size": 43866
+    },
+    {
+      "name": "WATER_SHORE",
+      "width": 128,
+      "height": 128,
+      "format_tag": "\u00008AI",
+      "payload_size": 43866
+    },
+    {
+      "name": "MAP_SP_0_1_TL",
+      "width": 1024,
+      "height": 1024,
+      "format_tag": "1TXD",
+      "payload_size": 524408
+    },
+    {
+      "name": "ICON_guntowerWF",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "WF_TPT01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "WF_AA01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "WF_ANTIARM01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "WF_ART01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "WF_BSHIP01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "WF_BSTA01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "WF_BOMBER01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "WF_FRIGATE01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "WF_FTR01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "WF_GRUNT01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "WF_GSHP01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "WF_LCRAFT01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "WF_HOSE01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "WF_LTNK01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "WF_LTRA01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "WF_ANTIAIR01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "WF_RECO01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "WF_PARABOLIC01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "WF_SUB01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "WF_SRATO01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "WF_HTNK01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "WF_HMG01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "WF_DNOUGHT01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "WF_PVTHazard01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "X_SRATO01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "X_RECO01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "X_PARABOLIC01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "X_ANTIAIR01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "X_LTRA01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "X_LTNK01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "X_HOSE01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "X_HTRA01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "X_HTNK01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "X_GSHP01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "X_GRUNT01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "X_FTR01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "X_HMG01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "X_BOMBER01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "X_BSTA01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "X_ART01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "X_ANTIARM01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "X_AA01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "X_TPT01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "ICON_guntowerX",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "X_BSHIP01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "X_DNOUGHT01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "X_FRIGATE01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "X_SUB01",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "SFX_rain",
+      "width": 256,
+      "height": 256,
+      "format_tag": "1TXD",
+      "payload_size": 43960
+    },
+    {
+      "name": "SFX_rainsoft",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "SFX_droplet_shading",
+      "width": 64,
+      "height": 64,
+      "format_tag": "\u00008AI",
+      "payload_size": 11090
+    },
+    {
+      "name": "SFX_droplet_distort",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2984
+    },
+    {
+      "name": "CO_X_YVlad_H",
+      "width": 64,
+      "height": 80,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 5760
+    },
+    {
+      "name": "CO_X_YVlad_S",
+      "width": 64,
+      "height": 80,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 5760
+    },
+    {
+      "name": "CO_Xvlad_S_2",
+      "width": 64,
+      "height": 80,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 5760
+    },
+    {
+      "name": "CO_Xvlad_H_2",
+      "width": 64,
+      "height": 80,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 5760
+    },
+    {
+      "name": "CO_Xubel_S_2",
+      "width": 64,
+      "height": 80,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 5760
+    },
+    {
+      "name": "CO_Xubel_H_2",
+      "width": 64,
+      "height": 80,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 5760
+    },
+    {
+      "name": "CO_XubelPrison_S",
+      "width": 64,
+      "height": 80,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 5760
+    },
+    {
+      "name": "CO_XubelPrison_H",
+      "width": 64,
+      "height": 80,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 5760
+    },
+    {
+      "name": "CO_WF_YHerman_S",
+      "width": 64,
+      "height": 80,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 5760
+    },
+    {
+      "name": "CO_WF_YHerman_H",
+      "width": 64,
+      "height": 80,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 5760
+    },
+    {
+      "name": "CO_WFherman_S_2",
+      "width": 64,
+      "height": 80,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 5760
+    },
+    {
+      "name": "CO_WFherman_H_2",
+      "width": 64,
+      "height": 80,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 5760
+    },
+    {
+      "name": "CO_WFbetty_S_2",
+      "width": 64,
+      "height": 80,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 5760
+    },
+    {
+      "name": "CO_WFbetty_H_2",
+      "width": 64,
+      "height": 80,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 5760
+    },
+    {
+      "name": "CO_WFaustin_S_2",
+      "width": 64,
+      "height": 80,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 5760
+    },
+    {
+      "name": "CO_WFaustin_H_2",
+      "width": 64,
+      "height": 80,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 5760
+    },
+    {
+      "name": "CO_T_YGorgi_S",
+      "width": 64,
+      "height": 80,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 5760
+    },
+    {
+      "name": "CO_T_YGorgi_H",
+      "width": 64,
+      "height": 80,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 5760
+    },
+    {
+      "name": "CO_Tnova_S_2",
+      "width": 64,
+      "height": 80,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 5760
+    },
+    {
+      "name": "CO_Tnova_H_2",
+      "width": 64,
+      "height": 80,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 5760
+    },
+    {
+      "name": "CO_Tnelly_S_2",
+      "width": 64,
+      "height": 80,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 5760
+    },
+    {
+      "name": "CO_Tnelly_H_2",
+      "width": 64,
+      "height": 80,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 5760
+    },
+    {
+      "name": "CO_Tgorgi_S_2",
+      "width": 64,
+      "height": 80,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 5760
+    },
+    {
+      "name": "CO_Tgorgi_H_2",
+      "width": 64,
+      "height": 80,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 5760
+    },
+    {
+      "name": "CO_TgorgiGhost_S",
+      "width": 64,
+      "height": 80,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 5760
+    },
+    {
+      "name": "CO_TgorgiGhost_H",
+      "width": 64,
+      "height": 80,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 5760
+    },
+    {
+      "name": "CO_SLeiqo_S",
+      "width": 64,
+      "height": 80,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 5760
+    },
+    {
+      "name": "CO_SLeiqoHel_S",
+      "width": 64,
+      "height": 80,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 5760
+    },
+    {
+      "name": "CO_SLeiqoHel_H",
+      "width": 64,
+      "height": 80,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 5760
+    },
+    {
+      "name": "CO_SLeiqo_H",
+      "width": 64,
+      "height": 80,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 5760
+    },
+    {
+      "name": "CO_S_AQira_S",
+      "width": 64,
+      "height": 80,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 5760
+    },
+    {
+      "name": "CO_S_AQira_H",
+      "width": 64,
+      "height": 80,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 5760
+    },
+    {
+      "name": "CO_L_Ferrok_S",
+      "width": 64,
+      "height": 80,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 5760
+    },
+    {
+      "name": "CO_L_Ferrok_H",
+      "width": 64,
+      "height": 80,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 5760
+    },
+    {
+      "name": "CO_AIWindsor_S",
+      "width": 64,
+      "height": 80,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 5760
+    },
+    {
+      "name": "CO_AIWindsor_H",
+      "width": 64,
+      "height": 80,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 5760
+    },
+    {
+      "name": "CO_AI_Pierce_S",
+      "width": 64,
+      "height": 80,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 5760
+    },
+    {
+      "name": "CO_AI_Pierce_H",
+      "width": 64,
+      "height": 80,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 5760
+    },
+    {
+      "name": "ICON_UNEXSHELL",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "ICON_QUEMARK",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "SFX_electric",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "ICON_TListen",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "ICON_GUNNEST",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "ICON_SLight",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "ICON_BARRIER",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "ICON_BLOCKAGE",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "ICON_EMPLACEMENT",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "ICON_FUELST",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "ICON_GENERATOR",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "ICON_GORGIMAUS",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "ICON_MININGSAW",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "ICON_PILLARMAUS",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "ICON_RADAR",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "T_BLIMP",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "ICON_TOWER",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "ICON_VLADSDRILL",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "ICON_GUARDPOST",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "ICON_ICESTATION",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "U_NSGun",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2168
+    },
+    {
+      "name": "SFX_lightning",
+      "width": 256,
+      "height": 256,
+      "format_tag": "1TXD",
+      "payload_size": 32888
+    },
+    {
+      "name": "SFX_clouclight",
+      "width": 128,
+      "height": 128,
+      "format_tag": "\u00008AI",
+      "payload_size": 43866
+    },
+    {
+      "name": "SFX_lightningbleach",
+      "width": 128,
+      "height": 128,
+      "format_tag": "\u00008AI",
+      "payload_size": 32888
+    },
+    {
+      "name": "SFX_lightningcore",
+      "width": 256,
+      "height": 256,
+      "format_tag": "1TXD",
+      "payload_size": 32888
+    },
+    {
+      "name": "SFX_lightning01",
+      "width": 256,
+      "height": 256,
+      "format_tag": "1TXD",
+      "payload_size": 32888
+    },
+    {
+      "name": "SFX_starbeams",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2984
+    },
+    {
+      "name": "LG_BOD_DIFF",
+      "width": 256,
+      "height": 256,
+      "format_tag": "1TXD",
+      "payload_size": 43960
+    },
+    {
+      "name": "LG_HELM_DIFF",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2984
+    },
+    {
+      "name": "L_RIFLE",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "LG_BAG_DIFF",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "SFX_grunttoysIL",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "SFX_mist",
+      "width": 128,
+      "height": 128,
+      "format_tag": "8R8A",
+      "payload_size": 87556
+    },
+    {
+      "name": "SFX_radial_glows",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "SFX_spawn_troop",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "SFX_digits_black_on_white",
+      "width": 256,
+      "height": 32,
+      "format_tag": "1TXD",
+      "payload_size": 5880
+    },
+    {
+      "name": "SFX_fire_cone",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2984
+    },
+    {
+      "name": "LV_BOD_DIFF",
+      "width": 256,
+      "height": 256,
+      "format_tag": "1TXD",
+      "payload_size": 43960
+    },
+    {
+      "name": "L_HOSEGUN",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "L_HOSEHELM",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "L_HOSEPACK",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "C1SMAMMOCRATEA",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "C1SMJERRYCAN",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "C1SMAMMOCRATEB",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "C1SMLISTENPOST",
+      "width": 128,
+      "height": 256,
+      "format_tag": "1TXD",
+      "payload_size": 22096
+    },
+    {
+      "name": "SFX_grunttoysSE",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "SFX_jetclouds",
+      "width": 64,
+      "height": 64,
+      "format_tag": "8R8A",
+      "payload_size": 22012
+    },
+    {
+      "name": "VUGSHP_MAIN",
+      "width": 512,
+      "height": 512,
+      "format_tag": "1TXD",
+      "payload_size": 175040
+    },
+    {
+      "name": "VUGSHP_MAIN_BUMP",
+      "width": 512,
+      "height": 512,
+      "format_tag": "\u00008AI",
+      "payload_size": 699242
+    },
+    {
+      "name": "VUGSHP_MAIN_SPEC",
+      "width": 16,
+      "height": 16,
+      "format_tag": "\u00008AI",
+      "payload_size": 834
+    },
+    {
+      "name": "rotorblur2",
+      "width": 128,
+      "height": 128,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 22541
+    },
+    {
+      "name": "VWFSCORCH",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "WF_rocket",
+      "width": 32,
+      "height": 32,
+      "format_tag": "1TXD",
+      "payload_size": 928
+    },
+    {
+      "name": "SFX_muzz_mg",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2984
+    },
+    {
+      "name": "VUGSHP_SHADOW01",
+      "width": 32,
+      "height": 32,
+      "format_tag": "1TXD",
+      "payload_size": 928
+    },
+    {
+      "name": "SFX_furnace",
+      "width": 32,
+      "height": 32,
+      "format_tag": "1TXD",
+      "payload_size": 632
+    },
+    {
+      "name": "VUHTNK_MAIN_bump",
+      "width": 512,
+      "height": 512,
+      "format_tag": "\u00008AI",
+      "payload_size": 699242
+    },
+    {
+      "name": "VUHTNK_MAIN_spec",
+      "width": 16,
+      "height": 16,
+      "format_tag": "\u00008AI",
+      "payload_size": 834
+    },
+    {
+      "name": "VUHTNKT_TREADS",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "VUHTNKT_TREADSB",
+      "width": 32,
+      "height": 32,
+      "format_tag": "1TXD",
+      "payload_size": 928
+    },
+    {
+      "name": "SFX_leaves",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "U_shell",
+      "width": 32,
+      "height": 32,
+      "format_tag": "1TXD",
+      "payload_size": 632
+    },
+    {
+      "name": "VUHTNK_SHADOW01",
+      "width": 32,
+      "height": 32,
+      "format_tag": "1TXD",
+      "payload_size": 928
+    },
+    {
+      "name": "VIL_BSTA01_main",
+      "width": 1024,
+      "height": 512,
+      "format_tag": "1TXD",
+      "payload_size": 349832
+    },
+    {
+      "name": "VIL_BSTA01_bump",
+      "width": 1024,
+      "height": 512,
+      "format_tag": "\u00008AI",
+      "payload_size": 1398302
+    },
+    {
+      "name": "VIL_BSTA01_spec",
+      "width": 16,
+      "height": 8,
+      "format_tag": "\u00008AI",
+      "payload_size": 494
+    },
+    {
+      "name": "WF_shell",
+      "width": 32,
+      "height": 32,
+      "format_tag": "1TXD",
+      "payload_size": 928
+    },
+    {
+      "name": "SFX_lines",
+      "width": 32,
+      "height": 32,
+      "format_tag": "1TXD",
+      "payload_size": 928
+    },
+    {
+      "name": "U_rocket",
+      "width": 32,
+      "height": 32,
+      "format_tag": "1TXD",
+      "payload_size": 928
+    },
+    {
+      "name": "GEN_VRPickup",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2984
+    },
+    {
+      "name": "VU_BSTA_SHAD",
+      "width": 32,
+      "height": 32,
+      "format_tag": "1TXD",
+      "payload_size": 928
+    },
+    {
+      "name": "SFX_pulseline",
+      "width": 32,
+      "height": 32,
+      "format_tag": "1TXD",
+      "payload_size": 928
+    },
+    {
+      "name": "L_ANTIARMGUN",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "L_ANTIARMHELM",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "L_ANTIARMPACK",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "C4SMROCKET1",
+      "width": 256,
+      "height": 256,
+      "format_tag": "1TXD",
+      "payload_size": 43960
+    },
+    {
+      "name": "VSE_GSHP01_main",
+      "width": 512,
+      "height": 512,
+      "format_tag": "1TXD",
+      "payload_size": 175040
+    },
+    {
+      "name": "VSE_GSHP01_bump",
+      "width": 512,
+      "height": 512,
+      "format_tag": "\u00008AI",
+      "payload_size": 699242
+    },
+    {
+      "name": "VSE_GSHP01_spec",
+      "width": 16,
+      "height": 16,
+      "format_tag": "\u00008AI",
+      "payload_size": 834
+    },
+    {
+      "name": "VGLASS",
+      "width": 64,
+      "height": 64,
+      "format_tag": "\u0000\u00008P",
+      "payload_size": 6149
+    },
+    {
+      "name": "VREFMAP2",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2984
+    },
+    {
+      "name": "S_rocket",
+      "width": 32,
+      "height": 32,
+      "format_tag": "1TXD",
+      "payload_size": 928
+    },
+    {
+      "name": "VSFTR_SHADOW01",
+      "width": 32,
+      "height": 32,
+      "format_tag": "1TXD",
+      "payload_size": 928
+    },
+    {
+      "name": "VUBOMBER01_main",
+      "width": 512,
+      "height": 512,
+      "format_tag": "1TXD",
+      "payload_size": 175040
+    },
+    {
+      "name": "VUBOMBER01_bump",
+      "width": 512,
+      "height": 512,
+      "format_tag": "\u00008AI",
+      "payload_size": 699242
+    },
+    {
+      "name": "VUBOMBER01_spec",
+      "width": 16,
+      "height": 16,
+      "format_tag": "\u00008AI",
+      "payload_size": 834
+    },
+    {
+      "name": "VUBOMBER02_main",
+      "width": 256,
+      "height": 256,
+      "format_tag": "1TXD",
+      "payload_size": 43960
+    },
+    {
+      "name": "VUBOMBER02_bump",
+      "width": 256,
+      "height": 256,
+      "format_tag": "\u00008AI",
+      "payload_size": 174946
+    },
+    {
+      "name": "VUBOMBER02_spec",
+      "width": 16,
+      "height": 16,
+      "format_tag": "\u00008AI",
+      "payload_size": 834
+    },
+    {
+      "name": "VWFBOMBER_SHADOW",
+      "width": 32,
+      "height": 32,
+      "format_tag": "1TXD",
+      "payload_size": 928
+    },
+    {
+      "name": "C4SMCASTLERUIN01LM2",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "C4SMCASTLERUIN01LM1",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "C4BWIREA",
+      "width": 64,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 5704
+    },
+    {
+      "name": "vsehtnk_BUMP",
+      "width": 512,
+      "height": 512,
+      "format_tag": "\u00008AI",
+      "payload_size": 699242
+    },
+    {
+      "name": "vsehtnk_SPEC",
+      "width": 16,
+      "height": 16,
+      "format_tag": "\u00008AI",
+      "payload_size": 834
+    },
+    {
+      "name": "VSHTNK_SHADOW01",
+      "width": 32,
+      "height": 32,
+      "format_tag": "1TXD",
+      "payload_size": 928
+    },
+    {
+      "name": "SV_BODY_DIFF",
+      "width": 256,
+      "height": 256,
+      "format_tag": "1TXD",
+      "payload_size": 43960
+    },
+    {
+      "name": "SCHAINGUN",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "SCHAINHELM",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "SHMGPACK",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "SFX_forcefield",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "SFX_staff_distort",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2984
+    },
+    {
+      "name": "MPB_WF_FLAG",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "MPB_X_FLAG",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "TFLAG",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "SFLAG",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "MPB_IL_FLAG",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "MPB_A_FLAG",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "C4FLAGPOLE",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "X_BarrelLid",
+      "width": 64,
+      "height": 64,
+      "format_tag": "1TXD",
+      "payload_size": 2984
+    },
+    {
+      "name": "X_Barrel",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "SHOSEGUN",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "SHOSEHELM",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "SHOSEPACK",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "santairGun1",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "santairHelm_01",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "santairpack_01",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "SAARMGUN",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "SAARMHELM",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "SAARMPACK",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "C4SMBUNKER03",
+      "width": 512,
+      "height": 512,
+      "format_tag": "1TXD",
+      "payload_size": 175040
+    },
+    {
+      "name": "C4SMBUNKER03LM",
+      "width": 128,
+      "height": 128,
+      "format_tag": "1TXD",
+      "payload_size": 11184
+    },
+    {
+      "name": "VXSHARE",
+      "width": 256,
+      "height": 256,
+      "format_tag": "1TXD",
+      "payload_size": 43960
+    },
+    {
+      "name": "X_shell",
+      "width": 32,
+      "height": 32,
+      "format_tag": "1TXD",
+      "payload_size": 928
+    }
+  ]
+}

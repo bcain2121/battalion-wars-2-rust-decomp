@@ -1,0 +1,20 @@
+{
+  "bounds_message_configured": true,
+  "debug_events": 11,
+  "initializers": [
+    {
+      "complete": true,
+      "instructions": 23,
+      "name": "ArtVariables"
+    },
+    {
+      "complete": true,
+      "instructions": 342,
+      "name": "Gambit_Part_1_Global_Variables"
+    }
+  ],
+  "logical_time": 0.0,
+  "numeric_globals_count": 107,
+  "scope": "Two original initializer bodies only, not a playable mission",
+  "warning": "Host contracts are reimplementation adapters. Scheduler order and full Lua behavior are not original-runtime validated."
+}

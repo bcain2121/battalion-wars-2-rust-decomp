@@ -1,0 +1,77 @@
+{
+  "scope": "Original first-mission foundations; not full mission acceptance",
+  "date_reference": "2026-10-03",
+  "tests": {
+    "viewer_library": 100,
+    "original_startup": 5,
+    "original_assets": 4,
+    "original_mission_regressions": 9,
+    "python": 15,
+    "total": 133
+  },
+  "formatting_passed": true,
+  "clippy_warnings_denied_passed": true,
+  "native_binaries_built": ["bw-battle", "bw-original-viewer", "bw-play"],
+  "original_bindings": {"initializers": 6, "global_scripts": 40, "unit_scripts": 57, "paused_global_bindings": 1},
+  "original_initializers_executed": 6,
+  "initialized_closures": 26,
+  "initialized_captured_cells": 3,
+  "independent_global_probes": {"yielded": 21, "complete": 5, "blocked": 14, "running_mission": false},
+  "authored_state": {
+    "mobile_units": 231,
+    "buildings": 140,
+    "capture_points": 1,
+    "destroyable_objects": 579,
+    "explicit_normal_state": 372,
+    "inactive_ai_flag": 71,
+    "ownership_configured": false,
+    "weapon_state_inferred": false,
+    "destroyable_visibility_inferred": false
+  },
+  "media": {
+    "localized_messages": 151,
+    "zero_duration_fields": 146,
+    "negative_one_duration_fields": 5,
+    "positive_duration_fields": 0,
+    "unique_original_voices_decoded": 57,
+    "first_voice_sample_rate": 24000,
+    "first_voice_samples": 209832,
+    "first_voice_seconds": 8.743,
+    "renderer_audio_playback_integrated": false,
+    "human_auditory_comparison": false,
+    "ffmpeg_bit_exact_comparison_claimed": false
+  },
+  "replacement_battle_native_regression": {
+    "victory_seconds": 11.066666666666638,
+    "victory_player_hp_percent": 72,
+    "restart_restored_state": true,
+    "defeat_seconds": 7.833333333333315,
+    "pass_token": "BATTLE_VERIFY_PASS mode=restart phase=Lost restart=true"
+  },
+  "logs": [
+    "local/analysis/mission-foundation-unit-tests.log",
+    "local/analysis/mission-foundation-original-tests.log",
+    "local/analysis/mission-foundation-python-tests.log",
+    "local/analysis/mission-foundation-clippy.log",
+    "local/analysis/mission-foundation-build.log",
+    "local/analysis/mission-foundation-battle-regression.log",
+    "local/analysis/mission-startup-audit.json",
+    "local/analysis/mission-voices-extraction.json"
+  ],
+  "references": [
+    {"source": "Battalion level editor plugins/strings_editor/strings.py", "commit": "c2b074cfac58af6e751c8cb7e9713fa6b7b795e5", "sha256": "b90fba4cc995c8d1833fae9516d5893e40d105c19a156a49cb66c8018080f714", "license": "MIT"},
+    {"source": "Battalion level editor widgets/edit_window_enums.py", "commit": "c2b074cfac58af6e751c8cb7e9713fa6b7b795e5", "sha256": "79bf5e66921e6003c584768b3a047b11b0ef23ae88630715739668bcc66566b9", "license": "MIT"},
+    {"source": "https://raw.githubusercontent.com/vgmstream/vgmstream/master/src/coding/ngc_dsp_decoder.c", "sha256": "108a3f8a736be181754a916502a35a99728fde6fcb249cda9d8b010515ab9c09", "license_notice": "docs/references/vgmstream-ISC.txt", "license_sha256": "fcc26d35c4c4365e31f21734f846e4ee362ff0b57ba696085605a7b4768d8763"},
+    {"source": "https://raw.githubusercontent.com/FFmpeg/FFmpeg/master/libavcodec/adpcm.c", "sha256": "b99f05c66bbdd639f7961f45ff631fe13ee6f2d72c41108323d332a869b32517", "usage": "Compared THP rounding; not used as a bit-exact DSP oracle. Reference retained only under ignored local/tools."}
+  ],
+  "original_startup_rendered": false,
+  "required_original_gameplay_complete": false,
+  "animation_fidelity_restored": false,
+  "original_end_to_end_playthrough": false,
+  "complete_original_level": false,
+  "human_input_acceptance": false,
+  "other_platform_execution": false,
+  "published": false,
+  "committed": false,
+  "subagents_used": false
+}

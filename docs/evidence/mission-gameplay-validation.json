@@ -1,0 +1,37 @@
+{
+  "date": "2026-10-03",
+  "scope": "Original first-mission logic to cinematic gates, typed world state, authored animation binding/playback",
+  "complete_original_mission_playable": false,
+  "original_logic_verified": [
+    "ScoreScreen initialization and non-capturing helper creation",
+    "Tower01 entry invokes original victory branch and StopScoringTimer",
+    "Staff-bearer death invokes original nested loss coroutine",
+    "Freeze state, objective visibility and cinematic flags retained",
+    "Nested call stacks remain suspended across cinematic waits",
+    "Original invulnerability script prevents raw unit damage"
+  ],
+  "fixture_inputs": ["Explicit player roster and activation", "Controlled position changes", "Controlled raw damage"],
+  "cinematic_completion_faked": false,
+  "animation_bindings": {"troops": 183, "state_bindings": 915, "unique_original_clips": 10},
+  "animation_playback_checks": ["State transition resets phase", "Unchanged state preserves phase", "Loop versus one-shot sampling", "Death state from health", "Scheduler pause freezes clock"],
+  "validation": {
+    "rust_unit_viewer": 62,
+    "original_asset_integration": 4,
+    "original_mission_integration": 6,
+    "python": 15,
+    "total_tests_passed": 87,
+    "warning_denying_clippy": "pass",
+    "original_and_custom_skirmish_regressions": "pass"
+  },
+  "remaining": [
+    "Original mission graphical/input integration",
+    "Cinematics, final win/loss completion and grading",
+    "Remaining Lua instructions, captures, varargs and host functions",
+    "Original AI, navigation, weapons, orders, vehicles and activation",
+    "BAN visual decoding correctness, translations and root motion",
+    "Original runtime comparison for zone/scheduler/enum semantics"
+  ],
+  "native_numeric_enum_abi_claimed": false,
+  "new_visual_acceptance_claimed": false,
+  "published": false
+}

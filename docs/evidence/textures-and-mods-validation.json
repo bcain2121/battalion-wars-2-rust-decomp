@@ -1,0 +1,20 @@
+{
+  "rust_tests": 33,
+  "python_tests": 15,
+  "clippy": "passed",
+  "native_metal_replays": [
+    {
+      "level": "textured-training",
+      "exit": 0,
+      "win": true,
+      "render_errors": false
+    },
+    {
+      "level": "custom-sandbox",
+      "exit": 0,
+      "win": true,
+      "render_errors": false
+    }
+  ],
+  "controller": "Synthetic Bevy Gamepad input tested; physical hardware not verified"
+}

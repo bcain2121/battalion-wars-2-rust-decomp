@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-03",
+  "scope": "Isolated original Stay_Here script connected to moving original actor, animation and scenery",
+  "complete_original_mission": false,
+  "fixture": {
+    "actor": "Troop.Sgrunt02",
+    "script": "Gambit_Part_1_Stay_Here",
+    "authored_script_actor_pairing_claimed": false,
+    "opening_cutscene_executed": false,
+    "explicit_inputs": ["activation", "cutsceneStart flag", "100-unit displacement", "raw lethal damage for death test"],
+    "navigation": "StraightLineDiagnostic; disabled by default outside this fixture",
+    "collision_or_pathfinding_claimed": false
+  },
+  "tests": {"rust_viewer_unit":62,"original_assets":4,"original_mission":7,"python":15,"total":88,"clippy_warnings_denied":"pass"},
+  "native_metal_smokes": {
+    "static_scene_regression":"pass",
+    "scripted_return_home":{"frames":180,"logical_hz":30,"arrival_distance":5,"animation":"Idle","result":"pass"},
+    "scripted_death":{"damage_frame":100,"frames":180,"script_complete":true,"death_clip_clamped":true,"result":"pass"}
+  },
+  "existing_skirmish_regressions":{"original_terrain":"pass","custom_terrain":"pass"},
+  "reviewed_local_captures": ["local/analysis/original-script-return-home.png","local/analysis/original-script-death.png"],
+  "preserved_failed_visual_capture":"local/analysis/original-script-death-occluded.png",
+  "visual_limits": ["Camera occlusion unresolved", "Experimental BAN poses and missing packed translation/root motion", "Scenery activation unapplied", "Original material/placement gaps remain"],
+  "test_windows_exited": true,
+  "existing_user_windows_closed": false,
+  "publication": false
+}

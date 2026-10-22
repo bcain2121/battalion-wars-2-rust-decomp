@@ -1,0 +1,15 @@
+{
+  "scope":"Authored controller enable masks",
+  "tests":{"viewer_library":125,"integration":42,"python":15,"total":182},
+  "format_check":"passed",
+  "clippy_viewer_all_targets_deny_warnings":"passed",
+  "locked_viewer_builds":"passed",
+  "replacement_battle_restart_regression":"passed",
+  "original_controls_disabled_script":"ten masks applied, yields at EndFrame",
+  "failed_resume_rollback_verified":true,
+  "unknown_controller_defaults":"explicitly unresolved",
+  "physical_input_consumes_masks":false,
+  "original_mission_playable":false,
+  "original_victory_verified":false,
+  "details":"docs/MISSION_CONTROLLER_RUNTIME.md"
+}

@@ -1,0 +1,70 @@
+{
+  "date": "2026-10-03",
+  "scope": "Bounded replacement infantry routing; not original navigation parity or full mission",
+  "tests": {
+    "viewer_rust_unit": 79,
+    "original_assets": 4,
+    "original_mission": 9,
+    "python": 15,
+    "total": 107,
+    "result": "passed",
+    "clippy_warnings_denied": "passed",
+    "format": "passed",
+    "launcher_shell_syntax": "passed",
+    "log": "local/analysis/navigation-tests.log"
+  },
+  "native_metal": {
+    "scene": {
+      "searches": 1,
+      "planned_order_arrivals": 1,
+      "failures": 0,
+      "expansions": 3,
+      "movement_probes": 162,
+      "home_distance": 4.9999943,
+      "mesh_contact_resolutions": 5,
+      "overlap_reported": false,
+      "capture": "local/analysis/navigation-scene.png",
+      "log": "local/analysis/navigation-scene.log"
+    },
+    "pair": {
+      "searches": 1,
+      "planned_order_arrivals": 1,
+      "failures": 0,
+      "expansions": 8,
+      "movement_probes": 365,
+      "home_distance": 5,
+      "unit_contact_resolutions": 4,
+      "overlap_reported": false,
+      "capture": "local/analysis/navigation-pair.png",
+      "log": "local/analysis/navigation-pair.log",
+      "in_motion_capture": "local/analysis/navigation-detour.png",
+      "in_motion_frame": 48
+    },
+    "collision_only_regression": {
+      "searches": 0,
+      "home_distance": 13.200027,
+      "unit_contact_resolutions": 694,
+      "result": "passed"
+    },
+    "original_death_coroutine_and_clip": "passed",
+    "legacy_camera": {"result": "passed", "adjusted_frames": 145},
+    "static_scene": "passed",
+    "original_skirmish": "passed",
+    "custom_skirmish": "passed",
+    "captures_visually_reviewed": true
+  },
+  "planner_limits": {
+    "searches_per_tick": 1,
+    "expansions_per_search": 256,
+    "movement_probes_per_search": 8192,
+    "grid_extent_cells": 64,
+    "infantry_grid_spacing": 1.5,
+    "retry_seconds": 0.5
+  },
+  "changing_blocker_replan": "passed in original-script fixture; not a native moving-blocker render test",
+  "original_activation_recovered": false,
+  "complete_original_mission": false,
+  "media_ignored": true,
+  "published": false,
+  "committed": false
+}

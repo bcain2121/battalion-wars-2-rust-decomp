@@ -1,0 +1,19 @@
+{
+  "slice": "Lua 5.0 SETLIST/SETLISTO and original cursor array fixtures",
+  "completed": true,
+  "original_script_instructions_modified": false,
+  "original_cursor_constructors_tested": 2,
+  "isolated_child_prototypes": true,
+  "global_root_executed": false,
+  "cursor_roll_implemented": false,
+  "page_lifecycle_executed": false,
+  "menus_rendered": false,
+  "original_mission_victory_verified": false,
+  "tests": {"viewer_library": 123, "integration": 38, "python": 15, "total": 176},
+  "formatting": "passed",
+  "clippy_viewer_all_targets_deny_warnings": "passed",
+  "locked_viewer_builds": "passed",
+  "replacement_battle_restart_regression": "passed",
+  "details": "docs/FRONTEND_ARRAYS.md",
+  "logs": "local/analysis/frontend-arrays-*.log"
+}

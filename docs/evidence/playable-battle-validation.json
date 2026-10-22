@@ -1,0 +1,53 @@
+{
+  "date": "2026-10-03",
+  "milestone": "Playable original-asset replacement battle",
+  "binary": "bw-battle",
+  "launcher": "Play Battalion Wars Rust.command",
+  "platform_executed": "macOS / Apple M5 / Bevy Metal",
+  "tests": {"rust_viewer_unit": 86, "original_assets": 4, "original_mission": 9, "python": 15, "total": 114, "default_feature_rust_unit_also_passed_not_double_counted": 76},
+  "checks": {"clippy_warnings_denied": true, "format": true, "locked_native_build": true, "launcher_shell_syntax": true},
+  "native": {
+    "briefing": {"passed": true, "frames": 180, "time": 0, "unchanged_positions_and_player_health": true, "shots": 0},
+    "victory": {"passed": true, "simulated_seconds": 11.066666666666638, "player_health_percent": 72, "enemies_remaining": 0, "total_shots": 34, "enemy_attacks": 8, "player_damage_native_health_units": 336, "animation_states_seen": ["Idle", "Walk", "Run", "Fire", "Death"]},
+    "defeat": {"passed": true, "simulated_seconds": 7.833333333333315, "player_health_percent": 0, "enemies_remaining": 4, "total_shots": 49, "enemy_attacks": 29},
+    "restart": {"passed": true, "sequence": ["Won", "shared restart handler", "Lost"], "assertions": ["roster", "positions", "health", "activation", "time", "capture", "pause", "cleared orders"]},
+    "original_script_planned_pair": {"passed": true, "overlap": false, "unit_contacts": 4, "remaining_home_distance": 5},
+    "original_script_death": {"passed": true, "script_complete": true, "death_clip_clamped": true},
+    "legacy_skirmish": {"passed": true, "victory_health": 85},
+    "custom_sandbox": {"passed": true, "victory_health": 91}
+  },
+  "visual_review": {
+    "passed_offscreen": true,
+    "target": "1280x800 Bevy image target, same Metal scene/camera/UI",
+    "primary_window_capture_accepted": false,
+    "reason": "Desktop was locked; initial primary-window screenshots were black. No unlocking or security changes attempted.",
+    "images": ["local/analysis/battle-briefing-final.png", "local/analysis/battle-combat-final.png", "local/analysis/battle-victory-final.png", "local/analysis/battle-defeat-final.png"],
+    "unsuccessful_evidence_retained": ["local/analysis/battle-first-combat.png", "local/analysis/battle-first-result.png", "local/analysis/battle-viewer-regression.png", "local/analysis/battle-briefing.log"],
+    "briefing_retry": "Initial generic smoke run reached its capture but lacked a battle exit condition and timed out. Process termination confirmed; bounded briefing mode now validates idle state and exits at frame 180."
+  },
+  "log_prefix": "local/analysis/battle-",
+  "scope": {
+    "original_textured_terrain_scenery_and_troops": true,
+    "original_animation_resources_with_provisional_decoder": true,
+    "player_control_collision_combat_enemy_ai_squad_orders": true,
+    "win_loss_pause_restart": true,
+    "active_troops": 7,
+    "enemy_troops": 4,
+    "replacement_encounter": true,
+    "original_mission_script_chain_executed_by_battle": false,
+    "original_activation_recovered": false,
+    "complete_original_level": false,
+    "full_port": false,
+    "animation_fidelity_verified": false,
+    "vehicles_audio_saves_multiplayer": false,
+    "human_keyboard_mouse_playtest": false,
+    "physical_controller_test": false,
+    "linux_windows_execution": false
+  },
+  "replacement_policies": ["roster and spawn selection", "activation and teams", "camera-relative movement and speeds", "infantry cylinders and bounded routing", "line-of-sight and cylinder hits", "weapon range, damage, cooldown and unlimited ammunition", "enemy pursuit and basic squad following", "autoaim", "uplink capture objective"],
+  "proprietary_media_ignored": true,
+  "committed": false,
+  "published": false,
+  "subagents_used": false,
+  "user_game_windows_forcibly_closed": false
+}

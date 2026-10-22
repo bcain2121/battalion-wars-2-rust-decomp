@@ -1,0 +1,3453 @@
+{
+  "object_count": 6603,
+  "unique_id_count": 6603,
+  "types": {
+    "cAnimationResource": 184,
+    "cTequilaEffectResource": 247,
+    "cNodeHierarchyResource": 116,
+    "cGameScriptResource": 53,
+    "sSampleResource": 365,
+    "cTextureResource": 554,
+    "cSimpleTequilaTaggedEffectBase": 42,
+    "cCoverPointBase": 208,
+    "cSoundBase": 275,
+    "sDestroyBase": 52,
+    "sSceneryClusterBase": 10,
+    "cAnimationTriggeredEffectChainItemGroundImpact": 18,
+    "cAdvancedWeaponBase": 8,
+    "cImpactTableTaggedEffectBase": 1,
+    "cProjectileSoundBase": 28,
+    "sProjectileBase": 28,
+    "sWeaponBase": 31,
+    "sAirVehicleBase": 5,
+    "cTroopAnimationSet": 3,
+    "cTroopVoiceManagerBase": 4,
+    "sTroopBase": 11,
+    "cReflectedPhysicsParams": 65,
+    "cGroundVehiclePhysicsBase": 7,
+    "cGroundVehicleSoundBase": 3,
+    "cSeatBase": 270,
+    "cGroundVehicleBase": 6,
+    "cAnimationTriggeredEffectManager": 4,
+    "cSoundCurve": 54,
+    "cAirVehicleEngineSoundBase": 3,
+    "cBuildingImpBase": 15,
+    "cWeaponSoundBase": 23,
+    "cArmyAllegiance": 6,
+    "cPanelSprites": 2,
+    "cObjectiveMarkerBase": 3,
+    "cAirVehicleSoundBase": 3,
+    "sExplodeBase": 130,
+    "cImpactBase": 540,
+    "cImpactTableBase": 20,
+    "cIncidentalBase": 18,
+    "cTerrainParticleGeneratorBase": 6,
+    "cCapturePointBase": 1,
+    "cAnimationTriggeredEffectChainItemSound": 5,
+    "cAnimationTriggeredEffectChainItemTequilaEffect": 7,
+    "cReticuleState": 6,
+    "cAnimationTriggeredEffect": 29,
+    "cCameraBase": 2,
+    "cTroopVoiceMessageBase": 106,
+    "cHUDSoundBlock": 2,
+    "sPickupBase": 5,
+    "cAirVehiclePhysicsBase": 3,
+    "cGroundVehicleEngineSoundBase": 3,
+    "cRevConScrollRegionBase": 7,
+    "cSprite": 287,
+    "sSpriteBasetype": 397,
+    "cContextSensitiveIdle": 55,
+    "cContextSensitiveIdleList": 2,
+    "cWaypoint": 637,
+    "cPlayerSettings": 1,
+    "cRenderParams": 1,
+    "cGlobalScriptEntity": 40,
+    "cHUDVariables": 2,
+    "cHUD": 2,
+    "cHUDTutorial": 1,
+    "cAttackSustainReleaseEnvelope": 35,
+    "cFlightData": 8,
+    "cMapZone": 111,
+    "cInitialisationScriptEntity": 6,
+    "cPhase": 105,
+    "cObjective": 29,
+    "cActionParameterData": 16,
+    "cMeleeHitReactionData": 58,
+    "cAmbientAreaPointSoundSphere": 27,
+    "cScriptSprite": 38,
+    "cSKUSpecificData": 1,
+    "cActionParameters": 1,
+    "cDamageZone": 16,
+    "cScriptedEffectBase": 14,
+    "cDestroyableObject": 579,
+    "cSceneryCluster": 90,
+    "cTroop": 183,
+    "cGroundVehicle": 30,
+    "cAirVehicle": 18,
+    "cBuilding": 140,
+    "cCapturePoint": 1,
+    "cPickupReflected": 35,
+    "cCamera": 10,
+    "cObjectiveMarker": 30
+  },
+  "unresolved_references_within_level_only": [
+    {
+      "source": "2138044251",
+      "field": "mpTerrainParticleAnimationParams",
+      "target": "250009047"
+    }
+  ],
+  "note": "References may resolve in preload/global data. Lua signatures alone are not validated bytecode.",
+  "resource_size": 36674604,
+  "resource_chunks": [
+    {
+      "tag": "RXET",
+      "offset": 0,
+      "size": 20239318
+    },
+    {
+      "tag": "DNOS",
+      "offset": 20239326,
+      "size": 5607238
+    },
+    {
+      "tag": "LDOM",
+      "offset": 25846572,
+      "size": 693
+    },
+    {
+      "tag": "LDOM",
+      "offset": 25847273,
+      "size": 38965
+    },
+    {
+      "tag": "LDOM",
+      "offset": 25886246,
+      "size": 27349
+    },
+    {
+      "tag": "LDOM",
+      "offset": 25913603,
+      "size": 27617
+    },
+    {
+      "tag": "LDOM",
+      "offset": 25941228,
+      "size": 15113
+    },
+    {
+      "tag": "LDOM",
+      "offset": 25956349,
+      "size": 9922
+    },
+    {
+      "tag": "LDOM",
+      "offset": 25966279,
+      "size": 12287
+    },
+    {
+      "tag": "LDOM",
+      "offset": 25978574,
+      "size": 1449
+    },
+    {
+      "tag": "LDOM",
+      "offset": 25980031,
+      "size": 75396
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26055435,
+      "size": 26962
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26082405,
+      "size": 77221
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26159634,
+      "size": 690
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26160332,
+      "size": 42923
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26203263,
+      "size": 24463
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26227734,
+      "size": 6581
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26234323,
+      "size": 11288
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26245619,
+      "size": 5386
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26251013,
+      "size": 5769
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26256790,
+      "size": 3796
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26260594,
+      "size": 66661
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26327263,
+      "size": 1039
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26328310,
+      "size": 7575
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26335893,
+      "size": 54189
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26390090,
+      "size": 16592
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26406690,
+      "size": 21541
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26428239,
+      "size": 84067
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26512314,
+      "size": 44012
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26556334,
+      "size": 57931
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26614273,
+      "size": 32911
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26647192,
+      "size": 27626
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26674826,
+      "size": 37769
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26712603,
+      "size": 28619
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26741230,
+      "size": 26667
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26767905,
+      "size": 21073
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26788986,
+      "size": 957
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26789951,
+      "size": 959
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26790918,
+      "size": 44880
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26835806,
+      "size": 13656
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26849470,
+      "size": 11323
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26860801,
+      "size": 31813
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26892622,
+      "size": 51939
+    },
+    {
+      "tag": "LDOM",
+      "offset": 26944569,
+      "size": 205471
+    },
+    {
+      "tag": "LDOM",
+      "offset": 27150048,
+      "size": 23243
+    },
+    {
+      "tag": "LDOM",
+      "offset": 27173299,
+      "size": 32571
+    },
+    {
+      "tag": "LDOM",
+      "offset": 27205878,
+      "size": 21250
+    },
+    {
+      "tag": "LDOM",
+      "offset": 27227136,
+      "size": 22584
+    },
+    {
+      "tag": "LDOM",
+      "offset": 27249728,
+      "size": 224562
+    },
+    {
+      "tag": "LDOM",
+      "offset": 27474298,
+      "size": 116957
+    },
+    {
+      "tag": "LDOM",
+      "offset": 27591263,
+      "size": 17149
+    },
+    {
+      "tag": "LDOM",
+      "offset": 27608420,
+      "size": 577252
+    },
+    {
+      "tag": "LDOM",
+      "offset": 28185680,
+      "size": 31482
+    },
+    {
+      "tag": "LDOM",
+      "offset": 28217170,
+      "size": 3809
+    },
+    {
+      "tag": "LDOM",
+      "offset": 28220987,
+      "size": 63477
+    },
+    {
+      "tag": "LDOM",
+      "offset": 28284472,
+      "size": 792
+    },
+    {
+      "tag": "LDOM",
+      "offset": 28285272,
+      "size": 6265
+    },
+    {
+      "tag": "LDOM",
+      "offset": 28291545,
+      "size": 10118
+    },
+    {
+      "tag": "LDOM",
+      "offset": 28301671,
+      "size": 2031
+    },
+    {
+      "tag": "LDOM",
+      "offset": 28303710,
+      "size": 4179
+    },
+    {
+      "tag": "LDOM",
+      "offset": 28307897,
+      "size": 745
+    },
+    {
+      "tag": "LDOM",
+      "offset": 28308650,
+      "size": 5076
+    },
+    {
+      "tag": "LDOM",
+      "offset": 28313734,
+      "size": 75293
+    },
+    {
+      "tag": "LDOM",
+      "offset": 28389035,
+      "size": 792
+    },
+    {
+      "tag": "LDOM",
+      "offset": 28389835,
+      "size": 5995
+    },
+    {
+      "tag": "LDOM",
+      "offset": 28395838,
+      "size": 5078
+    },
+    {
+      "tag": "LDOM",
+      "offset": 28400924,
+      "size": 70123
+    },
+    {
+      "tag": "LDOM",
+      "offset": 28471055,
+      "size": 5877
+    },
+    {
+      "tag": "LDOM",
+      "offset": 28476940,
+      "size": 5846
+    },
+    {
+      "tag": "LDOM",
+      "offset": 28482794,
+      "size": 6101
+    },
+    {
+      "tag": "LDOM",
+      "offset": 28488903,
+      "size": 37584
+    },
+    {
+      "tag": "LDOM",
+      "offset": 28526495,
+      "size": 5713
+    },
+    {
+      "tag": "LDOM",
+      "offset": 28532216,
+      "size": 227462
+    },
+    {
+      "tag": "LDOM",
+      "offset": 28759686,
+      "size": 1632
+    },
+    {
+      "tag": "LDOM",
+      "offset": 28761326,
+      "size": 225578
+    },
+    {
+      "tag": "LDOM",
+      "offset": 28986912,
+      "size": 3692
+    },
+    {
+      "tag": "LDOM",
+      "offset": 28990612,
+      "size": 3716
+    },
+    {
+      "tag": "LDOM",
+      "offset": 28994336,
+      "size": 1147
+    },
+    {
+      "tag": "LDOM",
+      "offset": 28995491,
+      "size": 313841
+    },
+    {
+      "tag": "LDOM",
+      "offset": 29309340,
+      "size": 1996
+    },
+    {
+      "tag": "LDOM",
+      "offset": 29311344,
+      "size": 1865
+    },
+    {
+      "tag": "LDOM",
+      "offset": 29313217,
+      "size": 2699
+    },
+    {
+      "tag": "LDOM",
+      "offset": 29315924,
+      "size": 137397
+    },
+    {
+      "tag": "LDOM",
+      "offset": 29453329,
+      "size": 8324
+    },
+    {
+      "tag": "LDOM",
+      "offset": 29461661,
+      "size": 6535
+    },
+    {
+      "tag": "LDOM",
+      "offset": 29468204,
+      "size": 4937
+    },
+    {
+      "tag": "LDOM",
+      "offset": 29473149,
+      "size": 31466
+    },
+    {
+      "tag": "LDOM",
+      "offset": 29504623,
+      "size": 209530
+    },
+    {
+      "tag": "LDOM",
+      "offset": 29714161,
+      "size": 1630
+    },
+    {
+      "tag": "LDOM",
+      "offset": 29715799,
+      "size": 292869
+    },
+    {
+      "tag": "LDOM",
+      "offset": 30008676,
+      "size": 82893
+    },
+    {
+      "tag": "LDOM",
+      "offset": 30091577,
+      "size": 204507
+    },
+    {
+      "tag": "LDOM",
+      "offset": 30296092,
+      "size": 68571
+    },
+    {
+      "tag": "LDOM",
+      "offset": 30364671,
+      "size": 8466
+    },
+    {
+      "tag": "LDOM",
+      "offset": 30373145,
+      "size": 4198
+    },
+    {
+      "tag": "LDOM",
+      "offset": 30377351,
+      "size": 3276
+    },
+    {
+      "tag": "LDOM",
+      "offset": 30380635,
+      "size": 3173
+    },
+    {
+      "tag": "LDOM",
+      "offset": 30383816,
+      "size": 2031
+    },
+    {
+      "tag": "LDOM",
+      "offset": 30385855,
+      "size": 2029
+    },
+    {
+      "tag": "LDOM",
+      "offset": 30387892,
+      "size": 2271
+    },
+    {
+      "tag": "LDOM",
+      "offset": 30390171,
+      "size": 2271
+    },
+    {
+      "tag": "LDOM",
+      "offset": 30392450,
+      "size": 2031
+    },
+    {
+      "tag": "LDOM",
+      "offset": 30394489,
+      "size": 2029
+    },
+    {
+      "tag": "LDOM",
+      "offset": 30396526,
+      "size": 39865
+    },
+    {
+      "tag": "LDOM",
+      "offset": 30436399,
+      "size": 2142
+    },
+    {
+      "tag": "LDOM",
+      "offset": 30438549,
+      "size": 7174
+    },
+    {
+      "tag": "LDOM",
+      "offset": 30445731,
+      "size": 5071
+    },
+    {
+      "tag": "LDOM",
+      "offset": 30450810,
+      "size": 4626
+    },
+    {
+      "tag": "LDOM",
+      "offset": 30455444,
+      "size": 8718
+    },
+    {
+      "tag": "LDOM",
+      "offset": 30464170,
+      "size": 7124
+    },
+    {
+      "tag": "LDOM",
+      "offset": 30471302,
+      "size": 6919
+    },
+    {
+      "tag": "LDOM",
+      "offset": 30478229,
+      "size": 8504
+    },
+    {
+      "tag": "LDOM",
+      "offset": 30486741,
+      "size": 8566
+    },
+    {
+      "tag": "LDOM",
+      "offset": 30495315,
+      "size": 7831
+    },
+    {
+      "tag": "LDOM",
+      "offset": 30503154,
+      "size": 72772
+    },
+    {
+      "tag": "LDOM",
+      "offset": 30575934,
+      "size": 1994
+    },
+    {
+      "tag": "LDOM",
+      "offset": 30577936,
+      "size": 44274
+    },
+    {
+      "tag": "LDOM",
+      "offset": 30622218,
+      "size": 36561
+    },
+    {
+      "tag": "MINA",
+      "offset": 30658787,
+      "size": 32211
+    },
+    {
+      "tag": "MINA",
+      "offset": 30691006,
+      "size": 24935
+    },
+    {
+      "tag": "MINA",
+      "offset": 30715949,
+      "size": 53871
+    },
+    {
+      "tag": "MINA",
+      "offset": 30769828,
+      "size": 50047
+    },
+    {
+      "tag": "MINA",
+      "offset": 30819883,
+      "size": 21293
+    },
+    {
+      "tag": "MINA",
+      "offset": 30841184,
+      "size": 63613
+    },
+    {
+      "tag": "MINA",
+      "offset": 30904805,
+      "size": 45213
+    },
+    {
+      "tag": "MINA",
+      "offset": 30950026,
+      "size": 24501
+    },
+    {
+      "tag": "MINA",
+      "offset": 30974535,
+      "size": 17707
+    },
+    {
+      "tag": "MINA",
+      "offset": 30992250,
+      "size": 24720
+    },
+    {
+      "tag": "MINA",
+      "offset": 31016978,
+      "size": 33379
+    },
+    {
+      "tag": "MINA",
+      "offset": 31050365,
+      "size": 12479
+    },
+    {
+      "tag": "MINA",
+      "offset": 31062852,
+      "size": 36684
+    },
+    {
+      "tag": "MINA",
+      "offset": 31099544,
+      "size": 52216
+    },
+    {
+      "tag": "MINA",
+      "offset": 31151768,
+      "size": 60096
+    },
+    {
+      "tag": "MINA",
+      "offset": 31211872,
+      "size": 25160
+    },
+    {
+      "tag": "MINA",
+      "offset": 31237040,
+      "size": 25426
+    },
+    {
+      "tag": "MINA",
+      "offset": 31262474,
+      "size": 70534
+    },
+    {
+      "tag": "MINA",
+      "offset": 31333016,
+      "size": 28730
+    },
+    {
+      "tag": "MINA",
+      "offset": 31361754,
+      "size": 35542
+    },
+    {
+      "tag": "MINA",
+      "offset": 31397304,
+      "size": 25056
+    },
+    {
+      "tag": "MINA",
+      "offset": 31422368,
+      "size": 51684
+    },
+    {
+      "tag": "MINA",
+      "offset": 31474060,
+      "size": 37140
+    },
+    {
+      "tag": "MINA",
+      "offset": 31511208,
+      "size": 24720
+    },
+    {
+      "tag": "MINA",
+      "offset": 31535936,
+      "size": 35765
+    },
+    {
+      "tag": "MINA",
+      "offset": 31571709,
+      "size": 19597
+    },
+    {
+      "tag": "MINA",
+      "offset": 31591314,
+      "size": 10399
+    },
+    {
+      "tag": "MINA",
+      "offset": 31601721,
+      "size": 10401
+    },
+    {
+      "tag": "MINA",
+      "offset": 31612130,
+      "size": 10400
+    },
+    {
+      "tag": "MINA",
+      "offset": 31622538,
+      "size": 10399
+    },
+    {
+      "tag": "MINA",
+      "offset": 31632945,
+      "size": 10401
+    },
+    {
+      "tag": "MINA",
+      "offset": 31643354,
+      "size": 10401
+    },
+    {
+      "tag": "MINA",
+      "offset": 31653763,
+      "size": 8429
+    },
+    {
+      "tag": "MINA",
+      "offset": 31662200,
+      "size": 10402
+    },
+    {
+      "tag": "MINA",
+      "offset": 31672610,
+      "size": 10399
+    },
+    {
+      "tag": "MINA",
+      "offset": 31683017,
+      "size": 10398
+    },
+    {
+      "tag": "MINA",
+      "offset": 31693423,
+      "size": 10399
+    },
+    {
+      "tag": "MINA",
+      "offset": 31703830,
+      "size": 10399
+    },
+    {
+      "tag": "MINA",
+      "offset": 31714237,
+      "size": 10401
+    },
+    {
+      "tag": "MINA",
+      "offset": 31724646,
+      "size": 10399
+    },
+    {
+      "tag": "MINA",
+      "offset": 31735053,
+      "size": 10999
+    },
+    {
+      "tag": "MINA",
+      "offset": 31746060,
+      "size": 7510
+    },
+    {
+      "tag": "MINA",
+      "offset": 31753578,
+      "size": 17642
+    },
+    {
+      "tag": "MINA",
+      "offset": 31771228,
+      "size": 10363
+    },
+    {
+      "tag": "MINA",
+      "offset": 31781599,
+      "size": 7514
+    },
+    {
+      "tag": "MINA",
+      "offset": 31789121,
+      "size": 6350
+    },
+    {
+      "tag": "MINA",
+      "offset": 31795479,
+      "size": 6349
+    },
+    {
+      "tag": "MINA",
+      "offset": 31801836,
+      "size": 7009
+    },
+    {
+      "tag": "MINA",
+      "offset": 31808853,
+      "size": 6687
+    },
+    {
+      "tag": "MINA",
+      "offset": 31815548,
+      "size": 9024
+    },
+    {
+      "tag": "MINA",
+      "offset": 31824580,
+      "size": 9024
+    },
+    {
+      "tag": "MINA",
+      "offset": 31833612,
+      "size": 9326
+    },
+    {
+      "tag": "MINA",
+      "offset": 31842946,
+      "size": 9794
+    },
+    {
+      "tag": "MINA",
+      "offset": 31852748,
+      "size": 13404
+    },
+    {
+      "tag": "MINA",
+      "offset": 31866160,
+      "size": 9275
+    },
+    {
+      "tag": "MINA",
+      "offset": 31875443,
+      "size": 9326
+    },
+    {
+      "tag": "MINA",
+      "offset": 31884777,
+      "size": 9794
+    },
+    {
+      "tag": "MINA",
+      "offset": 31894579,
+      "size": 10397
+    },
+    {
+      "tag": "MINA",
+      "offset": 31904984,
+      "size": 62159
+    },
+    {
+      "tag": "MINA",
+      "offset": 31967151,
+      "size": 9003
+    },
+    {
+      "tag": "MINA",
+      "offset": 31976162,
+      "size": 4743
+    },
+    {
+      "tag": "MINA",
+      "offset": 31980913,
+      "size": 7196
+    },
+    {
+      "tag": "MINA",
+      "offset": 31988117,
+      "size": 9545
+    },
+    {
+      "tag": "MINA",
+      "offset": 31997670,
+      "size": 18352
+    },
+    {
+      "tag": "MINA",
+      "offset": 32016030,
+      "size": 4847
+    },
+    {
+      "tag": "MINA",
+      "offset": 32020885,
+      "size": 10999
+    },
+    {
+      "tag": "MINA",
+      "offset": 32031892,
+      "size": 7604
+    },
+    {
+      "tag": "MINA",
+      "offset": 32039504,
+      "size": 8295
+    },
+    {
+      "tag": "MINA",
+      "offset": 32047807,
+      "size": 4107
+    },
+    {
+      "tag": "MINA",
+      "offset": 32051922,
+      "size": 10067
+    },
+    {
+      "tag": "MINA",
+      "offset": 32061997,
+      "size": 8130
+    },
+    {
+      "tag": "MINA",
+      "offset": 32070135,
+      "size": 13790
+    },
+    {
+      "tag": "MINA",
+      "offset": 32083933,
+      "size": 13790
+    },
+    {
+      "tag": "MINA",
+      "offset": 32097731,
+      "size": 6638
+    },
+    {
+      "tag": "MINA",
+      "offset": 32104377,
+      "size": 8596
+    },
+    {
+      "tag": "MINA",
+      "offset": 32112981,
+      "size": 12479
+    },
+    {
+      "tag": "MINA",
+      "offset": 32125468,
+      "size": 9463
+    },
+    {
+      "tag": "MINA",
+      "offset": 32134939,
+      "size": 17723
+    },
+    {
+      "tag": "MINA",
+      "offset": 32152670,
+      "size": 11187
+    },
+    {
+      "tag": "MINA",
+      "offset": 32163865,
+      "size": 17361
+    },
+    {
+      "tag": "MINA",
+      "offset": 32181234,
+      "size": 16777
+    },
+    {
+      "tag": "MINA",
+      "offset": 32198019,
+      "size": 2765
+    },
+    {
+      "tag": "MINA",
+      "offset": 32200792,
+      "size": 2765
+    },
+    {
+      "tag": "MINA",
+      "offset": 32203565,
+      "size": 2765
+    },
+    {
+      "tag": "MINA",
+      "offset": 32206338,
+      "size": 8520
+    },
+    {
+      "tag": "MINA",
+      "offset": 32214866,
+      "size": 9000
+    },
+    {
+      "tag": "MINA",
+      "offset": 32223874,
+      "size": 48002
+    },
+    {
+      "tag": "MINA",
+      "offset": 32271884,
+      "size": 48000
+    },
+    {
+      "tag": "MINA",
+      "offset": 32319892,
+      "size": 6560
+    },
+    {
+      "tag": "MINA",
+      "offset": 32326460,
+      "size": 3750
+    },
+    {
+      "tag": "MINA",
+      "offset": 32330218,
+      "size": 3602
+    },
+    {
+      "tag": "MINA",
+      "offset": 32333828,
+      "size": 3601
+    },
+    {
+      "tag": "MINA",
+      "offset": 32337437,
+      "size": 3602
+    },
+    {
+      "tag": "MINA",
+      "offset": 32341047,
+      "size": 41998
+    },
+    {
+      "tag": "MINA",
+      "offset": 32383053,
+      "size": 8660
+    },
+    {
+      "tag": "MINA",
+      "offset": 32391721,
+      "size": 8660
+    },
+    {
+      "tag": "MINA",
+      "offset": 32400389,
+      "size": 11729
+    },
+    {
+      "tag": "MINA",
+      "offset": 32412126,
+      "size": 31233
+    },
+    {
+      "tag": "MINA",
+      "offset": 32443367,
+      "size": 11729
+    },
+    {
+      "tag": "MINA",
+      "offset": 32455104,
+      "size": 14961
+    },
+    {
+      "tag": "MINA",
+      "offset": 32470073,
+      "size": 12489
+    },
+    {
+      "tag": "MINA",
+      "offset": 32482570,
+      "size": 9240
+    },
+    {
+      "tag": "MINA",
+      "offset": 32491818,
+      "size": 10799
+    },
+    {
+      "tag": "MINA",
+      "offset": 32502625,
+      "size": 10799
+    },
+    {
+      "tag": "MINA",
+      "offset": 32513432,
+      "size": 7577
+    },
+    {
+      "tag": "MINA",
+      "offset": 32521017,
+      "size": 7561
+    },
+    {
+      "tag": "MINA",
+      "offset": 32528586,
+      "size": 14183
+    },
+    {
+      "tag": "MINA",
+      "offset": 32542777,
+      "size": 7386
+    },
+    {
+      "tag": "MINA",
+      "offset": 32550171,
+      "size": 6399
+    },
+    {
+      "tag": "MINA",
+      "offset": 32556578,
+      "size": 8807
+    },
+    {
+      "tag": "MINA",
+      "offset": 32565393,
+      "size": 10162
+    },
+    {
+      "tag": "MINA",
+      "offset": 32575563,
+      "size": 6897
+    },
+    {
+      "tag": "MINA",
+      "offset": 32582468,
+      "size": 11293
+    },
+    {
+      "tag": "MINA",
+      "offset": 32593769,
+      "size": 6629
+    },
+    {
+      "tag": "MINA",
+      "offset": 32600406,
+      "size": 6485
+    },
+    {
+      "tag": "MINA",
+      "offset": 32606899,
+      "size": 6685
+    },
+    {
+      "tag": "MINA",
+      "offset": 32613592,
+      "size": 6008
+    },
+    {
+      "tag": "MINA",
+      "offset": 32619608,
+      "size": 6360
+    },
+    {
+      "tag": "MINA",
+      "offset": 32625976,
+      "size": 5486
+    },
+    {
+      "tag": "MINA",
+      "offset": 32631470,
+      "size": 5487
+    },
+    {
+      "tag": "MINA",
+      "offset": 32636965,
+      "size": 7264
+    },
+    {
+      "tag": "MINA",
+      "offset": 32644237,
+      "size": 7025
+    },
+    {
+      "tag": "MINA",
+      "offset": 32651270,
+      "size": 8905
+    },
+    {
+      "tag": "MINA",
+      "offset": 32660183,
+      "size": 7504
+    },
+    {
+      "tag": "MINA",
+      "offset": 32667695,
+      "size": 6812
+    },
+    {
+      "tag": "MINA",
+      "offset": 32674515,
+      "size": 6597
+    },
+    {
+      "tag": "MINA",
+      "offset": 32681120,
+      "size": 10816
+    },
+    {
+      "tag": "MINA",
+      "offset": 32691944,
+      "size": 10821
+    },
+    {
+      "tag": "MINA",
+      "offset": 32702773,
+      "size": 9897
+    },
+    {
+      "tag": "MINA",
+      "offset": 32712678,
+      "size": 22142
+    },
+    {
+      "tag": "MINA",
+      "offset": 32734828,
+      "size": 15660
+    },
+    {
+      "tag": "MINA",
+      "offset": 32750496,
+      "size": 20662
+    },
+    {
+      "tag": "MINA",
+      "offset": 32771166,
+      "size": 18062
+    },
+    {
+      "tag": "MINA",
+      "offset": 32789236,
+      "size": 7380
+    },
+    {
+      "tag": "MINA",
+      "offset": 32796624,
+      "size": 1706
+    },
+    {
+      "tag": "MINA",
+      "offset": 32798338,
+      "size": 7919
+    },
+    {
+      "tag": "MINA",
+      "offset": 32806265,
+      "size": 19540
+    },
+    {
+      "tag": "MINA",
+      "offset": 32825813,
+      "size": 8255
+    },
+    {
+      "tag": "MINA",
+      "offset": 32834076,
+      "size": 5102
+    },
+    {
+      "tag": "MINA",
+      "offset": 32839186,
+      "size": 9177
+    },
+    {
+      "tag": "MINA",
+      "offset": 32848371,
+      "size": 6659
+    },
+    {
+      "tag": "MINA",
+      "offset": 32855038,
+      "size": 6278
+    },
+    {
+      "tag": "MINA",
+      "offset": 32861324,
+      "size": 2524
+    },
+    {
+      "tag": "MINA",
+      "offset": 32863856,
+      "size": 6630
+    },
+    {
+      "tag": "MINA",
+      "offset": 32870494,
+      "size": 6777
+    },
+    {
+      "tag": "MINA",
+      "offset": 32877279,
+      "size": 4637
+    },
+    {
+      "tag": "MINA",
+      "offset": 32881924,
+      "size": 4636
+    },
+    {
+      "tag": "MINA",
+      "offset": 32886568,
+      "size": 5497
+    },
+    {
+      "tag": "MINA",
+      "offset": 32892073,
+      "size": 5911
+    },
+    {
+      "tag": "MINA",
+      "offset": 32897992,
+      "size": 5019
+    },
+    {
+      "tag": "MINA",
+      "offset": 32903019,
+      "size": 8874
+    },
+    {
+      "tag": "MINA",
+      "offset": 32911901,
+      "size": 7606
+    },
+    {
+      "tag": "MINA",
+      "offset": 32919515,
+      "size": 9486
+    },
+    {
+      "tag": "MINA",
+      "offset": 32929009,
+      "size": 7440
+    },
+    {
+      "tag": "MINA",
+      "offset": 32936457,
+      "size": 20458
+    },
+    {
+      "tag": "MINA",
+      "offset": 32956923,
+      "size": 2154
+    },
+    {
+      "tag": "MINA",
+      "offset": 32959085,
+      "size": 1624
+    },
+    {
+      "tag": "MINA",
+      "offset": 32960717,
+      "size": 2108
+    },
+    {
+      "tag": "MINA",
+      "offset": 32962833,
+      "size": 6184
+    },
+    {
+      "tag": "MINA",
+      "offset": 32969025,
+      "size": 6185
+    },
+    {
+      "tag": "MINA",
+      "offset": 32975218,
+      "size": 10820
+    },
+    {
+      "tag": "MINA",
+      "offset": 32986046,
+      "size": 5582
+    },
+    {
+      "tag": "MINA",
+      "offset": 32991636,
+      "size": 5422
+    },
+    {
+      "tag": "MINA",
+      "offset": 32997066,
+      "size": 2463
+    },
+    {
+      "tag": "MINA",
+      "offset": 32999537,
+      "size": 2457
+    },
+    {
+      "tag": "MINA",
+      "offset": 33002002,
+      "size": 2459
+    },
+    {
+      "tag": "MINA",
+      "offset": 33004469,
+      "size": 2461
+    },
+    {
+      "tag": "MINA",
+      "offset": 33006938,
+      "size": 2459
+    },
+    {
+      "tag": "MINA",
+      "offset": 33009405,
+      "size": 2460
+    },
+    {
+      "tag": "MINA",
+      "offset": 33011873,
+      "size": 6782
+    },
+    {
+      "tag": "MINA",
+      "offset": 33018663,
+      "size": 7503
+    },
+    {
+      "tag": "MINA",
+      "offset": 33026174,
+      "size": 7504
+    },
+    {
+      "tag": "MINA",
+      "offset": 33033686,
+      "size": 13956
+    },
+    {
+      "tag": "MINA",
+      "offset": 33047650,
+      "size": 13396
+    },
+    {
+      "tag": "MINA",
+      "offset": 33061054,
+      "size": 18884
+    },
+    {
+      "tag": "MINA",
+      "offset": 33079946,
+      "size": 10276
+    },
+    {
+      "tag": "MINA",
+      "offset": 33090230,
+      "size": 18884
+    },
+    {
+      "tag": "MINA",
+      "offset": 33109122,
+      "size": 7619
+    },
+    {
+      "tag": "MINA",
+      "offset": 33116749,
+      "size": 9739
+    },
+    {
+      "tag": "MINA",
+      "offset": 33126496,
+      "size": 9737
+    },
+    {
+      "tag": "MINA",
+      "offset": 33136241,
+      "size": 29024
+    },
+    {
+      "tag": "MINA",
+      "offset": 33165273,
+      "size": 17038
+    },
+    {
+      "tag": "MINA",
+      "offset": 33182319,
+      "size": 5057
+    },
+    {
+      "tag": "MINA",
+      "offset": 33187384,
+      "size": 6274
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33193666,
+      "size": 674
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33194348,
+      "size": 559
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33194915,
+      "size": 1664
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33196587,
+      "size": 1225
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33197820,
+      "size": 999
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33198827,
+      "size": 1279
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33200114,
+      "size": 839
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33200961,
+      "size": 289
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33201258,
+      "size": 3038
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33204304,
+      "size": 788
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33205100,
+      "size": 1291
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33206399,
+      "size": 340
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33206747,
+      "size": 4107
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33210862,
+      "size": 441
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33211311,
+      "size": 813
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33212132,
+      "size": 580
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33212720,
+      "size": 12011
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33224739,
+      "size": 5027
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33229774,
+      "size": 8246
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33238028,
+      "size": 4319
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33242355,
+      "size": 7247
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33249610,
+      "size": 1857
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33251475,
+      "size": 512
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33251995,
+      "size": 3536
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33255539,
+      "size": 991
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33256538,
+      "size": 1369
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33257915,
+      "size": 1298
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33259221,
+      "size": 9129
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33268358,
+      "size": 10016
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33278382,
+      "size": 1003
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33279393,
+      "size": 1126
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33280527,
+      "size": 881
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33281416,
+      "size": 11531
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33292955,
+      "size": 2193
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33295156,
+      "size": 1397
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33296561,
+      "size": 4638
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33301207,
+      "size": 3208
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33304423,
+      "size": 6131
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33310562,
+      "size": 15349
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33325919,
+      "size": 16616
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33342543,
+      "size": 265
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33342816,
+      "size": 316
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33343140,
+      "size": 1240
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33344388,
+      "size": 8908
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33353304,
+      "size": 5633
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33358945,
+      "size": 5393
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33364346,
+      "size": 7023
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33371377,
+      "size": 5358
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33376743,
+      "size": 4265
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33381016,
+      "size": 4426
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33385450,
+      "size": 5620
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33391078,
+      "size": 3804
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33394890,
+      "size": 4578
+    },
+    {
+      "tag": "PRCS",
+      "offset": 33399476,
+      "size": 61591
+    },
+    {
+      "tag": "FEQT",
+      "offset": 33461075,
+      "size": 14727
+    },
+    {
+      "tag": "FEQT",
+      "offset": 33475810,
+      "size": 6367
+    },
+    {
+      "tag": "FEQT",
+      "offset": 33482185,
+      "size": 21259
+    },
+    {
+      "tag": "FEQT",
+      "offset": 33503452,
+      "size": 41161
+    },
+    {
+      "tag": "FEQT",
+      "offset": 33544621,
+      "size": 9633
+    },
+    {
+      "tag": "FEQT",
+      "offset": 33554262,
+      "size": 37024
+    },
+    {
+      "tag": "FEQT",
+      "offset": 33591294,
+      "size": 32143
+    },
+    {
+      "tag": "FEQT",
+      "offset": 33623445,
+      "size": 63984
+    },
+    {
+      "tag": "FEQT",
+      "offset": 33687437,
+      "size": 35630
+    },
+    {
+      "tag": "FEQT",
+      "offset": 33723075,
+      "size": 15127
+    },
+    {
+      "tag": "FEQT",
+      "offset": 33738210,
+      "size": 18474
+    },
+    {
+      "tag": "FEQT",
+      "offset": 33756692,
+      "size": 5444
+    },
+    {
+      "tag": "FEQT",
+      "offset": 33762144,
+      "size": 27568
+    },
+    {
+      "tag": "FEQT",
+      "offset": 33789720,
+      "size": 9347
+    },
+    {
+      "tag": "FEQT",
+      "offset": 33799075,
+      "size": 13545
+    },
+    {
+      "tag": "FEQT",
+      "offset": 33812628,
+      "size": 15930
+    },
+    {
+      "tag": "FEQT",
+      "offset": 33828566,
+      "size": 13975
+    },
+    {
+      "tag": "FEQT",
+      "offset": 33842549,
+      "size": 10450
+    },
+    {
+      "tag": "FEQT",
+      "offset": 33853007,
+      "size": 4365
+    },
+    {
+      "tag": "FEQT",
+      "offset": 33857380,
+      "size": 5011
+    },
+    {
+      "tag": "FEQT",
+      "offset": 33862399,
+      "size": 10431
+    },
+    {
+      "tag": "FEQT",
+      "offset": 33872838,
+      "size": 37355
+    },
+    {
+      "tag": "FEQT",
+      "offset": 33910201,
+      "size": 19165
+    },
+    {
+      "tag": "FEQT",
+      "offset": 33929374,
+      "size": 32715
+    },
+    {
+      "tag": "FEQT",
+      "offset": 33962097,
+      "size": 32697
+    },
+    {
+      "tag": "FEQT",
+      "offset": 33994802,
+      "size": 14348
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34009158,
+      "size": 6744
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34015910,
+      "size": 10755
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34026673,
+      "size": 8427
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34035108,
+      "size": 17033
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34052149,
+      "size": 5438
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34057595,
+      "size": 14653
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34072256,
+      "size": 9153
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34081417,
+      "size": 19865
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34101290,
+      "size": 9303
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34110601,
+      "size": 21999
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34132608,
+      "size": 28454
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34161070,
+      "size": 11121
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34172199,
+      "size": 35896
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34208103,
+      "size": 30535
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34238646,
+      "size": 5437
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34244091,
+      "size": 5422
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34249521,
+      "size": 7987
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34257516,
+      "size": 35064
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34292588,
+      "size": 18958
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34311554,
+      "size": 7672
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34319234,
+      "size": 6733
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34325975,
+      "size": 6727
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34332710,
+      "size": 6733
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34339451,
+      "size": 6749
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34346208,
+      "size": 22461
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34368677,
+      "size": 21292
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34389977,
+      "size": 22455
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34412440,
+      "size": 44642
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34457090,
+      "size": 4881
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34461979,
+      "size": 6808
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34468795,
+      "size": 5416
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34474219,
+      "size": 19470
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34493697,
+      "size": 17460
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34511165,
+      "size": 30436
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34541609,
+      "size": 29917
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34571534,
+      "size": 11248
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34582790,
+      "size": 48901
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34631699,
+      "size": 15391
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34647098,
+      "size": 25404
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34672510,
+      "size": 11541
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34684059,
+      "size": 32762
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34716829,
+      "size": 25214
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34742051,
+      "size": 5430
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34747489,
+      "size": 31377
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34778874,
+      "size": 11883
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34790765,
+      "size": 5314
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34796087,
+      "size": 9925
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34806020,
+      "size": 23185
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34829213,
+      "size": 11131
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34840352,
+      "size": 6524
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34846884,
+      "size": 10647
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34857539,
+      "size": 15880
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34873427,
+      "size": 6016
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34879451,
+      "size": 5053
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34884512,
+      "size": 13468
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34897988,
+      "size": 6274
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34904270,
+      "size": 5064
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34909342,
+      "size": 21998
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34931348,
+      "size": 5603
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34936959,
+      "size": 11820
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34948787,
+      "size": 7585
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34956380,
+      "size": 4943
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34961331,
+      "size": 6327
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34967666,
+      "size": 13183
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34980857,
+      "size": 10038
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34990903,
+      "size": 6653
+    },
+    {
+      "tag": "FEQT",
+      "offset": 34997564,
+      "size": 5263
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35002835,
+      "size": 3761
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35006604,
+      "size": 9441
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35016053,
+      "size": 9159
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35025220,
+      "size": 9157
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35034385,
+      "size": 13846
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35048239,
+      "size": 9173
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35057420,
+      "size": 3761
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35061189,
+      "size": 4312
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35065509,
+      "size": 4344
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35069861,
+      "size": 4313
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35074182,
+      "size": 19370
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35093560,
+      "size": 4312
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35097880,
+      "size": 4857
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35102745,
+      "size": 4857
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35107610,
+      "size": 4532
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35112150,
+      "size": 12407
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35124565,
+      "size": 6429
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35131002,
+      "size": 4841
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35135851,
+      "size": 6796
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35142655,
+      "size": 6802
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35149465,
+      "size": 4901
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35154374,
+      "size": 5460
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35159842,
+      "size": 5470
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35165320,
+      "size": 4901
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35170229,
+      "size": 5498
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35175735,
+      "size": 16582
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35192325,
+      "size": 5471
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35197804,
+      "size": 10287
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35208099,
+      "size": 10305
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35218412,
+      "size": 7614
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35226034,
+      "size": 6865
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35232907,
+      "size": 37781
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35270696,
+      "size": 11616
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35282320,
+      "size": 24153
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35306481,
+      "size": 15137
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35321626,
+      "size": 4928
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35326562,
+      "size": 11596
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35338166,
+      "size": 8825
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35346999,
+      "size": 274
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35347281,
+      "size": 8249
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35355538,
+      "size": 6452
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35361998,
+      "size": 26137
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35388143,
+      "size": 38055
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35426206,
+      "size": 40038
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35466252,
+      "size": 18680
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35484940,
+      "size": 24527
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35509475,
+      "size": 17333
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35526816,
+      "size": 12850
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35539674,
+      "size": 2246
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35541928,
+      "size": 19313
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35561249,
+      "size": 10176
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35571433,
+      "size": 5500
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35576941,
+      "size": 11717
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35588666,
+      "size": 5042
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35593716,
+      "size": 20654
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35614378,
+      "size": 25572
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35639958,
+      "size": 16878
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35656844,
+      "size": 8432
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35665284,
+      "size": 6072
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35671364,
+      "size": 6402
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35677774,
+      "size": 9030
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35686812,
+      "size": 9029
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35695849,
+      "size": 9602
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35705459,
+      "size": 9030
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35714497,
+      "size": 9028
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35723533,
+      "size": 9029
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35732570,
+      "size": 9600
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35742178,
+      "size": 9028
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35751214,
+      "size": 7307
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35758529,
+      "size": 2602
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35761139,
+      "size": 10176
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35771323,
+      "size": 22090
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35793421,
+      "size": 10247
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35803676,
+      "size": 7614
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35811298,
+      "size": 21780
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35833086,
+      "size": 12461
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35845555,
+      "size": 6374
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35851937,
+      "size": 8786
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35860731,
+      "size": 8984
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35869723,
+      "size": 11883
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35881614,
+      "size": 13221
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35894843,
+      "size": 13535
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35908386,
+      "size": 17402
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35925796,
+      "size": 2534
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35928338,
+      "size": 15676
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35944022,
+      "size": 11091
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35955121,
+      "size": 7494
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35962623,
+      "size": 5956
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35968587,
+      "size": 6675
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35975270,
+      "size": 6677
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35981955,
+      "size": 16852
+    },
+    {
+      "tag": "FEQT",
+      "offset": 35998815,
+      "size": 13913
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36012736,
+      "size": 22569
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36035313,
+      "size": 6405
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36041726,
+      "size": 9570
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36051304,
+      "size": 4412
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36055724,
+      "size": 12274
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36068006,
+      "size": 11146
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36079160,
+      "size": 11245
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36090413,
+      "size": 12848
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36103269,
+      "size": 11118
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36114395,
+      "size": 11727
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36126130,
+      "size": 7486
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36133624,
+      "size": 10940
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36144572,
+      "size": 17058
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36161638,
+      "size": 20581
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36182227,
+      "size": 9686
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36191921,
+      "size": 7459
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36199388,
+      "size": 6379
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36205775,
+      "size": 2388
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36208171,
+      "size": 10809
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36218988,
+      "size": 17474
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36236470,
+      "size": 10538
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36247016,
+      "size": 12044
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36259068,
+      "size": 6877
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36265953,
+      "size": 25578
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36291539,
+      "size": 9108
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36300655,
+      "size": 9743
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36310406,
+      "size": 20580
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36330994,
+      "size": 15707
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36346709,
+      "size": 8305
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36355022,
+      "size": 13781
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36368811,
+      "size": 4629
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36373448,
+      "size": 4076
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36377532,
+      "size": 11916
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36389456,
+      "size": 5106
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36394570,
+      "size": 16048
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36410626,
+      "size": 10275
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36420909,
+      "size": 9738
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36430655,
+      "size": 9530
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36440193,
+      "size": 3188
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36443389,
+      "size": 10082
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36453479,
+      "size": 7765
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36461252,
+      "size": 7767
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36469027,
+      "size": 12243
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36481278,
+      "size": 3511
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36484797,
+      "size": 6645
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36491450,
+      "size": 9720
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36501178,
+      "size": 6356
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36507542,
+      "size": 22018
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36529568,
+      "size": 7232
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36536808,
+      "size": 13181
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36549997,
+      "size": 12981
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36562986,
+      "size": 14355
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36577349,
+      "size": 3301
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36580658,
+      "size": 15689
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36596355,
+      "size": 13138
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36609501,
+      "size": 8829
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36618338,
+      "size": 6072
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36624418,
+      "size": 8947
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36633373,
+      "size": 7209
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36640590,
+      "size": 7597
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36648195,
+      "size": 10680
+    },
+    {
+      "tag": "FEQT",
+      "offset": 36658883,
+      "size": 15713
+    }
+  ],
+  "chunk_types": {
+    "RXET": 1,
+    "DNOS": 1,
+    "LDOM": 116,
+    "MINA": 184,
+    "PRCS": 54,
+    "FEQT": 247
+  },
+  "lua_chunks": [
+    {
+      "chunk_offset": 33193666,
+      "tag": "PRCS",
+      "signature_offset_in_payload": 16,
+      "header_hex": "1b4c756150010404040608090908b609"
+    },
+    {
+      "chunk_offset": 33194348,
+      "tag": "PRCS",
+      "signature_offset_in_payload": 15,
+      "header_hex": "1b4c756150010404040608090908b609"
+    },
+    {
+      "chunk_offset": 33194915,
+      "tag": "PRCS",
+      "signature_offset_in_payload": 20,
+      "header_hex": "1b4c756150010404040608090908b609"
+    },
+    {
+      "chunk_offset": 33196587,
+      "tag": "PRCS",
+      "signature_offset_in_payload": 35,
+      "header_hex": "1b4c756150010404040608090908b609"
+    },
+    {
+      "chunk_offset": 33197820,
+      "tag": "PRCS",
+      "signature_offset_in_payload": 32,
+      "header_hex": "1b4c756150010404040608090908b609"
+    },
+    {
+      "chunk_offset": 33198827,
+      "tag": "PRCS",
+      "signature_offset_in_payload": 36,
+      "header_hex": "1b4c756150010404040608090908b609"
+    },
+    {
+      "chunk_offset": 33200114,
+      "tag": "PRCS",
+      "signature_offset_in_payload": 23,
+      "header_hex": "1b4c756150010404040608090908b609"
+    },
+    {
+      "chunk_offset": 33200961,
+      "tag": "PRCS",
+      "signature_offset_in_payload": 33,
+      "header_hex": "1b4c756150010404040608090908b609"
+    },
+    {
+      "chunk_offset": 33201258,
+      "tag": "PRCS",
+      "signature_offset_in_payload": 21,
+      "header_hex": "1b4c756150010404040608090908b609"
+    },
+    {
+      "chunk_offset": 33204304,
+      "tag": "PRCS",
+      "signature_offset_in_payload": 30,
+      "header_hex": "1b4c756150010404040608090908b609"
+    },
+    {
+      "chunk_offset": 33205100,
+      "tag": "PRCS",
+      "signature_offset_in_payload": 34,
+      "header_hex": "1b4c756150010404040608090908b609"
+    },
+    {
+      "chunk_offset": 33206399,
+      "tag": "PRCS",
+      "signature_offset_in_payload": 31,
+      "header_hex": "1b4c756150010404040608090908b609"
+    },
+    {
+      "chunk_offset": 33206747,
+      "tag": "PRCS",
+      "signature_offset_in_payload": 29,
+      "header_hex": "1b4c756150010404040608090908b609"
+    },
+    {
+      "chunk_offset": 33210862,
+      "tag": "PRCS",
+      "signature_offset_in_payload": 35,
+      "header_hex": "1b4c756150010404040608090908b609"
+    },
+    {
+      "chunk_offset": 33211311,
+      "tag": "PRCS",
+      "signature_offset_in_payload": 27,
+      "header_hex": "1b4c756150010404040608090908b609"
+    },
+    {
+      "chunk_offset": 33212132,
+      "tag": "PRCS",
+      "signature_offset_in_payload": 37,
+      "header_hex": "1b4c756150010404040608090908b609"
+    },
+    {
+      "chunk_offset": 33212720,
+      "tag": "PRCS",
+      "signature_offset_in_payload": 42,
+      "header_hex": "1b4c756150010404040608090908b609"
+    },
+    {
+      "chunk_offset": 33224739,
+      "tag": "PRCS",
+      "signature_offset_in_payload": 50,
+      "header_hex": "1b4c756150010404040608090908b609"
+    },
+    {
+      "chunk_offset": 33229774,
+      "tag": "PRCS",
+      "signature_offset_in_payload": 44,
+      "header_hex": "1b4c756150010404040608090908b609"
+    },
+    {
+      "chunk_offset": 33238028,
+      "tag": "PRCS",
+      "signature_offset_in_payload": 45,
+      "header_hex": "1b4c756150010404040608090908b609"
+    },
+    {
+      "chunk_offset": 33242355,
+      "tag": "PRCS",
+      "signature_offset_in_payload": 41,
+      "header_hex": "1b4c756150010404040608090908b609"
+    },
+    {
+      "chunk_offset": 33249610,
+      "tag": "PRCS",
+      "signature_offset_in_payload": 38,
+      "header_hex": "1b4c756150010404040608090908b609"
+    },
+    {
+      "chunk_offset": 33251475,
+      "tag": "PRCS",
+      "signature_offset_in_payload": 31,
+      "header_hex": "1b4c756150010404040608090908b609"
+    },
+    {
+      "chunk_offset": 33251995,
+      "tag": "PRCS",
+      "signature_offset_in_payload": 25,
+      "header_hex": "1b4c756150010404040608090908b609"
+    },
+    {
+      "chunk_offset": 33255539,
+      "tag": "PRCS",
+      "signature_offset_in_payload": 28,
+      "header_hex": "1b4c756150010404040608090908b609"
+    },
+    {
+      "chunk_offset": 33256538,
+      "tag": "PRCS",
+      "signature_offset_in_payload": 29,
+      "header_hex": "1b4c756150010404040608090908b609"
+    },
+    {
+      "chunk_offset": 33257915,
+      "tag": "PRCS",
+      "signature_offset_in_payload": 44,
+      "header_hex": "1b4c756150010404040608090908b609"
+    },
+    {
+      "chunk_offset": 33259221,
+      "tag": "PRCS",
+      "signature_offset_in_payload": 26,
+      "header_hex": "1b4c756150010404040608090908b609"
+    },
+    {
+      "chunk_offset": 33268358,
+      "tag": "PRCS",
+      "signature_offset_in_payload": 32,
+      "header_hex": "1b4c756150010404040608090908b609"
+    },
+    {
+      "chunk_offset": 33278382,
+      "tag": "PRCS",
+      "signature_offset_in_payload": 39,
+      "header_hex": "1b4c756150010404040608090908b609"
+    },
+    {
+      "chunk_offset": 33279393,
+      "tag": "PRCS",
+      "signature_offset_in_payload": 41,
+      "header_hex": "1b4c756150010404040608090908b609"
+    },
+    {
+      "chunk_offset": 33280527,
+      "tag": "PRCS",
+      "signature_offset_in_payload": 28,
+      "header_hex": "1b4c756150010404040608090908b609"
+    },
+    {
+      "chunk_offset": 33281416,
+      "tag": "PRCS",
+      "signature_offset_in_payload": 24,
+      "header_hex": "1b4c756150010404040608090908b609"
+    },
+    {
+      "chunk_offset": 33292955,
+      "tag": "PRCS",
+      "signature_offset_in_payload": 28,
+      "header_hex": "1b4c756150010404040608090908b609"
+    },
+    {
+      "chunk_offset": 33295156,
+      "tag": "PRCS",
+      "signature_offset_in_payload": 24,
+      "header_hex": "1b4c756150010404040608090908b609"
+    },
+    {
+      "chunk_offset": 33296561,
+      "tag": "PRCS",
+      "signature_offset_in_payload": 37,
+      "header_hex": "1b4c756150010404040608090908b609"
+    },
+    {
+      "chunk_offset": 33301207,
+      "tag": "PRCS",
+      "signature_offset_in_payload": 13,
+      "header_hex": "1b4c756150010404040608090908b609"
+    },
+    {
+      "chunk_offset": 33304423,
+      "tag": "PRCS",
+      "signature_offset_in_payload": 34,
+      "header_hex": "1b4c756150010404040608090908b609"
+    },
+    {
+      "chunk_offset": 33310562,
+      "tag": "PRCS",
+      "signature_offset_in_payload": 15,
+      "header_hex": "1b4c756150010404040608090908b609"
+    },
+    {
+      "chunk_offset": 33325919,
+      "tag": "PRCS",
+      "signature_offset_in_payload": 28,
+      "header_hex": "1b4c756150010404040608090908b609"
+    },
+    {
+      "chunk_offset": 33342543,
+      "tag": "PRCS",
+      "signature_offset_in_payload": 25,
+      "header_hex": "1b4c756150010404040608090908b609"
+    },
+    {
+      "chunk_offset": 33342816,
+      "tag": "PRCS",
+      "signature_offset_in_payload": 42,
+      "header_hex": "1b4c756150010404040608090908b609"
+    },
+    {
+      "chunk_offset": 33343140,
+      "tag": "PRCS",
+      "signature_offset_in_payload": 43,
+      "header_hex": "1b4c756150010404040608090908b609"
+    },
+    {
+      "chunk_offset": 33344388,
+      "tag": "PRCS",
+      "signature_offset_in_payload": 38,
+      "header_hex": "1b4c756150010404040608090908b609"
+    },
+    {
+      "chunk_offset": 33353304,
+      "tag": "PRCS",
+      "signature_offset_in_payload": 33,
+      "header_hex": "1b4c756150010404040608090908b609"
+    },
+    {
+      "chunk_offset": 33358945,
+      "tag": "PRCS",
+      "signature_offset_in_payload": 32,
+      "header_hex": "1b4c756150010404040608090908b609"
+    },
+    {
+      "chunk_offset": 33364346,
+      "tag": "PRCS",
+      "signature_offset_in_payload": 26,
+      "header_hex": "1b4c756150010404040608090908b609"
+    },
+    {
+      "chunk_offset": 33371377,
+      "tag": "PRCS",
+      "signature_offset_in_payload": 46,
+      "header_hex": "1b4c756150010404040608090908b609"
+    },
+    {
+      "chunk_offset": 33376743,
+      "tag": "PRCS",
+      "signature_offset_in_payload": 43,
+      "header_hex": "1b4c756150010404040608090908b609"
+    },
+    {
+      "chunk_offset": 33381016,
+      "tag": "PRCS",
+      "signature_offset_in_payload": 38,
+      "header_hex": "1b4c756150010404040608090908b609"
+    },
+    {
+      "chunk_offset": 33385450,
+      "tag": "PRCS",
+      "signature_offset_in_payload": 49,
+      "header_hex": "1b4c756150010404040608090908b609"
+    },
+    {
+      "chunk_offset": 33391078,
+      "tag": "PRCS",
+      "signature_offset_in_payload": 55,
+      "header_hex": "1b4c756150010404040608090908b609"
+    },
+    {
+      "chunk_offset": 33394890,
+      "tag": "PRCS",
+      "signature_offset_in_payload": 47,
+      "header_hex": "1b4c756150010404040608090908b609"
+    },
+    {
+      "chunk_offset": 33399476,
+      "tag": "PRCS",
+      "signature_offset_in_payload": 20,
+      "header_hex": "1b4c756150010404040608090908b609"
+    }
+  ]
+}

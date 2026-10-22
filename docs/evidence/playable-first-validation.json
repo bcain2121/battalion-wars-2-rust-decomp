@@ -1,0 +1,59 @@
+{
+  "status": "original-first-mission integration build; not complete mission playability",
+  "tests": {
+    "viewer_all_targets": {
+      "command": "cargo test --locked --features viewer --all-targets -- --include-ignored",
+      "passed": 302,
+      "failed": 0,
+      "ignored": 0,
+      "log": "local/analysis/first-mission-full-tests.log"
+    },
+    "no_viewer_library": {"passed": 180, "failed": 0, "log": "local/analysis/first-mission-no-viewer-tests.log"},
+    "overlapping_test_counts_must_not_be_summed": true,
+    "viewer_all_target_clippy": "passed with -D warnings",
+    "format": "passed"
+  },
+  "original_simulation": {
+    "artifact": "local/analysis/first-mission-final-simulation.json",
+    "successful_ticks_after_startup": 7200,
+    "simulated_seconds": 120,
+    "global_and_unit_coroutines": 97,
+    "intro_script_complete": true,
+    "player_frozen": false,
+    "error": null,
+    "full_combat_objective_victory_acceptance": false
+  },
+  "strict_reference": {
+    "artifact": "local/analysis/first-mission-strict-reference.json",
+    "committed": false,
+    "frame": 0,
+    "expected_error": "ArtInitialisation pc 3: Kill: Unsupported gameplay call/signature: Kill"
+  },
+  "rendered_movement": {
+    "capture": "local/analysis/first-mission-gpu-02.png",
+    "log": "local/analysis/first-mission-gpu-02.log",
+    "reviewed": true,
+    "error_or_warning_log_lines": 0,
+    "original_script_preroll_seconds": 45,
+    "input": "synthetic W/ArrowLeft ButtonInput through configured Bevy controls",
+    "visible_player_parts": 9,
+    "start": [165.139, 0.0, -346.259],
+    "end": [172.22066, 0.0, -327.55725],
+    "hardware_controls_verified": false
+  },
+  "opening_render": {
+    "capture": "local/analysis/first-mission-opening-01.png",
+    "log": "local/analysis/first-mission-opening-01.log",
+    "reviewed": true,
+    "no_preroll": true,
+    "error_or_warning_log_lines": 0,
+    "complete_rendered_cinematic_acceptance": false
+  },
+  "remaining": [
+    "shooting and enemy combat integration",
+    "objective guidance and capture",
+    "player replacement, authored defeat/victory and end-to-end restart acceptance",
+    "full animation and hardware audio",
+    "physical controller and other-platform execution"
+  ]
+}

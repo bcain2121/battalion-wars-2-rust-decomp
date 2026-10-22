@@ -1,0 +1,54 @@
+{
+  "status": "first authored combat objective verified; full mission incomplete",
+  "original_mission_test": {
+    "test": "original_intro_movement_look_pause_and_first_combat_objective",
+    "log": "local/analysis/first-combat-assisted-test.log",
+    "final_regression_log": "local/analysis/first-combat-full-tests-02.log",
+    "authored_coroutines": 97,
+    "movement_checkpoint": true,
+    "look_tutorial": true,
+    "pause_confirmation_uses_input": true,
+    "paused_frames_with_frozen_game_time_and_position": 193,
+    "all_three_tutorial_barrels_dead": true,
+    "authored_completed_objective": 550032165,
+    "game_time_seconds": 74.13333333333041,
+    "recorded_input_frames": 4641,
+    "total_rifle_shots_all_actors": 109,
+    "damaging_contacts_all_actors": 32,
+    "player_teleport_or_progress_global_override": false,
+    "invalid_input_rollback_and_restart": true
+  },
+  "tests": {
+    "viewer_all_targets_including_private_assets": {"passed": 309, "failed": 0, "ignored": 0},
+    "non_viewer_library": {"passed": 185, "failed": 0, "log": "local/analysis/first-combat-core-tests.log"},
+    "counts_overlap_do_not_sum": true,
+    "viewer_all_target_clippy": "passed with -D warnings",
+    "clippy_log": "local/analysis/first-combat-final-clippy-02.log",
+    "format": "passed"
+  },
+  "gpu_combat": {
+    "log": "local/analysis/first-combat-render-02.log",
+    "capture": "local/analysis/first-combat-render-02.png",
+    "capture_reviewed": true,
+    "error_warning_lines": 0,
+    "original_input_preroll_frames": 4521,
+    "rendered_recorded_inputs": 120,
+    "authored_objective_completion_asserted": true,
+    "full_rendered_cinematic_acceptance": false
+  },
+  "gpu_controls": {
+    "log": "local/analysis/first-combat-controls-02.log",
+    "capture": "local/analysis/first-combat-controls-02.png",
+    "capture_reviewed": true,
+    "error_warning_lines": 0,
+    "synthetic_keyboard_movement_and_lmb_fire_through_controls_adapter": true,
+    "gold_star_and_rifle_tracer_visible": true,
+    "physical_controller_acceptance": false
+  },
+  "isolated_combat_fixtures": {
+    "file": "tests/mission_combat.rs",
+    "scope": "original weapon data in flat arena; not mission progression",
+    "checks": ["damage", "cadence", "clip/reload", "cover", "invulnerability", "retirement", "enemy return fire", "friendly interception"]
+  },
+  "remaining": ["subsequent squad/attack objectives and tutorial cards", "heavy weapons", "capture", "player replacement", "authored full victory/defeat", "full animation", "hardware audio/controller acceptance", "menus/profiles", "other platforms"]
+}

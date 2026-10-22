@@ -1,0 +1,30 @@
+{
+  "session_date": "2026-10-02",
+  "ready_original_mission": false,
+  "original_initializer_bodies_completed": 2,
+  "initializer_instructions_executed": 365,
+  "original_coroutine_exercised": "Pause_Scoring_Timer",
+  "coroutine_fixture": {
+    "external_globals_explicitly_seeded": ["PauseTimerActive", "LevelPauseTimer"],
+    "checks": ["wait deadline", "preserved registers", "logical clock freeze", "active and disabled branches", "one final increment after an in-flight wait"],
+    "cinematic_scripts_executed": false,
+    "original_scheduler_parity_claimed": false
+  },
+  "tests": {
+    "rust_unit_with_viewer": 56,
+    "original_asset_integration": 4,
+    "original_mission_integration": 2,
+    "python": 15,
+    "clippy_warnings_denied": "pass",
+    "existing_original_terrain_skirmish": "movement/victory/defeat/restart pass",
+    "existing_custom_terrain_skirmish": "movement/victory/defeat/restart pass"
+  },
+  "animation_status": "No speculative decoder change promoted. Inverse-bind test does not independently validate palette assignments. Spatial evidence supports the candidate mapping; original animation fidelity remains unresolved.",
+  "limitations": [
+    "Restricted Lua instruction subset; Lua-to-Lua calls, captures, metatables, coercions and generic iteration remain unsupported.",
+    "Seven explicit in-memory host capabilities, not the complete original game host.",
+    "No original combat, AI, objective progression, vehicle gameplay or complete mission run.",
+    "Scheduler ordering, time units and pause behavior are proposed policies, not original-runtime comparisons.",
+    "No new visual renderer change or physical controller/cross-platform test in this slice."
+  ]
+}

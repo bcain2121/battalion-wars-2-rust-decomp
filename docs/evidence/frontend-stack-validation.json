@@ -1,0 +1,19 @@
+{
+  "slice": "original frontend PageStack Lua execution",
+  "completed": true,
+  "original_script_modified": false,
+  "capabilities": ["push", "pop", "replace", "reset", "top getter", "shared captured state", "transactional rollback"],
+  "verified_tests": {"viewer_library": 123, "integration": 33, "python": 15, "total": 171},
+  "format_check": "passed",
+  "clippy_viewer_all_targets_deny_warnings": "passed",
+  "locked_builds": ["bw-battle", "bw-original-viewer", "bw-play"],
+  "replacement_battle_restart_regression": "passed",
+  "test_supplies_page_names": true,
+  "page_lifecycle_callbacks_executed": false,
+  "menus_rendered": false,
+  "original_mission_launched": false,
+  "original_mission_victory_verified": false,
+  "human_controller_acceptance": false,
+  "details": "docs/FRONTEND_PAGE_STACK.md",
+  "local_logs": "local/analysis/frontend-stack-*.log"
+}

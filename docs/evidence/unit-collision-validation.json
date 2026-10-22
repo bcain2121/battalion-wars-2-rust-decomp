@@ -1,0 +1,64 @@
+{
+  "date": "2026-10-03",
+  "scope": "replacement infantry collision in original-script preview, not original collision parity or full mission",
+  "tests": {
+    "viewer_rust_unit": 74,
+    "original_assets": 4,
+    "original_mission": 8,
+    "python": 15,
+    "total": 101,
+    "result": "passed",
+    "clippy_warnings_denied": "passed",
+    "format": "passed",
+    "launcher_shell_syntax": "passed",
+    "log": "local/analysis/unit-collision-tests.log"
+  },
+  "native_metal": {
+    "scene": {
+      "instances": 1003,
+      "mesh_contact_resolutions": 675,
+      "unit_contact_resolutions": 0,
+      "overlap_reported": false,
+      "remaining_home_distance": 10.618307,
+      "arrived": false,
+      "capture": "local/analysis/unit-collision-scene-final.png",
+      "log": "local/analysis/unit-collision-scene-final.log"
+    },
+    "pair": {
+      "instances": 1002,
+      "mesh_contact_resolutions": 0,
+      "unit_contact_resolutions": 694,
+      "overlap_reported": false,
+      "remaining_home_distance": 13.200027,
+      "arrived": false,
+      "capture": "local/analysis/unit-collision-pair-final.png",
+      "log": "local/analysis/unit-collision-pair-final.log"
+    },
+    "death_coroutine_and_clip": "passed",
+    "legacy_camera_collision_disabled": {"result": "passed", "adjusted_frames": 145},
+    "static_scene": "passed",
+    "original_skirmish": "passed",
+    "custom_skirmish": "passed",
+    "final_captures_visually_reviewed": true
+  },
+  "fixture": {
+    "actor": "Troop.Sgrunt02",
+    "optional_blocker": "Troop.Sgrunt03",
+    "actor_home_x_offset": 40,
+    "blocker_home_x_offset": 12,
+    "original_activation_recovered": false,
+    "original_script": "Gambit_Part_1_Stay_Here",
+    "cutsceneStart": "explicit fixture input"
+  },
+  "limitations": [
+    "Provisional infantry cylinders and replacement solver, not original engine physics",
+    "No route planning; blocked orders remain pending",
+    "Rendered primary-mesh snapshot includes static troops and vehicles; not all collision assets or flags",
+    "No moving vehicle body shapes, destructible updates, corpse physics, or general vertical locomotion",
+    "Pose fidelity and complete original mission remain unfinished",
+    "Native testing is macOS only"
+  ],
+  "media_ignored": true,
+  "committed": false,
+  "published": false
+}

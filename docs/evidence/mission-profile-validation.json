@@ -1,0 +1,18 @@
+{
+  "scope": "Current mission history queries and native tutorial-mode behavior",
+  "tests": {"viewer_library":123,"integration":41,"python":15,"total":179},
+  "format_check":"passed",
+  "clippy_viewer_all_targets_deny_warnings":"passed",
+  "locked_viewer_builds":"passed",
+  "replacement_battle_restart_regression":"passed",
+  "profile_source":"explicit unsaved fresh-attempt snapshot; no Wii save parsing",
+  "fresh_profile_completed":false,
+  "tutorial_mode_source":"RBWE01 native function 0x800dd5d4 returns literal true",
+  "gameflow_probe_frontier":"Gambit_Part_1_Gameflow pc 87: Despawn unsupported signature",
+  "failed_resume_rollback_verified":true,
+  "simultaneous_mission_execution":false,
+  "original_mission_playable":false,
+  "original_mission_victory_verified":false,
+  "main_launcher_changed":false,
+  "details":"docs/MISSION_PROFILE_RUNTIME.md"
+}

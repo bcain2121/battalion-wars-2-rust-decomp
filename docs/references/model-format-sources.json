@@ -1,0 +1,32 @@
+{
+  "access_session_date": "2026-10-02",
+  "license": "MIT, Copyright 2019 Yoshi2",
+  "note": "Mutable branch URLs; snapshot hashes identify consulted bytes. Format reference, not project architecture.",
+  "sources": [
+    {
+      "url": "https://raw.githubusercontent.com/RenolY2/battalion-level-editor/master/lib/bw/model_rendering.py",
+      "snapshot_sha256": "d0e8d031cf5406149f1ce9343591c7bbdf8e156fdf595619b4ed515f1642dae9",
+      "local_ignored_snapshot": "local/tools/model-format-reference.py"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/RenolY2/battalion-level-editor/master/lib/bw/gx.py",
+      "snapshot_sha256": "695f501b0d654d87b6c1b6a9d6177c6ac5247fa66eddcfbbf9a4ae6baef3e4e1",
+      "local_ignored_snapshot": "local/tools/model-reference-gx.py"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/RenolY2/battalion-level-editor/master/lib/bw/read_binary.py",
+      "snapshot_sha256": "ae3fb099f1845757db56329717bd8fe341df19817f183e388c0e9792b866285e",
+      "local_ignored_snapshot": "local/tools/model-reference-read_binary.py"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/RenolY2/battalion-level-editor/master/lib/bw_terrain.py",
+      "snapshot_sha256": "a8fae7a88874b46ea3aae9cc8313a064453d4b72d056c6f5d601a4e72a7d1670",
+      "local_ignored_snapshot": "local/tools/terrain-format-reference.py"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/RenolY2/battalion-level-editor/master/LICENSE",
+      "snapshot_sha256": "b83ea71c762ee43a351f8a30b10ba12cb8c0e90ac0165f90519dc372e14c2bc6",
+      "local_ignored_snapshot": "local/tools/editor-reference-LICENSE"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Mod Sandbox / Custom Rolling Hills",
+  "terrain": "mods/sandbox/terrain.json",
+  "resources": "local/extracted/files/Data/CompoundFiles/SP_0.1_Level.res",
+  "arena_center": [24.25, 24.25],
+  "player_color": [0.15, 1.0, 0.7],
+  "enemy_color": [1.0, 0.3, 0.15]
+}

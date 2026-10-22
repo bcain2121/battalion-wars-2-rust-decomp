@@ -1,0 +1,65 @@
+{
+  "size": 2522748,
+  "chunk_count": 8,
+  "chunk_types": {
+    "FNPG": 1,
+    "KNHC": 1,
+    "LTAM": 1,
+    "MLOC": 1,
+    "PAMC": 1,
+    "ROHS": 1,
+    "RRET": 1,
+    "TCWU": 1
+  },
+  "entries": [
+    {
+      "tag": "RRET",
+      "offset": 0,
+      "size": 16,
+      "name": null
+    },
+    {
+      "tag": "ROHS",
+      "offset": 24,
+      "size": 24648,
+      "name": null
+    },
+    {
+      "tag": "KNHC",
+      "offset": 24680,
+      "size": 2113920,
+      "name": null
+    },
+    {
+      "tag": "FNPG",
+      "offset": 2138608,
+      "size": 76,
+      "name": null
+    },
+    {
+      "tag": "PAMC",
+      "offset": 2138692,
+      "size": 16384,
+      "name": null
+    },
+    {
+      "tag": "TCWU",
+      "offset": 2155084,
+      "size": 2880,
+      "name": null
+    },
+    {
+      "tag": "MLOC",
+      "offset": 2157972,
+      "size": 364088,
+      "name": null
+    },
+    {
+      "tag": "LTAM",
+      "offset": 2522068,
+      "size": 672,
+      "name": null
+    }
+  ],
+  "textures": []
+}

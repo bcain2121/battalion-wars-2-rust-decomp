@@ -1,0 +1,43 @@
+{
+  "date": "2026-10-09",
+  "committed": false,
+  "scope": "Original Start constructor and Open callback, then authored A/B event; not cold boot or menu rendering",
+  "implemented": [
+    "Fresh controller-error policy from native lazy singleton constructor",
+    "EnableControllerErrorMessages Lua truthiness and previous-state result",
+    "Scoped light-userdata values distinct from authored object references",
+    "Bounded OpenSprite resource resolution, shared sprite field reset, per-table cache",
+    "CloseSprite clears the table cache without deleting or resetting shared sprite state"
+  ],
+  "original_open": {
+    "completed": true,
+    "opened_descriptor": 2144913074,
+    "sprite": 2144913068,
+    "role": "revConCrosshair, not revConCursor",
+    "field_5c": 0.0,
+    "byte_70": 0,
+    "subsequent_authored_event_stack_top": "LoadCampaignData"
+  },
+  "validation": {
+    "viewer_library_tests": 186,
+    "selected_integration_tests": 27,
+    "fmt": "passed",
+    "viewer_all_target_clippy": "passed",
+    "callback_budget_failure_rollback": "passed",
+    "temporary_debug_instrumentation_removed": true
+  },
+  "logs": [
+    "local/analysis/frontend-error-policy-first-test.log",
+    "local/analysis/frontend-sprite-first-test.log",
+    "local/analysis/frontend-sprite-debug.log",
+    "local/analysis/frontend-sprite-library-tests.log",
+    "local/analysis/frontend-sprite-integration-tests.log",
+    "local/analysis/frontend-sprite-clippy.log"
+  ],
+  "limitations": [
+    "No FrontendBW2 cold driver, original menu renderer, profile persistence or RunLevel integration",
+    "RenderSprite and native sprite playback remain unimplemented",
+    "Sprite function/string descriptor evaluation and general userdata metatables/keys are unsupported",
+    "Mission startup still lacks production Kill; first level is not playable"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "scope": "Temporary skirmish on recovered SP_0.1 terrain; not original mission compatibility",
+  "rust_tests_passed": 24,
+  "python_tests_passed": 15,
+  "clippy_viewer_all_targets_warnings_denied": "passed",
+  "real_terrain_simulation": ["movement", "victory", "defeat", "restart"],
+  "native_smoke": {
+    "backend": "Metal",
+    "exit_code": 0,
+    "victory": true,
+    "shots": 15,
+    "hits": 15,
+    "remaining_health": 79,
+    "victory_frame": 342
+  },
+  "visual_review": ["local/analysis/play-smoke.png", "local/analysis/play-ready.png"],
+  "human_input_testing": "Not yet performed; replay injected simulation input",
+  "platforms_run": ["macOS"],
+  "interactive_session": "Launched paused at ready screen; live process details are local/analysis/play-session.json"
+}

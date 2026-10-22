@@ -1,0 +1,48 @@
+{
+  "scope": "Frozen fully-faded default infantry transfer, branching battle waypoints, non-player troop teleport, staff-cutscene completion and post-cutscene DAMAGE_FIRE rollback",
+  "original_player_ownership_transfer_accepted": true,
+  "staff_recovery_completed": true,
+  "staff_cutscene_control_return_accepted": true,
+  "visible_smooth_transfer_implemented": false,
+  "native_camera_sound_parity": false,
+  "scripts_modified": false,
+  "forced_progression_or_route_teleports": false,
+  "player_after_transfer": 550035312,
+  "cutscene_phase_at_control_return": 2,
+  "player_frozen_at_control_return": false,
+  "post_cutscene_input_frames_before_next_boundary": 325,
+  "current_error": "Unsupported non-rifle projectile 200001224: DAMAGE_FIRE",
+  "viewer_tests": {"passed":325,"failed":0,"ignored":0,"log":"local/analysis/staff-complete-full-tests.log"},
+  "overlapping_library_tests": {"passed":194,"failed":0,"ignored":0,"log":"local/analysis/staff-complete-core-tests.log"},
+  "format_check_passed": true,
+  "clippy_log": "local/analysis/staff-complete-clippy.log",
+  "build_log": "local/analysis/staff-complete-build.log",
+  "tests": [
+    "faded_default_transfer_is_not_a_visible_hard_cut",
+    "branch_selection_matches_native_slot_order_and_rand_consumption",
+    "validates_reachable_optional_branches_and_rejects_degenerate_candidates",
+    "branching_waypoints_advance_deterministically_and_order_normal_respects_rewrite_liveness",
+    "non_player_troop_teleport_validates_collision_and_never_relocates_player",
+    "original_battle_waypoint_branches_validate_and_advance_with_crt_rng",
+    "original_route_completes_staff_bearer_cutscene_and_returns_player_control"
+  ],
+  "gpu_replay": {
+    "recording":"local/analysis/staff-complete-inputs.json",
+    "capture":"local/analysis/staff-complete.png",
+    "frame_series":[
+      "local/analysis/staff-complete.png.frame-0320.png",
+      "local/analysis/staff-complete.png.frame-0550.png",
+      "local/analysis/staff-complete.png.frame-0950.png",
+      "local/analysis/staff-complete.png.frame-1280.png"
+    ],
+    "log":"local/analysis/staff-complete-render.log",
+    "rendered_staff_frames":1053,
+    "replay_held_at_last_successful_tick":false,
+    "reviewed":true,
+    "observation":"Frames 320 and 550 (eCAMTYPE_GENERAL shots) remain terrain-obscured; frame 950 clearly frames Iron Legion trench defense in front of the Iron Tower; frame 1280 and final capture clearly show restored chase camera on Sstaffbearer01 looking toward Trench00 Gold Star (68m ahead) and Iron Tower",
+    "full_staff_cinematic_visual_acceptance":false
+  },
+  "policy":"docs/STAFF_TRANSFER.md",
+  "user_previews_stopped":false,
+  "published":false
+}

@@ -1,0 +1,12 @@
+# Original media and proprietary extracted material stay local.
+*.7z
+*.wbfs
+*.iso
+*.rvz
+/Battalion Wars 2 (USA)/
+/local/
+/extracted/
+/target/
+/.venv/
+__pycache__/
+.DS_Store

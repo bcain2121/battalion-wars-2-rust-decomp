@@ -1,0 +1,23 @@
+{
+  "scope":"Infantry waypoint-order integration, not complete original mission acceptance",
+  "tests":{"viewer_library":120,"startup":11,"original_assets":4,"original_mission":9,"python":15,"total":159},
+  "formatting_passed":true,
+  "clippy_warnings_denied_passed":true,
+  "locked_viewer_builds_passed":true,
+  "replacement_battle_restart_regression_passed":true,
+  "local_offset_transform_verified":true,
+  "collision_prevents_skipping_nodes":true,
+  "astar_detour_and_successor_verified":true,
+  "pause_freeze_and_cancellation_verified":true,
+  "original_data_fixture":{"unit":"Troop.Sstrikebazooka01","waypoint":"Waypoint.WP01","offset":[15,15],"four_link_chain_completed":true,"isolated_actor":true,"empty_collision_geometry":true,"original_terrain":false,"full_intro":false},
+  "configured_intro_frontier":"FollowWaypoint: Waypoint movement backend not configured",
+  "vehicle_movement_supported":false,
+  "native_acceleration_parity":false,
+  "hardware_audio_integrated":false,
+  "original_cinematic_rendered":false,
+  "original_mission_end_to_end_verified":false,
+  "first_mission_finished":false,
+  "logs":["local/analysis/waypoint-runtime-unit-tests.log","local/analysis/waypoint-runtime-original-tests.log","local/analysis/waypoint-runtime-python-tests.log","local/analysis/waypoint-runtime-clippy.log","local/analysis/waypoint-runtime-build.log","local/analysis/waypoint-runtime-battle-regression.log"],
+  "committed":false,
+  "published":false
+}

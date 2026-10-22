@@ -1,0 +1,1336 @@
+[
+  {
+    "name": "GenericRubble",
+    "nodes": 1,
+    "skinned_nodes": 0,
+    "surfaces": 1,
+    "textures": [
+      "SFX_SmokePlume"
+    ],
+    "triangles": 16
+  },
+  {
+    "name": "C4SNCLIFFFACE04_H",
+    "nodes": 4,
+    "skinned_nodes": 0,
+    "surfaces": 4,
+    "textures": [
+      "C4SNCLIFFFACE_LM",
+      "C4TTROCKB"
+    ],
+    "triangles": 1497
+  },
+  {
+    "name": "C4SNCLIFFFACE05_H",
+    "nodes": 4,
+    "skinned_nodes": 0,
+    "surfaces": 7,
+    "textures": [
+      "C4SNCLIFFFACE_LM",
+      "C4SNNEROCITE",
+      "C4SNREFMAP",
+      "C4TTROCKB"
+    ],
+    "triangles": 1573
+  },
+  {
+    "name": "C4SNROCKNEROCITE01_H",
+    "nodes": 17,
+    "skinned_nodes": 0,
+    "surfaces": 22,
+    "textures": [
+      "C4SNNEROCITE",
+      "C4SNREFMAP",
+      "C4TTROCKB"
+    ],
+    "triangles": 1928
+  },
+  {
+    "name": "C4SMWALLEND4_RUNIED_H",
+    "nodes": 2,
+    "skinned_nodes": 0,
+    "surfaces": 10,
+    "textures": [
+      "C4SMXBANNER",
+      "C4SM_WALL01",
+      "C4SM_WALL02",
+      "C4SM_WALL03",
+      "C4SM_WALL04",
+      "C4SNCLIFFFACE"
+    ],
+    "triangles": 1169
+  },
+  {
+    "name": "C4SNROCKSHARP01_H",
+    "nodes": 2,
+    "skinned_nodes": 0,
+    "surfaces": 2,
+    "textures": [
+      "C4SNROCKSHARP01_LM",
+      "C4TTROCKB"
+    ],
+    "triangles": 471
+  },
+  {
+    "name": "C4SNROCKSHARP02_H",
+    "nodes": 2,
+    "skinned_nodes": 0,
+    "surfaces": 2,
+    "textures": [
+      "C4SNROCKSHARP02_LM",
+      "C4TTROCKB"
+    ],
+    "triangles": 659
+  },
+  {
+    "name": "C4SNTHORNYBUSH",
+    "nodes": 1,
+    "skinned_nodes": 0,
+    "surfaces": 1,
+    "textures": [
+      "C4SNTHORNYBUSH"
+    ],
+    "triangles": 216
+  },
+  {
+    "name": "C4SMTOWERHIGH_H",
+    "nodes": 3,
+    "skinned_nodes": 0,
+    "surfaces": 8,
+    "textures": [
+      "C4SMBANNER",
+      "C4SM_CASTLE02",
+      "C4SM_WALL01",
+      "C4SM_WALL02",
+      "C4SM_WALL04",
+      "C4SNCLIFFFACE"
+    ],
+    "triangles": 2963
+  },
+  {
+    "name": "C4SMWALL20M_A_H",
+    "nodes": 2,
+    "skinned_nodes": 0,
+    "surfaces": 10,
+    "textures": [
+      "C4SM_CASTLE02",
+      "C4SM_WALL02",
+      "C4SM_WALL03",
+      "C4SM_WALL04",
+      "C4SNCLIFFFACE"
+    ],
+    "triangles": 1367
+  },
+  {
+    "name": "C4SMTOWERENTRANCE",
+    "nodes": 15,
+    "skinned_nodes": 0,
+    "surfaces": 40,
+    "textures": [
+      "C4SMBANNER",
+      "C4SMIRONTOWER",
+      "C4SMIRONTOWER2",
+      "C4SMIRONTOWER2_LM",
+      "C4SMIRONTOWERSTONE",
+      "C4SMIRONTOWER_LM",
+      "C4SMTOWERENTRANCE",
+      "C4TTConcrete"
+    ],
+    "triangles": 5658
+  },
+  {
+    "name": "SFXdummyRoot",
+    "nodes": 2,
+    "skinned_nodes": 0,
+    "surfaces": 1,
+    "textures": [
+      "SFX_bats"
+    ],
+    "triangles": 2
+  },
+  {
+    "name": "C4SNTREEGENERIC",
+    "nodes": 2,
+    "skinned_nodes": 0,
+    "surfaces": 2,
+    "textures": [
+      "C4SNGENERICTREE"
+    ],
+    "triangles": 2077
+  },
+  {
+    "name": "C4SNTREEGNARLED",
+    "nodes": 2,
+    "skinned_nodes": 0,
+    "surfaces": 3,
+    "textures": [
+      "C4SNgnarledtree",
+      "C4SNgnarledtreebranches"
+    ],
+    "triangles": 2224
+  },
+  {
+    "name": "ILSMTENTSMALL",
+    "nodes": 4,
+    "skinned_nodes": 0,
+    "surfaces": 6,
+    "textures": [
+      "C4SMRKT",
+      "C4SMROPE",
+      "ILSMTENTSMALL"
+    ],
+    "triangles": 590
+  },
+  {
+    "name": "ILSMTENTMID",
+    "nodes": 4,
+    "skinned_nodes": 0,
+    "surfaces": 6,
+    "textures": [
+      "C4SMRKT",
+      "C4SMROPE",
+      "ILSMTENTMID"
+    ],
+    "triangles": 1171
+  },
+  {
+    "name": "C4SNFUNGIA",
+    "nodes": 1,
+    "skinned_nodes": 0,
+    "surfaces": 1,
+    "textures": [
+      "C4SNVegetation01"
+    ],
+    "triangles": 350
+  },
+  {
+    "name": "C4SNMUSHROOM",
+    "nodes": 1,
+    "skinned_nodes": 0,
+    "surfaces": 2,
+    "textures": [
+      "C4SNVegetation01",
+      "C4TTFUNGI"
+    ],
+    "triangles": 341
+  },
+  {
+    "name": "C4SNMUSHROOMB",
+    "nodes": 1,
+    "skinned_nodes": 0,
+    "surfaces": 2,
+    "textures": [
+      "C4SNVegetation01",
+      "C4TTFUNGI"
+    ],
+    "triangles": 185
+  },
+  {
+    "name": "C4SMTOWERLOW_H",
+    "nodes": 3,
+    "skinned_nodes": 0,
+    "surfaces": 8,
+    "textures": [
+      "C4SM_CASTLE02",
+      "C4SM_WALL01",
+      "C4SM_WALL02",
+      "C4SM_WALL04",
+      "C4SNCLIFFFACE"
+    ],
+    "triangles": 4199
+  },
+  {
+    "name": "C4SNROCKSHARP03_H",
+    "nodes": 1,
+    "skinned_nodes": 0,
+    "surfaces": 1,
+    "textures": [
+      "C4TTROCKB"
+    ],
+    "triangles": 68
+  },
+  {
+    "name": "C4SNCLIFFLEDGE_H",
+    "nodes": 2,
+    "skinned_nodes": 0,
+    "surfaces": 2,
+    "textures": [
+      "C4SNCLIFFFACE_LM",
+      "C4TTROCKB"
+    ],
+    "triangles": 516
+  },
+  {
+    "name": "C4SMBIGGATEWINCH_H",
+    "nodes": 13,
+    "skinned_nodes": 0,
+    "surfaces": 20,
+    "textures": [
+      "C4SMBRIDGEIRON01",
+      "C4SMIRONTOWER",
+      "C4SMXBANNER",
+      "C4SM_WALL01",
+      "C4SM_WALL02",
+      "C4SM_WALL03",
+      "C4SM_WALL04",
+      "C4SNCLIFFFACE",
+      "C4SNREFMAP"
+    ],
+    "triangles": 8447
+  },
+  {
+    "name": "C4SMWALL20M_A_H",
+    "nodes": 2,
+    "skinned_nodes": 0,
+    "surfaces": 10,
+    "textures": [
+      "C4SM_CASTLE02",
+      "C4SM_WALL02",
+      "C4SM_WALL03",
+      "C4SM_WALL04",
+      "C4SNCLIFFFACE"
+    ],
+    "triangles": 1367
+  },
+  {
+    "name": "C4SNTALLCLIFF01_H",
+    "nodes": 3,
+    "skinned_nodes": 0,
+    "surfaces": 6,
+    "textures": [
+      "C4SNCLIFFFACE_LM",
+      "C4SNNEROCITE",
+      "C4SNREFMAP",
+      "C4TTROCKB"
+    ],
+    "triangles": 1265
+  },
+  {
+    "name": "C4SNCLIFFARCH_H",
+    "nodes": 6,
+    "skinned_nodes": 0,
+    "surfaces": 5,
+    "textures": [
+      "C4SNCLIFFARCH_LM",
+      "C4TTROCKB"
+    ],
+    "triangles": 4888
+  },
+  {
+    "name": "C4SNCLIFFFACE2_H",
+    "nodes": 4,
+    "skinned_nodes": 0,
+    "surfaces": 4,
+    "textures": [
+      "C4SNCLIFFFACE2_LM",
+      "C4TTROCKB"
+    ],
+    "triangles": 1374
+  },
+  {
+    "name": "C4SNCLIFFFACE_H",
+    "nodes": 4,
+    "skinned_nodes": 0,
+    "surfaces": 8,
+    "textures": [
+      "C4SNCLIFFFACE_LM",
+      "C4SNNEROCITE",
+      "C4SNREFMAP",
+      "C4TTROCKB"
+    ],
+    "triangles": 1868
+  },
+  {
+    "name": "C4SMFORTWALL20M_C_H",
+    "nodes": 2,
+    "skinned_nodes": 0,
+    "surfaces": 8,
+    "textures": [
+      "C4SM_WALL01",
+      "C4SM_WALL02",
+      "C4SNCLIFFFACE"
+    ],
+    "triangles": 1965
+  },
+  {
+    "name": "C4SMBRIDGEIRONMID02",
+    "nodes": 22,
+    "skinned_nodes": 0,
+    "surfaces": 36,
+    "textures": [
+      "C4SMBRIDGEIRON01",
+      "C4SMBRIDGEIRON02"
+    ],
+    "triangles": 2499
+  },
+  {
+    "name": "C4SMBRIDGEIRONMID01",
+    "nodes": 22,
+    "skinned_nodes": 0,
+    "surfaces": 37,
+    "textures": [
+      "C4SMBRIDGEIRON01",
+      "C4SMBRIDGEIRON02"
+    ],
+    "triangles": 2970
+  },
+  {
+    "name": "C4SMFORTWALL20M_A_H",
+    "nodes": 2,
+    "skinned_nodes": 0,
+    "surfaces": 10,
+    "textures": [
+      "C4SMXBANNER",
+      "C4SM_WALL01",
+      "C4SM_WALL02",
+      "C4SM_WALL03",
+      "C4SM_WALL04",
+      "C4SNCLIFFFACE"
+    ],
+    "triangles": 1570
+  },
+  {
+    "name": "C4SMFORTWALL20M_B_H",
+    "nodes": 2,
+    "skinned_nodes": 0,
+    "surfaces": 5,
+    "textures": [
+      "C4SM_WALL01",
+      "C4SM_WALL02",
+      "C4SNCLIFFFACE"
+    ],
+    "triangles": 2148
+  },
+  {
+    "name": "C3SMTENTLARGE",
+    "nodes": 2,
+    "skinned_nodes": 0,
+    "surfaces": 4,
+    "textures": [
+      "C3SMSTENTLARGE",
+      "C4SMRKT",
+      "C4SMROPE"
+    ],
+    "triangles": 2405
+  },
+  {
+    "name": "SFXobjmark",
+    "nodes": 1,
+    "skinned_nodes": 0,
+    "surfaces": 1,
+    "textures": [
+      "SFX_obj_mark"
+    ],
+    "triangles": 106
+  },
+  {
+    "name": "SFXobjmark2",
+    "nodes": 1,
+    "skinned_nodes": 0,
+    "surfaces": 1,
+    "textures": [
+      "SFX_obj_mark"
+    ],
+    "triangles": 106
+  },
+  {
+    "name": "C4SMBARBEDWIREHIGH",
+    "nodes": 11,
+    "skinned_nodes": 0,
+    "surfaces": 11,
+    "textures": [
+      "C4SMBARBEDWIRE"
+    ],
+    "triangles": 2836
+  },
+  {
+    "name": "C4SMBARBEDWIRELOW",
+    "nodes": 10,
+    "skinned_nodes": 0,
+    "surfaces": 10,
+    "textures": [
+      "C4SMBARBEDWIRE"
+    ],
+    "triangles": 1234
+  },
+  {
+    "name": "C4SMWALLEND2_RUNIED_H",
+    "nodes": 2,
+    "skinned_nodes": 0,
+    "surfaces": 10,
+    "textures": [
+      "C4SMXBANNER",
+      "C4SM_WALL01",
+      "C4SM_WALL02",
+      "C4SM_WALL03",
+      "C4SM_WALL04",
+      "C4SNCLIFFFACE"
+    ],
+    "triangles": 878
+  },
+  {
+    "name": "SLOGOsmall",
+    "nodes": 1,
+    "skinned_nodes": 0,
+    "surfaces": 2,
+    "textures": [
+      "ArmyColours"
+    ],
+    "triangles": 5391
+  },
+  {
+    "name": "C4SMWALLVEHICLE20M_A_H",
+    "nodes": 8,
+    "skinned_nodes": 0,
+    "surfaces": 35,
+    "textures": [
+      "C4SMXBANNER",
+      "C4SM_WALL01",
+      "C4SM_WALL02",
+      "C4SM_WALL03",
+      "C4SM_WALL04",
+      "C4SNCLIFFFACE"
+    ],
+    "triangles": 2420
+  },
+  {
+    "name": "C4SNCLIFFWATERARCH_H",
+    "nodes": 7,
+    "skinned_nodes": 0,
+    "surfaces": 6,
+    "textures": [
+      "C4SNCLIFFARCH_LM",
+      "C4TTROCKB"
+    ],
+    "triangles": 9768
+  },
+  {
+    "name": "C4SMBRIDGESTONE01END_H",
+    "nodes": 14,
+    "skinned_nodes": 0,
+    "surfaces": 50,
+    "textures": [
+      "C4SMBRIDGEIRON02",
+      "C4SMBRIDGEST_LM1",
+      "C4SM_WALL01",
+      "C4SM_WALL02",
+      "C4SM_WALL03",
+      "C4SM_WALL05"
+    ],
+    "triangles": 859
+  },
+  {
+    "name": "C4SMBRIDGESTONE01MID1_H",
+    "nodes": 14,
+    "skinned_nodes": 0,
+    "surfaces": 59,
+    "textures": [
+      "C4SMBRIDGEIRON02",
+      "C4SMBRIDGEST_LM2",
+      "C4SM_WALL01",
+      "C4SM_WALL02",
+      "C4SM_WALL03",
+      "C4SM_WALL05"
+    ],
+    "triangles": 1336
+  },
+  {
+    "name": "ILSMTENTLARGE",
+    "nodes": 4,
+    "skinned_nodes": 0,
+    "surfaces": 5,
+    "textures": [
+      "C4SMRKT",
+      "C4SMROPE",
+      "ILSMTENTLARGE"
+    ],
+    "triangles": 2401
+  },
+  {
+    "name": "C4SMBRIDGEIRONEND",
+    "nodes": 18,
+    "skinned_nodes": 0,
+    "surfaces": 37,
+    "textures": [
+      "C4SMBRIDGEIRON01",
+      "C4SMBRIDGEIRON02"
+    ],
+    "triangles": 1495
+  },
+  {
+    "name": "C4SMRUINEDABBEY",
+    "nodes": 11,
+    "skinned_nodes": 0,
+    "surfaces": 26,
+    "textures": [
+      "C4SMBLASTTEST",
+      "C4SMRUIN_LM",
+      "C4SMSTONEFLOOR",
+      "C4SM_WALL06"
+    ],
+    "triangles": 12148
+  },
+  {
+    "name": "VSHTNK_RUIN_H",
+    "nodes": 12,
+    "skinned_nodes": 0,
+    "surfaces": 14,
+    "textures": [
+      "VSHTNK_RUIN",
+      "vsehtnk"
+    ],
+    "triangles": 6508
+  },
+  {
+    "name": "C4SMBIGGATE_H",
+    "nodes": 5,
+    "skinned_nodes": 0,
+    "surfaces": 5,
+    "textures": [
+      "C4SMBRIDGEIRON01",
+      "C4SM_WALL02"
+    ],
+    "triangles": 2206
+  },
+  {
+    "name": "C4SMIRONTOWER_H",
+    "nodes": 29,
+    "skinned_nodes": 0,
+    "surfaces": 60,
+    "textures": [
+      "C4SMBANNER",
+      "C4SMGIRD",
+      "C4SMIRONTOWER",
+      "C4SMIRONTOWER2",
+      "C4SMIRONTOWER2_LM",
+      "C4SMIRONTOWERSTONE",
+      "C4SMIRONTOWER_LM",
+      "C4SMTOWERENTRANCE",
+      "C4TTConcrete",
+      "T-HOSEGUN",
+      "VUHTNK_MAIN"
+    ],
+    "triangles": 39272
+  },
+  {
+    "name": "C4SNTREESPLIT",
+    "nodes": 2,
+    "skinned_nodes": 0,
+    "surfaces": 4,
+    "textures": [
+      "C4SNfungus1",
+      "C4SNfungus2",
+      "C4SNsplittree"
+    ],
+    "triangles": 2777
+  },
+  {
+    "name": "C4SMIRONTOWERRAMP",
+    "nodes": 3,
+    "skinned_nodes": 0,
+    "surfaces": 12,
+    "textures": [
+      "C4SMBANNER",
+      "C4SMIRONTOWER",
+      "C4SMIRONTOWER2",
+      "C4SMIRONTOWER2_LM",
+      "C4SMIRONTOWERSTONE",
+      "C4SMIRONTOWER_LM",
+      "C4SMTOWERENTRANCE",
+      "C4TTConcrete"
+    ],
+    "triangles": 36
+  },
+  {
+    "name": "SG_HI_LOD",
+    "nodes": 46,
+    "skinned_nodes": 1,
+    "surfaces": 6,
+    "textures": [
+      "SG_BOD_DIFF",
+      "SG_HELM_DIFF"
+    ],
+    "triangles": 3293
+  },
+  {
+    "name": "S_BOXLOD",
+    "nodes": 1,
+    "skinned_nodes": 0,
+    "surfaces": 1,
+    "textures": [
+      "boxlod"
+    ],
+    "triangles": 39
+  },
+  {
+    "name": "SRIFLE",
+    "nodes": 2,
+    "skinned_nodes": 0,
+    "surfaces": 2,
+    "textures": [
+      "SRIFLE"
+    ],
+    "triangles": 311
+  },
+  {
+    "name": "SGPACKSTAFF",
+    "nodes": 1,
+    "skinned_nodes": 0,
+    "surfaces": 2,
+    "textures": [
+      "SG_BAG_DIFF",
+      "S_staff"
+    ],
+    "triangles": 933
+  },
+  {
+    "name": "GEN_HealthPickup",
+    "nodes": 1,
+    "skinned_nodes": 0,
+    "surfaces": 1,
+    "textures": [
+      "GEN_HealthPickUp"
+    ],
+    "triangles": 163
+  },
+  {
+    "name": "SKY_C4Gambit",
+    "nodes": 1,
+    "skinned_nodes": 0,
+    "surfaces": 4,
+    "textures": [
+      "SKY_C4Gambit01",
+      "SKY_C4Gambit02",
+      "SKY_C4Gambit03",
+      "SKY_C4Gambit04"
+    ],
+    "triangles": 452
+  },
+  {
+    "name": "SFXobjmarkbase",
+    "nodes": 2,
+    "skinned_nodes": 0,
+    "surfaces": 1,
+    "textures": [
+      "SFX_obj_mark"
+    ],
+    "triangles": 6
+  },
+  {
+    "name": "SSTAFFOFPOWER_H",
+    "nodes": 3,
+    "skinned_nodes": 0,
+    "surfaces": 1,
+    "textures": [
+      "S_staff"
+    ],
+    "triangles": 621
+  },
+  {
+    "name": "LG_HI_LOD",
+    "nodes": 46,
+    "skinned_nodes": 1,
+    "surfaces": 5,
+    "textures": [
+      "LG_BOD_DIFF",
+      "LG_HELM_DIFF"
+    ],
+    "triangles": 4320
+  },
+  {
+    "name": "U_BOXLOD",
+    "nodes": 1,
+    "skinned_nodes": 0,
+    "surfaces": 1,
+    "textures": [
+      "boxlod"
+    ],
+    "triangles": 39
+  },
+  {
+    "name": "L_RIFLE",
+    "nodes": 2,
+    "skinned_nodes": 0,
+    "surfaces": 2,
+    "textures": [
+      "L_RIFLE"
+    ],
+    "triangles": 315
+  },
+  {
+    "name": "UGPACK",
+    "nodes": 1,
+    "skinned_nodes": 0,
+    "surfaces": 1,
+    "textures": [
+      "LG_BAG_DIFF"
+    ],
+    "triangles": 607
+  },
+  {
+    "name": "LV_HI_LOD",
+    "nodes": 31,
+    "skinned_nodes": 1,
+    "surfaces": 3,
+    "textures": [
+      "LV_BOD_DIFF"
+    ],
+    "triangles": 4109
+  },
+  {
+    "name": "L_HOSEGUN",
+    "nodes": 2,
+    "skinned_nodes": 0,
+    "surfaces": 2,
+    "textures": [
+      "L_HOSEGUN"
+    ],
+    "triangles": 237
+  },
+  {
+    "name": "L_HOSEHELM",
+    "nodes": 1,
+    "skinned_nodes": 0,
+    "surfaces": 1,
+    "textures": [
+      "L_HOSEHELM"
+    ],
+    "triangles": 241
+  },
+  {
+    "name": "L_HOSEPACK",
+    "nodes": 1,
+    "skinned_nodes": 0,
+    "surfaces": 1,
+    "textures": [
+      "L_HOSEPACK"
+    ],
+    "triangles": 270
+  },
+  {
+    "name": "C1SMAMMODUMP",
+    "nodes": 7,
+    "skinned_nodes": 0,
+    "surfaces": 15,
+    "textures": [
+      "C1SMAMMOCRATEA",
+      "C1SMAMMOCRATEB",
+      "C1SMJERRYCAN",
+      "C1SMLISTENPOST"
+    ],
+    "triangles": 2781
+  },
+  {
+    "name": "SGPACK",
+    "nodes": 1,
+    "skinned_nodes": 0,
+    "surfaces": 1,
+    "textures": [
+      "SG_BAG_DIFF"
+    ],
+    "triangles": 406
+  },
+  {
+    "name": "VUGSHPH",
+    "nodes": 34,
+    "skinned_nodes": 0,
+    "surfaces": 15,
+    "textures": [
+      "VUGSHP_MAIN",
+      "VUGSHP_MAIN_BUMP",
+      "VUGSHP_MAIN_SPEC",
+      "rotorblur2"
+    ],
+    "triangles": 6025
+  },
+  {
+    "name": "WF_rocket",
+    "nodes": 1,
+    "skinned_nodes": 0,
+    "surfaces": 1,
+    "textures": [
+      "WF_rocket"
+    ],
+    "triangles": 115
+  },
+  {
+    "name": "VUHTNKH",
+    "nodes": 37,
+    "skinned_nodes": 0,
+    "surfaces": 24,
+    "textures": [
+      "VUHTNKT_TREADS",
+      "VUHTNK_MAIN",
+      "VUHTNK_MAIN_bump",
+      "VUHTNK_MAIN_spec"
+    ],
+    "triangles": 5237
+  },
+  {
+    "name": "VUHTNKH_TRAC_L",
+    "nodes": 5,
+    "skinned_nodes": 1,
+    "surfaces": 1,
+    "textures": [
+      "VUHTNKT_TREADS"
+    ],
+    "triangles": 390
+  },
+  {
+    "name": "VUHTNKH_TRAC_R",
+    "nodes": 5,
+    "skinned_nodes": 1,
+    "surfaces": 1,
+    "textures": [
+      "VUHTNKT_TREADS"
+    ],
+    "triangles": 404
+  },
+  {
+    "name": "U_grenade",
+    "nodes": 1,
+    "skinned_nodes": 0,
+    "surfaces": 1,
+    "textures": [
+      "U_shell"
+    ],
+    "triangles": 70
+  },
+  {
+    "name": "VUBSTAH",
+    "nodes": 63,
+    "skinned_nodes": 0,
+    "surfaces": 34,
+    "textures": [
+      "VIL_BSTA01_bump",
+      "VIL_BSTA01_main",
+      "VIL_BSTA01_spec"
+    ],
+    "triangles": 8347
+  },
+  {
+    "name": "WF_shell",
+    "nodes": 1,
+    "skinned_nodes": 0,
+    "surfaces": 1,
+    "textures": [
+      "WF_shell"
+    ],
+    "triangles": 159
+  },
+  {
+    "name": "U_shell",
+    "nodes": 1,
+    "skinned_nodes": 0,
+    "surfaces": 1,
+    "textures": [
+      "U_rocket"
+    ],
+    "triangles": 275
+  },
+  {
+    "name": "GEN_VRPickup",
+    "nodes": 1,
+    "skinned_nodes": 0,
+    "surfaces": 1,
+    "textures": [
+      "GEN_VRPickup"
+    ],
+    "triangles": 187
+  },
+  {
+    "name": "C4SNROCKRUBBLE2_H",
+    "nodes": 44,
+    "skinned_nodes": 0,
+    "surfaces": 125,
+    "textures": [
+      "C4SMXBANNER",
+      "C4SM_CASTLE02",
+      "C4SM_WALL01",
+      "C4SM_WALL02",
+      "C4SM_WALL04",
+      "C4SNCLIFFFACE"
+    ],
+    "triangles": 18661
+  },
+  {
+    "name": "L_ANTIARMGUN",
+    "nodes": 2,
+    "skinned_nodes": 0,
+    "surfaces": 2,
+    "textures": [
+      "L_ANTIARMGUN"
+    ],
+    "triangles": 422
+  },
+  {
+    "name": "L_ANTIARMHELM",
+    "nodes": 1,
+    "skinned_nodes": 0,
+    "surfaces": 1,
+    "textures": [
+      "L_ANTIARMHELM"
+    ],
+    "triangles": 456
+  },
+  {
+    "name": "L_ANTIARMPACK",
+    "nodes": 1,
+    "skinned_nodes": 0,
+    "surfaces": 1,
+    "textures": [
+      "L_ANTIARMPACK"
+    ],
+    "triangles": 205
+  },
+  {
+    "name": "C4SMSHELLUNEXP_H",
+    "nodes": 12,
+    "skinned_nodes": 0,
+    "surfaces": 11,
+    "textures": [
+      "C4SMROCKET1",
+      "C4SNREFMAP",
+      "C4TTROCKA"
+    ],
+    "triangles": 2585
+  },
+  {
+    "name": "VSGSHPH",
+    "nodes": 36,
+    "skinned_nodes": 0,
+    "surfaces": 15,
+    "textures": [
+      "VGLASS",
+      "VGLASSopaque",
+      "VREFMAP2",
+      "VSE_GSHP01_bump",
+      "VSE_GSHP01_main",
+      "VSE_GSHP01_spec",
+      "vglass"
+    ],
+    "triangles": 4161
+  },
+  {
+    "name": "S_rocket",
+    "nodes": 1,
+    "skinned_nodes": 0,
+    "surfaces": 1,
+    "textures": [
+      "S_rocket"
+    ],
+    "triangles": 115
+  },
+  {
+    "name": "VUBOMBERH",
+    "nodes": 59,
+    "skinned_nodes": 0,
+    "surfaces": 30,
+    "textures": [
+      "VUBOMBER01_bump",
+      "VUBOMBER01_main",
+      "VUBOMBER01_spec",
+      "VUBOMBER02_bump",
+      "VUBOMBER02_main",
+      "VUBOMBER02_spec"
+    ],
+    "triangles": 5929
+  },
+  {
+    "name": "C4SMCASTLERUIN01",
+    "nodes": 7,
+    "skinned_nodes": 0,
+    "surfaces": 42,
+    "textures": [
+      "C4BWIREA",
+      "C4SMCASTLERUIN01LM1",
+      "C4SMCASTLERUIN01LM2",
+      "C4SM_WALL01",
+      "C4SM_WALL02",
+      "C4SM_WALL03",
+      "C4SM_WALL04",
+      "C4TTROCKB"
+    ],
+    "triangles": 5626
+  },
+  {
+    "name": "VSHTNKH",
+    "nodes": 44,
+    "skinned_nodes": 0,
+    "surfaces": 20,
+    "textures": [
+      "vsehtnk",
+      "vsehtnk_BUMP",
+      "vsehtnk_SPEC"
+    ],
+    "triangles": 4900
+  },
+  {
+    "name": "SVET",
+    "nodes": 31,
+    "skinned_nodes": 1,
+    "surfaces": 4,
+    "textures": [
+      "SV_BODY_DIFF"
+    ],
+    "triangles": 3999
+  },
+  {
+    "name": "SCHAINGUN_H",
+    "nodes": 2,
+    "skinned_nodes": 0,
+    "surfaces": 2,
+    "textures": [
+      "SCHAINGUN"
+    ],
+    "triangles": 310
+  },
+  {
+    "name": "SCHAINHELM",
+    "nodes": 1,
+    "skinned_nodes": 0,
+    "surfaces": 1,
+    "textures": [
+      "SCHAINHELM"
+    ],
+    "triangles": 224
+  },
+  {
+    "name": "SCHAINPACK",
+    "nodes": 1,
+    "skinned_nodes": 0,
+    "surfaces": 1,
+    "textures": [
+      "SHMGPACK"
+    ],
+    "triangles": 147
+  },
+  {
+    "name": "U_bomb",
+    "nodes": 1,
+    "skinned_nodes": 0,
+    "surfaces": 1,
+    "textures": [
+      "C4SMROCKET1"
+    ],
+    "triangles": 465
+  },
+  {
+    "name": "MPB_WF_FLAG",
+    "nodes": 1,
+    "skinned_nodes": 0,
+    "surfaces": 1,
+    "textures": [
+      "MPB_WF_FLAG"
+    ],
+    "triangles": 306
+  },
+  {
+    "name": "MPB_X_FLAG",
+    "nodes": 1,
+    "skinned_nodes": 0,
+    "surfaces": 1,
+    "textures": [
+      "MPB_X_FLAG"
+    ],
+    "triangles": 306
+  },
+  {
+    "name": "TFlag_H",
+    "nodes": 1,
+    "skinned_nodes": 0,
+    "surfaces": 1,
+    "textures": [
+      "TFLAG"
+    ],
+    "triangles": 306
+  },
+  {
+    "name": "SFlag_H",
+    "nodes": 1,
+    "skinned_nodes": 0,
+    "surfaces": 1,
+    "textures": [
+      "SFLAG"
+    ],
+    "triangles": 306
+  },
+  {
+    "name": "MPB_IL_FLAG",
+    "nodes": 1,
+    "skinned_nodes": 0,
+    "surfaces": 1,
+    "textures": [
+      "MPB_IL_FLAG"
+    ],
+    "triangles": 306
+  },
+  {
+    "name": "MPB_A_FLAG",
+    "nodes": 1,
+    "skinned_nodes": 0,
+    "surfaces": 1,
+    "textures": [
+      "MPB_A_FLAG"
+    ],
+    "triangles": 306
+  },
+  {
+    "name": "C4FLAGPOLE",
+    "nodes": 9,
+    "skinned_nodes": 0,
+    "surfaces": 5,
+    "textures": [
+      "C4FLAGPOLE",
+      "C4SMROPE"
+    ],
+    "triangles": 4406
+  },
+  {
+    "name": "X_Barrel01",
+    "nodes": 3,
+    "skinned_nodes": 0,
+    "surfaces": 4,
+    "textures": [
+      "X_Barrel",
+      "X_BarrelLid"
+    ],
+    "triangles": 69
+  },
+  {
+    "name": "SHOSEGUN",
+    "nodes": 2,
+    "skinned_nodes": 0,
+    "surfaces": 2,
+    "textures": [
+      "SHOSEGUN"
+    ],
+    "triangles": 403
+  },
+  {
+    "name": "SHOSEHELM",
+    "nodes": 1,
+    "skinned_nodes": 0,
+    "surfaces": 1,
+    "textures": [
+      "SHOSEHELM"
+    ],
+    "triangles": 267
+  },
+  {
+    "name": "SHOSEPACK",
+    "nodes": 1,
+    "skinned_nodes": 0,
+    "surfaces": 1,
+    "textures": [
+      "SHOSEPACK"
+    ],
+    "triangles": 208
+  },
+  {
+    "name": "SANTAIRGUN",
+    "nodes": 2,
+    "skinned_nodes": 0,
+    "surfaces": 2,
+    "textures": [
+      "santairGun1"
+    ],
+    "triangles": 538
+  },
+  {
+    "name": "SANTAIRHELM",
+    "nodes": 1,
+    "skinned_nodes": 0,
+    "surfaces": 1,
+    "textures": [
+      "santairHelm_01"
+    ],
+    "triangles": 398
+  },
+  {
+    "name": "SANTAIRPACK",
+    "nodes": 1,
+    "skinned_nodes": 0,
+    "surfaces": 1,
+    "textures": [
+      "santairpack_01"
+    ],
+    "triangles": 389
+  },
+  {
+    "name": "SAARMGUN",
+    "nodes": 2,
+    "skinned_nodes": 0,
+    "surfaces": 2,
+    "textures": [
+      "SAARMGUN"
+    ],
+    "triangles": 539
+  },
+  {
+    "name": "SAARMHELM",
+    "nodes": 1,
+    "skinned_nodes": 0,
+    "surfaces": 1,
+    "textures": [
+      "SAARMHELM"
+    ],
+    "triangles": 349
+  },
+  {
+    "name": "SAARMPACK",
+    "nodes": 1,
+    "skinned_nodes": 0,
+    "surfaces": 1,
+    "textures": [
+      "SAARMPACK"
+    ],
+    "triangles": 448
+  },
+  {
+    "name": "C4SMBUNKER03_H",
+    "nodes": 28,
+    "skinned_nodes": 0,
+    "surfaces": 18,
+    "textures": [
+      "C4SMBUNKER03",
+      "C4SMBUNKER03LM",
+      "C4TTROCKB",
+      "VXSHARE"
+    ],
+    "triangles": 5717
+  },
+  {
+    "name": "X_shell",
+    "nodes": 1,
+    "skinned_nodes": 0,
+    "surfaces": 1,
+    "textures": [
+      "X_shell"
+    ],
+    "triangles": 159
+  },
+  {
+    "name": "C4SMFORTWALL20M_DEST_H",
+    "nodes": 22,
+    "skinned_nodes": 0,
+    "surfaces": 32,
+    "textures": [
+      "C4SM_WALL01",
+      "C4SM_WALL02",
+      "C4SNCLIFFFACE"
+    ],
+    "triangles": 2422
+  },
+  {
+    "name": "C4SMDEADSTAFFGUY",
+    "nodes": 1,
+    "skinned_nodes": 0,
+    "surfaces": 3,
+    "textures": [
+      "SG_BOD_DIFF",
+      "SG_HELM_DIFF"
+    ],
+    "triangles": 3552
+  }
+]

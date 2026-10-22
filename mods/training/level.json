@@ -1,0 +1,8 @@
+{
+  "name": "Gambit Terrain / Prototype Skirmish",
+  "terrain": "local/extracted/files/Data/CompoundFiles/SP_0.1.out",
+  "resources": "local/extracted/files/Data/CompoundFiles/SP_0.1_Level.res",
+  "arena_center": null,
+  "player_color": [0.15, 0.7, 1.0],
+  "enemy_color": [1.0, 0.18, 0.1]
+}

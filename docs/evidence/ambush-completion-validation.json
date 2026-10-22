@@ -1,0 +1,60 @@
+{
+  "scope": "Original input-driven bomber ambush, staff reveal and control return; known staff-handoff boundary",
+  "scripted_ambush_sequence_accepted": true,
+  "entire_ambush_sequence_rendered": true,
+  "staff_recovery_accepted": false,
+  "full_mission_accepted": false,
+  "native_cinematic_physics_animation_parity_accepted": false,
+  "original_scripts_modified": false,
+  "progress_globals_forced": false,
+  "player_route_shortcut_teleports": false,
+  "viewer_tests": {"passed":318,"failed":0,"ignored":0,"log":"local/analysis/ambush-full-tests-final.log"},
+  "overlapping_non_viewer_library_tests": {"passed":188,"failed":0,"ignored":0,"log":"local/analysis/ambush-core-tests-final.log"},
+  "format_check_passed": true,
+  "clippy_log": "local/analysis/ambush-clippy-final.log",
+  "build_log": "local/analysis/ambush-build-final.log",
+  "original_route": {
+    "test": "original_route_completes_bomber_ambush_and_returns_player_control",
+    "game_seconds_at_control_return": 101.1,
+    "missile_launches":14,
+    "aircraft_contacts":14,
+    "bomb_releases":4,
+    "bomb_impacts":4,
+    "original_camp_objective":550032489,
+    "next_marker":550041658,
+    "restart_clears_new_ordnance":true,
+    "recording":"local/analysis/ambush-complete-inputs.json"
+  },
+  "staff_handoff_boundary": {
+    "test":"original_route_reaches_staff_handoff_and_preserves_unsupported_transfer_rollback",
+    "error":"Gambit_Part_1_Cutscene_StaffBearer pc 327: ForceUnitTransfer: Unsupported gameplay call/signature: ForceUnitTransfer",
+    "signature":"ForceUnitTransfer(PLAYER_ONE, Sstaffbearer01)",
+    "rollback_checks":["frame","player ownership","positions"],
+    "recording":"local/analysis/staff-boundary-inputs.json",
+    "completion_claimed":false
+  },
+  "isolated_arenas": {
+    "mission_progression_evidence":false,
+    "checks":["actual aircraft damage","invulnerability","clip and reload","repeated orders","disarm/re-enable","cover","target despawn","expiry and airburst","invalid-step rollback","malformed-mode rejection","in-place facing does not relocate"],
+    "protected_target_health_before":100000,
+    "protected_target_health_after_first_hit":99782
+  },
+  "gpu": {
+    "log":"local/analysis/ambush-full-render-final.log",
+    "preroll_inputs":4459,
+    "rendered_replay_inputs":1800,
+    "rendered_frames_inside_ambush":1284,
+    "renderer_error_warning_blocked_lines":0,
+    "declared_cosmetic_gaps_remain":true,
+    "captures":[
+      {"path":"local/analysis/ambush-full-render-final.png.frame-1450.png","sha256":"28782d2e08988d3fff6699e64fc0f7e834c0067347869b1a3edbbd593aeb5b7a","reviewed":"original staff-bearer and staff reveal"},
+      {"path":"local/analysis/ambush-full-render-final.png.frame-1550.png","sha256":"c4f40f78104b73948bcfeaa65e04770f20c46ed567cca1e7e6e8726069cfa050","reviewed":"staff remains after authored body retirement"},
+      {"path":"local/analysis/ambush-full-render-final.png","sha256":"4feaa6e7f54cf98c6761f8cd3d3c8fa41a15ea2bf74e828feb09bd47d0c8e8e1","reviewed":"staff objective and restored player control"}
+    ],
+    "first_shot_aircraft_visibility_native_comparison_accepted":false,
+    "hardware_audio_controller_accepted":false
+  },
+  "policies_and_limits":"docs/AMBUSH_COMPLETION.md",
+  "user_owned_previews_stopped":false,
+  "published":false
+}

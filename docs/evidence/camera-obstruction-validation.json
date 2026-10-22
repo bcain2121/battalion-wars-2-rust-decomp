@@ -1,0 +1,21 @@
+{
+  "date": "2026-10-03",
+  "scope": "Original-script diagnostic follow-camera obstruction",
+  "complete_original_mission": false,
+  "reproduction": {"damage_frame":80,"capture_frame":100,"actor_relocated_to_fix_shot":false,"obstacle_instances":1003},
+  "implementation": "Rendered-model triangle segment tests; nearest-surface retraction and bounded alternate views",
+  "tests": {"rust_viewer_unit":68,"original_asset_integration":4,"original_mission_integration":7,"python":15,"total_passed":94,"clippy_warnings_denied":"pass"},
+  "native_metal": {
+    "death_replay":{"result":"pass","adjusted_frames":145,"script_terminated":true,"death_clip_clamped":true},
+    "return_home":{"result":"pass","adjusted_frames":53,"arrival_distance":5,"animation":"Idle"},
+    "corrected_segment_assertions":"pass",
+    "static_scene":"pass",
+    "animation_gallery":"pass"
+  },
+  "existing_skirmish_regressions":{"original":"pass","custom":"pass"},
+  "local_visual_evidence":["local/analysis/camera-occlusion-before.png","local/analysis/camera-occlusion-after.png","local/analysis/camera-follow-running.png"],
+  "preserved_failed_replays":["local/analysis/camera-noncanonical-replay.log","local/analysis/camera-follow-unfocused.png"],
+  "limits":["No terrain query or swept-sphere/near-plane collision", "No alpha-tested transparency query", "Only primary rendered static model instances", "Alternate camera directions can snap", "Inside-geometry targets remain problematic", "No original-camera parity claim", "Unit collision/pathfinding and full mission flow remain incomplete"],
+  "live_gameplay_keys_ignored_during_smoke":true,
+  "published":false
+}

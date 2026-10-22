@@ -1,0 +1,55 @@
+[package]
+name = "bw-rust"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.95"
+publish = false
+default-run = "bw-rust"
+
+# Optimize collision/navigation, VM, and Bevy rendering for 60 FPS in dev builds.
+[profile.dev]
+opt-level = 2
+
+[features]
+viewer = ["dep:bevy"]
+
+[[bin]]
+name = "bw-viewer"
+path = "src/bin/bw-viewer.rs"
+required-features = ["viewer"]
+
+[[bin]]
+name = "bw-play"
+path = "src/bin/bw-play.rs"
+required-features = ["viewer"]
+
+[[bin]]
+name = "bw-original-viewer"
+path = "src/bin/bw-original-viewer.rs"
+required-features = ["viewer"]
+
+[[bin]]
+name = "bw-first-mission"
+path = "src/bin/bw-first-mission.rs"
+required-features = ["viewer"]
+
+[[bin]]
+name = "bw-battle"
+path = "src/bin/bw-battle.rs"
+required-features = ["viewer"]
+
+[[bin]]
+name = "bw-lightning-check"
+path = "src/bin/bw-lightning-check.rs"
+required-features = ["viewer"]
+
+[[bin]]
+name = "bw-movie"
+path = "src/bin/bw-movie.rs"
+required-features = ["viewer"]
+
+[dependencies]
+bevy = { version = "=0.19.1", optional = true, default-features = false, features = ["3d", "ui", "bevy_audio", "wav"] }
+roxmltree = "=0.21.1"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"

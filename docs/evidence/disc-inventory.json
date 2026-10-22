@@ -1,0 +1,24 @@
+{
+  "format": "WBFS",
+  "file_size": 2787115008,
+  "disc_id": "RBWE01",
+  "title": "Battalion Wars 2",
+  "host_sector_size": 512,
+  "wbfs_block_size": 2097152,
+  "mapped_blocks": 1328,
+  "partitions": [
+    {
+      "group": 0,
+      "index": 0,
+      "type": 0,
+      "offset": 260046848,
+      "tmd_size": 520,
+      "tmd_offset": 704,
+      "certificate_size": 2560,
+      "certificate_offset": 1248,
+      "hash_table_offset": 32768,
+      "data_offset": 131072,
+      "data_size": 4424597504
+    }
+  ]
+}
