@@ -263,6 +263,7 @@ pub struct World {
     pub tick_when_despawned: BTreeSet<ObjectId>,
     pub unit_invulnerable: BTreeSet<ObjectId>,
     pub invulnerable_army_mask: u32,
+    pub is_multiplayer: bool,
 }
 impl World {
     pub fn same_allegiance(&self, army_a: &str, army_b: &str) -> bool {
@@ -302,7 +303,10 @@ impl World {
             .objects();
         let is_water = objects.get(&id).is_some_and(|o| o.kind == "cWaterVehicle");
         let is_active = self.units.get(&id).is_none_or(|u| u.active == Some(true));
-        if margin == 0.0 && !is_water && is_active && (self.player != Some(id) || self.frozen)
+        if margin == 0.0
+            && !is_water
+            && is_active
+            && (self.player != Some(id) || self.frozen)
             && let Ok(applied) = self.teleport_scripted(positions, id, x, z, heading)
         {
             return Ok(applied);
@@ -823,10 +827,7 @@ impl World {
                     .chain(self.props.keys())
                     .copied()
                     .collect();
-                let real_level = self
-                    .collision
-                    .as_ref()
-                    .is_some_and(|s| s.ground.is_some());
+                let real_level = self.collision.as_ref().is_some_and(|s| s.ground.is_some());
                 let owner_army = self.units.get(&blast.owner).map(|u| u.army.clone());
                 for id in targets {
                     let unit = self.entity(id)?;
@@ -836,7 +837,10 @@ impl World {
                         || ((self.props.contains_key(&blast.owner)
                             || self.units.contains_key(&blast.owner))
                             && self.units.contains_key(&id)
-                            && self.activity.get(&id).is_some_and(|a| a.enabled == Some(false)))
+                            && self
+                                .activity
+                                .get(&id)
+                                .is_some_and(|a| a.enabled == Some(false)))
                         || (real_level
                             && self.units.contains_key(&id)
                             && owner_army.as_ref().is_some_and(|oa| {
@@ -1007,8 +1011,7 @@ impl World {
         } else {
             30.0
         };
-        if a.iter().chain(b).any(|v| !v.is_finite())
-            || (a[0] - b[0]).hypot(a[2] - b[2]) > max_range
+        if a.iter().chain(b).any(|v| !v.is_finite()) || (a[0] - b[0]).hypot(a[2] - b[2]) > max_range
         {
             return Err("Recruit outside command range".into());
         }
@@ -1070,7 +1073,10 @@ impl World {
         let leader = if self.collision.as_ref().is_some_and(|s| s.ground.is_some()) {
             self.entity(player)?.clone()
         } else {
-            self.units.get(&player).ok_or("Missing player unit")?.clone()
+            self.units
+                .get(&player)
+                .ok_or("Missing player unit")?
+                .clone()
         };
         if leader.health <= 0.0 || leader.active != Some(true) {
             return Err("Ineligible squad leader".into());
@@ -1154,7 +1160,7 @@ impl World {
             } else {
                 1.0
             };
-            if !(0.05..=100.0).contains(&d) || cos < min_cos {
+            if !(0.05..=225.0).contains(&d) || cos < min_cos {
                 continue;
             }
             let is_obj = cos >= 0.92
@@ -1174,7 +1180,10 @@ impl World {
                         && fu.active == Some(true)
                         && fu.health > 0.0
                         && !fu.invulnerable
-                        && self.activity.get(uid).is_none_or(|a| a.enabled != Some(false))
+                        && self
+                            .activity
+                            .get(uid)
+                            .is_none_or(|a| a.enabled != Some(false))
                         && positions
                             .get(uid)
                             .is_some_and(|fp| (fp[0] - ep[0]).hypot(fp[2] - ep[2]) < 15.5)
@@ -1251,8 +1260,12 @@ impl World {
                     let dx = b_pos[0] as f64 - p[0] as f64;
                     let dz = b_pos[2] as f64 - p[2] as f64;
                     let d = dx.hypot(dz);
-                    let has_marker = self.objective_attachment.iter().any(|(m, &t)| {
-                        t == b_id && self.objective_visibility.get(m) == Some(&Some(true))
+                    let has_marker = self.objective_visibility.iter().any(|(m, vis)| {
+                        *vis == Some(true)
+                            && (self.objective_attachment.get(m) == Some(&b_id)
+                                || positions.get(m).is_some_and(|mp| {
+                                    (mp[0] - b_pos[0]).hypot(mp[2] - b_pos[2]) <= 35.0
+                                }))
                     });
                     let aimed_directly = aimed.is_none()
                         && d > 1e-6
@@ -1274,10 +1287,9 @@ impl World {
                         id != player
                             && !self.carrier_of.contains_key(&id)
                             && !self.entering_vehicle.contains_key(&id)
-                            && self
-                                .bodies
-                                .get(&id)
-                                .is_some_and(|b| b.radius == crate::unit_collision::Body::INFANTRY.radius)
+                            && self.bodies.get(&id).is_some_and(|b| {
+                                b.radius == crate::unit_collision::Body::INFANTRY.radius
+                            })
                             && self
                                 .units
                                 .get(&id)
@@ -1288,12 +1300,12 @@ impl World {
                                 .is_none_or(|a| a.enabled != Some(false))
                     })
                     .min_by(|a, b| {
-                        let da = positions
-                            .get(a)
-                            .map_or(f64::INFINITY, |q| (q[0] as f64 - b_xz[0]).hypot(q[2] as f64 - b_xz[1]));
-                        let db = positions
-                            .get(b)
-                            .map_or(f64::INFINITY, |q| (q[0] as f64 - b_xz[0]).hypot(q[2] as f64 - b_xz[1]));
+                        let da = positions.get(a).map_or(f64::INFINITY, |q| {
+                            (q[0] as f64 - b_xz[0]).hypot(q[2] as f64 - b_xz[1])
+                        });
+                        let db = positions.get(b).map_or(f64::INFINITY, |q| {
+                            (q[0] as f64 - b_xz[0]).hypot(q[2] as f64 - b_xz[1])
+                        });
                         da.total_cmp(&db)
                     })
             {
@@ -1346,17 +1358,21 @@ impl World {
                     .is_none_or(|a| a.enabled != Some(false))
             {
                 if has_ground
+                    && !self.air_shapes.contains_key(&id)
                     && let Some(qp) = positions.get(&id)
                     && (qp[0] as f64 - p[0] as f64).hypot(qp[2] as f64 - p[2] as f64) > 120.0
                     && (qp[0] as f64 - target[0]).hypot(qp[2] as f64 - target[1]) > 120.0
                 {
                     continue;
                 }
-                let radius = if aimed_cp.is_none()
-                    && best_enemy.is_some()
-                    && self.bodies.get(&id).is_some_and(|b| b.radius > 1.2)
-                {
-                    26.0
+                let radius = if aimed_cp.is_none() && best_enemy.is_some() {
+                    if self.air_shapes.contains_key(&id) && !self.water_units.contains(&id) {
+                        42.0
+                    } else if self.bodies.get(&id).is_some_and(|b| b.radius > 1.2) {
+                        26.0
+                    } else {
+                        base_radius
+                    }
                 } else {
                     base_radius
                 };
@@ -1456,12 +1472,12 @@ impl World {
             return Ok(());
         }
         let player = self.player.ok_or("Missing squad leader")?;
+        if !self.roster.contains(&player) {
+            return Ok(());
+        }
         let p = *positions
             .get(&player)
             .ok_or("Missing squad leader position")?;
-        if p[0].hypot(p[2]) > 1400.0 {
-            return Ok(());
-        }
         let move_dir = self.direct_velocity.get(&player).and_then(|v| {
             let speed = v[0].hypot(v[1]);
             (speed > 0.1).then(|| [v[0] / speed, v[1] / speed])
@@ -1543,6 +1559,7 @@ impl World {
             }
             let q = *positions.get(&id).ok_or("Missing squad member position")?;
             let mut p = p;
+            let mut around_defended_bldg = false;
             if self.non_ground_units.contains(&player)
                 && !self.water_units.contains(&player)
                 && !self.non_ground_units.contains(&id)
@@ -1552,22 +1569,43 @@ impl World {
                     .buildings
                     .iter()
                     .filter(|&&bid| {
-                        self.props.get(&bid).is_some_and(|u| {
-                            u.active == Some(true)
-                                && u.health > 0.0
-                                && self.same_allegiance(&u.army, player_army)
-                        })
+                        !self.capture_points.contains(&bid)
+                            && !self.garrisonable_buildings.contains(&bid)
+                            && self.props.get(&bid).is_some_and(|u| {
+                                u.active == Some(true)
+                                    && u.health > 0.0
+                                    && !u.invulnerable
+                                    && self.same_allegiance(&u.army, player_army)
+                            })
                     })
-                    .filter_map(|&bid| {
+                    .copied()
+                    .chain(
+                        self.units
+                            .iter()
+                            .filter(|&(&uid, u)| {
+                                u.active == Some(true)
+                                    && u.health > 0.0
+                                    && (self.unit_gtype_flags(uid) & 0x0000_0400) != 0
+                                    && self.same_allegiance(&u.army, player_army)
+                            })
+                            .map(|(&uid, _)| uid),
+                    )
+                    .filter_map(|bid| {
                         let bp = *positions.get(&bid)?;
                         let dp = (bp[0] - p[0]).hypot(bp[2] - p[2]);
                         let dq = (bp[0] - q[0]).hypot(bp[2] - q[2]);
-                        (dp <= 280.0 && dq <= 220.0).then_some((bp, dp))
+                        (dp <= 340.0 && dq <= 260.0).then_some((bp, dp))
                     })
                     .min_by(|a, b| a.1.total_cmp(&b.1));
                 if let Some((bp, _)) = defended_bldg {
+                    if (self.unit_gtype_flags(id) & 0x0000_0400) != 0 {
+                        self.orders.remove(&id);
+                        self.routes.remove(&id);
+                        continue;
+                    }
                     p[0] = bp[0];
                     p[2] = bp[2];
+                    around_defended_bldg = true;
                 }
             }
             let rel = [q[0] as f64 - p[0] as f64, q[2] as f64 - p[2] as f64];
@@ -1581,11 +1619,18 @@ impl World {
                 let l = a[0].hypot(a[2]);
                 (l > 1e-3).then_some([a[0] / l, a[2] / l])
             });
-            let (target, radius) = if self.interactive_squad_formation {
-                let form_dir = self
-                    .squad_formation_dir
-                    .or(aim_dir)
-                    .unwrap_or([0.0, 1.0]);
+            let (target, radius) = if around_defended_bldg {
+                let angle = (idx as f64) * std::f64::consts::TAU / (followers.len().max(1) as f64);
+                let spread = 22.0;
+                (
+                    [
+                        p[0] as f64 + angle.cos() * spread,
+                        p[2] as f64 + angle.sin() * spread,
+                    ],
+                    6.0,
+                )
+            } else if self.interactive_squad_formation {
+                let form_dir = self.squad_formation_dir.or(aim_dir).unwrap_or([0.0, 1.0]);
                 let right = [-form_dir[1], form_dir[0]];
                 if let Some(dir) = move_dir
                     && rel[0].hypot(rel[1]) < 3.0 + leader_extra + body_radius
@@ -1704,8 +1749,7 @@ impl World {
                     1.2,
                 )
             } else {
-                let angle =
-                    (idx as f64) * std::f64::consts::TAU / (followers.len().max(1) as f64);
+                let angle = (idx as f64) * std::f64::consts::TAU / (followers.len().max(1) as f64);
                 let spread = if self.water_units.contains(&id) {
                     12.0
                 } else if body_radius <= 0.8 {
@@ -1743,12 +1787,8 @@ impl World {
                 && let Some(scene) = &self.collision
                 && scene.ground.is_some()
                 && let Some(&body) = self.bodies.get(&id)
-                && let Ok(free) = scene.find_free_near(
-                    [target[0] as f32, 0.0, target[1] as f32],
-                    body,
-                    &[],
-                    14.0,
-                )
+                && let Ok(free) =
+                    scene.find_free_near([target[0] as f32, 0.0, target[1] as f32], body, &[], 14.0)
             {
                 self.pending_positions.insert(id, free);
                 self.routes.remove(&id);
@@ -1759,10 +1799,7 @@ impl World {
                 .routes
                 .get(&id)
                 .is_some_and(|r| !r.points.is_empty() || r.pending);
-            let detour_route = self
-                .routes
-                .get(&id)
-                .is_some_and(|r| r.points.len() > 2);
+            let detour_route = self.routes.get(&id).is_some_and(|r| r.points.len() > 2);
             let wake_thresh = if self.interactive_squad_formation && !self.orders.contains_key(&id)
             {
                 radius + 1.8
@@ -2069,7 +2106,23 @@ impl World {
                         .fields
                         .iter()
                         .find(|f| f.attributes.get("name").is_some_and(|n| n == "mSeatData"))
-                        .is_some_and(|f| f.items.iter().any(|v| v != "0"))
+                        .is_some_and(|f| {
+                            f.items.iter().any(|v| {
+                                v != "0"
+                                    && v.parse::<u64>()
+                                        .ok()
+                                        .and_then(|sid| graph.objects.get(&ObjectId(sid)))
+                                        .is_some_and(|seat| {
+                                            field(seat, "SeatFlags")
+                                                .and_then(|s| s.parse::<u32>().ok())
+                                                .is_some_and(|f| (f & 1) != 0)
+                                                && (field(seat, "WeaponType")
+                                                    .is_some_and(|w| w != "0")
+                                                    || field(seat, "PlayerWeaponType")
+                                                        .is_some_and(|w| w != "0"))
+                                        })
+                            })
+                        })
                 {
                     w.garrisonable_buildings.insert(o.id);
                 }
@@ -2282,13 +2335,16 @@ impl World {
         }
         for &bid in &w.buildings {
             if !w.capture_points.contains(&bid)
-                && w.props
-                    .get(&bid)
-                    .is_some_and(|b| b.army.is_empty() || b.army == "eNeutral" || b.army == "eNoArmy")
+                && w.props.get(&bid).is_some_and(|b| {
+                    b.army.is_empty() || b.army == "eNeutral" || b.army == "eNoArmy"
+                })
                 && let Some(p_army) = w
                     .passengers
                     .get(&bid)
-                    .and_then(|list| list.iter().find_map(|pid| w.units.get(pid).map(|u| u.army.clone())))
+                    .and_then(|list| {
+                        list.iter()
+                            .find_map(|pid| w.units.get(pid).map(|u| u.army.clone()))
+                    })
                     .filter(|a| !a.is_empty() && a != "eNeutral" && a != "eNoArmy")
                 && let Some(b) = w.props.get_mut(&bid)
             {
@@ -2350,6 +2406,25 @@ impl World {
                 staged.enemy_targetable_only.insert(o.id);
             } else if staged.units.contains_key(&o.id) && (flags & 0x08) == 0 {
                 staged.playable_units.insert(o.id);
+            }
+        }
+        let initial_carriers: Vec<(ObjectId, Vec<ObjectId>)> = staged
+            .passengers
+            .iter()
+            .map(|(&cid, list)| (cid, list.clone()))
+            .collect();
+        for (carrier, list) in initial_carriers {
+            if staged.capture_points.contains(&carrier) {
+                continue;
+            }
+            if let Some(army) = list
+                .iter()
+                .find_map(|uid| staged.units.get(uid).map(|u| u.army.clone()))
+                .filter(|a| !a.is_empty() && a != "eNeutral" && a != "eNoArmy")
+                && let Some(b) = staged.props.get_mut(&carrier)
+                && (b.army.is_empty() || b.army == "eNeutral" || b.army == "eNoArmy")
+            {
+                b.army = army;
             }
         }
         *self = staged;
@@ -2424,12 +2499,33 @@ impl World {
             });
         }
         let target = target.ok_or("No authored player camera")?;
+        self.is_multiplayer = self.rewrite.is_some() && num_players == Some("2");
         self.player_view = view;
         self.player = Some(target);
         self.player_lifecycle = None;
         self.roster.clear();
         if self.rewrite.is_some() {
             self.roster.insert(target);
+            if self.is_multiplayer {
+                let mut allies = Vec::new();
+                for (&uid, u) in &self.units {
+                    if uid != target
+                        && u.army == army
+                        && u.active == Some(true)
+                        && u.health > 0.0
+                        && !self.buildings.contains(&uid)
+                        && !self.enemy_targetable_only.contains(&uid)
+                    {
+                        allies.push(uid);
+                    }
+                }
+                for uid in allies {
+                    self.roster.insert(uid);
+                    if self.can_squad_follow(uid, target) {
+                        self.squad_follow.insert(uid);
+                    }
+                }
+            }
             let transform =
                 matrix(field(&graph.objects[&target], "Mat").ok_or("Missing player transform")?)?;
             self.set_player_aim([
@@ -3039,7 +3135,8 @@ impl World {
             let Some(unit_army) = self.units.get(&uid).map(|u| u.army.clone()) else {
                 continue;
             };
-            if !self.same_allegiance(&unit_army, &player_army) {
+            let is_player_allied = self.same_allegiance(&unit_army, &player_army);
+            if !is_player_allied && !self.is_multiplayer {
                 continue;
             }
             let is_alive = self.units.get(&uid).is_some_and(|u| u.health > 0.0);
@@ -3069,20 +3166,17 @@ impl World {
                     if si.multi_facility_multiplier > 0.0 && si.multi_facility_multiplier < mult {
                         mult = si.multi_facility_multiplier;
                     }
-                    let d = (zone.matrix[12] - player_pos[0])
-                        .hypot(zone.matrix[14] - player_pos[2]);
+                    let d =
+                        (zone.matrix[12] - player_pos[0]).hypot(zone.matrix[14] - player_pos[2]);
                     if best_si.is_none_or(|(_, _, best_d)| d < best_d) {
                         best_si = Some((si_id, zid, d));
                     }
                 }
             }
             let effective_mult = if matching_facilities >= 2 { mult } else { 1.0 };
-            let timer = self
-                .revive_timers
-                .entry(uid)
-                .or_insert(base_revive_time);
+            let timer = self.revive_timers.entry(uid).or_insert(base_revive_time);
             *timer = (*timer - dt / effective_mult.max(0.1)).max(0.0);
-            if !any_player_alive && best_si.is_some() {
+            if is_player_allied && !any_player_alive && best_si.is_some() {
                 *timer = 0.0;
             }
             if *timer > 0.0 {
@@ -3091,11 +3185,9 @@ impl World {
             let Some((si_id, zid, _)) = best_si else {
                 continue;
             };
-            if self
-                .installations
-                .get(&si_id)
-                .is_some_and(|si| si.respawn_cooldown > 0.0 && any_player_alive)
-            {
+            if self.installations.get(&si_id).is_some_and(|si| {
+                si.respawn_cooldown > 0.0 && (!is_player_allied || any_player_alive)
+            }) {
                 continue;
             }
             let Some(zone) = self.zones.get(&zid).cloned() else {
@@ -3125,9 +3217,11 @@ impl World {
             self.landing_units.remove(&uid);
             self.entering_vehicle.remove(&uid);
             self.attack_orders.remove(&uid);
-            self.roster.insert(uid);
-            if self.player != Some(uid) {
-                self.squad_follow.insert(uid);
+            if is_player_allied {
+                self.roster.insert(uid);
+                if self.player != Some(uid) {
+                    self.squad_follow.insert(uid);
+                }
             }
             let m = zone.matrix;
             let offset_idx = (uid.0 % 5) as f32 - 2.0;
@@ -3137,7 +3231,11 @@ impl World {
             if self.water_units.contains(&uid) {
                 pos[1] = 0.0;
             } else if self.non_ground_units.contains(&uid) {
-                let hag = self.scripted_air_altitude.get(&uid).copied().unwrap_or(35.0);
+                let hag = self
+                    .scripted_air_altitude
+                    .get(&uid)
+                    .copied()
+                    .unwrap_or(35.0);
                 if let Some(scene) = &self.collision
                     && let Ok(air_pos) = scene.world_point([sx, 0.0, sz], hag)
                 {
@@ -3175,6 +3273,130 @@ impl World {
             self.headings.insert(uid, m[8].atan2(m[10]));
         }
     }
+    fn advance_skirmish_ai(&mut self, positions: &BTreeMap<ObjectId, [f32; 3]>) {
+        if !self.is_multiplayer || self.frozen {
+            return;
+        }
+        let idle_ai_units: Vec<(ObjectId, String, bool, [f32; 3])> = self
+            .units
+            .iter()
+            .filter_map(|(&uid, u)| {
+                if u.active != Some(true)
+                    || u.health <= 0.0
+                    || u.army.is_empty()
+                    || u.army == "eNeutral"
+                    || u.army == "eNoArmy"
+                    || self.buildings.contains(&uid)
+                    || self.player == Some(uid)
+                    || self.roster.contains(&uid)
+                    || self.squad_follow.contains(&uid)
+                    || self.orders.contains_key(&uid)
+                    || self.following.contains_key(&uid)
+                    || self.follow_unit_orders.contains_key(&uid)
+                    || self.attack_orders.contains_key(&uid)
+                    || self.entering_vehicle.contains_key(&uid)
+                    || self.carrier_of.contains_key(&uid)
+                {
+                    return None;
+                }
+                let pos = *positions.get(&uid)?;
+                let is_infantry = !self.non_ground_units.contains(&uid)
+                    && !self.water_units.contains(&uid)
+                    && self.bodies.get(&uid).is_some_and(|b| b.radius <= 0.8);
+                Some((uid, u.army.clone(), is_infantry, pos))
+            })
+            .collect();
+        for (uid, army, is_infantry, pos) in idle_ai_units {
+            if is_infantry && !self.capture_points.is_empty() {
+                let mut best_cp: Option<(ObjectId, f32)> = None;
+                for &cp_id in &self.capture_points {
+                    let cp_owner = self
+                        .capture_point_state
+                        .get(&cp_id)
+                        .map(|s| s.owner.as_str())
+                        .or_else(|| self.props.get(&cp_id).map(|p| p.army.as_str()))
+                        .unwrap_or("eNeutral");
+                    if self.same_allegiance(cp_owner, &army) {
+                        continue;
+                    }
+                    let assigned_allies = self
+                        .entering_vehicle
+                        .iter()
+                        .chain(self.carrier_of.iter())
+                        .filter(|&(u, &c)| {
+                            c == cp_id
+                                && self
+                                    .units
+                                    .get(u)
+                                    .is_some_and(|au| self.same_allegiance(&au.army, &army))
+                        })
+                        .count();
+                    if assigned_allies >= 2 {
+                        continue;
+                    }
+                    if let Some(&cpp) = positions.get(&cp_id) {
+                        let d = (cpp[0] - pos[0]).hypot(cpp[2] - pos[2]);
+                        if best_cp.is_none_or(|(_, best_d)| d < best_d) {
+                            best_cp = Some((cp_id, d));
+                        }
+                    }
+                }
+                if let Some((cp_id, _)) = best_cp {
+                    self.entering_vehicle.insert(uid, cp_id);
+                    continue;
+                }
+            }
+            let mut best_enemy: Option<(ObjectId, f32)> = None;
+            let uid_is_water = self.water_units.contains(&uid);
+            for (&other_id, other) in &self.units {
+                if other_id == uid
+                    || other.active != Some(true)
+                    || other.health <= 0.0
+                    || other.invulnerable
+                    || other.army.is_empty()
+                    || other.army == "eNeutral"
+                    || other.army == "eNoArmy"
+                    || self.same_allegiance(&other.army, &army)
+                {
+                    continue;
+                }
+                if uid_is_water
+                    && !self.water_units.contains(&other_id)
+                    && !self.non_ground_units.contains(&other_id)
+                {
+                    continue;
+                }
+                if let Some(&ep) = positions.get(&other_id) {
+                    let d = (ep[0] - pos[0]).hypot(ep[2] - pos[2]);
+                    if best_enemy.is_none_or(|(_, best_d)| d < best_d) {
+                        best_enemy = Some((other_id, d));
+                    }
+                }
+            }
+            if best_enemy.is_none() {
+                for &bldg_id in &self.buildings {
+                    if let Some(b) = self.props.get(&bldg_id)
+                        && b.active == Some(true)
+                        && b.health > 0.0
+                        && !b.invulnerable
+                        && !b.army.is_empty()
+                        && b.army != "eNeutral"
+                        && b.army != "eNoArmy"
+                        && !self.same_allegiance(&b.army, &army)
+                        && let Some(&bp) = positions.get(&bldg_id)
+                    {
+                        let d = (bp[0] - pos[0]).hypot(bp[2] - pos[2]);
+                        if best_enemy.is_none_or(|(_, best_d)| d < best_d) {
+                            best_enemy = Some((bldg_id, d));
+                        }
+                    }
+                }
+            }
+            if let Some((enemy_id, _)) = best_enemy {
+                self.attack_orders.insert(uid, enemy_id);
+            }
+        }
+    }
     fn advance_campaign_mechanics(
         &mut self,
         dt: f64,
@@ -3185,6 +3407,7 @@ impl World {
         }
         self.advance_strategic_installations(dt, positions);
         self.replace_dead_player(positions);
+        self.advance_skirmish_ai(positions);
         if let Some(t) = &mut self.timer_seconds {
             *t = (*t - dt).max(0.0);
         }
@@ -3314,10 +3537,11 @@ impl World {
             };
             if is_cp
                 && (self.roster.contains(&unit) || close)
-                && self
-                    .capture_point_state
-                    .get(&carrier)
-                    .is_some_and(|cp| cp.owner == u.army && cp.height >= 100.0)
+                && self.capture_point_state.get(&carrier).is_some_and(|cp| {
+                    cp.owner != "eNeutral"
+                        && self.same_allegiance(&cp.owner, &u.army)
+                        && cp.height >= 100.0
+                })
             {
                 self.entering_vehicle.remove(&unit);
                 self.orders.remove(&unit);
@@ -3345,9 +3569,7 @@ impl World {
                 }
                 let list = self.passengers.entry(carrier).or_default();
                 if !list.contains(&unit) {
-                    if !is_cp
-                        && let Some(slot) = list.iter_mut().find(|id| id.0 == 0)
-                    {
+                    if !is_cp && let Some(slot) = list.iter_mut().find(|id| id.0 == 0) {
                         *slot = unit;
                     } else {
                         list.push(unit);
@@ -3378,6 +3600,10 @@ impl World {
                 );
             }
         }
+        let player_army = self
+            .player
+            .and_then(|p| self.entity(p).ok())
+            .map(|u| u.army.clone());
         let cp_ids: Vec<_> = self.capture_point_state.keys().copied().collect();
         for cp_id in cp_ids {
             if let Some(list) = self.passengers.get_mut(&cp_id) {
@@ -3405,23 +3631,48 @@ impl World {
                         && u.active == Some(true)
                         && u.health > 0.0
                     {
-                        *army_counts.entry(u.army.clone()).or_default() += 1;
+                        let key = match &player_army {
+                            Some(pa) if self.same_allegiance(&u.army, pa) => pa.clone(),
+                            _ => u.army.clone(),
+                        };
+                        *army_counts.entry(key).or_default() += 1;
                         counted.insert(uid);
                     }
                 }
             }
+            let cp_owner = self
+                .capture_point_state
+                .get(&cp_id)
+                .map(|cp| cp.owner.clone())
+                .unwrap_or_default();
+            let in_cutscene = self.frozen
+                || self
+                    .cameras
+                    .as_ref()
+                    .is_some_and(|c| c.active.is_some() && c.chase_target().is_none());
             if let Some(&cpos) = positions.get(&cp_id) {
                 for (&uid, u) in &self.units {
                     if !counted.contains(&uid)
+                        && (self.entering_vehicle.get(&uid) == Some(&cp_id)
+                            || (!in_cutscene
+                                && (self.player == Some(uid)
+                                    || self.roster.contains(&uid)
+                                    || (!cp_owner.is_empty()
+                                        && cp_owner != "eNeutral"
+                                        && self.same_allegiance(&cp_owner, &u.army)))))
                         && u.active == Some(true)
                         && u.health > 0.0
                         && self.bodies.get(&uid).is_some_and(|b| {
                             b.radius == crate::unit_collision::Body::INFANTRY.radius
                         })
                         && let Some(&upos) = positions.get(&uid)
-                        && (upos[0] - cpos[0]).hypot(upos[2] - cpos[2]) <= 12.0
+                        && (upos[0] - cpos[0]).hypot(upos[2] - cpos[2]) <= 8.5
                     {
-                        *army_counts.entry(u.army.clone()).or_default() += 1;
+                        let key = match &player_army {
+                            Some(pa) if self.same_allegiance(&u.army, pa) => pa.clone(),
+                            _ => u.army.clone(),
+                        };
+                        *army_counts.entry(key).or_default() += 1;
                     }
                 }
             }
@@ -3436,47 +3687,49 @@ impl World {
             } else {
                 None
             };
-            if let Some(army) = contender_army
-                && let Some(cp) = self.capture_point_state.get_mut(&cp_id)
-                && (cp.owner != army || cp.height < 100.0)
-            {
-                cp.capturing_army = Some(army.clone());
-                if cp.owner != "eNeutral" && cp.owner != army && cp.height > 0.0 {
-                    cp.direction = -1;
-                    cp.height = (cp.height - 15.0 * dt).max(0.0);
-                    if cp.height <= 0.0 {
-                        cp.owner = "eNeutral".to_string();
-                        if let Some(si_id) = cp.installation
-                            && let Some(si) = self.installations.get_mut(&si_id)
-                        {
-                            si.owner = "eNeutral".to_string();
+            if let Some(army) = contender_army {
+                let owner_allied = cp_owner != "eNeutral" && self.same_allegiance(&cp_owner, &army);
+                if let Some(cp) = self.capture_point_state.get_mut(&cp_id)
+                    && (!owner_allied || cp.height < 100.0)
+                {
+                    cp.capturing_army = Some(army.clone());
+                    if cp.owner != "eNeutral" && !owner_allied && cp.height > 0.0 {
+                        cp.direction = -1;
+                        cp.height = (cp.height - 15.0 * dt).max(0.0);
+                        if cp.height <= 0.0 {
+                            cp.owner = "eNeutral".to_string();
+                            if let Some(si_id) = cp.installation
+                                && let Some(si) = self.installations.get_mut(&si_id)
+                            {
+                                si.owner = "eNeutral".to_string();
+                            }
                         }
-                    }
-                } else {
-                    cp.direction = 1;
-                    cp.height = (cp.height + 15.0 * dt).min(100.0);
-                    if cp.height >= 97.0 {
-                        cp.owner = army.clone();
-                        if let Some(si_id) = cp.installation
-                            && let Some(si) = self.installations.get_mut(&si_id)
-                        {
-                            si.owner = army.clone();
-                            for &bid in &si.buildings.clone() {
-                                if let Some(b) = self.props.get_mut(&bid) {
-                                    b.army = army.clone();
+                    } else {
+                        cp.direction = 1;
+                        cp.height = (cp.height + 15.0 * dt).min(100.0);
+                        if cp.height >= 97.0 {
+                            cp.owner = army.clone();
+                            if let Some(si_id) = cp.installation
+                                && let Some(si) = self.installations.get_mut(&si_id)
+                            {
+                                si.owner = army.clone();
+                                for &bid in &si.buildings.clone() {
+                                    if let Some(b) = self.props.get_mut(&bid) {
+                                        b.army = army.clone();
+                                    }
                                 }
                             }
                         }
-                    }
-                    if cp.height >= 100.0 {
-                        cp.direction = 0;
-                        if let Some(list) = self.passengers.remove(&cp_id) {
-                            for uid in list {
-                                if self.carrier_of.get(&uid) == Some(&cp_id) {
-                                    self.carrier_of.remove(&uid);
-                                }
-                                if self.roster.contains(&uid) && self.player != Some(uid) {
-                                    self.squad_follow.insert(uid);
+                        if cp.height >= 100.0 {
+                            cp.direction = 0;
+                            if let Some(list) = self.passengers.remove(&cp_id) {
+                                for uid in list {
+                                    if self.carrier_of.get(&uid) == Some(&cp_id) {
+                                        self.carrier_of.remove(&uid);
+                                    }
+                                    if self.roster.contains(&uid) && self.player != Some(uid) {
+                                        self.squad_follow.insert(uid);
+                                    }
                                 }
                             }
                         }
@@ -3611,8 +3864,8 @@ impl World {
                     }
                 } else {
                     sub.depth = (sub.depth - rate as f32).max(0.0);
-                    sub.oxygen =
-                        (sub.oxygen + dt * (sub.max_oxygen / sub.recharge_time)).min(sub.max_oxygen);
+                    sub.oxygen = (sub.oxygen + dt * (sub.max_oxygen / sub.recharge_time))
+                        .min(sub.max_oxygen);
                 }
                 if let Some(p) = positions.get_mut(&id) {
                     p[1] = -sub.depth;
@@ -3629,9 +3882,7 @@ impl World {
                             let cur_y = scene
                                 .terrain_height(p[0], p[2])
                                 .unwrap_or(self.water_height);
-                            let next_y = scene
-                                .terrain_height(nx, nz)
-                                .unwrap_or(self.water_height);
+                            let next_y = scene.terrain_height(nx, nz).unwrap_or(self.water_height);
                             if next_y <= shore_y || next_y <= cur_y {
                                 p[0] = nx;
                                 p[2] = nz;
@@ -3709,8 +3960,8 @@ impl World {
                     let prev_xz = [p[0], p[2]];
                     let mut arrived =
                         crate::mission_air::step(p, order.target, order.radius, speed, dt)?;
-                    let is_follower =
-                        self.squad_follow.contains(&id) || self.follow_unit_orders.contains_key(&id);
+                    let is_follower = self.squad_follow.contains(&id)
+                        || self.follow_unit_orders.contains_key(&id);
                     let shore_limit = if is_follower {
                         self.water_height + 6.0
                     } else {
@@ -3899,7 +4150,8 @@ impl World {
                 let near_self = positions.get(id).is_some_and(|p| {
                     (o.target[0] - p[0] as f64).hypot(o.target[1] - p[2] as f64) <= 18.0
                 });
-                if near_self || (o.target[0] - r.target[0]).hypot(o.target[1] - r.target[1]) > 45.0 {
+                if near_self || (o.target[0] - r.target[0]).hypot(o.target[1] - r.target[1]) > 45.0
+                {
                     r.points.clear();
                 }
                 r.target = o.target;
@@ -4291,7 +4543,7 @@ impl World {
                         continue;
                     }
                     if let Some(c) = scene.object_center(pid)
-                        && ((c[0] - pos[0]).hypot(c[2] - pos[2]) as f64) <= body.radius + 1.8
+                        && ((c[0] - pos[0]).hypot(c[2] - pos[2]) as f64) <= body.radius + 4.2
                     {
                         crushed.push(pid);
                     }
@@ -4876,14 +5128,12 @@ impl World {
                     && let Ok(p) = self.entity(player).cloned()
                 {
                     for &uid in &self.playable_units {
-                        if self
-                            .units
+                        if self.units.get(&uid).is_some_and(|u| {
+                            u.army == p.army && u.active == Some(true) && u.health > 0.0
+                        }) && self
+                            .activity
                             .get(&uid)
-                            .is_some_and(|u| u.army == p.army && u.active == Some(true) && u.health > 0.0)
-                            && self
-                                .activity
-                                .get(&uid)
-                                .is_none_or(|a| a.enabled != Some(false))
+                            .is_none_or(|a| a.enabled != Some(false))
                         {
                             self.roster.insert(uid);
                         }
@@ -5203,16 +5453,16 @@ impl World {
                     vec![id]
                 };
                 for tid in targets {
-                    if !self.units.contains_key(&tid)
-                        && !self.activity.contains_key(&tid)
-                        && !(self.rewrite.is_some() && self.props.contains_key(&tid))
+                    if !(self.units.contains_key(&tid)
+                        || self.activity.contains_key(&tid)
+                        || (self.rewrite.is_some() && self.props.contains_key(&tid)))
                     {
                         return Err("Unknown activity target".into());
                     }
                     if adjust
-                        && !self.units.contains_key(&tid)
-                        && !self.buildings.contains(&tid)
-                        && !(self.rewrite.is_some() && self.props.contains_key(&tid))
+                        && !(self.units.contains_key(&tid)
+                            || self.buildings.contains(&tid)
+                            || (self.rewrite.is_some() && self.props.contains_key(&tid)))
                     {
                         return Err("Weapon activity on non-unit unsupported".into());
                     }
@@ -5227,7 +5477,8 @@ impl World {
                         if is_active {
                             if self.playable_units.contains(&tid)
                                 && let Some(player) = self.player
-                                && let (Some(u), Ok(p)) = (self.units.get(&tid), self.entity(player))
+                                && let (Some(u), Ok(p)) =
+                                    (self.units.get(&tid), self.entity(player))
                                 && u.army == p.army
                                 && u.active == Some(true)
                                 && u.health > 0.0
@@ -5591,7 +5842,11 @@ impl World {
                 let is_cutscene_dummy = self.frozen
                     && positions
                         .get(&target)
-                        .is_some_and(|tp| tp[0].hypot(tp[2]) > 1400.0);
+                        .zip(positions.get(&current))
+                        .is_some_and(|(tp, cp)| {
+                            tp[0].hypot(tp[2]) > 1400.0
+                                && (tp[0] - cp[0]).hypot(tp[2] - cp[2]) > 600.0
+                        });
                 if self.rewrite.is_some() {
                     if !is_cutscene_dummy {
                         self.roster.insert(target);
@@ -5772,7 +6027,9 @@ impl World {
                 }
                 let mut alive = false;
                 for &id in &self.roster {
-                    let u = self.entity(id).map_err(|_| "Unknown roster unit".to_string())?;
+                    let u = self
+                        .entity(id)
+                        .map_err(|_| "Unknown roster unit".to_string())?;
                     let present = if self.despawn_retention.contains_key(&id) {
                         self.unit_list_presence(id)?
                     } else {
@@ -5906,8 +6163,8 @@ impl World {
                         .as_ref()
                         .and_then(|r| r.objects().get(owner).map(|o| o.kind == "cAirVehicle"))
                         .unwrap_or(false);
-                let is_air_target = self.air_shapes.contains_key(target)
-                    && !self.water_units.contains(target);
+                let is_air_target =
+                    self.air_shapes.contains_key(target) && !self.water_units.contains(target);
                 if !is_air_attacker && is_air_target {
                     if actor_active == Some(false) || victim_active == Some(false) {
                         self.orders.remove(owner);
@@ -6302,15 +6559,20 @@ impl World {
                 let is_cp = self.capture_points.contains(carrier);
                 let list = self.passengers.entry(*carrier).or_default();
                 if !list.contains(unit) {
-                    if !is_cp
-                        && let Some(slot) = list.iter_mut().find(|id| id.0 == 0)
-                    {
+                    if !is_cp && let Some(slot) = list.iter_mut().find(|id| id.0 == 0) {
                         *slot = *unit;
                     } else {
                         list.push(*unit);
                     }
                 }
-                if !is_cp {
+                if is_cp {
+                    self.entering_vehicle.remove(unit);
+                    self.orders.remove(unit);
+                    if let Some(&cpos) = positions.get(carrier) {
+                        self.pending_positions
+                            .insert(*unit, [cpos[0], 0.0, cpos[2]]);
+                    }
+                } else {
                     let u_army = self.units.get(unit).map(|u| u.army.clone());
                     if let Some(u) = self.units.get_mut(unit) {
                         u.active = Some(false);
@@ -6397,9 +6659,7 @@ impl World {
                     let is_cp = self.capture_points.contains(carrier);
                     let list = self.passengers.entry(*carrier).or_default();
                     if !list.contains(unit) {
-                        if !is_cp
-                            && let Some(slot) = list.iter_mut().find(|id| id.0 == 0)
-                        {
+                        if !is_cp && let Some(slot) = list.iter_mut().find(|id| id.0 == 0) {
                             *slot = *unit;
                         } else {
                             list.push(*unit);
@@ -6427,6 +6687,8 @@ impl World {
                 (Value::Enum(none), _) if none == "ID_NONE" => {}
                 (Value::Nil, _) => {}
                 (Value::Object(unit), _) => {
+                    self.entering_vehicle.remove(unit);
+                    self.orders.remove(unit);
                     let carrier = self.carrier_of.remove(unit).or_else(|| {
                         rest.first().and_then(|v| match v {
                             Value::Object(cid) => Some(*cid),
@@ -6434,16 +6696,26 @@ impl World {
                         })
                     });
                     if let Some(cid) = carrier {
+                        let mut now_empty = true;
                         if let Some(list) = self.passengers.get_mut(&cid) {
                             if self.capture_points.contains(&cid) {
                                 list.retain(|&u| u != *unit);
+                                now_empty = list.is_empty();
                             } else {
                                 for u in list.iter_mut() {
                                     if *u == *unit {
                                         *u = ObjectId(0);
                                     }
                                 }
+                                now_empty = list.iter().all(|id| id.0 == 0);
                             }
+                        }
+                        if now_empty
+                            && self.garrisonable_buildings.contains(&cid)
+                            && !self.capture_points.contains(&cid)
+                            && let Some(b) = self.props.get_mut(&cid)
+                        {
+                            b.army = "eNeutral".to_string();
                         }
                         if let Some(&cpos) = positions.get(&cid) {
                             let y = if self.non_ground_units.contains(unit)
@@ -6557,7 +6829,18 @@ impl World {
                 self.following.remove(follower);
                 self.squad_follow.remove(follower);
                 self.follow_unit_orders.insert(*follower, *target);
-                if self.player == Some(*target) && self.can_squad_follow(*follower, *target) {
+                if self.collision.as_ref().is_some_and(|s| s.ground.is_some())
+                    && self.units.contains_key(follower)
+                {
+                    let act = self.activity.entry(*follower).or_default();
+                    act.enabled = Some(true);
+                    if act.weapons_enabled.is_none() {
+                        act.weapons_enabled = Some(true);
+                    }
+                }
+                if (self.player == Some(*target) || self.roster.contains(target))
+                    && self.can_squad_follow(*follower, *target)
+                {
                     self.roster.insert(*follower);
                     self.squad_follow.insert(*follower);
                 }
@@ -6651,7 +6934,14 @@ impl World {
                         _ => true,
                     };
                     let army_ok = cp.owner == wanted
-                        || (cp.owner == "eNeutral" && cp.capturing_army.as_deref() == Some(wanted));
+                        || (wanted != "eNeutral"
+                            && cp.owner != "eNeutral"
+                            && self.same_allegiance(&cp.owner, wanted))
+                        || (cp.owner == "eNeutral"
+                            && cp.capturing_army.as_deref().is_some_and(|ca| {
+                                ca == wanted
+                                    || (wanted != "eNeutral" && self.same_allegiance(ca, wanted))
+                            }));
                     dir_ok && army_ok && (cp.height - target_h).abs() <= (*tol).max(1.0)
                 } else {
                     false
@@ -6943,14 +7233,21 @@ impl World {
                                 .iter()
                                 .find_map(|rid| self.units.get(rid).map(|u| u.army.clone()))
                         })
-                    && self.units.get(carrier).is_some_and(|u| u.army == player_army)
+                    && self
+                        .units
+                        .get(carrier)
+                        .is_some_and(|u| u.army == player_army)
                 {
                     self.roster.insert(*carrier);
                 }
                 if self.roster.contains(carrier) && self.player != Some(*carrier) {
                     self.squad_follow.insert(*carrier);
                 }
-                let mut pos = [*x as f32, positions.get(carrier).map_or(20.0, |p| p[1]), *z as f32];
+                let mut pos = [
+                    *x as f32,
+                    positions.get(carrier).map_or(20.0, |p| p[1]),
+                    *z as f32,
+                ];
                 if let Some(&hag) = self.scripted_air_altitude.get(carrier)
                     && let Some(scene) = &self.collision
                     && let Ok(air_pos) = scene.world_point([pos[0], 0.0, pos[2]], hag)
@@ -7115,10 +7412,9 @@ impl World {
                 return Ok(vec![Value::Number(0.0)]);
             }
             ("GetSubmarineAirpercentage", [Value::Object(id)]) => {
-                let pct = self
-                    .submarines
-                    .get(id)
-                    .map_or(100.0, |s| (s.oxygen / s.max_oxygen * 100.0).clamp(0.0, 100.0));
+                let pct = self.submarines.get(id).map_or(100.0, |s| {
+                    (s.oxygen / s.max_oxygen * 100.0).clamp(0.0, 100.0)
+                });
                 return Ok(vec![Value::Number(pct)]);
             }
             ("IsSubmarineSubmerged", [Value::Object(id)]) => {

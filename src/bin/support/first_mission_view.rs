@@ -1128,6 +1128,8 @@ pub struct View {
     pub destroyed_times: BTreeMap<ObjectId, f32>,
     pub seen_rewrite_effects: usize,
     pub active_explosions: Vec<ExplosionEffect>,
+    pub vfx_fireball_materials: [Handle<StandardMaterial>; 4],
+    pub vfx_smoke_materials: [Handle<StandardMaterial>; 4],
     pub locked_target: Option<ObjectId>,
     pub lock_toggled: bool,
     accumulator: f64,
@@ -1502,6 +1504,19 @@ const LEVEL_UI_TEXTURE_NAMES: &[&str] = &[
     "pm_butt2high",
     "hud_whiteflag",
     "blip_01",
+    "sfx_fireball",
+    "sfx_fireblobanim",
+    "sfx_bigfireadd",
+    "sfx_smoke",
+    "sfx_smoke2",
+    "sfx_smokeplume",
+    "sfx_shock",
+    "sfx_radial_glows",
+    "sfx_white_glow",
+    "sfx_hl_flare",
+    "sfx_muzz_mg",
+    "sfx_waterwake",
+    "sfx_waterring",
 ];
 
 impl View {
@@ -2091,6 +2106,8 @@ impl View {
             destroyed_times: BTreeMap::new(),
             seen_rewrite_effects: 0,
             active_explosions: Vec::new(),
+            vfx_fireball_materials: std::array::from_fn(|_| Handle::default()),
+            vfx_smoke_materials: std::array::from_fn(|_| Handle::default()),
             locked_target: None,
             lock_toggled: false,
             accumulator: 0.0,
@@ -2207,7 +2224,9 @@ impl View {
         if is_animated_troop {
             let mut actor_parts = Vec::new();
             for p in &model.parts {
-                if is_hidden_subnode(source, p.node_index) || is_fragment_subnode(source, p.node_index) {
+                if is_hidden_subnode(source, p.node_index)
+                    || is_fragment_subnode(source, p.node_index)
+                {
                     continue;
                 }
                 if source.nodes[p.node_index].has_skin_data {
@@ -2344,15 +2363,14 @@ impl View {
                         || node_upper.contains("TRACK")
                         || tex_upper.contains("TREAD")
                         || tex_upper.contains("TRACK"));
-                let (mesh_handle, tread_mesh, tread_uvs) = if is_tread
-                    && let Some(base_mesh) = meshes.get(&p.mesh).cloned()
-                {
-                    let cloned = meshes.add(base_mesh);
-                    let uvs = surface.vertices.iter().map(|v| v.uv).collect::<Vec<_>>();
-                    (cloned.clone(), Some(cloned), Some(uvs))
-                } else {
-                    (p.mesh.clone(), None, None)
-                };
+                let (mesh_handle, tread_mesh, tread_uvs) =
+                    if is_tread && let Some(base_mesh) = meshes.get(&p.mesh).cloned() {
+                        let cloned = meshes.add(base_mesh);
+                        let uvs = surface.vertices.iter().map(|v| v.uv).collect::<Vec<_>>();
+                        (cloned.clone(), Some(cloned), Some(uvs))
+                    } else {
+                        (p.mesh.clone(), None, None)
+                    };
                 let frag_vel = if is_frag {
                     let offset = p.transform.w_axis.truncate();
                     let angle = (p.node_index as f32) * 2.39996 + (placement.id.0 as f32) * 0.71;
@@ -2432,13 +2450,11 @@ impl View {
         let is_ground_vehicle = kind == "cGroundVehicle";
         let is_water_vehicle = kind == "cWaterVehicle";
         let is_air_vehicle = kind == "cAirVehicle";
-        let is_mobile = animated
-            || is_ground_vehicle
-            || is_water_vehicle
-            || is_air_vehicle
-            || kind == "cTroop";
+        let is_mobile =
+            animated || is_ground_vehicle || is_water_vehicle || is_air_vehicle || kind == "cTroop";
         for p in &model.parts {
-            if is_hidden_subnode(source, p.node_index) || is_fragment_subnode(source, p.node_index) {
+            if is_hidden_subnode(source, p.node_index) || is_fragment_subnode(source, p.node_index)
+            {
                 continue;
             }
             let node_upper = source.nodes[p.node_index].name.to_ascii_uppercase();
@@ -2452,21 +2468,19 @@ impl View {
             } else {
                 matrix * p.transform
             };
-            let (turret_role, turret_yaw_pivot, turret_pivot) = if !animated
-                && (is_ground_vehicle || is_water_vehicle)
-                && rotor_axis.is_none()
-            {
-                let (role, yp, bp) = detect_turret_role_and_pivot(source, model, p.node_index);
-                if role > 0 {
-                    let m_bp = matrix.transform_point3(bp);
-                    let m_yp = matrix.transform_point3(Vec3::new(yp[0], bp.y, yp[1]));
-                    (role, [m_yp.x, m_yp.z], m_bp)
+            let (turret_role, turret_yaw_pivot, turret_pivot) =
+                if !animated && (is_ground_vehicle || is_water_vehicle) && rotor_axis.is_none() {
+                    let (role, yp, bp) = detect_turret_role_and_pivot(source, model, p.node_index);
+                    if role > 0 {
+                        let m_bp = matrix.transform_point3(bp);
+                        let m_yp = matrix.transform_point3(Vec3::new(yp[0], bp.y, yp[1]));
+                        (role, [m_yp.x, m_yp.z], m_bp)
+                    } else {
+                        (0, [0.0, 0.0], Vec3::ZERO)
+                    }
                 } else {
                     (0, [0.0, 0.0], Vec3::ZERO)
-                }
-            } else {
-                (0, [0.0, 0.0], Vec3::ZERO)
-            };
+                };
             commands.spawn((
                 SceneEntity,
                 Mesh3d(p.mesh.clone()),
@@ -3189,7 +3203,12 @@ pub fn verify_input(
 pub fn traces(
     view: Option<Res<View>>,
     camera: Query<&Transform, (With<Camera3d>, Without<RifleTrace>)>,
-    mut traces: Query<(&RifleTrace, &mut Transform, &mut Visibility)>,
+    mut traces: Query<(
+        &RifleTrace,
+        &mut Transform,
+        &mut Visibility,
+        &mut MeshMaterial3d<StandardMaterial>,
+    )>,
 ) {
     let Some(view) = view else {
         return;
@@ -3200,7 +3219,7 @@ pub fn traces(
         .map(|c| c.rotation)
         .unwrap_or(Quat::IDENTITY);
     let in_mission = view.stage == FrontendStage::InMission;
-    for (slot, mut transform, mut visibility) in &mut traces {
+    for (slot, mut transform, mut visibility, mut mat_handle) in &mut traces {
         if !in_mission {
             if *visibility != Visibility::Hidden {
                 *visibility = Visibility::Hidden;
@@ -3232,11 +3251,16 @@ pub fn traces(
                         }
                     }
                     1 => {
-                        // Layer 1: Camera-facing multi-lobe fireball billboard (first 82% of lifetime)
+                        // Layer 1: Camera-facing 4-frame animated fireball flipbook billboard (first 82% of lifetime)
                         if frac < 0.82 {
                             let f1 = (frac / 0.82).clamp(0.0, 1.0);
                             let r = s * (1.0 + f1.sqrt() * 5.2) * (1.0 - f1.powi(3));
                             if r > 0.05 {
+                                let frame_idx = ((f1 * 4.0) as usize).min(3);
+                                let desired = &view.vfx_fireball_materials[frame_idx];
+                                if mat_handle.0 != *desired {
+                                    mat_handle.0 = desired.clone();
+                                }
                                 *transform = Transform {
                                     translation: exp.pos + Vec3::Y * (0.45 * s + f1 * 2.6 * s),
                                     rotation: cam_rot * Quat::from_rotation_z(-phase + f1 * 1.4),
@@ -3247,14 +3271,20 @@ pub fn traces(
                         }
                     }
                     2 => {
-                        // Layer 2: Camera-facing rising smoke plume billboard (6% to 100% of lifetime)
+                        // Layer 2: Camera-facing 4-frame rising smoke plume flipbook billboard (6% to 100% of lifetime)
                         if frac > 0.06 {
                             let f2 = ((frac - 0.06) / 0.94).clamp(0.0, 1.0);
                             let r = s * (1.1 + f2.sqrt() * 5.6) * (1.0 - f2.powi(3));
                             if r > 0.05 {
+                                let frame_idx = ((f2 * 4.0) as usize).min(3);
+                                let desired = &view.vfx_smoke_materials[frame_idx];
+                                if mat_handle.0 != *desired {
+                                    mat_handle.0 = desired.clone();
+                                }
                                 *transform = Transform {
                                     translation: exp.pos + Vec3::Y * (0.85 * s + f2 * 6.2 * s),
-                                    rotation: cam_rot * Quat::from_rotation_z(phase * 0.5 - f2 * 1.1),
+                                    rotation: cam_rot
+                                        * Quat::from_rotation_z(phase * 0.5 - f2 * 1.1),
                                     scale: Vec3::new(r * 1.15, r * 0.95, 1.0),
                                 };
                                 shown = true;
@@ -3540,6 +3570,15 @@ pub fn setup(
         return;
     };
     let textures = std::mem::take(&mut view.ui_textures);
+    let raw_fireblob = textures.get("sfx_fireblobanim").cloned();
+    let raw_fireball = textures.get("sfx_fireball").cloned();
+    let raw_smoke = textures.get("sfx_smoke").cloned();
+    let raw_smoke2 = textures.get("sfx_smoke2").cloned();
+    let raw_flare = textures
+        .get("sfx_hl_flare")
+        .or_else(|| textures.get("sfx_radial_glows"))
+        .cloned();
+    let raw_shock = textures.get("sfx_shock").cloned();
     for (name, decoded) in textures {
         view.ui_handles
             .insert(name, model_render::image(decoded, &mut images));
@@ -3621,7 +3660,7 @@ pub fn setup(
         unlit: true,
         ..default()
     });
-    let make_vfx_tex = |images: &mut Assets<Image>, kind: u8| -> Handle<Image> {
+    let make_vfx_tex = |images: &mut Assets<Image>, kind: u8, frame: usize| -> Handle<Image> {
         let size = 64usize;
         let mut rgba = vec![0u8; size * size * 4];
         for y in 0..size {
@@ -3630,34 +3669,37 @@ pub fn setup(
                 let nx = (x as f32 + 0.5) / (size as f32) * 2.0 - 1.0;
                 let r = (nx * nx + ny * ny).sqrt();
                 let angle = ny.atan2(nx);
+                let f_off = frame as f32 * 0.85;
                 let (cr, cg, cb, ca) = match kind {
                     0 => {
-                        // Soft radial starburst flash
                         let rays = 0.85 + 0.15 * (angle * 6.0).cos();
                         let a = ((1.0 - r / rays).clamp(0.0, 1.0)).powi(2);
                         (255, 246, 205, (a * 255.0) as u8)
                     }
                     1 => {
-                        // Multi-lobe billowing fireball
                         let lobe = 0.82
-                            + 0.12 * (angle * 5.0 + r * 3.0).sin()
-                            + 0.08 * (angle * 3.0 - r * 2.0).cos();
+                            + 0.12 * (angle * 5.0 + r * 3.0 + f_off).sin()
+                            + 0.08 * (angle * 3.0 - r * 2.0 - f_off * 0.7).cos();
                         let a = ((1.0 - r / lobe).clamp(0.0, 1.0)).powf(1.5);
-                        let g = (220.0 * (1.0 - r * 0.55).clamp(0.0, 1.0)) as u8;
+                        let g = (220.0 * (1.0 - r * (0.50 + frame as f32 * 0.05)).clamp(0.0, 1.0))
+                            as u8;
                         let b = (90.0 * (1.0 - r * 0.85).clamp(0.0, 1.0)) as u8;
                         (255, g, b, (a * 245.0) as u8)
                     }
                     2 => {
-                        // Soft billowing smoke puff
                         let lobe = 0.84
-                            + 0.10 * (angle * 4.0 + 1.1).sin()
-                            + 0.08 * (angle * 7.0 - 0.6).cos();
+                            + 0.10 * (angle * 4.0 + 1.1 + f_off).sin()
+                            + 0.08 * (angle * 7.0 - 0.6 - f_off * 0.6).cos();
                         let a = ((1.0 - r / lobe).clamp(0.0, 1.0)).powf(1.6) * 0.82;
                         let shade = (38.0 + (1.0 - r).clamp(0.0, 1.0) * 28.0) as u8;
-                        (shade, shade.saturating_sub(2), shade.saturating_sub(4), (a * 255.0) as u8)
+                        (
+                            shade,
+                            shade.saturating_sub(2),
+                            shade.saturating_sub(4),
+                            (a * 255.0) as u8,
+                        )
                     }
                     _ => {
-                        // Shockwave ring
                         let ring = (1.0 - ((r - 0.68).abs() / 0.24).clamp(0.0, 1.0)).powi(2);
                         (255, 195, 95, (ring * 235.0) as u8)
                     }
@@ -3678,10 +3720,94 @@ pub fn setup(
             images,
         )
     };
-    let flash_tex = make_vfx_tex(&mut images, 0);
-    let fireball_tex = make_vfx_tex(&mut images, 1);
-    let smoke_tex = make_vfx_tex(&mut images, 2);
-    let ring_tex = make_vfx_tex(&mut images, 3);
+    // Helper that converts a decoded archive TXET chunk (or a 2x2 flipbook quadrant of one)
+    // into a soft-edged alpha-masked particle sprite texture.
+    let mask_archive_vfx = |src: &texture::DecodedTexture,
+                            quadrant: Option<usize>,
+                            luma_to_alpha: bool,
+                            images: &mut Assets<Image>|
+     -> Handle<Image> {
+        let (w, h, ox, oy) = if let Some(q) = quadrant {
+            let qw = (src.width / 2).max(1);
+            let qh = (src.height / 2).max(1);
+            (qw, qh, (q % 2) * qw, (q / 2) * qh)
+        } else {
+            (src.width.max(1), src.height.max(1), 0, 0)
+        };
+        let mut rgba = vec![0u8; w * h * 4];
+        for y in 0..h {
+            let ny = (y as f32 + 0.5) / (h as f32) * 2.0 - 1.0;
+            for x in 0..w {
+                let nx = (x as f32 + 0.5) / (w as f32) * 2.0 - 1.0;
+                let r = (nx * nx + ny * ny).sqrt();
+                let radial_mask = ((1.0 - r) / 0.28).clamp(0.0, 1.0).powf(1.35);
+                let s_idx = ((oy + y) * src.width + (ox + x)) * 4;
+                let (sr, sg, sb, sa) = if s_idx + 3 < src.rgba.len() {
+                    (
+                        src.rgba[s_idx],
+                        src.rgba[s_idx + 1],
+                        src.rgba[s_idx + 2],
+                        src.rgba[s_idx + 3],
+                    )
+                } else {
+                    (255, 255, 255, 0)
+                };
+                let luma = (sr as f32 * 0.299 + sg as f32 * 0.587 + sb as f32 * 0.114) / 255.0;
+                let base_a = if luma_to_alpha {
+                    (sa as f32 / 255.0) * luma.powf(0.85)
+                } else {
+                    (sa as f32 / 255.0).max(luma)
+                };
+                let final_a = (base_a * radial_mask * 255.0).clamp(0.0, 255.0) as u8;
+                let d_idx = (y * w + x) * 4;
+                rgba[d_idx] = sr;
+                rgba[d_idx + 1] = sg;
+                rgba[d_idx + 2] = sb;
+                rgba[d_idx + 3] = final_a;
+            }
+        }
+        model_render::image(
+            texture::DecodedTexture {
+                width: w,
+                height: h,
+                rgba,
+            },
+            images,
+        )
+    };
+    let flash_tex = if let Some(ref tex) = raw_flare {
+        mask_archive_vfx(tex, None, true, &mut images)
+    } else {
+        make_vfx_tex(&mut images, 0, 0)
+    };
+    let ring_tex = if let Some(ref tex) = raw_shock {
+        mask_archive_vfx(tex, None, true, &mut images)
+    } else {
+        make_vfx_tex(&mut images, 3, 0)
+    };
+    let fireball_frames: [Handle<Image>; 4] = std::array::from_fn(|f| {
+        if let Some(ref blob) = raw_fireblob
+            && blob.width >= 64
+            && blob.height >= 64
+        {
+            mask_archive_vfx(blob, Some(f), true, &mut images)
+        } else if let Some(ref fb) = raw_fireball {
+            mask_archive_vfx(fb, None, true, &mut images)
+        } else {
+            make_vfx_tex(&mut images, 1, f)
+        }
+    });
+    let smoke_frames: [Handle<Image>; 4] = std::array::from_fn(|f| {
+        if f >= 2
+            && let Some(ref sm2) = raw_smoke2
+        {
+            mask_archive_vfx(sm2, None, true, &mut images)
+        } else if let Some(ref sm) = raw_smoke {
+            mask_archive_vfx(sm, None, true, &mut images)
+        } else {
+            make_vfx_tex(&mut images, 2, f)
+        }
+    });
     let billboard_mesh = meshes.add(Rectangle::new(1.0, 1.0));
     let shockwave_mesh = meshes.add(Plane3d::default().mesh().size(1.0, 1.0));
     let flash_material = materials.add(StandardMaterial {
@@ -3693,24 +3819,32 @@ pub fn setup(
         cull_mode: None,
         ..default()
     });
-    let fireball_material = materials.add(StandardMaterial {
-        base_color: Color::srgba(1.0, 0.56, 0.16, 0.92),
-        base_color_texture: Some(fireball_tex),
-        emissive: LinearRgba::new(3.8, 1.35, 0.18, 1.0),
-        alpha_mode: AlphaMode::Add,
-        unlit: true,
-        cull_mode: None,
-        ..default()
+    let fireball_materials: [Handle<StandardMaterial>; 4] = std::array::from_fn(|f| {
+        let heat = 1.0 - (f as f32) * 0.16;
+        materials.add(StandardMaterial {
+            base_color: Color::srgba(1.0, 0.62 * heat, 0.18 * heat, 0.94),
+            base_color_texture: Some(fireball_frames[f].clone()),
+            emissive: LinearRgba::new(4.2 * heat, 1.55 * heat, 0.22 * heat, 1.0),
+            alpha_mode: AlphaMode::Add,
+            unlit: true,
+            cull_mode: None,
+            ..default()
+        })
     });
-    let smoke_material = materials.add(StandardMaterial {
-        base_color: Color::srgba(0.24, 0.22, 0.20, 0.78),
-        base_color_texture: Some(smoke_tex),
-        perceptual_roughness: 0.98,
-        alpha_mode: AlphaMode::Blend,
-        unlit: true,
-        cull_mode: None,
-        ..default()
+    let smoke_materials: [Handle<StandardMaterial>; 4] = std::array::from_fn(|f| {
+        let fade = 1.0 - (f as f32) * 0.14;
+        materials.add(StandardMaterial {
+            base_color: Color::srgba(0.26 * fade, 0.24 * fade, 0.22 * fade, 0.80 * fade),
+            base_color_texture: Some(smoke_frames[f].clone()),
+            perceptual_roughness: 0.98,
+            alpha_mode: AlphaMode::Blend,
+            unlit: true,
+            cull_mode: None,
+            ..default()
+        })
     });
+    view.vfx_fireball_materials = fireball_materials.clone();
+    view.vfx_smoke_materials = smoke_materials.clone();
     let shockwave_material = materials.add(StandardMaterial {
         base_color: Color::srgba(1.0, 0.74, 0.30, 0.78),
         base_color_texture: Some(ring_tex),
@@ -3724,8 +3858,8 @@ pub fn setup(
         let (mesh_h, mat) = if i >= 384 {
             match (i - 384) % 4 {
                 0 => (billboard_mesh.clone(), flash_material.clone()),
-                1 => (billboard_mesh.clone(), fireball_material.clone()),
-                2 => (billboard_mesh.clone(), smoke_material.clone()),
+                1 => (billboard_mesh.clone(), fireball_materials[0].clone()),
+                2 => (billboard_mesh.clone(), smoke_materials[0].clone()),
                 _ => (shockwave_mesh.clone(), shockwave_material.clone()),
             }
         } else {
@@ -6573,9 +6707,8 @@ pub fn update(
                 let page_start = (current_sel / 6) * 6;
                 let total_pages = total_movies.div_ceil(6);
                 let current_page = (current_sel / 6) + 1;
-                left_header = format!(
-                    "FMV MOVIES (PAGE {current_page}/{total_pages} | UP/DOWN/LEFT/RIGHT)"
-                );
+                left_header =
+                    format!("FMV MOVIES (PAGE {current_page}/{total_pages} | UP/DOWN/LEFT/RIGHT)");
                 active_count = (total_movies - page_start).min(6);
                 selected_idx = current_sel - page_start;
                 for (slot_i, item_text) in item_texts.iter_mut().enumerate().take(active_count) {
@@ -6745,9 +6878,7 @@ pub fn update(
                     }
                 }
                 UiImageSlot::MovieScreen => {
-                    if in_movie_theater
-                        && let Some(movie) = &view.active_movie
-                    {
+                    if in_movie_theater && let Some(movie) = &view.active_movie {
                         if img.image != movie.image {
                             img.image = movie.image.clone();
                         }
@@ -7285,8 +7416,7 @@ pub fn update(
                         && prev_eye.distance(eye) < 35.0
                     {
                         eye = prev_eye.lerp(eye, (dt * 15.0).clamp(0.0, 1.0));
-                        let smoothed_target =
-                            prev_target.lerp(target, (dt * 18.0).clamp(0.0, 1.0));
+                        let smoothed_target = prev_target.lerp(target, (dt * 18.0).clamp(0.0, 1.0));
                         (eye, smoothed_target)
                     } else {
                         (eye, target)
@@ -7665,11 +7795,12 @@ pub fn update(
                         | "W_G_Mortar"
                 ) {
                     let impact_pos = Vec3::from_array(shot.to);
-                    let scale = if matches!(launch_sfx, "WArtillery" | "WBattlestation" | "WBomberBomb") {
-                        1.55
-                    } else {
-                        1.05
-                    };
+                    let scale =
+                        if matches!(launch_sfx, "WArtillery" | "WBattlestation" | "WBomberBomb") {
+                            1.55
+                        } else {
+                            1.05
+                        };
                     view.active_explosions.push(ExplosionEffect {
                         pos: impact_pos,
                         age: 0.0,
@@ -8046,13 +8177,7 @@ pub fn update(
                 .or_else(|| view.session.program.host.positions.get(&id).copied())
                 .unwrap_or([0.0; 3]);
             let is_troop = view.troops.contains_key(&id);
-            let is_water = view
-                .session
-                .program
-                .host
-                .world
-                .water_units
-                .contains(&id);
+            let is_water = view.session.program.host.world.water_units.contains(&id);
             let is_air = (view
                 .session
                 .program
@@ -8153,7 +8278,8 @@ pub fn update(
                 .and_then(|tid| host.positions.get(&tid).copied())
                 .map(|tp| {
                     let [gx, gz] = bw_rust::original_scene::source_to_grid(tp[0], tp[2]);
-                    let gy = (loaded.ground.height(gx, gz).unwrap_or(0.0) * 2.0).max(view.water_height);
+                    let gy =
+                        (loaded.ground.height(gx, gz).unwrap_or(0.0) * 2.0).max(view.water_height);
                     Vec3::new(tp[0], tp[1] + gy + 1.8, tp[2])
                 })
                 .or_else(|| view.smoothed_camera.map(|(_, look)| look))
@@ -8311,8 +8437,8 @@ pub fn update(
             && let Some(ref uvs) = part.tread_uvs
             && let Some(mut mesh) = meshes.get_mut(mesh_h)
         {
-            let scroll = (view.wheel_angles.get(&part.id).copied().unwrap_or(0.0) * 0.35)
-                .rem_euclid(1.0);
+            let scroll =
+                (view.wheel_angles.get(&part.id).copied().unwrap_or(0.0) * 0.35).rem_euclid(1.0);
             let scrolled: Vec<[f32; 2]> = uvs.iter().map(|&[u, v]| [u, v + scroll]).collect();
             mesh.insert_attribute(Mesh::ATTRIBUTE_UV_0, scrolled);
         }

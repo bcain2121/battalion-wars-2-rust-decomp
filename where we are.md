@@ -2,16 +2,42 @@
 
 **Agent handoff:** read `HANDOFF.md` for safety constraints, exact reproduction commands, code/data locations and the next bounded task; `docs/ROADMAP.md` contains the prioritized forward plan. The latest section below is authoritative. Earlier checkpoints retain historical blockers/test counts and must not be mistaken for current failures. This checkout is largely untracked, with no commits on `main`; preserve all work.
 
-## Latest: `SP_0.1` and `SP_1.1` complete through `WinMission`; all 20 single-player levels (`SP_0.1..SP_5.4`) load and run 3,600 frames cleanly
+## Latest: All 20 single-player campaign levels (`SP_0.1`, `SP_1.1..SP_5.4`) complete through `WinMission`; MP Skirmish AI (`MP1..MP17`) and authored particle flipbook textures integrated
 
-- **`SP_0.1` (*Prologue: A Flash in the Pan*) and `SP_1.1` (*1. Anglo Attack* / *Flashback: A Prelude to War*) complete end-to-end through their full authored cutscenes, objectives, and `WinMission` (`MissionOutcome::Won`):**
-  - `SP_0.1` completes through `Gambit_Part_1_Cutscene_PlayerWins` and `WinMission` at frame `23,115` (`MissionOutcome::Won { speed: 100.0, power: 0.0, technique: 34.159773225060164, rating: "GRADE_C" }`), with authored defeat (`MissionOutcome::Lost { message_id: Some(196) }`) and `restart()` verified (`tests/first_mission_staff.rs::first_mission_reaches_victory_and_defeat`).
-  - `SP_1.1` completes all 9 authored mission objectives (`260025754`, `280009207`, `280009344`, `280009356`, `280010295`, `280014581`, `260027438`, `280010544`, and `280009570` `Defend_Airbase`), all 5 cutscenes (`JW_Cutscene01..05`), and `WinMission` (`MissionOutcome::Won { speed: 72.5, power: 83.03693570451436, technique: 100.0, rating: "GRADE_A" }`) at frame `34,013` (`566.9s`) via ordinary `Input` in `tests/campaign_levels_runtime.rs::autopilot_survey_campaign_levels`.
-- **All 20 single-player campaign levels (`SP_0.1` through `SP_5.4`) load and run 3,600 frames (`60s`) past their opening cutscenes with `frozen=false` and zero script errors** (`tests/campaign_levels_runtime.rs::survey_all_campaign_levels`).
+- **All 20 single-player campaign levels (`SP_0.1` and `SP_1.1` through `SP_5.4`) complete end-to-end through their full authored cutscenes, objectives, and `WinMission` (`MissionOutcome::Won`) via ordinary `Input` in `tests/campaign_levels_runtime.rs::autopilot_survey_campaign_levels`:**
+  - **Prologue & Campaign 1 (6/6 `Won`):**
+    - `SP_0.1` (*Prologue: A Flash in the Pan*): `Won` (`GRADE_S`, frame `11,069`; also verified with authored defeat `MissionOutcome::Lost { message_id: Some(196) }` and `restart()` in `tests/first_mission_staff.rs::first_mission_reaches_victory_and_defeat`).
+    - `SP_1.1`: `Won` (`GRADE_S`, frame `13,128`, `objectives_done=9`).
+    - `SP_1.2`: `Won` (`GRADE_S`, frame `17,676`, `objectives_done=38`).
+    - `SP_1.3`: `Won` (`GRADE_S`, frame `18,863`, `objectives_done=16`).
+    - `SP_1.4`: `Won` (`GRADE_S`, frame `13,866`, `objectives_done=14`).
+    - `SP_1.5`: `Won` (`GRADE_S`, frame `18,695`, `objectives_done=43`).
+  - **Campaign 2 (3/3 `Won`):**
+    - `SP_2.1`: `Won` (`GRADE_S`, frame `13,441`, `objectives_done=9`).
+    - `SP_2.2`: `Won` (`GRADE_A`, frame `24,995`, `objectives_done=9`).
+    - `SP_2.3`: `Won` (`GRADE_S`, frame `24,522`, `objectives_done=9`).
+  - **Campaign 3 (4/4 `Won`):**
+    - `SP_3.1`: `Won` (`GRADE_S`, frame `15,436`, `objectives_done=10`).
+    - `SP_3.2`: `Won` (`GRADE_A`, frame `14,705`, `objectives_done=4`).
+    - `SP_3.3`: `Won` (`GRADE_S`, frame `19,356`, `objectives_done=15`).
+    - `SP_3.4`: `Won` (`GRADE_A`, frame `11,176`, `objectives_done=24`).
+  - **Campaign 4 (3/3 `Won`):**
+    - `SP_4.1`: `Won` (`GRADE_A`, frame `21,679`, `objectives_done=14`).
+    - `SP_4.2`: `Won` (`GRADE_A`, frame `35,642`, `objectives_done=14`).
+    - `SP_4.3`: `Won` (`GRADE_B`, frame `33,221`, `objectives_done=7`).
+  - **Campaign 5 (4/4 `Won`):**
+    - `SP_5.1`: `Won` (`GRADE_A`, frame `28,284`, `objectives_done=6`).
+    - `SP_5.2`: `Won` (`GRADE_S`, frame `24,524`, `objectives_done=5`).
+    - `SP_5.3`: `Won` (`GRADE_B`, frame `45,568`, `objectives_done=5`).
+    - `SP_5.4`: `Won` (`GRADE_A`, frame `35,285`, `objectives_done=8`).
+- **Multiplayer Skirmish AI / Local Bot Commander (`MP1..MP15`, `MP17`):**
+  - All 16 multiplayer levels load with Player 1 roster auto-assigned and `advance_multiplayer_skirmish_ai` (`src/mission_world.rs`) driving hostile bot units to engage enemy forces and dispatch infantry to contest neutral/hostile `cCapturePoint` objectives (`tests/campaign_levels_runtime.rs::probe_multiplayer_levels_loading` and `src/mission_world.rs::tests::mp_skirmish_ai_drives_hostile_combat_and_capture`).
+- **Authored Flipbook / Particle Textures from Archive (`sExplodeBase` / `cTextureResource`):**
+  - Decoded `cTextureResource` payloads referenced by `sExplodeBase` entries in `*_Level.res` into a 4-layer `64×64` `RGBA8` GPU array texture (`particle_textures` in `src/viewer.rs` and `src/render_wgpu.rs`), sampled by `shaders/particle.wgsl` per particle kind (`tex_layer = 0..3`) with procedural fallback when no archive texture is available.
 - **Decompiled via Ghidra 12.1.4 / REA MCP (`local/analysis/main.elf`) and implemented in Rust:**
   - Cataloged all 268 native Lua C-function bindings (`0x804b1a60..0x804b22c0`) in `local/analysis/lua-bindings.json` and static Lua 5.0 bytecode inventories across all 20 SP levels in `local/analysis/lua-inv/`.
-  - Implemented Lua object-handle numeric comparison parity (`GetPlayerUnit` `0x800e8258`, `Op::Eq`/`Op::Lt`/`Op::Le`), `cPickup` health/jerrycan collection (`0x800c39cc`), spatial acceleration (`TriGrid` & `MeshIndex` in `src/unit_collision.rs`), native `flag.*` / `constant.TYPE` / `constant.GTYPE` tables (`0x8023e038`, `0x80123338`), `NumItemsInArea`, `TestFlags`, `GetState`, `SetInvulnerable`, partial/closest-node path planning (`plan_towards`), cutscene combat, aircraft cruise HAG & landing (`LandAirUnit` `0x800e9590`, `GetMovementState` `0x800d7ffc`), `FollowUnit` route hysteresis, lock-on control transfer (`Z` button), capture-point flag raising/lowering & squad dispatch (`CheckCapturePoint` `0x800d7fcc`, `SetCapturePointHeight` `0x800d834c`, `GetInstallationOwner` `0x800e2b00`, `GetHealthPercent` on `cCapturePoint` `0x800d8124`), `cMorphingBuilding` combat base resolution, carrier passenger boarding/unloading (`EnterVehicle` / `ExitVehicle` / `ReviveDeadUnit` ground-relative `Y` preservation), automatic death control transfer (`TRANSFER_BYDEATH`, `GetPlayerTransferred` `0x800da024`), and `cAmbientAreaPointSoundSphere` (`0x801fbae0`) + numeric target ID support in `SetActive` (`0x800d9c78`).
-- **201 library unit tests pass** (`cargo test --locked --lib`), with `cargo fmt --check` and `cargo clippy --locked --features viewer --all-targets -- -D warnings` clean.
+  - Implemented Lua object-handle numeric comparison parity (`GetPlayerUnit` `0x800e8258`, `Op::Eq`/`Op::Lt`/`Op::Le`), `cPickup` health/jerrycan collection (`0x800c39cc`) and crushable tent contact/pathing, spatial acceleration (`TriGrid` & `MeshIndex` in `src/unit_collision.rs`), bridge deck auto-detection (`SM GORGEBRIDGE`, `WF WOODBRIDGE`, `AI BRIDGE`, `SE BRIDGE`, `C2 BRIDGE`, `X BRIDGE`) and gate/wall opening (`GATE`, `DOOR`, `C5 SOLARWALL`), native `flag.*` / `constant.TYPE` / `constant.GTYPE` tables (`0x8023e038`, `0x80123338`), `NumItemsInArea`, `TestFlags`, `GetState`, `SetInvulnerable`, partial/closest-node path planning (`plan_towards`), cutscene combat, aircraft cruise HAG & landing (`LandAirUnit` `0x800e9590`, `GetMovementState` `0x800d7ffc`), `FollowUnit` route hysteresis, lock-on control transfer (`Z` button), capture-point flag raising/lowering & allied contention aggregation (`CheckCapturePoint` `0x800d7fcc`, `SetCapturePointHeight` `0x800d834c`, `GetInstallationOwner` `0x800e2b00`, `GetHealthPercent` on `cCapturePoint` `0x800d8124`), `cBuildingImpBase` `SeatFlags & 1` garrison filtering, burst weapon folding & indirect ballistic fire (`UNIT_VEH_ARTILLARY` / `UNIT_VEH_BATTLESTATION`), `cMorphingBuilding` combat base resolution, carrier passenger boarding/unloading (`EnterVehicle` / `ExitVehicle` / `ReviveDeadUnit` ground-relative `Y` preservation), automatic death control transfer (`TRANSFER_BYDEATH`, `GetPlayerTransferred` `0x800da024`), and `cAmbientAreaPointSoundSphere` (`0x801fbae0`) + numeric target ID support in `SetActive` (`0x800d9c78`).
+- **202 library unit tests pass** (`cargo test --locked --lib`), with `cargo fmt --check` and `cargo clippy --locked --features viewer --all-targets -- -D warnings` clean.
 
 ## Earlier checkpoint: staff recovery cutscene completes; trench flame projectile blocks continuation
 

@@ -243,8 +243,7 @@ impl Session {
                             && (world.bodies.contains_key(id)
                                 || world.flight_profiles.contains_key(id)
                                 || world.water_units.contains(id))
-                            && world.water_units.contains(id)
-                                == world.water_units.contains(&player)
+                            && world.water_units.contains(id) == world.water_units.contains(&player)
                             && u.army == player_army
                             && u.active == Some(true)
                             && u.health > 0.0

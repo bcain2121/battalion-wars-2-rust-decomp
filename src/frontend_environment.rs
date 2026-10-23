@@ -69,7 +69,11 @@ impl Environment {
             for (c, cell_out) in row_out.iter_mut().enumerate() {
                 let cell = vm.table_get(row_id, &Value::Number((c + 1) as f64))?;
                 let Value::Number(val) = cell else {
-                    return Err(format!("Matrix cell [{}, {}] is not a number", r + 1, c + 1));
+                    return Err(format!(
+                        "Matrix cell [{}, {}] is not a number",
+                        r + 1,
+                        c + 1
+                    ));
                 };
                 *cell_out = val as f32;
             }
@@ -218,7 +222,15 @@ impl Environment {
             ("GetTotalFrames", []) => Ok(vec![Value::Number(self.video_total_frames as f64)]),
             ("GetFrameNum", []) => Ok(vec![Value::Number(self.video_frame_num as f64)]),
             // 0x800eadf0..0x800d6f84: Briefing voiceover (ADP) playback
-            ("StartVO", [Value::Number(_chan), Value::String(dir), Value::String(file), ..]) => {
+            (
+                "StartVO",
+                [
+                    Value::Number(_chan),
+                    Value::String(dir),
+                    Value::String(file),
+                    ..,
+                ],
+            ) => {
                 self.vo_directory = Some(dir.clone());
                 self.vo_filename = Some(file.clone());
                 self.vo_playing = true;
@@ -250,10 +262,7 @@ impl Environment {
             }
             ("GetCurrentFMVOutSeen", []) => Ok(vec![Value::Boolean(self.current_fmv_out_seen)]),
             // 0x800e50ec: RotationToVector(rx_deg, ry_deg, rz_deg)
-            (
-                "RotationToVector",
-                [Value::Number(rx), Value::Number(ry), Value::Number(rz)],
-            ) => {
+            ("RotationToVector", [Value::Number(rx), Value::Number(ry), Value::Number(rz)]) => {
                 let (sx, cx) = ((*rx * DEG_TO_RAD) as f32).sin_cos();
                 let (sy, cy) = ((*ry * DEG_TO_RAD) as f32).sin_cos();
                 let (sz, cz) = ((*rz * DEG_TO_RAD) as f32).sin_cos();
@@ -279,7 +288,12 @@ impl Environment {
                 ],
             ) => {
                 let (sx, sy, gx, gy, gz, r) = (
-                    *sx as f32, *sy as f32, *gx as f32, *gy as f32, *gz as f32, *radius as f32,
+                    *sx as f32,
+                    *sy as f32,
+                    *gx as f32,
+                    *gy as f32,
+                    *gz as f32,
+                    *radius as f32,
                 );
                 let dx = sx - gx;
                 let dy = sy - gy;
@@ -341,21 +355,16 @@ impl Environment {
     ) -> Result<Vec<Value>> {
         match (name, args) {
             // 0x800e4e84: MatrixMultiply(a_mtx, b_mtx, out_mtx)
-            (
-                "MatrixMultiply",
-                [
-                    Value::Table(a_id),
-                    Value::Table(b_id),
-                    Value::Table(out_id),
-                ],
-            ) => {
+            ("MatrixMultiply", [Value::Table(a_id), Value::Table(b_id), Value::Table(out_id)]) => {
                 let a = Self::read_matrix4(vm, *a_id)?;
                 let b = Self::read_matrix4(vm, *b_id)?;
                 let mut out = [[0.0f32; 4]; 4];
                 for r in 0..4 {
                     for c in 0..4 {
-                        out[r][c] =
-                            a[r][0] * b[0][c] + a[r][1] * b[1][c] + a[r][2] * b[2][c] + a[r][3] * b[3][c];
+                        out[r][c] = a[r][0] * b[0][c]
+                            + a[r][1] * b[1][c]
+                            + a[r][2] * b[2][c]
+                            + a[r][3] * b[3][c];
                     }
                 }
                 Self::write_matrix4(vm, *out_id, &out)?;
@@ -364,11 +373,7 @@ impl Environment {
             // 0x800e544c: GlobeLatLonToOrientationMatrix(mtx, lat, lon)
             (
                 "GlobeLatLonToOrientationMatrix",
-                [
-                    Value::Table(mtx_id),
-                    Value::Number(lat),
-                    Value::Number(lon),
-                ],
+                [Value::Table(mtx_id), Value::Number(lat), Value::Number(lon)],
             ) => {
                 let mtx = Self::globe_lat_lon_to_orientation_matrix(*lat as f32, *lon as f32);
                 Self::write_matrix4(vm, *mtx_id, &mtx)?;
@@ -482,10 +487,7 @@ impl Environment {
                     ("SERVER", 536870912),
                 ][..],
             ),
-            (
-                "VIDEO",
-                &[("OFF", 0), ("ONCE", 1), ("LOOPED", 2)][..],
-            ),
+            ("VIDEO", &[("OFF", 0), ("ONCE", 1), ("LOOPED", 2)][..]),
         ] {
             if vm.globals.contains_key(table) {
                 return Err(format!("Frontend constant table already exists: {table}"));

@@ -74,7 +74,7 @@ pub fn configure(
             [root.w_axis.x, root.w_axis.z]
         })
         .collect();
-    let mut raw_bridge_boxes: Vec<(Vec<[f32; 2]>, Vec<[f32; 2]>)> = Vec::new();
+    let mut raw_bridge_boxes = Vec::new();
     for (index, placement) in placements.placements.iter().enumerate() {
         let root = Mat4::from_cols_array(&resolved_matrices[index]);
         if graph
@@ -168,7 +168,7 @@ pub fn configure(
         }
         let upper = placement.model.to_ascii_uppercase();
         if upper.contains("BRIDGE")
-            && !upper.contains("BRIDGEIRON")
+            && !upper.contains("C4SMBRIDGEIRON")
             && !upper.contains("DMGD")
             && !upper.contains("POST")
             && !upper.contains("DEBRIS")
@@ -241,6 +241,7 @@ pub fn configure(
             || upper.contains("CLIFFARCH")
             || upper.contains("CLIFFLEDGE")
             || upper.contains("CLIFFWATERARCH")
+            || upper.contains("MPB_")
             || upper.contains("ENTRANCE")
             || upper.contains("ICEARCH")
             || upper.contains("WALLVEHICLE")
@@ -404,7 +405,12 @@ pub fn configure(
             .units
             .get_mut(id)
             .ok_or("Missing ground vehicle state")?
-            .forward_speed = Some(binding.profile.attack_speed.max(binding.profile.patrol_speed));
+            .forward_speed = Some(
+            binding
+                .profile
+                .attack_speed
+                .max(binding.profile.patrol_speed),
+        );
     }
     staged.air_shapes = Arc::new(air_shapes);
     staged.collision = Some(Arc::new(scene));

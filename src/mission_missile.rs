@@ -353,9 +353,11 @@ impl System {
             let shooter_pos = *positions
                 .get(owner)
                 .ok_or("Missing missile shooter position")?;
-            let origin = scene
-                .world_point(shooter_pos, 2.)
-                .unwrap_or([shooter_pos[0], world.water_height + 2., shooter_pos[2]]);
+            let origin = scene.world_point(shooter_pos, 2.).unwrap_or([
+                shooter_pos[0],
+                world.water_height + 2.,
+                shooter_pos[2],
+            ]);
             let destination = *positions
                 .get(&order.target)
                 .ok_or("Missing missile target position")?;

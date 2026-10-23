@@ -143,7 +143,9 @@ pub fn plan(
     others: &[Other],
     limits: Limits,
 ) -> Result<Plan> {
-    plan_inner(scene, start, target, radius, body, others, limits, false, None)
+    plan_inner(
+        scene, start, target, radius, body, others, limits, false, None,
+    )
 }
 
 pub fn plan_towards(
@@ -155,7 +157,9 @@ pub fn plan_towards(
     others: &[Other],
     limits: Limits,
 ) -> Result<Plan> {
-    let primary = plan_inner(scene, start, target, radius, body, others, limits, true, None)?;
+    let primary = plan_inner(
+        scene, start, target, radius, body, others, limits, true, None,
+    )?;
     if primary.status != Status::Found && scene.ground.is_some() {
         let fine = (body.radius * 2.0).clamp(1.5, 3.5);
         for retry_spacing in [fine, 8.0, 12.0] {
@@ -172,12 +176,10 @@ pub fn plan_towards(
                 limits,
                 true,
                 Some(retry_spacing),
-            ) {
-                if alt.status == Status::Found
-                    || (primary.points.is_empty() && !alt.points.is_empty())
-                {
-                    return Ok(alt);
-                }
+            ) && (alt.status == Status::Found
+                || (primary.points.is_empty() && !alt.points.is_empty()))
+            {
+                return Ok(alt);
             }
         }
     }

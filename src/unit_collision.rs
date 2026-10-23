@@ -711,8 +711,7 @@ impl Scene {
                 }
                 let p: [f32; 3] = std::array::from_fn(|j| (origin[j] + delta[j] * t) as f32);
                 let [x, z] = original_scene::source_to_grid(p[0], p[2]);
-                if g.height(x, z).is_none_or(|h| p[1] < h * 2.0 + 0.05) && !ignore_owner(t, None)
-                {
+                if g.height(x, z).is_none_or(|h| p[1] < h * 2.0 + 0.05) && !ignore_owner(t, None) {
                     nearest = Some((t, None));
                     break;
                 }
@@ -763,11 +762,7 @@ impl Scene {
             for span in &self.bridge_spans {
                 let pu = p[0] * span.ux + p[2] * span.uz;
                 let pv = -p[0] * span.uz + p[2] * span.ux;
-                if pu >= span.min_u
-                    && pu <= span.max_u
-                    && pv >= span.min_v
-                    && pv <= span.max_v
-                {
+                if pu >= span.min_u && pu <= span.max_u && pv >= span.min_v && pv <= span.max_v {
                     let t = ((pu - span.min_u) / (span.max_u - span.min_u).max(1e-3))
                         .clamp(0.0, 1.0) as f64;
                     base = base.max(span.y0 + (span.y1 - span.y0) * t);
@@ -788,6 +783,18 @@ impl Scene {
         mut visit: impl FnMut(&[V2]),
     ) {
         let end = add(p, d);
+        if self.bridge_spans.iter().any(|span| {
+            [p, end].into_iter().all(|pt| {
+                let pu = pt[0] as f32 * span.ux + pt[1] as f32 * span.uz;
+                let pv = -pt[0] as f32 * span.uz + pt[1] as f32 * span.ux;
+                pu >= span.min_u - 4.0
+                    && pu <= span.max_u + 4.0
+                    && pv >= span.min_v - 0.5
+                    && pv <= span.max_v + 0.5
+            })
+        }) {
+            return;
+        }
         let xmin = p[0].min(end[0]) - body.radius;
         let xmax = p[0].max(end[0]) + body.radius;
         let zmin = p[1].min(end[1]) - body.radius;

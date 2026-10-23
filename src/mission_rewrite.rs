@@ -239,7 +239,7 @@ impl Runtime {
     }
     /// Five-argument PlayEffect route; named camera-anchored Rust LightningX visual.
     pub fn play_effect(&mut self, id: ObjectId, flags: u32, offset: [f32; 3]) -> Result<()> {
-        if !matches!(flags, 1 | 3) && !(self.allow_cosmetic_gaps && flags == 2) {
+        if !(matches!(flags, 1 | 3) || (self.allow_cosmetic_gaps && flags == 2)) {
             return Err("Unsupported rewrite PlayEffect channel flags".into());
         }
         let object = self.object(id)?;

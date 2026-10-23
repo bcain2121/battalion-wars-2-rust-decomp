@@ -133,4 +133,3 @@ fn original_globe_select_script_and_orientation_matrices() {
         }
     }
 }
-

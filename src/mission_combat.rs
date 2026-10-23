@@ -137,7 +137,10 @@ impl Combat {
         }
         self.refer(o, "mBase")
     }
-    fn explosion_damage<'b>(&'b self, proj: &'b Object) -> Option<(&'b Vec<String>, &'b Vec<String>)> {
+    fn explosion_damage<'b>(
+        &'b self,
+        proj: &'b Object,
+    ) -> Option<(&'b Vec<String>, &'b Vec<String>)> {
         fn extract(exp: &Object) -> Option<(&Vec<String>, &Vec<String>)> {
             let et = exp
                 .fields
@@ -324,7 +327,7 @@ impl Combat {
             scalar(p, "mProximityFuseDistance")?,
             scalar(p, "mTurnSpeed")?,
         );
-        let interval = scalar(w, "TimeBetweenBullets")?;
+        let mut interval = scalar(w, "TimeBetweenBullets")?;
         let reload = scalar(w, "ReloadTime")?;
         let clip = scalar(w, "MaxAmmoInClip")?;
         if clip <= 0.0 && self.objects.len() > 20 {
@@ -339,23 +342,35 @@ impl Combat {
             min = min.min(ai_min);
         }
         let mut max = scalar(w, "MaxRange")?;
+        let raw_interval = interval;
+        let mut clip = clip.clamp(1., 1000.).floor();
+        if raw_interval == 0. && clip > 1. && reload >= 0.01 {
+            for (_, amt) in &mut channels {
+                *amt *= clip;
+            }
+            clip = 1.;
+            interval = reload;
+        }
         let primary_has_damage = !channels.is_empty();
         let primary_cycle = clip * interval + reload;
-        let primary_rate = if primary_cycle > 0.0 {
+        let primary_rate = if raw_interval == 0. && reload >= 0.01 {
+            1.0 / reload
+        } else if primary_cycle > 0.0 {
             clip / primary_cycle
         } else {
             1.0
         };
         let is_air_base = matches!(base.kind.as_str(), "sAirVehicleBase" | "cAirVehicleBase")
             && field(base, "mUnitSubType") != Some("UNIT_AIR_GUNSHIP");
-        let is_long_range_water =
-            matches!(base.kind.as_str(), "cWaterVehicleBase" | "sWaterVehicleBase")
-                && max >= 200.0;
+        let is_long_range_heavy = matches!(
+            base.kind.as_str(),
+            "cWaterVehicleBase" | "sWaterVehicleBase" | "cGroundVehicleBase" | "sGroundVehicleBase"
+        ) && max >= 200.0;
         for sw in extra_weapons {
             let sw_max = scalar(sw, "MaxRange").unwrap_or(max);
             let is_depth_charge = scalar(sw, "DAMAGE_SHIP_0").unwrap_or(0.0) > 0.0;
             if primary_has_damage
-                && (((is_air_base || (is_long_range_water && !is_depth_charge))
+                && (((is_air_base || (is_long_range_heavy && !is_depth_charge))
                     && sw_max < max * 0.5)
                     || sw_max < 20.0)
             {
@@ -484,14 +499,6 @@ impl Combat {
             && channels.is_empty()
             && field(p, "mImpactTable") == Some("0")
             && types.iter().all(|k| k == "DAMAGE_NO_DAMAGE");
-        let raw_interval = interval;
-        let mut clip = clip.clamp(1., 1000.).floor();
-        if raw_interval == 0. && clip > 1. && reload >= 0.01 {
-            for (_, amt) in &mut channels {
-                *amt *= clip;
-            }
-            clip = 1.;
-        }
         let interval = if raw_interval == 0. && reload >= 0.01 {
             reload
         } else if raw_interval < 0.01 {
@@ -574,6 +581,7 @@ impl Combat {
                     st,
                     "UNIT_MAN_MORTAR"
                         | "UNIT_VEH_ARTILLARY"
+                        | "UNIT_VEH_BATTLESTATION"
                         | "UNIT_SEA_BATTLESHIP"
                         | "UNIT_SEA_DREADNAUGHT"
                         | "UNIT_SEA_SUBMARINE"
@@ -641,11 +649,12 @@ impl Combat {
         let can_hit_air = is_aa_unit
             || (!real_level && range >= 100.0)
             || shooter_weapon.as_ref().is_some_and(|w| {
-                w.channels
-                    .iter()
-                    .any(|(ch, v)| *v > 0.0 && matches!(ch.as_str(), "DAMAGE_AIRCRAFT" | "DAMAGE_MISSILE"))
+                w.channels.iter().any(|(ch, v)| {
+                    *v > 0.0 && matches!(ch.as_str(), "DAMAGE_AIRCRAFT" | "DAMAGE_MISSILE")
+                })
             });
         let can_hit_gunship = can_hit_air
+            || (host.world.unit_gtype_flags(shooter) & 0x0000_0008) != 0
             || shooter_weapon.as_ref().is_some_and(|w| {
                 w.channels.iter().any(|(ch, v)| {
                     *v > 0.0
@@ -772,7 +781,7 @@ impl Combat {
                 continue;
             }
             let is_gunship_target = is_air_target
-                && (host.world.unit_gtype_flags(*id) & 0x0000_0008) != 0;
+                && (host.world.unit_gtype_flags(*id) & (0x0000_0008 | 0x0000_0004)) != 0;
             if *id == shooter
                 || (!target.army.is_empty() && host.world.same_allegiance(&target.army, &unit.army))
                 || (!prop && target.army == "eNoArmy")
@@ -789,11 +798,11 @@ impl Combat {
                 || (!prop
                     && !host.world.bodies.contains_key(id)
                     && (!host.world.air_shapes.contains_key(id)
-                        || (cone.is_none()
-                            && !squad_target
-                            && !host.world.water_units.contains(id)
-                            && !can_hit_air
-                            && !(in_roster && is_gunship_target && can_hit_gunship))))
+                        || !(cone.is_some()
+                            || squad_target
+                            || host.world.water_units.contains(id)
+                            || can_hit_air
+                            || (in_roster && is_gunship_target && can_hit_gunship))))
                 || (prop
                     && !is_ordered_target
                     && host
@@ -839,23 +848,52 @@ impl Combat {
                 }
             }
             let shooter_flags = host.world.unit_gtype_flags(shooter);
-            let target_flags = if prop { 0 } else { host.world.unit_gtype_flags(*id) };
+            let shooter_is_air = host.world.non_ground_units.contains(&shooter)
+                && !host.world.water_units.contains(&shooter);
+            let target_flags = if prop {
+                0
+            } else {
+                host.world.unit_gtype_flags(*id)
+            };
             let target_is_vehicle = armed_bldg
                 || (!prop
                     && (host.world.bodies.get(id).is_some_and(|b| b.radius > 1.2)
                         || (target_flags & 0x0040_0000) != 0));
-            let target_is_anti_armor = !prop && (target_flags & (0x0040_0000 | 0x0000_7400)) != 0;
+            let target_is_anti_armor = !prop
+                && (target_flags
+                    & (0x0040_0000
+                        | 0x0000_7400
+                        | if shooter_is_air {
+                            0x0008_0000 | 0x0000_0800 | 0x0000_0008 | 0x0000_0010 | 0x0000_0004
+                        } else {
+                            0
+                        }))
+                    != 0;
             let target_is_infantry = !prop
                 && !target_is_vehicle
                 && ((target_flags & 0x0020_0000) != 0
                     || host.world.bodies.get(id).is_some_and(|b| b.radius <= 1.2));
+            let air_prefers_air_or_aa = in_roster && shooter_is_air && is_air_target;
             let anti_armor_prefers_vehicle = in_roster
-                && (shooter_flags & (0x0040_0000 | 0x0000_7400)) != 0
+                && (shooter_flags & (0x0040_0000 | 0x0000_7400 | 0x0000_0008)) != 0
                 && (target_is_vehicle || target_is_anti_armor);
             let anti_infantry_prefers_troop = in_roster
                 && (shooter_flags & 0x0020_0000) != 0
                 && (shooter_flags & (0x0040_0000 | 0x0000_7400)) == 0
                 && target_is_infantry;
+            let target_capturing_cp = real_level
+                && cone.is_none()
+                && !prop
+                && (host
+                    .world
+                    .carrier_of
+                    .get(id)
+                    .is_some_and(|c| host.world.capture_points.contains(c))
+                    || host
+                        .world
+                        .entering_vehicle
+                        .get(id)
+                        .is_some_and(|c| host.world.capture_points.contains(c)));
             let priority_override = (squad_target && (!is_aa_unit || !best_is_air))
                 || (tactical_barrel && !best_is_tactical_barrel)
                 || (cone.is_none() && is_aa_unit && is_air_target && !best_is_air);
@@ -872,6 +910,8 @@ impl Combat {
                 range.min(80.0).min(distance)
             } else if cone.is_some()
                 || priority_override
+                || target_capturing_cp
+                || air_prefers_air_or_aa
                 || anti_armor_prefers_vehicle
                 || anti_infantry_prefers_troop
             {
@@ -909,6 +949,10 @@ impl Combat {
                 } else {
                     base_score
                 }
+            } else if air_prefers_air_or_aa {
+                if is_air_target { d * 0.01 } else { d * 0.02 }
+            } else if target_capturing_cp {
+                d * 0.015
             } else if anti_armor_prefers_vehicle {
                 d * 0.04
             } else if anti_infantry_prefers_troop {
@@ -917,11 +961,7 @@ impl Combat {
                         .get(cp)
                         .is_some_and(|cp_pos| (cp_pos[0] - p[0]).hypot(cp_pos[2] - p[2]) <= 25.0)
                 });
-                if near_cp {
-                    d * 0.04
-                } else {
-                    d * 0.15
-                }
+                if near_cp { d * 0.04 } else { d * 0.15 }
             } else {
                 d
             };
@@ -959,7 +999,7 @@ impl Combat {
                             })
                             || owner.is_some_and(|o| {
                                 host.world.props.get(&o).is_some_and(|u| {
-                                     !u.army.is_empty()
+                                    !u.army.is_empty()
                                         && u.army != "eNeutral"
                                         && u.army != "eNoArmy"
                                         && host.world.same_allegiance(&u.army, &unit.army)
@@ -1434,8 +1474,8 @@ impl Combat {
             let end = Self::point(host, id).ok()?;
             let delta: [f64; 3] = std::array::from_fn(|i| (end[i] - start[i]) as f64);
             let d = delta.iter().map(|v| v * v).sum::<f64>().sqrt();
-            let is_air = host.world.air_shapes.contains_key(&id)
-                && !host.world.water_units.contains(&id);
+            let is_air =
+                host.world.air_shapes.contains_key(&id) && !host.world.water_units.contains(&id);
             let max_reticle = if is_air { 180.0 } else { 70.0 };
             if !(0.01..max_reticle).contains(&d) {
                 return None;
@@ -1447,8 +1487,7 @@ impl Combat {
                 (aim[0] * delta[0] + aim[2] * delta[2]) / (horiz_aim * horiz_delta)
             } else {
                 dot3
-            }
-            ;
+            };
             let effective_dot = if delta[1].abs() <= 4.5 {
                 dot3.max(dot_horiz * 0.985)
             } else {
@@ -1497,7 +1536,12 @@ impl Combat {
             s.remaining -= dt;
         }
         self.shots.retain(|s| s.remaining > 0.);
-        if dt == 0. || (host.world.frozen && host.world.attack_orders.is_empty()) {
+        if dt == 0.
+            || (host.world.frozen
+                && host.world.attack_orders.is_empty()
+                && host.world.orders.is_empty()
+                && host.world.entering_vehicle.is_empty())
+        {
             return Ok(());
         }
         for s in self.states.values_mut() {
@@ -1612,7 +1656,6 @@ impl Combat {
             if id == player
                 || host.world.bombers.orders.contains_key(&id)
                 || (host.world.non_ground_units.contains(&id) && !non_ground_allowed)
-                || (in_cutscene && !has_attack_order)
             {
                 continue;
             }
@@ -1631,14 +1674,10 @@ impl Combat {
                 || unit.army.is_empty()
                 || unit.army == "eNeutral"
                 || unit.army == "eNoArmy"
-                || host
-                    .world
-                    .activity
-                    .get(&id)
-                    .is_none_or(|a| {
-                        (!has_attack_order && a.enabled != Some(true))
-                            || a.weapons_enabled == Some(false)
-                    })
+                || host.world.activity.get(&id).is_none_or(|a| {
+                    (!has_attack_order && a.enabled != Some(true))
+                        || a.weapons_enabled == Some(false)
+                })
             {
                 continue;
             }
@@ -1700,10 +1739,25 @@ impl Combat {
                 search_range = search_range.min(75.0);
             }
             if let Some(target) = self.nearest_enemy(host, id, search_range, None)? {
-                if in_cutscene
-                    && (target == player || host.world.roster.contains(&target))
-                {
-                    continue;
+                if in_cutscene {
+                    let shooter_active = has_attack_order
+                        || host.world.orders.contains_key(&id)
+                        || host.world.entering_vehicle.contains_key(&id);
+                    let target_active = host.world.attack_orders.contains_key(&target)
+                        || host.world.orders.contains_key(&target)
+                        || host.world.entering_vehicle.contains_key(&target)
+                        || host
+                            .world
+                            .carrier_of
+                            .get(&target)
+                            .is_some_and(|c| host.world.capture_points.contains(c));
+                    if target == player
+                        || host.world.roster.contains(&target)
+                        || (!has_attack_order && host.world.roster.contains(&id))
+                        || (!shooter_active && !target_active)
+                    {
+                        continue;
+                    }
                 }
                 let from = Self::point(host, id)?;
                 let to = Self::point(host, target)?;

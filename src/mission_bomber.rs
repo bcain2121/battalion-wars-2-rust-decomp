@@ -89,9 +89,13 @@ impl Profile {
         {
             return Err("Unsupported bomber profile types".into());
         }
-        if !matches!(number(weapon, "Flags")? as u32, 96 | 4160 | 4192 | 4288 | 32854)
-            || !matches!(number(bullet, "mObjFlags")? as u32, 140 | 396 | 971 | 262540)
-            || number(weapon, "ScatterAngle")? != 0.
+        if !matches!(
+            number(weapon, "Flags")? as u32,
+            96 | 4160 | 4192 | 4288 | 32854
+        ) || !matches!(
+            number(bullet, "mObjFlags")? as u32,
+            140 | 396 | 971 | 262540
+        ) || number(weapon, "ScatterAngle")? != 0.
             || number(bullet, "mScatterNum")? != 0.
             || number(bullet, "mProximityFuseDistance")? != 0.
         {
@@ -135,10 +139,7 @@ impl Profile {
                 }
             } else if matches!(
                 kind.as_str(),
-                "DAMAGE_IMPACT"
-                    | "DAMAGE_CUSTOM_1"
-                    | "DAMAGE_CUSTOM_2"
-                    | "DAMAGE_PRECALCULATED"
+                "DAMAGE_IMPACT" | "DAMAGE_CUSTOM_1" | "DAMAGE_CUSTOM_2" | "DAMAGE_PRECALCULATED"
             ) {
                 channels.push((kind.clone(), amount));
             } else {
@@ -363,9 +364,11 @@ impl System {
                 .get(&order.target)
                 .ok_or("Missing bomber target position")?;
             let destination = scene.object_center(order.target).unwrap_or_else(|| {
-                scene
-                    .world_point(target_pos, 0.)
-                    .unwrap_or([target_pos[0], world.water_height, target_pos[2]])
+                scene.world_point(target_pos, 0.).unwrap_or([
+                    target_pos[0],
+                    world.water_height,
+                    target_pos[2],
+                ])
             });
             let p = positions.get_mut(owner).ok_or("Missing bomber position")?;
             let dx = (destination[0] - p[0]) as f64;
@@ -497,7 +500,7 @@ impl System {
                         positions,
                     )?;
                 }
-                if let Some( explosion ) = bomb.profile.impacts[index] {
+                if let Some(explosion) = bomb.profile.impacts[index] {
                     world.projectile_explosion(bomb.owner, point, explosion, positions)?;
                 }
                 if world.frozen

@@ -426,8 +426,15 @@ impl Thread {
                 2 => format!("LOADBOOL R{a} <- {b} (skip={c})"),
                 5 => format!("GETGLOBAL R{a} <- {:?}", self.prototype.constants.get(bx)),
                 6 => format!("GETTABLE R{a} <- R{b}[{}]", k(c)),
-                7 => format!("SETGLOBAL {:?} <- R{a}({:?})", self.prototype.constants.get(bx), self.registers.get(a)),
-                20 => format!("JMP -> {}", idx.saturating_add_signed(bx as isize - 131071) + 1),
+                7 => format!(
+                    "SETGLOBAL {:?} <- R{a}({:?})",
+                    self.prototype.constants.get(bx),
+                    self.registers.get(a)
+                ),
+                20 => format!(
+                    "JMP -> {}",
+                    idx.saturating_add_signed(bx as isize - 131071) + 1
+                ),
                 21 => format!("EQ (a={a}) {} == {}", k(b), k(c)),
                 22 => format!("LT (a={a}) {} < {}", k(b), k(c)),
                 23 => format!("LE (a={a}) {} <= {}", k(b), k(c)),

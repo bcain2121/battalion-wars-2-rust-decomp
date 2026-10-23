@@ -36,7 +36,7 @@ fn autopilot_survey_campaign_levels() {
     let frames: usize = std::env::var("BW_SURVEY_FRAMES")
         .ok()
         .and_then(|v| v.parse().ok())
-        .unwrap_or(42_000);
+        .unwrap_or(48_000);
     let only = std::env::var("BW_SURVEY_LEVELS").unwrap_or_else(|_| "SP_1.1".into());
     for level in only.split(',') {
         let (graph, archive) = load_graph_and_archive(root, level);
@@ -133,9 +133,13 @@ fn autopilot_survey_campaign_levels() {
                     .player
                     .and_then(|p| session.program.host.positions.get(&p).copied());
                 let hp = w.player.and_then(|p| w.units.get(&p)).map(|u| u.health);
+                let spd = w
+                    .player
+                    .and_then(|p| w.units.get(&p))
+                    .and_then(|u| u.forward_speed);
                 println!(
-                    "AUTOPILOT {level}: frame {frame} pos {p:?} hp {hp:?} frozen {}",
-                    w.frozen
+                    "AUTOPILOT {level}: frame {frame} pos {p:?} hp {hp:?} spd {spd:?} frozen {} goal {goal:?} mov {:?} fire {} xfer {}",
+                    w.frozen, input.movement, input.fire, input.transfer
                 );
             }
         }
@@ -207,7 +211,7 @@ fn autopilot_survey_campaign_levels() {
                     let dx = pos[0] - p[0];
                     let dz = pos[2] - p[2];
                     let d = (dx * dx + dz * dz).sqrt();
-                    if d <= 50.0 {
+                    if d <= 50.0 || prop.max_health >= 200.0 {
                         println!(
                             "NEAR PROP {level}: {} d={d:.1} pos={pos:?} hp={}/{} invuln={} army={} active={:?} bldg={}",
                             id.0,
@@ -369,15 +373,18 @@ fn probe_multiplayer_levels_loading() {
         let (graph, archive) = load_graph_and_archive(root, level);
         match Session::load_level(root, level, &graph, &archive) {
             Ok(mut session) => {
-                println!(
-                    "{level}: LOADED OK! player={:?} units={} props={}",
-                    session.program.host.world.player,
-                    session.program.host.world.units.len(),
-                    session.program.host.world.props.len()
+                assert!(
+                    session.program.host.world.is_multiplayer,
+                    "{level}: expected is_multiplayer == true"
                 );
+                assert!(
+                    !session.program.host.world.roster.is_empty(),
+                    "{level}: expected non-empty Player 1 roster"
+                );
+                let mut saw_ai_orders = false;
                 for frame in 0..300 {
                     let mut input = Input::default();
-                    if frame == 60 {
+                    if frame % 60 == 59 {
                         input.confirm = true;
                     }
                     if let Err(err) = session.tick(1.0 / 60.0, input) {
@@ -385,6 +392,28 @@ fn probe_multiplayer_levels_loading() {
                         failures.push(format!("{level} tick {frame}: {err}"));
                         break;
                     }
+                    let w = &session.program.host.world;
+                    if !w.attack_orders.is_empty()
+                        || !w.entering_vehicle.is_empty()
+                        || !w.orders.is_empty()
+                    {
+                        saw_ai_orders = true;
+                    }
+                }
+                let w = &session.program.host.world;
+                println!(
+                    "{level}: OK! player={:?} roster={} units={} atk={} cap={} orders={}",
+                    w.player,
+                    w.roster.len(),
+                    w.units.len(),
+                    w.attack_orders.len(),
+                    w.entering_vehicle.len(),
+                    w.orders.len()
+                );
+                if !saw_ai_orders {
+                    failures.push(format!(
+                        "{level}: Skirmish AI issued no orders in 300 frames"
+                    ));
                 }
             }
             Err(err) => {

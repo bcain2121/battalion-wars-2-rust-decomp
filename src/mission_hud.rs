@@ -1,7 +1,12 @@
 //! Authored single-player HUD presentation requests. Rendering remains a separate consumer.
 use crate::{Result, lua50::Value};
 use std::collections::BTreeMap;
-pub const ITEMS: &[&str] = &["HUD_COMMANDBAR", "HUD_COMMANDSTACK", "HUD_PLAYERICON"];
+pub const ITEMS: &[&str] = &[
+    "HUD_COMMANDBAR",
+    "HUD_COMMANDSTACK",
+    "HUD_PLAYERICON",
+    "HUD_FUNCTIONINDICATOR",
+];
 #[derive(Debug, Clone, Default, PartialEq, Eq)]
 pub struct Hud {
     requested: BTreeMap<String, bool>,
@@ -29,6 +34,9 @@ impl Hud {
                     "HUD_ITEM_ON" => true,
                     _ => return Err("Unsupported HUD state/transition".into()),
                 };
+                if item == "HUD_FUNCTIONINDICATOR" {
+                    self.function_indicator = Some(shown);
+                }
                 self.requested.insert(item.clone(), shown);
             }
             ("SetFunctionIndicatorState", [Value::Boolean(enabled)]) => {
