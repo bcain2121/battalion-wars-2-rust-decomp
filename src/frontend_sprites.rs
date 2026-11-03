@@ -17,6 +17,8 @@ pub struct Sprites {
     scripts: BTreeMap<ObjectId, Option<u64>>,
     identities: BTreeMap<ObjectId, u64>,
     states: BTreeMap<u64, Option<OpenState>>,
+    positions: BTreeMap<u64, (f32, f32)>,
+    drawn: Vec<(u64, f32, f32)>,
 }
 impl Sprites {
     /// Scope identities to this frontend VM. Neither native pointers nor authored IDs
@@ -77,6 +79,61 @@ impl Sprites {
             .get(&sprite)
             .ok_or("Unknown frontend sprite")?;
         Ok(self.states[handle])
+    }
+    pub fn drawn_sprites(&self) -> &[(u64, f32, f32)] {
+        &self.drawn
+    }
+    pub fn active_count(&self) -> usize {
+        self.states.values().filter(|s| s.is_some()).count()
+    }
+    pub fn clear_drawn_sprites(&mut self) {
+        self.drawn.clear();
+    }
+    pub fn get_sprite(&mut self, args: &[Value]) -> Result<Vec<Value>> {
+        let [arg] = args else {
+            return Err("Unsupported GetSprite signature".into());
+        };
+        let id = match arg {
+            Value::Object(id) => *id,
+            Value::Number(n) if n.is_finite() && *n >= 0.0 => ObjectId(*n as u64),
+            Value::LightUserdata(h) => return Ok(vec![Value::LightUserdata(*h)]),
+            _ => return Err("Unsupported GetSprite descriptor".into()),
+        };
+        let handle = self
+            .scripts
+            .get(&id)
+            .copied()
+            .flatten()
+            .or_else(|| self.identities.get(&id).copied())
+            .unwrap_or(id.0);
+        Ok(vec![Value::LightUserdata(handle)])
+    }
+    pub fn move_sprite(&mut self, args: &[Value]) -> Result<Vec<Value>> {
+        let [sprite, Value::Number(x), Value::Number(y)] = args else {
+            return Err("Unsupported MoveSprite signature".into());
+        };
+        let handle = match sprite {
+            Value::LightUserdata(h) => *h,
+            Value::Object(id) => id.0,
+            Value::Number(n) => *n as u64,
+            _ => return Err("Unsupported MoveSprite handle".into()),
+        };
+        self.positions.insert(handle, (*x as f32, *y as f32));
+        Ok(vec![])
+    }
+    pub fn draw_sprite(&mut self, args: &[Value]) -> Result<Vec<Value>> {
+        let [sprite] = args else {
+            return Err("Unsupported DrawSprite signature".into());
+        };
+        let handle = match sprite {
+            Value::LightUserdata(h) => *h,
+            Value::Object(id) => id.0,
+            Value::Number(n) => *n as u64,
+            _ => return Err("Unsupported DrawSprite handle".into()),
+        };
+        let (x, y) = self.positions.get(&handle).copied().unwrap_or((0.0, 0.0));
+        self.drawn.push((handle, x, y));
+        Ok(vec![])
     }
     /// Restricted numeric/object resource input. Native function/string-producing
     /// descriptors need separate Lua evaluation/coercion support and are rejected.

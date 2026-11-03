@@ -9,7 +9,7 @@ pub fn field<'a>(object: &'a Object, name: &str) -> Option<&'a str> {
         .and_then(|f| f.items.first())
         .map(String::as_str)
 }
-fn reference<'a>(graph: &'a ObjectGraph, object: &Object, name: &str) -> Option<&'a Object> {
+pub fn reference<'a>(graph: &'a ObjectGraph, object: &Object, name: &str) -> Option<&'a Object> {
     graph
         .objects
         .get(&ObjectId(field(object, name)?.parse().ok()?))
@@ -49,6 +49,70 @@ pub fn resolve_base<'a>(graph: &'a ObjectGraph, object: &Object) -> Option<&'a O
         }
     }
     None
+}
+#[derive(Debug, Clone, Default, PartialEq, Eq, Serialize)]
+pub struct MorphingBuildingModels {
+    /// Map from faction enum name (e.g. `"eSolarEmpire"`) to `(intact_model, dead_model)`.
+    pub by_faction: std::collections::BTreeMap<String, (String, Option<String>)>,
+}
+impl MorphingBuildingModels {
+    pub fn select(&self, allegiance: &str, dead: bool) -> Option<&str> {
+        let key = match allegiance {
+            "eTundran" => "eTundranTerritories",
+            "eXylvania" => "eXylvanian",
+            "eUnderworld" => "eUnderWorld",
+            "eNoArmy" => "eNeutral",
+            other => other,
+        };
+        let (intact, dead_opt) = self
+            .by_faction
+            .get(key)
+            .or_else(|| self.by_faction.get("eNeutral"))
+            .or_else(|| self.by_faction.values().next())?;
+        if dead && let Some(d) = dead_opt {
+            Some(d.as_str())
+        } else {
+            Some(intact.as_str())
+        }
+    }
+}
+pub fn resolve_morphing_building_models(
+    graph: &ObjectGraph,
+    object: &Object,
+) -> Option<MorphingBuildingModels> {
+    if object.kind != "cMorphingBuilding" {
+        return None;
+    }
+    let mut by_faction = std::collections::BTreeMap::new();
+    for (field_key, faction) in [
+        ("mBaseSE", "eSolarEmpire"),
+        ("mBaseAG", "eAngloIsles"),
+        ("mBaseWF", "eWesternFrontier"),
+        ("mBaseTT", "eTundranTerritories"),
+        ("mBaseXY", "eXylvanian"),
+        ("mBaseUW", "eUnderWorld"),
+        ("mBaseNeutral", "eNeutral"),
+    ] {
+        let Some(base) = reference(graph, object, field_key) else {
+            continue;
+        };
+        let intact = ["mpModel", "mBAN_Model", "Model", "model", "mModel"]
+            .iter()
+            .find_map(|k| reference(graph, base, k))
+            .filter(|o| o.kind == "cNodeHierarchyResource")
+            .and_then(|o| field(o, "mName"))
+            .map(str::to_owned);
+        let dead = ["mpDeadModel", "mDeadModel"]
+            .iter()
+            .find_map(|k| reference(graph, base, k))
+            .filter(|o| o.kind == "cNodeHierarchyResource")
+            .and_then(|o| field(o, "mName"))
+            .map(str::to_owned);
+        if let Some(intact_name) = intact {
+            by_faction.insert(faction.to_owned(), (intact_name, dead));
+        }
+    }
+    (!by_faction.is_empty()).then_some(MorphingBuildingModels { by_faction })
 }
 #[derive(Debug, Serialize)]
 pub struct Placement {
@@ -119,8 +183,13 @@ pub fn load(graph: &ObjectGraph) -> Result<Scene> {
         };
         let mut attachments = Vec::new();
         if object.kind == "cTroop" {
+            let weapon_bone = if field(base, "meHoldWeaponInLeftHand") == Some("eTrue") {
+                "BONE_L_HAND"
+            } else {
+                "BONE_R_HAND"
+            };
             for (key, bone) in [
-                ("mWeaponModel", "BONE_R_HAND"),
+                ("mWeaponModel", weapon_bone),
                 ("mHelmetModel", "BONE_HELMET"),
                 ("mBkPackModel", "BONE_BCK_MISC"),
             ] {
@@ -455,5 +524,33 @@ mod tests {
         assert!((resolved[0][13] - 56.0).abs() < 1e-4);
         let expected_x = end_pos[0] - (9.5 + 13.0 * (1023.0 / 1024.0));
         assert!((resolved[0][12] - expected_x).abs() < 1e-3);
+    }
+
+    #[test]
+    fn morphing_building_resolves_faction_intact_and_dead_models() {
+        let xml = r#"<Instances>
+            <Object id="100" type="cNodeHierarchyResource"><Attribute name="mName"><Item>se_hq_intact</Item></Attribute></Object>
+            <Object id="101" type="cNodeHierarchyResource"><Attribute name="mName"><Item>se_hq_dead</Item></Attribute></Object>
+            <Object id="102" type="cNodeHierarchyResource"><Attribute name="mName"><Item>ag_hq_intact</Item></Attribute></Object>
+            <Object id="200" type="cBuildingImpBase">
+                <Resource name="mpModel"><Item>100</Item></Resource>
+                <Resource name="mpDeadModel"><Item>101</Item></Resource>
+            </Object>
+            <Object id="201" type="cBuildingImpBase">
+                <Resource name="mpModel"><Item>102</Item></Resource>
+            </Object>
+            <Object id="300" type="cMorphingBuilding">
+                <Enum name="mAllegiance"><Item>eSolarEmpire</Item></Enum>
+                <Pointer name="mBaseSE"><Item>200</Item></Pointer>
+                <Pointer name="mBaseAG"><Item>201</Item></Pointer>
+            </Object>
+        </Instances>"#;
+        let mut graph = ObjectGraph::default();
+        graph.merge(crate::parse_objects(xml).unwrap()).unwrap();
+        let mb = resolve_morphing_building_models(&graph, &graph.objects[&ObjectId(300)]).unwrap();
+        assert_eq!(mb.select("eSolarEmpire", false), Some("se_hq_intact"));
+        assert_eq!(mb.select("eSolarEmpire", true), Some("se_hq_dead"));
+        assert_eq!(mb.select("eAngloIsles", false), Some("ag_hq_intact"));
+        assert_eq!(mb.select("eAngloIsles", true), Some("ag_hq_intact"));
     }
 }

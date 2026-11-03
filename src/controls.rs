@@ -1,14 +1,14 @@
 //! Remappable action bindings. Controller path uses Bevy's standard gamepad API.
 use crate::{Result, skirmish::Input};
 use bevy::prelude::*;
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 use std::collections::BTreeMap;
 
 fn default_mouse_sensitivity() -> f32 {
     0.15
 }
 
-#[derive(Deserialize)]
+#[derive(Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 struct Config {
     deadzone: f32,
@@ -21,7 +21,7 @@ struct Config {
     keyboard: BTreeMap<String, Vec<String>>,
     gamepad: BTreeMap<String, String>,
 }
-#[derive(Resource)]
+#[derive(Resource, Clone)]
 pub struct Controls {
     keyboard: BTreeMap<String, Vec<KeyCode>>,
     gamepad: BTreeMap<String, GamepadButton>,
@@ -106,93 +106,190 @@ const PAD_ACTIONS: &[&str] = &[
     "pause",
     "restart",
 ];
+const KEY_TABLE: &[(&str, KeyCode)] = &[
+    ("A", KeyCode::KeyA),
+    ("B", KeyCode::KeyB),
+    ("C", KeyCode::KeyC),
+    ("D", KeyCode::KeyD),
+    ("E", KeyCode::KeyE),
+    ("F", KeyCode::KeyF),
+    ("G", KeyCode::KeyG),
+    ("H", KeyCode::KeyH),
+    ("I", KeyCode::KeyI),
+    ("J", KeyCode::KeyJ),
+    ("K", KeyCode::KeyK),
+    ("L", KeyCode::KeyL),
+    ("M", KeyCode::KeyM),
+    ("N", KeyCode::KeyN),
+    ("O", KeyCode::KeyO),
+    ("P", KeyCode::KeyP),
+    ("Q", KeyCode::KeyQ),
+    ("R", KeyCode::KeyR),
+    ("S", KeyCode::KeyS),
+    ("T", KeyCode::KeyT),
+    ("U", KeyCode::KeyU),
+    ("V", KeyCode::KeyV),
+    ("W", KeyCode::KeyW),
+    ("X", KeyCode::KeyX),
+    ("Y", KeyCode::KeyY),
+    ("Z", KeyCode::KeyZ),
+    ("Digit0", KeyCode::Digit0),
+    ("Digit1", KeyCode::Digit1),
+    ("Digit2", KeyCode::Digit2),
+    ("Digit3", KeyCode::Digit3),
+    ("Digit4", KeyCode::Digit4),
+    ("Digit5", KeyCode::Digit5),
+    ("Digit6", KeyCode::Digit6),
+    ("Digit7", KeyCode::Digit7),
+    ("Digit8", KeyCode::Digit8),
+    ("Digit9", KeyCode::Digit9),
+    ("ArrowLeft", KeyCode::ArrowLeft),
+    ("ArrowRight", KeyCode::ArrowRight),
+    ("ArrowUp", KeyCode::ArrowUp),
+    ("ArrowDown", KeyCode::ArrowDown),
+    ("Space", KeyCode::Space),
+    ("Tab", KeyCode::Tab),
+    ("Enter", KeyCode::Enter),
+    ("Escape", KeyCode::Escape),
+    ("Backspace", KeyCode::Backspace),
+    ("ShiftLeft", KeyCode::ShiftLeft),
+    ("ShiftRight", KeyCode::ShiftRight),
+    ("ControlLeft", KeyCode::ControlLeft),
+    ("ControlRight", KeyCode::ControlRight),
+    ("AltLeft", KeyCode::AltLeft),
+    ("AltRight", KeyCode::AltRight),
+    ("Comma", KeyCode::Comma),
+    ("Period", KeyCode::Period),
+    ("BracketLeft", KeyCode::BracketLeft),
+    ("BracketRight", KeyCode::BracketRight),
+];
+const PAD_TABLE: &[(&str, GamepadButton)] = &[
+    ("South", GamepadButton::South),
+    ("East", GamepadButton::East),
+    ("West", GamepadButton::West),
+    ("North", GamepadButton::North),
+    ("Start", GamepadButton::Start),
+    ("Select", GamepadButton::Select),
+    ("LeftTrigger", GamepadButton::LeftTrigger),
+    ("RightTrigger", GamepadButton::RightTrigger),
+    ("LeftTrigger2", GamepadButton::LeftTrigger2),
+    ("RightTrigger2", GamepadButton::RightTrigger2),
+    ("LeftThumb", GamepadButton::LeftThumb),
+    ("RightThumb", GamepadButton::RightThumb),
+    ("DPadUp", GamepadButton::DPadUp),
+    ("DPadDown", GamepadButton::DPadDown),
+    ("DPadLeft", GamepadButton::DPadLeft),
+    ("DPadRight", GamepadButton::DPadRight),
+];
 fn key(name: &str) -> Result<KeyCode> {
-    let result = match name {
-        "A" => KeyCode::KeyA,
-        "B" => KeyCode::KeyB,
-        "C" => KeyCode::KeyC,
-        "D" => KeyCode::KeyD,
-        "E" => KeyCode::KeyE,
-        "F" => KeyCode::KeyF,
-        "G" => KeyCode::KeyG,
-        "H" => KeyCode::KeyH,
-        "I" => KeyCode::KeyI,
-        "J" => KeyCode::KeyJ,
-        "K" => KeyCode::KeyK,
-        "L" => KeyCode::KeyL,
-        "M" => KeyCode::KeyM,
-        "N" => KeyCode::KeyN,
-        "O" => KeyCode::KeyO,
-        "P" => KeyCode::KeyP,
-        "Q" => KeyCode::KeyQ,
-        "R" => KeyCode::KeyR,
-        "S" => KeyCode::KeyS,
-        "T" => KeyCode::KeyT,
-        "U" => KeyCode::KeyU,
-        "V" => KeyCode::KeyV,
-        "W" => KeyCode::KeyW,
-        "X" => KeyCode::KeyX,
-        "Y" => KeyCode::KeyY,
-        "Z" => KeyCode::KeyZ,
-        "Digit0" => KeyCode::Digit0,
-        "Digit1" => KeyCode::Digit1,
-        "Digit2" => KeyCode::Digit2,
-        "Digit3" => KeyCode::Digit3,
-        "Digit4" => KeyCode::Digit4,
-        "Digit5" => KeyCode::Digit5,
-        "Digit6" => KeyCode::Digit6,
-        "Digit7" => KeyCode::Digit7,
-        "Digit8" => KeyCode::Digit8,
-        "Digit9" => KeyCode::Digit9,
-        "ArrowLeft" => KeyCode::ArrowLeft,
-        "ArrowRight" => KeyCode::ArrowRight,
-        "ArrowUp" => KeyCode::ArrowUp,
-        "ArrowDown" => KeyCode::ArrowDown,
-        "Space" => KeyCode::Space,
-        "Tab" => KeyCode::Tab,
-        "Enter" => KeyCode::Enter,
-        "Escape" => KeyCode::Escape,
-        "Backspace" => KeyCode::Backspace,
-        "ShiftLeft" => KeyCode::ShiftLeft,
-        "ShiftRight" => KeyCode::ShiftRight,
-        "ControlLeft" => KeyCode::ControlLeft,
-        "ControlRight" => KeyCode::ControlRight,
-        "AltLeft" => KeyCode::AltLeft,
-        "AltRight" => KeyCode::AltRight,
-        "Comma" => KeyCode::Comma,
-        "Period" => KeyCode::Period,
-        "BracketLeft" => KeyCode::BracketLeft,
-        "BracketRight" => KeyCode::BracketRight,
-        _ => {
-            return Err(format!(
-                "Unsupported key {name}; use A-Z, Digit0-9, arrows, Space/Tab/Enter/Escape/Backspace/Shift/Control/Alt/Comma/Period/Brackets"
-            ));
+    for &(label, code) in KEY_TABLE {
+        if label == name {
+            return Ok(code);
         }
-    };
-    Ok(result)
+    }
+    Err(format!(
+        "Unsupported key {name}; use A-Z, Digit0-9, arrows, Space/Tab/Enter/Escape/Backspace/Shift/Control/Alt/Comma/Period/Brackets"
+    ))
+}
+pub fn key_name(code: KeyCode) -> Option<&'static str> {
+    KEY_TABLE
+        .iter()
+        .find_map(|&(label, c)| (c == code).then_some(label))
+}
+pub fn detect_pressed_key(keys: &ButtonInput<KeyCode>) -> Option<KeyCode> {
+    KEY_TABLE
+        .iter()
+        .find_map(|&(_, code)| keys.just_pressed(code).then_some(code))
 }
 fn button(name: &str) -> Result<GamepadButton> {
-    Ok(match name {
-        "South" => GamepadButton::South,
-        "East" => GamepadButton::East,
-        "West" => GamepadButton::West,
-        "North" => GamepadButton::North,
-        "Start" => GamepadButton::Start,
-        "Select" => GamepadButton::Select,
-        "LeftTrigger" => GamepadButton::LeftTrigger,
-        "RightTrigger" => GamepadButton::RightTrigger,
-        "LeftTrigger2" => GamepadButton::LeftTrigger2,
-        "RightTrigger2" => GamepadButton::RightTrigger2,
-        "LeftThumb" => GamepadButton::LeftThumb,
-        "RightThumb" => GamepadButton::RightThumb,
-        "DPadUp" => GamepadButton::DPadUp,
-        "DPadDown" => GamepadButton::DPadDown,
-        "DPadLeft" => GamepadButton::DPadLeft,
-        "DPadRight" => GamepadButton::DPadRight,
-        _ => return Err(format!("Unsupported gamepad button {name}")),
-    })
+    for &(label, btn) in PAD_TABLE {
+        if label == name {
+            return Ok(btn);
+        }
+    }
+    Err(format!("Unsupported gamepad button {name}"))
+}
+pub fn button_name(btn: GamepadButton) -> Option<&'static str> {
+    PAD_TABLE
+        .iter()
+        .find_map(|&(label, b)| (b == btn).then_some(label))
+}
+pub fn detect_pressed_gamepad_button(pad: &Gamepad) -> Option<GamepadButton> {
+    PAD_TABLE
+        .iter()
+        .find_map(|&(_, btn)| pad.just_pressed(btn).then_some(btn))
 }
 impl Controls {
+    pub fn defaults() -> Self {
+        Self::parse(include_str!("../config/controls.json")).expect("Default controls.json")
+    }
+    pub fn reset_defaults(&mut self) {
+        *self = Self::defaults();
+    }
+    pub fn keys_label(&self, action: &str) -> String {
+        self.keyboard
+            .get(action)
+            .map(|list| {
+                list.iter()
+                    .filter_map(|&k| key_name(k))
+                    .collect::<Vec<_>>()
+                    .join(" / ")
+            })
+            .unwrap_or_else(|| "-".into())
+    }
+    pub fn gamepad_label(&self, action: &str) -> String {
+        self.gamepad
+            .get(action)
+            .and_then(|&b| button_name(b))
+            .unwrap_or("-")
+            .to_string()
+    }
+    pub fn rebind_key(&mut self, action: &str, new_key: KeyCode) -> Result<()> {
+        if key_name(new_key).is_none() {
+            return Err("Unsupported key for rebinding".into());
+        }
+        let Some(slot) = self.keyboard.get_mut(action) else {
+            return Err(format!("Unknown keyboard action {action}"));
+        };
+        *slot = vec![new_key];
+        Ok(())
+    }
+    pub fn rebind_gamepad(&mut self, action: &str, new_btn: GamepadButton) -> Result<()> {
+        if button_name(new_btn).is_none() {
+            return Err("Unsupported gamepad button for rebinding".into());
+        }
+        let Some(slot) = self.gamepad.get_mut(action) else {
+            return Err(format!("Unknown gamepad action {action}"));
+        };
+        *slot = new_btn;
+        Ok(())
+    }
+    pub fn to_json_pretty(&self) -> Result<String> {
+        let mut keyboard = BTreeMap::new();
+        for (action, codes) in &self.keyboard {
+            let names: Vec<String> = codes
+                .iter()
+                .filter_map(|&c| key_name(c).map(str::to_string))
+                .collect();
+            keyboard.insert(action.clone(), names);
+        }
+        let mut gamepad = BTreeMap::new();
+        for (action, &btn) in &self.gamepad {
+            if let Some(name) = button_name(btn) {
+                gamepad.insert(action.clone(), name.to_string());
+            }
+        }
+        let cfg = Config {
+            deadzone: self.deadzone,
+            turn_sensitivity: self.sensitivity,
+            mouse_sensitivity: self.mouse_sensitivity,
+            invert_right_stick_y: self.invert_y,
+            invert_mouse_y: self.invert_mouse_y,
+            keyboard,
+            gamepad,
+        };
+        serde_json::to_string_pretty(&cfg).map_err(|e| e.to_string())
+    }
     pub fn parse(json: &str) -> Result<Self> {
         if json.len() > 65536 {
             return Err("Controls configuration too large".into());
@@ -354,6 +451,8 @@ impl Controls {
                 "CONTROL_TRANSFER".into(),
                 button("transfer", "transfer", None),
             ),
+            ("CONTROL_JUMP".into(), button("start", "start", None)),
+            ("CONTROL_ROLL".into(), button("lock", "lock", None)),
             (
                 "CONTROL_LOAD_VEHICLE".into(),
                 button("load_vehicle", "load_vehicle", None),
@@ -552,5 +651,25 @@ mod tests {
         let mut k = ButtonInput::default();
         k.press(KeyCode::KeyF);
         assert!(c.sample(&k, &ButtonInput::default(), None).input.fire);
+    }
+    #[test]
+    fn rebind_key_and_gamepad_roundtrips_json() {
+        let mut c = Controls::defaults();
+        c.rebind_key("fire", KeyCode::KeyE).unwrap();
+        c.rebind_gamepad("fire", GamepadButton::South).unwrap();
+        assert_eq!(c.keys_label("fire"), "E");
+        assert_eq!(c.gamepad_label("fire"), "South");
+        let serialized = c.to_json_pretty().unwrap();
+        let reparsed = Controls::parse(&serialized).unwrap();
+        assert_eq!(reparsed.keys_label("fire"), "E");
+        assert_eq!(reparsed.gamepad_label("fire"), "South");
+        let mut k = ButtonInput::default();
+        k.press(KeyCode::KeyE);
+        assert!(
+            reparsed
+                .sample(&k, &ButtonInput::default(), None)
+                .input
+                .fire
+        );
     }
 }

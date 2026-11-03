@@ -114,6 +114,7 @@ pub struct FlightProfile {
     pub min_speed: f64,
     pub cruise_speed: f64,
     pub max_speed: f64,
+    pub backward_max_speed: f64,
     pub strafe_speed: f64,
     pub up_speed: f64,
     pub down_speed: f64,
@@ -121,6 +122,13 @@ pub struct FlightProfile {
     pub min_hag: f32,
     pub cruise_hag: f32,
     pub max_hag: f32,
+    pub max_tilt_forward: f32,
+    pub cruise_tilt_forward: f32,
+    pub max_tilt_backward: f32,
+    pub max_tilt_sideways: f32,
+    pub bank_factor: f32,
+    pub barrel_roll_duration: f32,
+    pub barrel_roll_radius: f32,
 }
 pub fn flight_profiles(graph: &ObjectGraph) -> Result<BTreeMap<ObjectId, FlightProfile>> {
     let mut profiles = BTreeMap::new();
@@ -148,6 +156,7 @@ pub fn flight_profiles(graph: &ObjectGraph) -> Result<BTreeMap<ObjectId, FlightP
         let cruise_speed = num("mCruiseSpeed", 20.0).max(1.0);
         let min_speed = num("mForwardMinSpeed", 0.0).min(cruise_speed);
         let max_speed = num("mForwardMaxSpeed", cruise_speed).max(cruise_speed);
+        let backward_max_speed = num("mBackwardMaxSpeed", cruise_speed * 0.45);
         let strafe_speed = num("mStrafeTopSpeed", cruise_speed * 0.5).max(4.0);
         let up_speed = num("mUpTopSpeed", 12.0).clamp(1.0, 60.0);
         let down_speed = num("mDownTopSpeed", 12.0).clamp(1.0, 60.0);
@@ -157,12 +166,29 @@ pub fn flight_profiles(graph: &ObjectGraph) -> Result<BTreeMap<ObjectId, FlightP
             .max(1.0)
             .min(cruise_hag);
         let max_hag = (num("mMaxHAG", cruise_hag as f64 * 1.5) as f32).max(cruise_hag);
+        let deg_to_rad = |k: &str, default_deg: f64| -> f32 {
+            let v = num(k, default_deg) as f32;
+            (if v > std::f32::consts::FRAC_PI_2 {
+                v.to_radians()
+            } else {
+                v
+            })
+            .clamp(0.0, 1.2)
+        };
+        let max_tilt_forward = deg_to_rad("mMaxTiltForward", 15.0);
+        let cruise_tilt_forward = deg_to_rad("mCruiseTiltForward", 10.0).min(max_tilt_forward);
+        let max_tilt_backward = deg_to_rad("mMaxTiltBackward", 10.0);
+        let max_tilt_sideways = deg_to_rad("mMaxTiltSideways", 35.0);
+        let bank_factor = (num("mBankFactor", 1.2) as f32).clamp(0.2, 4.0);
+        let barrel_roll_duration = (num("mBarrelRollDuration", 1.5) as f32).clamp(0.4, 4.0);
+        let barrel_roll_radius = (num("mBarrelRollRadius", 4.0) as f32).clamp(0.0, 20.0);
         profiles.insert(
             object.id,
             FlightProfile {
                 min_speed,
                 cruise_speed,
                 max_speed,
+                backward_max_speed,
                 strafe_speed,
                 up_speed,
                 down_speed,
@@ -170,6 +196,13 @@ pub fn flight_profiles(graph: &ObjectGraph) -> Result<BTreeMap<ObjectId, FlightP
                 min_hag,
                 cruise_hag,
                 max_hag,
+                max_tilt_forward,
+                cruise_tilt_forward,
+                max_tilt_backward,
+                max_tilt_sideways,
+                bank_factor,
+                barrel_roll_duration,
+                barrel_roll_radius,
             },
         );
     }

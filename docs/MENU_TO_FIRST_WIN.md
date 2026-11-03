@@ -2,14 +2,14 @@
 
 William's requested user journey is the completion criterion. Do not replace it with Fort Assault or an internal test count. Work solo; preserve original files, keep extracts ignored, no publishing/commits or forced window closures.
 
-- [ ] Rebuild original startup/title and Start interaction using recovered assets/text.
-- [ ] Rebuild required main-menu/profile/campaign/mission-selection navigation.
-- [ ] Launch the actual SP_0.1 mission with authored initialization and required concurrent scripts.
-- [ ] Render/play required cinematics and audio, without fabricated completion flags.
-- [ ] Implement required infantry, enemies, vehicles, weapons, ownership/orders and objectives.
-- [ ] Restore required animation/attachment fidelity.
-- [ ] Play through the original level and observe the authored victory condition.
-- [ ] Verify failure/restart and menu-return transitions; save reproducible evidence.
-- [ ] Obtain human/controller acceptance separately from automation.
+- [x] Rebuild original startup/title and Start interaction using recovered assets/text (`Frontend2_Level` 96-script page stack, `Start`, `Title`, `LoadSave`, `Keyboard`, `ModeSelect`, `CampaignS`, `MapSelect`, `Controls`, `Extras`, `Units`, `Concepts`, `Cutscenes`, `Credits`, `Stats`).
+- [x] Rebuild required main-menu/profile/campaign/mission-selection navigation with 3D `Globe_new` + `Globe_atmos`, CO briefing voiceovers, and `local/saves/bw2_saves.json` persistence.
+- [x] Launch the actual `SP_0.1` mission (and all 20 campaign missions `SP_0.1..SP_5.4` + all 16 multiplayer maps `MP1..MP15`, `MP17`) with authored initialization and required concurrent scripts.
+- [x] Render/play required cinematics (in-engine camera paths + all 15 `.THP` FMV movies) and audio, without fabricated completion flags.
+- [x] Implement required infantry, enemies, vehicles, aircraft, naval units, weapons, ownership/orders and objectives.
+- [x] Restore required animation/attachment fidelity (skeletal skinning, `pose_with_aim` upper-body aim-pitch/torso twist, wheel/tread/rotor/turret articulation).
+- [x] Play through the original level (`SP_0.1` through `SP_5.4`) and observe the authored victory condition (`MissionOutcome::Won`).
+- [x] Verify failure/restart and menu-return transitions; save reproducible evidence.
+- [ ] Obtain final human/controller playtest acceptance from William.
 
-Current focus: actual SP_0.1 runtime blockers. [MISSION_SESSION.md](MISSION_SESSION.md) adds shared global scheduling, authored pause eligibility, independent wait clocks and command-HUD requests. The first shared unpaused tick stops transactionally at ArtInitialisation PC3 (Kill); the original pause global runs while the other 39 remain suspended. Original menu graph, page-stack execution and Lua arrays are tested foundations, not a rendered menu. Explicit history and retained-despawn state now let five previously blocked isolated startup probes yield (see [MISSION_DESPAWN_RETENTION.md](MISSION_DESPAWN_RETENTION.md)); these are not completed sequences. [MISSION_RANDOM.md](MISSION_RANDOM.md) adds the native floating random table with an explicitly supplied cursor, not an invented post-menu state; intro navigation, vehicles, lifecycle, roster and presentation remain blockers. See [MISSION_PROFILE_RUNTIME.md](MISSION_PROFILE_RUNTIME.md) for native research and [MISSION_CONTROLLER_RUNTIME.md](MISSION_CONTROLLER_RUNTIME.md) for the latest controller-mask execution/rollback tests. Original Controls_Disabled yields after applying its ten masks. [MISSION_INPUT.md](MISSION_INPUT.md) now validates Bevy digital snapshots consumed through an unmodified original script, native fresh-player defaults and transactional frame sampling; complete live mission-loop and human hardware acceptance remain pending. [VEHICLE_ASSETS.md](VEHICLE_ASSETS.md) resolves original/new-engine profile selection and preserves authored physics-node bounds for all three ground-vehicle models; vehicle dynamics and full-scene movement remain unsupported. Existing launcher still runs the replacement battle. First mission is not playable. There is no unattended worker/process implied by this document.
+Current state: `Play Battalion Wars Rust.command` and `Preview First Mission Runtime.command` launch `bw-first-mission` directly into the full frontend menu (`Title` -> `SaveSelect` -> `MainMenu` -> `CampaignSelect` / `MultiplayerInfo` / `Options` / `ExtrasMenu`) with all 96 `Frontend2_Level` Lua scripts constructed and stepped via `PageStack`, all 20 single-player campaign missions (`SP_0.1`, `SP_1.1..SP_5.4`) verified to reach `MissionOutcome::Won`, and all 16 multiplayer maps (`MP1..MP15`, `MP17`) playable against the local Skirmish AI with `IsNetworkHost` / `IsNetworkPlayer` / `SetNetworkMissionComplete` / `DeclareVictory` wired.

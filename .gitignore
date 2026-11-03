@@ -3,7 +3,23 @@
 *.wbfs
 *.iso
 *.rvz
+*.gcm
+*.gcz
+*.nkit.iso
+*.nkit.gcz
+*.wad
+*.bnr
+*.dol
+*.elf
+*.thp
+*.btf
+*.res
+*.out
+*.str
+*.adp
+*.brsar
 /Battalion Wars 2 (USA)/
+/DATA/
 /local/
 /extracted/
 /target/

@@ -133,3 +133,233 @@ fn original_globe_select_script_and_orientation_matrices() {
         }
     }
 }
+
+#[test]
+#[ignore = "requires local original frontend assets"]
+fn original_all_shared_scripts_and_all_82_pages_and_page_stack_flows() {
+    let root = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("local/extracted/files/Data");
+    let global_strings: Vec<String> = bw_rust::localization::Language::parse(
+        &std::fs::read(root.join("Strings/globeng.str")).unwrap(),
+    )
+    .unwrap()
+    .messages
+    .into_iter()
+    .map(|e| e.text)
+    .collect();
+    let frontend_strings: Vec<String> = bw_rust::localization::Language::parse(
+        &std::fs::read(root.join("Strings/frontend2English.str")).unwrap(),
+    )
+    .unwrap()
+    .messages
+    .into_iter()
+    .map(|e| e.text)
+    .collect();
+
+    let mut runtime = original();
+    runtime.set_string_tables(global_strings, frontend_strings);
+    runtime.init_shared_scripts(200_000).unwrap();
+
+    let page_count = runtime.construct_all_pages(200_000).unwrap();
+    assert_eq!(page_count, 82);
+
+    // 1. Step from Logo -> StartPre -> Start
+    runtime.reset_page_stack("Logo", 100_000).unwrap();
+    let mut visited = Vec::new();
+    for _ in 0..400 {
+        if let Some(active) = runtime.step_page_stack(1.0 / 60.0, 200_000).unwrap() {
+            if visited.last() != Some(&active) {
+                visited.push(active.clone());
+            }
+            if active == "Start" {
+                break;
+            }
+        }
+    }
+    assert!(
+        visited.contains(&"Logo".to_string())
+            && visited.contains(&"StartPre".to_string())
+            && visited.contains(&"Start".to_string()),
+        "Expected Logo -> StartPre -> Start, got {visited:?}"
+    );
+
+    // 2. Dispatch Start AB press -> LoadCampaignData -> Save
+    runtime
+        .dispatch_page_callback("Start", "eGUIEvent_OnAB", &[], 200_000)
+        .unwrap();
+    for _ in 0..30 {
+        if let Some(active) = runtime.step_page_stack(1.0 / 60.0, 200_000).unwrap() {
+            if visited.last() != Some(&active) {
+                visited.push(active.clone());
+            }
+            if active == "Save" {
+                break;
+            }
+        }
+    }
+    assert!(
+        visited.contains(&"Save".to_string()),
+        "Expected transition to Save, got {visited:?}"
+    );
+
+    // 3. Unlock solar campaign levels and step MapPre -> Map -> MapPost -> CampaignS -> CampaignSInfo -> CutsceneIn -> CampaignSLoading -> RunLevel
+    if let Some(env) = runtime.env_mut() {
+        env.levels_done = 5;
+        env.levels_attempted_or_done = 5;
+        env.sp_save_valid = true;
+    }
+    runtime.set_global("LevelsDone", Value::Number(5.0));
+    runtime.set_global("SelectedCampaign", Value::Number(1.0));
+    runtime.reset_page_stack("MapPre", 200_000).unwrap();
+    for _ in 0..250 {
+        if let Some(active) = runtime.step_page_stack(1.0 / 60.0, 200_000).unwrap() {
+            if visited.last() != Some(&active) {
+                visited.push(active.clone());
+            }
+            if active == "Map" {
+                break;
+            }
+        }
+    }
+    assert!(
+        visited.contains(&"Map".to_string()),
+        "Expected MapPre -> Map, got {visited:?}"
+    );
+
+    // Select Campaign 1 (Solar Empire) on Map -> MapPost -> CampaignS
+    runtime
+        .call_page_method(
+            "Map",
+            "campaignButtonActivated",
+            &[Value::Number(1.0)],
+            200_000,
+        )
+        .unwrap();
+    let mut bezier_dots_drawn = 0;
+    for _ in 0..300 {
+        if let Some(active) = runtime.step_page_stack(1.0 / 60.0, 200_000).unwrap() {
+            if visited.last() != Some(&active) {
+                visited.push(active.clone());
+            }
+            if active == "CampaignS" {
+                bezier_dots_drawn = runtime.drawn_sprites().len();
+                break;
+            }
+        }
+    }
+    assert!(
+        visited.contains(&"MapPost".to_string()) && visited.contains(&"CampaignS".to_string()),
+        "Expected Map -> MapPost -> CampaignS, got {visited:?}"
+    );
+    assert!(
+        bezier_dots_drawn > 0,
+        "Expected CampaignS.renderBeziers to draw Bezier link sprites"
+    );
+
+    // Hover Level 1 (missionTTOn) -> openLevelInfo -> CampaignSInfo -> playCampaignLevel -> CutsceneIn -> CampaignSLoading -> RunLevel
+    runtime
+        .call_page_method("CampaignS", "missionTTOn", &[Value::Number(1.0)], 200_000)
+        .unwrap();
+    runtime
+        .call_page_method("CampaignS", "openLevelInfo", &[], 200_000)
+        .unwrap();
+    let active = runtime.step_page_stack(1.0 / 60.0, 200_000).unwrap();
+    assert_eq!(active.as_deref(), Some("CampaignSInfo"));
+    runtime
+        .call_page_method("CampaignSInfo", "playCampaignLevel", &[], 200_000)
+        .unwrap();
+    for _ in 0..200 {
+        let active = runtime.step_page_stack(1.0 / 60.0, 200_000).unwrap();
+        if let Some(p) = &active
+            && visited.last() != Some(p)
+        {
+            visited.push(p.clone());
+        }
+        if runtime.env().and_then(|e| e.launched_level).is_some() {
+            break;
+        }
+    }
+    assert!(
+        visited.contains(&"CutsceneIn".to_string())
+            && visited.contains(&"CampaignSLoading".to_string()),
+        "Expected CutsceneIn -> CampaignSLoading, got {visited:?}"
+    );
+    // Campaign Mission 1 is index 10 in levels.xml (1 + NumFrontendLevels where NumFrontendLevels == 9)
+    assert_eq!(runtime.env().and_then(|e| e.launched_level), Some(10));
+
+    // 4. Test Multiplayer page-stack flow (Gametype -> Levels -> ChooseArmy -> MPLoading)
+    runtime.set_global("FrontendDone", Value::Boolean(false));
+    runtime.reset_page_stack("Gametype", 200_000).unwrap();
+    let active = runtime.step_page_stack(1.0 / 60.0, 200_000).unwrap();
+    assert_eq!(active.as_deref(), Some("Gametype"));
+    runtime
+        .call_page_method("Gametype", "gotoLevels", &[Value::Number(2.0)], 200_000)
+        .unwrap();
+    for _ in 0..120 {
+        if let Some(p) = runtime.step_page_stack(1.0 / 60.0, 200_000).unwrap() {
+            if visited.last() != Some(&p) {
+                visited.push(p.clone());
+            }
+            if p == "Levels" {
+                break;
+            }
+        }
+    }
+    assert!(
+        visited.contains(&"Levels".to_string()),
+        "Expected Gametype -> Levels, got {visited:?}"
+    );
+    runtime
+        .call_page_method("Levels", "selectLevel", &[Value::Number(1.0)], 200_000)
+        .unwrap();
+    let chosen_name_id = runtime
+        .call_page_method("Levels", "getChosenLevelName", &[], 200_000)
+        .unwrap();
+    let chosen_name = runtime
+        .global_call("GetString", &chosen_name_id, 10_000)
+        .unwrap();
+    assert_eq!(chosen_name, vec![Value::String("STORM THE BEACHES".into())]);
+
+    // 5. Test Victory and Defeat pages Open/Update/Close cleanly
+    for outcome_page in ["Victory", "Defeat"] {
+        runtime.reset_page_stack(outcome_page, 200_000).unwrap();
+        let active = runtime.step_page_stack(1.0 / 60.0, 200_000).unwrap();
+        assert_eq!(active.as_deref(), Some(outcome_page));
+    }
+
+    // 6. Verify GuiScene canvas evaluation across authored pages
+    let mut graph = ObjectGraph::default();
+    for file in ["Frontend2_Level.xml", "Frontend2_Level_preload.xml"] {
+        graph
+            .merge(
+                parse_objects(
+                    &std::fs::read_to_string(root.join("CompoundFiles").join(file)).unwrap(),
+                )
+                .unwrap(),
+            )
+            .unwrap();
+    }
+    let gui_scene = bw_rust::frontend_gui::GuiScene::from_graph(&graph);
+    assert!(!gui_scene.textures.is_empty());
+    assert!(!gui_scene.sprite_bases.is_empty());
+    for page_name in [
+        "Start",
+        "Save",
+        "Map",
+        "CampaignS",
+        "Gametype",
+        "Levels",
+        "Victory",
+        "Defeat",
+    ] {
+        runtime.reset_page_stack(page_name, 200_000).unwrap();
+        let active = runtime.step_page_stack(1.0 / 60.0, 200_000).unwrap();
+        assert_eq!(active.as_deref(), Some(page_name));
+        let quads = gui_scene
+            .evaluate_active_page_canvas(&graph, &mut runtime)
+            .unwrap();
+        assert!(
+            !quads.is_empty(),
+            "Expected non-empty GuiCanvasQuad list for page {page_name}"
+        );
+    }
+}

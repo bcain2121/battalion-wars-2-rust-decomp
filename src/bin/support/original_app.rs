@@ -119,6 +119,18 @@ fn load_level_bundle(
         } else {
             wanted.insert("SKY_C4Gambit".into());
         }
+        for obj in graph.objects.values() {
+            if obj.kind == "cMorphingBuilding"
+                && let Some(m) = original_scene::resolve_morphing_building_models(&graph, obj)
+            {
+                for (intact, dead) in m.by_faction.values() {
+                    wanted.insert(intact.clone());
+                    if let Some(d) = dead {
+                        wanted.insert(d.clone());
+                    }
+                }
+            }
+        }
     }
     let mut models = Vec::new();
     let mut missing = Vec::new();
@@ -287,6 +299,7 @@ fn run_mode(battle_mode: bool, mission_mode: bool) {
     } else {
         app.add_plugins(plugins);
     }
+    terrain_render::register_shader(&mut app);
     app.add_plugins(MaterialPlugin::<TerrainMaterial>::default())
         .init_resource::<bw_rust::mission_lightning_render::Renderer>()
         .insert_resource(loaded)
@@ -306,6 +319,7 @@ fn run_mode(battle_mode: bool, mission_mode: bool) {
                 first_mission_view::lightning,
                 first_mission_view::markers,
                 first_mission_view::traces,
+                first_mission_view::sync_overlays_and_splitscreen,
                 update,
             )
                 .chain(),
@@ -549,6 +563,13 @@ fn setup(
                     root,
                     &mut meshes,
                 );
+                mission.spawn_morphing_variants(
+                    &mut commands,
+                    placement,
+                    root,
+                    &models,
+                    &loaded.models,
+                );
             } else {
                 model_render::spawn(&mut commands, model, root);
             }
@@ -698,6 +719,25 @@ fn setup(
             .looking_at(center, Vec3::Y),
         ))
         .id();
+    if mission.is_some() && std::env::var_os("BW_OFFSCREEN").is_none() {
+        commands.spawn((
+            first_mission_view::Player2Camera3d,
+            Camera3d::default(),
+            Camera {
+                is_active: false,
+                order: 1,
+                ..default()
+            },
+            Projection::Perspective(PerspectiveProjection {
+                far: 25000.0,
+                ..default()
+            }),
+            Transform::from_translation(
+                center + Vec3::new(distance * 0.5, distance * 0.3, distance),
+            )
+            .looking_at(center, Vec3::Y),
+        ));
+    }
     let mut capture = CaptureTarget::default();
     if std::env::var_os("BW_OFFSCREEN").is_some() {
         use bevy::render::render_resource::{TextureFormat, TextureUsages};
@@ -883,6 +923,13 @@ fn reload_mission_level(
             root_mat,
             &mut meshes,
         );
+        mission.spawn_morphing_variants(
+            &mut commands,
+            placement,
+            root_mat,
+            &render_models,
+            &loaded.models,
+        );
         for (bone, name) in &placement.attachments {
             if let (Some(matrix), Some(attachment)) =
                 (model.bones.get(bone), render_models.get(name))
@@ -928,7 +975,7 @@ fn reload_mission_level(
 #[allow(clippy::type_complexity)]
 fn assign_ui_camera(
     mut commands: Commands,
-    cameras: Query<Entity, With<Camera3d>>,
+    cameras: Query<Entity, (With<Camera3d>, Without<first_mission_view::Player2Camera3d>)>,
     roots: Query<Entity, (With<Node>, Without<ChildOf>, Without<UiTargetCamera>)>,
 ) {
     if let Ok(camera) = cameras.single() {
@@ -984,7 +1031,10 @@ fn update(
     keys: Res<ButtonInput<KeyCode>>,
     time: Res<Time>,
     mut state: ResMut<CameraState>,
-    mut camera: Query<&mut Transform, With<Camera3d>>,
+    mut camera: Query<
+        &mut Transform,
+        (With<Camera3d>, Without<first_mission_view::Player2Camera3d>),
+    >,
     mut frame: Local<u32>,
     mut exit: MessageWriter<AppExit>,
     collision: Option<Res<bw_rust::camera_collision::CameraCollision>>,

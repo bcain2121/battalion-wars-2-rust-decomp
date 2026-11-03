@@ -669,6 +669,7 @@ impl Combat {
             });
         let mut best = None;
         let mut distance = range;
+        let mut best_is_squad_target = false;
         let mut best_is_tactical_barrel = false;
         let mut best_is_air = false;
         let in_roster = cone.is_none() && host.world.roster.contains(&shooter);
@@ -698,6 +699,14 @@ impl Combat {
                     || host.world.attack_orders.get(&shooter) == Some(*id)
                     || (host.world.roster.contains(&shooter)
                         && host.world.squad_target == Some(**id))
+                    || (in_roster
+                        && !target.invulnerable
+                        && host.world.buildings.contains(id)
+                        && self
+                            .base(**id)
+                            .ok()
+                            .and_then(|b| field(b, "mBuildingIconType"))
+                            == Some("eExplosionIconType"))
                     || (((squad_targets_buildings
                         || (in_roster
                             && (real_level
@@ -894,9 +903,10 @@ impl Combat {
                         .entering_vehicle
                         .get(id)
                         .is_some_and(|c| host.world.capture_points.contains(c)));
-            let priority_override = (squad_target && (!is_aa_unit || !best_is_air))
-                || (tactical_barrel && !best_is_tactical_barrel)
-                || (cone.is_none() && is_aa_unit && is_air_target && !best_is_air);
+            let priority_override =
+                (squad_target && (!is_aa_unit || !best_is_air) && !best_is_tactical_barrel)
+                    || (tactical_barrel && !best_is_tactical_barrel)
+                    || (cone.is_none() && is_aa_unit && is_air_target && !best_is_air);
             let ai_water_vs_ground = cone.is_none()
                 && !in_roster
                 && !is_ordered_target
@@ -965,7 +975,11 @@ impl Combat {
             } else {
                 d
             };
-            if !priority_override && score >= distance {
+            if !priority_override
+                && ((best_is_tactical_barrel && !tactical_barrel)
+                    || (best_is_squad_target && !squad_target)
+                    || score >= distance)
+            {
                 continue;
             }
             let ignore_terrain = (!ai_water_vs_ground
@@ -1039,12 +1053,13 @@ impl Combat {
             {
                 continue;
             }
-            if squad_target && (!is_aa_unit || is_air_target) {
-                // Explicit squad attack target takes precedence when engageable.
+            if is_ordered_target && (!is_aa_unit || is_air_target) {
+                // Explicit script attack order takes precedence when engageable.
                 return Ok(Some(*id));
             }
             best = Some(*id);
             distance = score;
+            best_is_squad_target = squad_target && (!is_aa_unit || is_air_target);
             best_is_tactical_barrel = tactical_barrel;
             best_is_air = is_air_target;
         }
@@ -1527,6 +1542,32 @@ impl Combat {
     pub fn aim_target(&self, host: &Host, player: ObjectId) -> Option<ObjectId> {
         self.reticle_target(host, player, None, 0.90)
     }
+
+    pub fn fire_unit_at_direction(
+        &mut self,
+        host: &mut Host,
+        shooter: ObjectId,
+        mut aim: [f64; 3],
+        auto_assist: bool,
+    ) -> Result<bool> {
+        if host.world.frozen || host.world.entity(shooter)?.health <= 0.0 {
+            return Ok(false);
+        }
+        let Ok(pw) = self.weapon(shooter, true) else {
+            return Ok(false);
+        };
+        if auto_assist
+            && let Some(target) = self.nearest_enemy(host, shooter, pw.max.max(70.0), Some(aim))?
+        {
+            let from = Self::point(host, shooter)?;
+            let to = Self::point(host, target)?;
+            aim = direction(from, to)?;
+        }
+        let before = self.fired;
+        self.fire(host, shooter, true, aim)?;
+        Ok(self.fired > before)
+    }
+
     /// Caller stages both Host and Combat and commits only after the original script tick succeeds.
     pub fn tick(&mut self, host: &mut Host, dt: f64, fire: bool, lock: bool) -> Result<()> {
         if !dt.is_finite() || !(0.0..=0.1).contains(&dt) {

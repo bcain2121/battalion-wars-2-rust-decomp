@@ -264,8 +264,75 @@ pub struct World {
     pub unit_invulnerable: BTreeSet<ObjectId>,
     pub invulnerable_army_mask: u32,
     pub is_multiplayer: bool,
+    pub two_player_mode: bool,
+    pub player2: Option<ObjectId>,
+    pub player2_roster: BTreeSet<ObjectId>,
+    pub revived_dead_health: BTreeMap<String, f64>,
+    pub dead_health_baseline: BTreeMap<String, f64>,
+    pub stored_dead_health: BTreeMap<String, f64>,
 }
 impl World {
+    pub fn army_from_type_flag(mask: u32) -> Option<&'static str> {
+        if mask & 0x0000_0001 != 0 {
+            Some("eWesternFrontier")
+        } else if mask & 0x0000_0002 != 0 {
+            Some("eXylvanian")
+        } else if mask & 0x0000_0020 != 0 {
+            Some("eTundranTerritories")
+        } else if mask & 0x0000_0400 != 0 {
+            Some("eSolarEmpire")
+        } else if mask & 0x0000_0800 != 0 {
+            Some("eUnderWorld")
+        } else if mask & 0x0002_0000 != 0 {
+            Some("eAngloIsles")
+        } else if mask & 0x0000_1000 != 0 {
+            Some("eNeutral")
+        } else {
+            None
+        }
+    }
+
+    pub fn raw_army_dead_health(&self, army: &str) -> f64 {
+        let mut dead = self.revived_dead_health.get(army).copied().unwrap_or(0.0);
+        for id in self.units.keys().chain(self.buildings.iter()).copied() {
+            let Ok(unit) = self.entity(id) else {
+                continue;
+            };
+            if unit.army != army {
+                continue;
+            }
+            dead += (unit.max_health - unit.health.max(0.0)).max(0.0);
+        }
+        dead
+    }
+
+    pub fn army_health_total(&self, army: &str, dead: bool) -> f64 {
+        if dead {
+            let raw = self.raw_army_dead_health(army);
+            let base = self.dead_health_baseline.get(army).copied().unwrap_or(0.0);
+            (raw - base).max(0.0)
+        } else {
+            let mut alive = 0.0;
+            for id in self.units.keys().chain(self.buildings.iter()).copied() {
+                let Ok(unit) = self.entity(id) else {
+                    continue;
+                };
+                if unit.army != army {
+                    continue;
+                }
+                let present = self.unit_list_presence(id).unwrap_or(false)
+                    || self
+                        .rewrite
+                        .as_ref()
+                        .is_some_and(|r| r.retired.contains(&id));
+                if present {
+                    alive += unit.health.max(0.0);
+                }
+            }
+            alive
+        }
+    }
+
     pub fn same_allegiance(&self, army_a: &str, army_b: &str) -> bool {
         if army_a.is_empty() || army_b.is_empty() {
             return false;
@@ -4308,12 +4375,9 @@ impl World {
                         || (self.frozen && self.player == Some(*id)))
                 {
                     if let Some(animation) = &mut self.units.get_mut(id).unwrap().animation
-                        && (matches!(
-                            animation.motion,
-                            crate::unit_animation::Motion::Run
-                                | crate::unit_animation::Motion::Walk
-                        ) || (animation.motion == crate::unit_animation::Motion::Fire
-                            && animation.elapsed >= 0.45))
+                        && (animation.motion.is_locomotion()
+                            || (animation.motion == crate::unit_animation::Motion::Fire
+                                && animation.elapsed >= 0.45))
                     {
                         animation.select(crate::unit_animation::Motion::Idle)?;
                     }
@@ -4398,11 +4462,13 @@ impl World {
                             > 1e-5;
                         positions.insert(*id, movement.position);
                         if let Some(animation) = &mut self.units.get_mut(id).unwrap().animation {
-                            animation.select(if moved {
-                                crate::unit_animation::Motion::Run
+                            if moved {
+                                if !animation.motion.is_locomotion() {
+                                    animation.select(crate::unit_animation::Motion::Run)?;
+                                }
                             } else {
-                                crate::unit_animation::Motion::Idle
-                            })?;
+                                animation.select(crate::unit_animation::Motion::Idle)?;
+                            }
                         }
                     } else if let Some(animation) = &mut self.units.get_mut(id).unwrap().animation {
                         animation.select(crate::unit_animation::Motion::Idle)?;
@@ -4507,11 +4573,13 @@ impl World {
                 }
                 positions.insert(*id, movement.position);
                 if let Some(animation) = &mut self.units.get_mut(id).unwrap().animation {
-                    animation.select(if moved && !arrived {
-                        crate::unit_animation::Motion::Run
+                    if moved && !arrived {
+                        if !animation.motion.is_locomotion() {
+                            animation.select(crate::unit_animation::Motion::Run)?;
+                        }
                     } else {
-                        crate::unit_animation::Motion::Idle
-                    })?;
+                        animation.select(crate::unit_animation::Motion::Idle)?;
+                    }
                 }
                 if arrived {
                     self.orders.remove(id);
@@ -4558,10 +4626,7 @@ impl World {
         self.orders
             .retain(|id, _| self.units.get(id).is_some_and(|u| u.health > 0.0));
         for unit in self.units.values_mut().filter(|u| {
-            u.active == Some(true)
-                || u.animation
-                    .as_ref()
-                    .is_some_and(|a| a.motion == crate::unit_animation::Motion::Death)
+            u.active == Some(true) || u.animation.as_ref().is_some_and(|a| a.motion.is_death())
         }) {
             if let Some(animation) = &mut unit.animation {
                 animation.advance(dt)?;
@@ -4827,10 +4892,10 @@ impl World {
         vm.tables.push(grades);
         vm.globals.insert("GRADE".into(), Value::Table(index));
         let mut net = BTreeMap::new();
+        let player_net_index = vm.tables.len();
+        vm.tables.push(BTreeMap::new());
         for name in ["player1", "player2"] {
-            let index = vm.tables.len();
-            vm.tables.push(BTreeMap::new());
-            net.insert(name.into(), Value::Table(index));
+            net.insert(name.into(), Value::Table(player_net_index));
         }
         let index = vm.tables.len();
         vm.tables.push(net);
@@ -5213,6 +5278,12 @@ impl World {
                 }) {
                     self.killed_scripts.insert(id.0);
                     return Ok(vec![]);
+                }
+                if matches!(rest, [Value::Boolean(false)])
+                    && let Ok(u) = self.entity(*id)
+                {
+                    let delta = u.health.max(0.0);
+                    *self.dead_health_baseline.entry(u.army.clone()).or_default() += delta;
                 }
                 self.kill_rewrite_in_scene(*id, positions)?;
                 return Ok(vec![]);
@@ -5739,9 +5810,46 @@ impl World {
             }
             ("ForceUnitTransfer", [player_val, Value::Object(target), _options @ ..])
                 if self.rewrite.is_some()
-                    && matches!(player_val, Value::Enum(player) if player == "PLAYER_TWO") =>
+                    && (matches!(player_val, Value::Enum(player) if player == "PLAYER_TWO")
+                        || matches!(player_val, Value::Number(n) if *n == 1.0)) =>
             {
-                let _ = target;
+                let mut target = *target;
+                if !self.units.contains_key(&target) && !self.buildings.contains(&target) {
+                    if let Some(members) = self.unit_groups.get(&target)
+                        && let Some(&m) = members
+                            .iter()
+                            .find(|m| self.units.contains_key(m) || self.buildings.contains(m))
+                    {
+                        target = m;
+                    } else {
+                        return Ok(Vec::new());
+                    }
+                }
+                if self.units.get(&target).is_some_and(|u| u.health > 0.0) {
+                    self.player2 = Some(target);
+                    self.player2_roster.insert(target);
+                    let act = self.activity.entry(target).or_default();
+                    act.enabled = Some(true);
+                    act.weapons_enabled = Some(true);
+                    let target_army = self
+                        .entity(target)
+                        .map(|u| u.army.clone())
+                        .unwrap_or_default();
+                    for group in self.unit_groups.values() {
+                        if group.contains(&target) {
+                            for &uid in group {
+                                if self.units.get(&uid).is_some_and(|u| u.army == target_army)
+                                    && self
+                                        .activity
+                                        .get(&uid)
+                                        .is_none_or(|a| a.enabled != Some(false))
+                                {
+                                    self.player2_roster.insert(uid);
+                                }
+                            }
+                        }
+                    }
+                }
             }
             ("ForceUnitTransfer", [player_val, Value::Object(target), options @ ..])
                 if matches!(player_val, Value::Enum(player) if player == "PLAYER_ONE")
@@ -5923,8 +6031,15 @@ impl World {
                         || matches!(rest, [Value::Number(n)] if *n == 0.0 || *n == 1.0)) =>
             {
                 let unit = self.units.get(id).ok_or("Unknown commandable unit")?;
+                let is_p2 = matches!(rest, [Value::Enum(p)] if p == "PLAYER_TWO")
+                    || matches!(rest, [Value::Number(n)] if *n == 1.0);
+                let in_roster = if is_p2 && !self.player2_roster.is_empty() {
+                    self.player2_roster.contains(id)
+                } else {
+                    self.roster.contains(id)
+                };
                 return Ok(vec![Value::Boolean(
-                    self.roster.contains(id) && unit.active == Some(true) && unit.health > 0.0,
+                    in_roster && unit.active == Some(true) && unit.health > 0.0,
                 )]);
             }
             ("GetPlayerUnit", rest)
@@ -5933,8 +6048,15 @@ impl World {
                     || (self.rewrite.is_some()
                         && matches!(rest, [Value::Number(n)] if *n == 0.0 || *n == 1.0)) =>
             {
+                let is_p2 = matches!(rest, [Value::Enum(p)] if p == "PLAYER_TWO")
+                    || matches!(rest, [Value::Number(n)] if *n == 1.0);
+                let unit = if is_p2 {
+                    self.player2.or(self.player)
+                } else {
+                    self.player
+                };
                 return Ok(vec![Value::Object(
-                    self.player.ok_or("Player unit not configured")?,
+                    unit.ok_or("Player unit not configured")?,
                 )]);
             }
             ("IsDead", [Value::Object(id)]) => {
@@ -5997,6 +6119,14 @@ impl World {
             ("AllPlayerUnitsDead", [Value::Enum(player)])
                 if self.rewrite.is_some() && player == "PLAYER_TWO" =>
             {
+                if self.two_player_mode && !self.player2_roster.is_empty() {
+                    let any_alive = self.player2_roster.iter().any(|id| {
+                        self.units
+                            .get(id)
+                            .is_some_and(|u| u.active == Some(true) && u.health > 0.0)
+                    });
+                    return Ok(vec![Value::Boolean(!any_alive)]);
+                }
                 return Ok(vec![Value::Boolean(false)]);
             }
             ("AllPlayerUnitsDead", rest)
@@ -6285,7 +6415,32 @@ impl World {
             ("DeclareVictory", [Value::Enum(army)])
                 if Self::army_enum_to_internal(army).is_some() =>
             {
-                self.declared_victory = Some(army.clone())
+                self.declared_victory = Some(army.clone());
+                if self.is_multiplayer && self.mission_complete.is_none() {
+                    let player_army = self
+                        .player
+                        .and_then(|p| self.entity(p).ok())
+                        .map(|u| u.army.clone())
+                        .or_else(|| {
+                            self.roster
+                                .iter()
+                                .find_map(|rid| self.units.get(rid).map(|u| u.army.clone()))
+                        });
+                    let internal = Self::army_enum_to_internal(army).unwrap_or("eNeutral");
+                    let won = player_army
+                        .as_deref()
+                        .is_none_or(|pa| pa == internal || self.same_allegiance(pa, internal));
+                    self.mission_complete = Some(if won {
+                        MissionOutcome::Won {
+                            speed: 100.0,
+                            power: 95.0,
+                            technique: 90.0,
+                            rating: "GRADE_S".into(),
+                        }
+                    } else {
+                        MissionOutcome::Lost { message_id: None }
+                    });
+                }
             }
             (
                 "DestroyablePlayAnim",
@@ -6452,6 +6607,30 @@ impl World {
             ) if self.rewrite.is_some() => {
                 self.mission_ratings = Some([s.clone(), p.clone(), t.clone(), o.clone()]);
             }
+            (
+                "SetMissionRatings",
+                [
+                    Value::Number(speed),
+                    Value::Number(power),
+                    Value::Number(technique),
+                    Value::Enum(rating),
+                ],
+            ) if self.rewrite.is_some() => {
+                self.mission_ratings = Some([
+                    format!("{speed:.0}"),
+                    format!("{power:.0}"),
+                    format!("{technique:.0}"),
+                    rating.clone(),
+                ]);
+                if matches!(self.mission_complete, Some(MissionOutcome::Won { .. })) {
+                    self.mission_complete = Some(MissionOutcome::Won {
+                        speed: *speed,
+                        power: *power,
+                        technique: *technique,
+                        rating: rating.clone(),
+                    });
+                }
+            }
             ("SetCurrentMissionCompleted", []) => {
                 let history = self
                     .mission_history
@@ -6504,8 +6683,18 @@ impl World {
                     rating: "GRADE_S".into(),
                 });
             }
-            ("IsNetworkHost" | "IsNetworkPlayer", _) => {
-                return Ok(vec![Value::Boolean(false)]);
+            ("IsNetworkHost", _) => {
+                return Ok(vec![Value::Boolean(self.is_multiplayer)]);
+            }
+            ("IsNetworkPlayer", [Value::Enum(player)]) => {
+                return Ok(vec![Value::Boolean(
+                    self.is_multiplayer
+                        && (player == "PLAYER_ONE"
+                            || (self.two_player_mode && player == "PLAYER_TWO")),
+                )]);
+            }
+            ("IsNetworkPlayer", _) => {
+                return Ok(vec![Value::Boolean(self.is_multiplayer)]);
             }
             // --- SP_1.1..SP_5.4 & MP1..MP17 Campaign Bindings ---
             ("IsPassengerInUnit", [Value::Object(unit)]) => {
@@ -7140,6 +7329,13 @@ impl World {
                 if let Some(runtime) = &mut self.rewrite {
                     runtime.retired.remove(id);
                 }
+                if let Some((army, dead_hp)) = self
+                    .entity(*id)
+                    .ok()
+                    .map(|u| (u.army.clone(), (u.max_health - u.health.max(0.0)).max(0.0)))
+                {
+                    *self.revived_dead_health.entry(army).or_default() += dead_hp;
+                }
                 if let Ok(u) = self.entity_mut(*id) {
                     u.health = u.max_health;
                     u.active = Some(true);
@@ -7212,6 +7408,13 @@ impl World {
                 if let Some(runtime) = &mut self.rewrite {
                     runtime.retired.remove(carrier);
                 }
+                if let Some((army, dead_hp)) = self
+                    .entity(*carrier)
+                    .ok()
+                    .map(|u| (u.army.clone(), (u.max_health - u.health.max(0.0)).max(0.0)))
+                {
+                    *self.revived_dead_health.entry(army).or_default() += dead_hp;
+                }
                 if let Ok(u) = self.entity_mut(*carrier) {
                     u.health = u.max_health;
                     u.active = Some(true);
@@ -7265,6 +7468,14 @@ impl World {
                     if let Some(runtime) = &mut self.rewrite {
                         runtime.retired.remove(&pid);
                     }
+                    if let Some((army, dead_hp)) = self.units.get(&pid).map(|pu| {
+                        (
+                            pu.army.clone(),
+                            (pu.max_health - pu.health.max(0.0)).max(0.0),
+                        )
+                    }) {
+                        *self.revived_dead_health.entry(army).or_default() += dead_hp;
+                    }
                     if let Some(pu) = self.units.get_mut(&pid) {
                         pu.health = pu.max_health;
                         pu.active = Some(false);
@@ -7287,6 +7498,13 @@ impl World {
                 if let Some(uid) = candidate {
                     if let Some(runtime) = &mut self.rewrite {
                         runtime.retired.remove(&uid);
+                    }
+                    if let Some((army, dead_hp)) = self
+                        .units
+                        .get(&uid)
+                        .map(|u| (u.army.clone(), (u.max_health - u.health.max(0.0)).max(0.0)))
+                    {
+                        *self.revived_dead_health.entry(army).or_default() += dead_hp;
                     }
                     if let Some(u) = self.units.get_mut(&uid) {
                         u.health = u.max_health;
@@ -7454,14 +7672,41 @@ impl World {
                     Some(MissionOutcome::Lost { .. })
                 ))]);
             }
-            (
-                "GetScoreTotals"
-                | "GetFriendlyScoreTotals"
-                | "GetEnemyScoreTotals"
-                | "GetHealthTotals",
-                _,
-            ) => {
-                return Ok(vec![Value::Number(100.0)]);
+            ("GetScoreTotals" | "GetHealthTotals", [army_val, mode_val]) => {
+                let army = match army_val {
+                    Value::Number(mask) => Self::army_from_type_flag(*mask as u32),
+                    Value::Enum(e) => Self::army_enum_to_internal(e),
+                    _ => None,
+                };
+                let is_dead = match mode_val {
+                    Value::Enum(m) => m == "TOTAL_DEAD_HEALTH",
+                    Value::Number(n) => (*n as i32) == 1,
+                    _ => true,
+                };
+                let total = army.map_or(0.0, |a| self.army_health_total(a, is_dead));
+                return Ok(vec![Value::Number(total)]);
+            }
+            ("GetFriendlyScoreTotals" | "GetEnemyScoreTotals", args) => {
+                let wanted = if name == "GetFriendlyScoreTotals" {
+                    1
+                } else {
+                    2
+                };
+                let is_dead = match args.first() {
+                    Some(Value::Enum(m)) => m == "TOTAL_DEAD_HEALTH",
+                    Some(Value::Number(n)) => (*n as i32) == 1,
+                    _ => true,
+                };
+                let mut total = 0.0;
+                for (army, &flag) in &self.scoring_allegiance {
+                    if flag == wanted {
+                        total += self.army_health_total(army, is_dead);
+                    }
+                }
+                return Ok(vec![Value::Number(total)]);
+            }
+            ("GetScoreTotals" | "GetHealthTotals", _) => {
+                return Ok(vec![Value::Number(0.0)]);
             }
             ("GetObjectivesResult", _) => {
                 let p = self.power_objectives.map_or(1.0, |v| v[1]);
@@ -7634,11 +7879,65 @@ impl World {
                 }
             }
             ("SetTickScriptWhenDead" | "SetTickScriptWhenDespawned", _) => {}
+            ("SetNetworkMissionComplete", [player_val, won_val, rest @ ..]) => {
+                let is_p1 = matches!(player_val, Value::Enum(p) if p == "PLAYER_ONE")
+                    || matches!(player_val, Value::Number(n) if (*n as i32) == 1);
+                if is_p1 {
+                    let won = match won_val {
+                        Value::Boolean(b) => *b,
+                        Value::Number(n) => *n != 0.0,
+                        _ => true,
+                    };
+                    let message_id = match rest.first() {
+                        Some(Value::Number(id)) if id.is_finite() && *id >= 0.0 => Some(*id as u32),
+                        _ => None,
+                    };
+                    self.mission_complete = Some(if won {
+                        MissionOutcome::Won {
+                            speed: 100.0,
+                            power: 95.0,
+                            technique: 90.0,
+                            rating: "GRADE_S".into(),
+                        }
+                    } else {
+                        MissionOutcome::Lost { message_id }
+                    });
+                }
+            }
+            ("StoreHealthAndScoreTotals", _) => {
+                self.stored_dead_health.clear();
+                for army in [
+                    "eWesternFrontier",
+                    "eTundranTerritories",
+                    "eXylvanian",
+                    "eSolarEmpire",
+                    "eUnderWorld",
+                    "eAngloIsles",
+                ] {
+                    self.stored_dead_health
+                        .insert(army.into(), self.army_health_total(army, true));
+                }
+            }
+            ("ResetHealthAndScoreTotals", _) => {
+                for army in [
+                    "eWesternFrontier",
+                    "eTundranTerritories",
+                    "eXylvanian",
+                    "eSolarEmpire",
+                    "eUnderWorld",
+                    "eAngloIsles",
+                ] {
+                    self.dead_health_baseline
+                        .insert(army.into(), self.raw_army_dead_health(army));
+                }
+            }
+            ("AddStoredHealthAndScoreTotals", _) => {
+                for (army, stored) in self.stored_dead_health.clone() {
+                    *self.revived_dead_health.entry(army).or_default() += stored;
+                }
+            }
             (
                 "CameraShake"
-                | "ResetHealthAndScoreTotals"
-                | "StoreHealthAndScoreTotals"
-                | "AddStoredHealthAndScoreTotals"
                 | "ResetPathBlocking"
                 | "SetPathReblocking"
                 | "SetNogoZone"
@@ -7683,6 +7982,67 @@ impl World {
             _ => return Err(format!("Unsupported gameplay call/signature: {name}")),
         }
         Ok(vec![])
+    }
+
+    pub fn morphing_building_visual_state(&self, id: ObjectId) -> Option<(bool, u32)> {
+        let ent = self.props.get(&id).or_else(|| self.units.get(&id))?;
+        let owner_str = self
+            .installations
+            .values()
+            .find(|si| si.main_building == Some(id) || si.buildings.contains(&id))
+            .map(|si| si.owner.as_str())
+            .unwrap_or(ent.army.as_str());
+        let army_id = match owner_str {
+            "eWesternFrontier" => 1,
+            "eTundranTerritories" => 2,
+            "eXylvania" | "eXylvanian" => 3,
+            "eSolarEmpire" => 4,
+            "eUnderworld" | "eUnderWorld" => 5,
+            "eAngloIsles" => 6,
+            _ => 0,
+        };
+        Some((ent.health > 0.0, army_id))
+    }
+
+    pub fn cycle_player2_unit(&mut self) -> Option<ObjectId> {
+        let mut candidates: Vec<ObjectId> = self
+            .player2_roster
+            .iter()
+            .copied()
+            .filter(|id| {
+                !self.buildings.contains(id)
+                    && self
+                        .units
+                        .get(id)
+                        .is_some_and(|u| u.active == Some(true) && u.health > 0.0)
+            })
+            .collect();
+        if candidates.is_empty() {
+            candidates = self
+                .units
+                .iter()
+                .filter_map(|(&id, u)| {
+                    (Some(id) != self.player
+                        && !self.buildings.contains(&id)
+                        && u.active == Some(true)
+                        && u.health > 0.0)
+                        .then_some(id)
+                })
+                .collect();
+        }
+        if candidates.is_empty() {
+            return None;
+        }
+        let next = match self.player2 {
+            Some(cur) => {
+                let pos = candidates.iter().position(|&id| id == cur).unwrap_or(0);
+                candidates[(pos + 1) % candidates.len()]
+            }
+            None => candidates[0],
+        };
+        self.player2 = Some(next);
+        self.player2_roster.insert(next);
+        Some(next)
     }
 }
 #[cfg(test)]
@@ -8613,6 +8973,77 @@ mod tests {
             w.call("GetMovementState", &[Value::Object(ObjectId(1))], &p)
                 .unwrap(),
             vec![Value::Enum("MOVEMENT_STATE_ON_GROUND".into())]
+        );
+
+        // Verify 2-player mode & PLAYER_TWO bindings
+        w.is_multiplayer = true;
+        w.two_player_mode = true;
+        assert_eq!(
+            w.call("IsNetworkPlayer", &[Value::Enum("PLAYER_TWO".into())], &p)
+                .unwrap(),
+            vec![Value::Boolean(true)]
+        );
+        w.call(
+            "ForceUnitTransfer",
+            &[
+                Value::Enum("PLAYER_TWO".into()),
+                Value::Object(ObjectId(1)),
+                Value::Boolean(true),
+            ],
+            &p,
+        )
+        .unwrap();
+        assert_eq!(w.player2, Some(ObjectId(1)));
+        assert_eq!(
+            w.call("GetPlayerUnit", &[Value::Enum("PLAYER_TWO".into())], &p)
+                .unwrap(),
+            vec![Value::Object(ObjectId(1))]
+        );
+        assert_eq!(
+            w.call(
+                "AllPlayerUnitsDead",
+                &[Value::Enum("PLAYER_TWO".into())],
+                &p
+            )
+            .unwrap(),
+            vec![Value::Boolean(false)]
+        );
+        w.units.insert(
+            ObjectId(2),
+            Unit {
+                health: 100.0,
+                max_health: 100.0,
+                invulnerable: false,
+                active: Some(true),
+                army: "eSolarEmpire".into(),
+                forward_speed: Some(8.0),
+                animation: None,
+            },
+        );
+        w.player2_roster.insert(ObjectId(2));
+        assert_eq!(w.cycle_player2_unit(), Some(ObjectId(2)));
+        assert_eq!(w.cycle_player2_unit(), Some(ObjectId(1)));
+
+        w.props.insert(
+            ObjectId(51),
+            Unit {
+                health: 200.0,
+                max_health: 200.0,
+                invulnerable: false,
+                active: Some(true),
+                army: "eSolarEmpire".into(),
+                forward_speed: None,
+                animation: None,
+            },
+        );
+        assert_eq!(
+            w.morphing_building_visual_state(ObjectId(51)),
+            Some((true, 4))
+        );
+        w.props.get_mut(&ObjectId(51)).unwrap().health = 0.0;
+        assert_eq!(
+            w.morphing_building_visual_state(ObjectId(51)),
+            Some((false, 4))
         );
     }
 }

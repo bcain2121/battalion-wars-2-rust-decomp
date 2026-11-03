@@ -64,15 +64,18 @@ impl Host {
         vm: &mut Bootstrap,
     ) -> Result<(Vec<Value>, Option<Wake>)> {
         match (name, args) {
-            ("OpenSprite" | "CloseSprite", _) => {
+            ("OpenSprite" | "CloseSprite" | "GetSprite" | "MoveSprite" | "DrawSprite", _) => {
                 let sprites = self
                     .frontend_sprites
                     .as_mut()
                     .ok_or("Frontend sprite backend not configured")?;
-                let values = if name == "OpenSprite" {
-                    sprites.open(vm, args)?
-                } else {
-                    sprites.close(vm, args)?
+                let values = match name {
+                    "OpenSprite" => sprites.open(vm, args)?,
+                    "CloseSprite" => sprites.close(vm, args)?,
+                    "GetSprite" => sprites.get_sprite(args)?,
+                    "MoveSprite" => sprites.move_sprite(args)?,
+                    "DrawSprite" => sprites.draw_sprite(args)?,
+                    _ => unreachable!(),
                 };
                 Ok((values, None))
             }
@@ -105,24 +108,20 @@ impl Host {
                     .ok_or("Frontend environment not configured")?;
                 Ok((env.call_with_vm(name, args, vm)?, None))
             }
-            (
-                "sin"
-                | "cos"
-                | "tan"
-                | "mod"
-                | "sqrt"
-                | "abs"
-                | "ceil"
-                | "floor"
-                | "rint"
-                | "SetCurrentMissionAttempted"
-                | "GetCurrentMissionAttempted"
-                | "SetCurrentMissionCompleted"
-                | "GetCurrentMissionCompleted"
-                | "SetCurrentFMVOutSeen"
-                | "GetCurrentFMVOutSeen",
-                _,
-            ) if self.frontend.is_some() => {
+            (name, _)
+                if self.frontend.is_some()
+                    && !matches!(
+                        name,
+                        "DebugOut"
+                            | "EndFrame"
+                            | "WaitFor"
+                            | "WaitForNoPause"
+                            | "ReadControllerState"
+                            | "GetObjectXPosition"
+                            | "GetObjectZPosition"
+                            | "OutOfBoundsMessageInfo"
+                    ) =>
+            {
                 let env = self.frontend.as_mut().unwrap();
                 Ok((env.call_with_vm(name, args, vm)?, None))
             }
@@ -737,6 +736,26 @@ impl Thread {
                 }
                 17 => self.set(a, Value::Number(-number(self.reg(b)?)?))?,
                 18 => self.set(a, Value::Boolean(!truth(&self.reg(b)?)))?,
+                19 => {
+                    if b > c {
+                        return Err("Invalid CONCAT range".into());
+                    }
+                    let mut out = String::new();
+                    for r in b..=c {
+                        match self.reg(r)? {
+                            Value::String(s) => out.push_str(&s),
+                            Value::Number(n) => {
+                                if n.fract() == 0.0 {
+                                    out.push_str(&format!("{}", n as i64));
+                                } else {
+                                    out.push_str(&format!("{n}"));
+                                }
+                            }
+                            _ => return Err("CONCAT requires string or number".into()),
+                        }
+                    }
+                    self.set(a, Value::String(out))?;
+                }
                 20 => {
                     self.pc = self
                         .pc
@@ -779,7 +798,8 @@ impl Thread {
                         self.pc += 1;
                     }
                 }
-                25 => {
+                25 | 26 => {
+                    let c = if op == 26 { 0 } else { c };
                     let end = if b == 0 {
                         self.top.ok_or("Open CALL without result top")?
                     } else {

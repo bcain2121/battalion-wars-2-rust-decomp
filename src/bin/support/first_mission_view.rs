@@ -22,13 +22,17 @@ use std::collections::{BTreeMap, VecDeque};
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum FrontendStage {
+    BootLogos,
+    IntroMovie,
     Title,
     SaveSelect,
     NameEntry,
     MainMenu,
     CampaignSelect,
+    MissionCutsceneIn,
     MultiplayerInfo,
     Options,
+    Keybindings,
     ExtrasMenu,
     UnitDossier,
     ConceptGallery,
@@ -38,6 +42,129 @@ pub enum FrontendStage {
     Victory,
     Defeat,
 }
+
+pub const REBINDABLE_ACTIONS: [(&str, &str, &str); 24] = [
+    (
+        "forward",
+        "MOVE FORWARD",
+        "Move your controlled infantry unit or ground/naval vehicle forward.",
+    ),
+    (
+        "back",
+        "MOVE BACKWARD",
+        "Move backward on foot or reverse your vehicle.",
+    ),
+    (
+        "left",
+        "STRAFE / STEER LEFT",
+        "Strafe left on foot or steer vehicle left.",
+    ),
+    (
+        "right",
+        "STRAFE / STEER RIGHT",
+        "Strafe right on foot or steer vehicle right.",
+    ),
+    (
+        "turn_left",
+        "TURN CAMERA LEFT",
+        "Rotate camera and weapon aim yaw to the left.",
+    ),
+    (
+        "turn_right",
+        "TURN CAMERA RIGHT",
+        "Rotate camera and weapon aim yaw to the right.",
+    ),
+    (
+        "look_up",
+        "LOOK / AIM UP",
+        "Pitch camera and weapon aim upward.",
+    ),
+    (
+        "look_down",
+        "LOOK / AIM DOWN",
+        "Pitch camera and weapon aim downward.",
+    ),
+    (
+        "fire",
+        "FIRE PRIMARY WEAPON",
+        "Fire primary weapon (Left Mouse Button also always fires).",
+    ),
+    (
+        "lock",
+        "TARGET LOCK-ON",
+        "Lock onto enemy target (Right Mouse Button also locks on).",
+    ),
+    (
+        "sprint",
+        "SPRINT / ROLL / BOOST",
+        "Sprint or combat-roll on foot, or boost vehicle speed.",
+    ),
+    (
+        "call",
+        "CALL SQUAD (FOLLOW)",
+        "Order selected squad units to follow your Commander.",
+    ),
+    (
+        "send",
+        "SEND SQUAD (ATTACK)",
+        "Order selected squad units to attack target or capture objective (Middle Mouse also sends).",
+    ),
+    (
+        "dismiss",
+        "DISMISS SQUAD (GUARD)",
+        "Order selected squad units to hold position and guard the area.",
+    ),
+    (
+        "transfer",
+        "TRANSFER COMMAND (CO)",
+        "Transfer direct player control to the highlighted friendly unit.",
+    ),
+    (
+        "load_vehicle",
+        "LOAD TRANSPORT",
+        "Order selected squad units to board a friendly transport vehicle.",
+    ),
+    (
+        "unload_vehicle",
+        "UNLOAD TRANSPORT",
+        "Eject carried passengers from your transport vehicle.",
+    ),
+    (
+        "next_unit",
+        "NEXT SQUAD SLOT",
+        "Highlight the next unit stack on the Squad Command bar.",
+    ),
+    (
+        "prev_unit",
+        "PREV SQUAD SLOT",
+        "Highlight the previous unit stack on the Squad Command bar.",
+    ),
+    (
+        "next_unit_type",
+        "NEXT UNIT CATEGORY",
+        "Cycle to the next unit category in your battalion.",
+    ),
+    (
+        "prev_unit_type",
+        "PREV UNIT CATEGORY",
+        "Cycle to the previous unit category in your battalion.",
+    ),
+    (
+        "global_toggle",
+        "SELECT ALL SQUADS",
+        "Select the 'ALL' global command stack.",
+    ),
+    (
+        "toggle_map",
+        "TOGGLE TACTICAL MAP",
+        "Open or close the tactical battlefield overview.",
+    ),
+    (
+        "pause",
+        "PAUSE MISSION",
+        "Open or close the in-mission Pause Menu.",
+    ),
+];
 
 #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
 pub struct SaveProfile {
@@ -289,163 +416,163 @@ pub const CAMPAIGN_1_MISSIONS: [CampaignMissionMeta; 20] = [
 pub const MULTIPLAYER_MAPS: [CampaignMissionMeta; 16] = [
     CampaignMissionMeta {
         code: "MP1",
-        short_title: "MP1: BRIDGE TOO FAR (SKIRMISH)",
-        full_title: "MULTIPLAYER MAP 1: BRIDGE TOO FAR (MP1)",
-        co_left_portrait: "co_tnova_h_2",
-        co_right_portrait: "co_xvlad_h_2",
-        co_matchup: "Skirmish Mode — Tundran Territories vs. Xylvania",
-        default_briefing: "Head-to-head tactical battle across contested river bridges and fortified riverbanks.",
-        fe_string_idx: None,
+        short_title: "MP1: LIGHTNING STRIKE (ASSAULT)",
+        full_title: "ASSAULT MAP 1: LIGHTNING STRIKE (MP1)",
+        co_left_portrait: "co_l_ferrok_h",
+        co_right_portrait: "co_sleiqo_h",
+        co_matchup: "Assault Mode — Iron Legion (Attack) vs. Solar Empire (Defend) [200 Years Ago]",
+        default_briefing: "Lead the Iron Legion in an assault to destroy the Solar Empire's Plasma Generators and capture the Palace.",
+        fe_string_idx: Some(1156),
     },
     CampaignMissionMeta {
         code: "MP2",
-        short_title: "MP2: THE ANGLO ISLES (ASSAULT)",
-        full_title: "MULTIPLAYER MAP 2: THE ANGLO ISLES (MP2)",
-        co_left_portrait: "co_ai_pierce_h",
-        co_right_portrait: "co_s_aqira_h",
-        co_matchup: "Assault Mode — Anglo Isles vs. Solar Empire",
-        default_briefing: "Amphibious island siege pitting Anglo Isles defenders against a Solar Empire strike force.",
-        fe_string_idx: None,
+        short_title: "MP2: DESTROY ALL TUNDRANS (ASSAULT)",
+        full_title: "ASSAULT MAP 2: DESTROY ALL TUNDRANS (MP2)",
+        co_left_portrait: "co_xvlad_h_2",
+        co_right_portrait: "co_tnova_h_2",
+        co_matchup: "Assault Mode — Xylvania (Attack) vs. Tundran Territories (Defend) [Present Day]",
+        default_briefing: "Storm the Tundran border fortifications, destroy the bridge blockade, and capture the Tundran HQ.",
+        fe_string_idx: Some(1157),
     },
     CampaignMissionMeta {
         code: "MP3",
-        short_title: "MP3: FRIENDLY FIRE (SKIRMISH)",
-        full_title: "MULTIPLAYER MAP 3: FRIENDLY FIRE (MP3)",
+        short_title: "MP3: ACES HIGH (ASSAULT)",
+        full_title: "ASSAULT MAP 3: ACES HIGH (MP3)",
         co_left_portrait: "co_wfherman_h_2",
         co_right_portrait: "co_tgorgi_h_2",
-        co_matchup: "Skirmish Mode — Western Frontier vs. Tundran Territories",
-        default_briefing: "Combined-arms skirmish between Western Frontier and Tundran armored battalions.",
-        fe_string_idx: None,
+        co_matchup: "Assault Mode — Western Frontier (Attack) vs. Tundra (Defend) [30 Years Ago]",
+        default_briefing: "Seize the island airbases and launch an airborne offensive to destroy the Tundran dreadnought fleet.",
+        fe_string_idx: Some(1158),
     },
     CampaignMissionMeta {
         code: "MP4",
-        short_title: "MP4: WINDBREAK RIDGE (ASSAULT)",
-        full_title: "MULTIPLAYER MAP 4: RAID ON WINDBREAK RIDGE (MP4)",
-        co_left_portrait: "co_wfbetty_h_2",
-        co_right_portrait: "co_xvlad_h_2",
-        co_matchup: "Assault Mode — Western Frontier vs. Xylvania",
-        default_briefing: "Storm the fortified ridge positions and destroy the defending Xylvanian stronghold.",
-        fe_string_idx: None,
+        short_title: "MP4: STORM THE PALACE (ASSAULT)",
+        full_title: "ASSAULT MAP 4: STORM THE PALACE (MP4)",
+        co_left_portrait: "co_xvlad_h_2",
+        co_right_portrait: "co_wfbetty_h_2",
+        co_matchup: "Assault Mode — Xylvania (Attack) vs. Western Frontier (Defend) [Present Day]",
+        default_briefing: "Break through the Western Frontier perimeter defenses and storm the central palace stronghold.",
+        fe_string_idx: Some(1159),
     },
     CampaignMissionMeta {
         code: "MP5",
-        short_title: "MP5: COLD RECEPTION (CO-OP)",
-        full_title: "MULTIPLAYER MAP 5: COLD RECEPTION (MP5)",
-        co_left_portrait: "co_tnova_h_2",
-        co_right_portrait: "co_xubel_h_2",
-        co_matchup: "Co-Op Mode — Tundran Territories vs. Xylvania",
-        default_briefing: "Coordinate infantry, armor, and air support across frozen terrain to crush the Xylvanian garrison.",
-        fe_string_idx: None,
+        short_title: "MP5: ARMADA (ASSAULT)",
+        full_title: "ASSAULT MAP 5: ARMADA (MP5)",
+        co_left_portrait: "co_s_aqira_h",
+        co_right_portrait: "co_ai_pierce_h",
+        co_matchup: "Assault Mode — Solar Empire (Attack) vs. Anglo Isles (Defend) [Present Day]",
+        default_briefing: "Command the Solar Empire naval armada to sink the Anglo fleet and capture the island port.",
+        fe_string_idx: Some(1160),
     },
     CampaignMissionMeta {
         code: "MP6",
-        short_title: "MP6: CANNON FODDER (SKIRMISH)",
-        full_title: "MULTIPLAYER MAP 6: CANNON FODDER (MP6)",
-        co_left_portrait: "co_aiwindsor_h",
-        co_right_portrait: "co_sleiqo_h",
-        co_matchup: "Skirmish Mode — Anglo Isles vs. Solar Empire",
-        default_briefing: "Naval and coastal skirmish for control of island docks and artillery positions.",
-        fe_string_idx: None,
+        short_title: "MP6: COLD WAR (ASSAULT)",
+        full_title: "ASSAULT MAP 6: COLD WAR (MP6)",
+        co_left_portrait: "co_xubel_h_2",
+        co_right_portrait: "co_tnova_h_2",
+        co_matchup: "Assault Mode — Xylvania (Attack) vs. Tundran Territories (Defend) [Present Day]",
+        default_briefing: "Advance across frozen Tundran valleys to capture the missile silos and radar installations.",
+        fe_string_idx: Some(1161),
     },
     CampaignMissionMeta {
         code: "MP7",
-        short_title: "MP7: GRIM DETERMINATION (ASSAULT)",
-        full_title: "MULTIPLAYER MAP 7: GRIM DETERMINATION (MP7)",
-        co_left_portrait: "co_xvlad_h_2",
-        co_right_portrait: "co_tgorgi_h_2",
-        co_matchup: "Assault Mode — Xylvania vs. Tundran Territories",
-        default_briefing: "Break through heavily entrenched Tundran defensive lines in a timed siege.",
-        fe_string_idx: None,
+        short_title: "MP7: BATTLE STATIONS (SKIRMISH)",
+        full_title: "SKIRMISH MAP 1: BATTLE STATIONS (MP7)",
+        co_left_portrait: "co_tnova_h_2",
+        co_right_portrait: "co_xvlad_h_2",
+        co_matchup: "Skirmish Mode — Tundran Territories vs. Xylvania [Present Day]",
+        default_briefing: "Score-based tactical skirmish over contested barracks, factories, and heavy Battlestations.",
+        fe_string_idx: Some(1166),
     },
     CampaignMissionMeta {
         code: "MP8",
-        short_title: "MP8: FISTFUL OF STEEL (SKIRMISH)",
-        full_title: "MULTIPLAYER MAP 8: FISTFUL OF STEEL (MP8)",
+        short_title: "MP8: EXCHANGE OF FIRE (SKIRMISH)",
+        full_title: "SKIRMISH MAP 2: EXCHANGE OF FIRE (MP8)",
         co_left_portrait: "co_wfherman_h_2",
         co_right_portrait: "co_xvlad_h_2",
-        co_matchup: "Skirmish Mode — Western Frontier vs. Xylvania",
-        default_briefing: "Heavy tank and battlestation clash over strategic factories and capture points.",
-        fe_string_idx: None,
+        co_matchup: "Skirmish Mode — Western Frontier vs. Xylvania [Present Day]",
+        default_briefing: "Head-to-head artillery and armor duel across a fortified canyon divide.",
+        fe_string_idx: Some(1167),
     },
     CampaignMissionMeta {
         code: "MP9",
-        short_title: "MP9: HOT PURSUIT (SKIRMISH)",
-        full_title: "MULTIPLAYER MAP 9: HOT PURSUIT (MP9)",
-        co_left_portrait: "co_s_aqira_h",
-        co_right_portrait: "co_ai_pierce_h",
-        co_matchup: "Skirmish Mode — Solar Empire vs. Anglo Isles",
-        default_briefing: "Fast-paced island skirmish featuring hover tanks, gunships, and amphibious landings.",
-        fe_string_idx: None,
+        short_title: "MP9: BORDER PATROL (SKIRMISH)",
+        full_title: "SKIRMISH MAP 3: BORDER PATROL (MP9)",
+        co_left_portrait: "co_wfaustin_h_2",
+        co_right_portrait: "co_tgorgi_h_2",
+        co_matchup: "Skirmish Mode — Western Frontier vs. Tundran Territories [30 Years Ago]",
+        default_briefing: "Capture and hold strategic border outposts and factories to outscore the opposing battalion.",
+        fe_string_idx: Some(1168),
     },
     CampaignMissionMeta {
         code: "MP10",
-        short_title: "MP10: LINES OF COMM. (SKIRMISH)",
-        full_title: "MULTIPLAYER MAP 10: LINES OF COMMUNICATION (MP10)",
-        co_left_portrait: "co_wfaustin_h_2",
-        co_right_portrait: "co_tnova_h_2",
-        co_matchup: "Skirmish Mode — Western Frontier vs. Tundran Territories",
-        default_briefing: "Capture and hold vital communications bases and supply lines across the valley.",
-        fe_string_idx: None,
+        short_title: "MP10: DONATSU ISLAND (SKIRMISH)",
+        full_title: "SKIRMISH MAP 4: DONATSU ISLAND (MP10)",
+        co_left_portrait: "co_sleiqo_h",
+        co_right_portrait: "co_l_ferrok_h",
+        co_matchup: "Skirmish Mode — Solar Empire vs. Iron Legion [200 Years Ago]",
+        default_briefing: "Ring-shaped volcanic island skirmish pitting Solar Empire plasma forces against Iron Legion armor.",
+        fe_string_idx: Some(1169),
     },
     CampaignMissionMeta {
         code: "MP11",
-        short_title: "MP11: CROSSING THE DITCH (SKIRMISH)",
-        full_title: "MULTIPLAYER MAP 11: CROSSING THE DITCH (MP11)",
-        co_left_portrait: "co_ai_pierce_h",
-        co_right_portrait: "co_xvlad_h_2",
-        co_matchup: "Skirmish Mode — Anglo Isles vs. Xylvania",
-        default_briefing: "Air and sea battle across a treacherous channel separating two fortified bases.",
-        fe_string_idx: None,
+        short_title: "MP11: SAND CASTLES (SKIRMISH)",
+        full_title: "SKIRMISH MAP 5: SAND CASTLES (MP11)",
+        co_left_portrait: "co_wfbetty_h_2",
+        co_right_portrait: "co_aiwindsor_h",
+        co_matchup: "Skirmish Mode — Western Frontier vs. Anglo Isles [Present Day]",
+        default_briefing: "Desert oasis skirmish for control of airfields, factories, and coastal capture points.",
+        fe_string_idx: Some(1170),
     },
     CampaignMissionMeta {
         code: "MP12",
-        short_title: "MP12: STORM THE BEACH (ASSAULT)",
-        full_title: "MULTIPLAYER MAP 12: STORM THE BEACH (MP12)",
-        co_left_portrait: "co_wfherman_h_2",
-        co_right_portrait: "co_xubel_h_2",
-        co_matchup: "Assault Mode — Western Frontier vs. Xylvania",
-        default_briefing: "Amphibious beach landing under heavy coastal artillery and pillbox fire.",
-        fe_string_idx: None,
+        short_title: "MP12: STORM THE BEACHES (CO-OP)",
+        full_title: "CO-OP MAP 1: STORM THE BEACHES (MP12)",
+        co_left_portrait: "co_s_aqira_h",
+        co_right_portrait: "co_tnova_h_2",
+        co_matchup: "Co-Op Mode — Solar Empire & Tundran Territories vs. Anglo Isles [Present Day]",
+        default_briefing: "Coordinate an amphibious landing with allied forces to secure the beachhead and inland base.",
+        fe_string_idx: Some(1176),
     },
     CampaignMissionMeta {
         code: "MP13",
-        short_title: "MP13: LIGHTNING WARS (ASSAULT)",
-        full_title: "MULTIPLAYER MAP 13: THE LIGHTNING WARS (MP13)",
-        co_left_portrait: "co_sleiqo_h",
-        co_right_portrait: "co_l_ferrok_h",
-        co_matchup: "Assault Mode — Solar Empire vs. Iron Legion",
-        default_briefing: "Relive the ancient war on the Lightning Isle in an all-out assault against the Iron Legion!",
-        fe_string_idx: None,
+        short_title: "MP13: FROM TUNDRA WITH LOVE (CO-OP)",
+        full_title: "CO-OP MAP 2: FROM TUNDRA WITH LOVE (MP13)",
+        co_left_portrait: "co_wfherman_h_2",
+        co_right_portrait: "co_tnova_h_2",
+        co_matchup: "Co-Op Mode — Western Frontier & Tundran Territories vs. Xylvania [Present Day]",
+        default_briefing: "Join forces with Tundran allies to defend the valley and crush the Xylvanian offensive.",
+        fe_string_idx: Some(1177),
     },
     CampaignMissionMeta {
         code: "MP14",
-        short_title: "MP14: CLEANING UP (CO-OP)",
-        full_title: "MULTIPLAYER MAP 14: CLEANING UP (MP14)",
+        short_title: "MP14: CRACK SQUAD (CO-OP)",
+        full_title: "CO-OP MAP 3: CRACK SQUAD (MP14)",
         co_left_portrait: "co_sleiqo_h",
-        co_right_portrait: "co_xvlad_h_2",
-        co_matchup: "Co-Op Mode — Solar Empire vs. Xylvania",
-        default_briefing: "Cooperative strike mission to eradicate Xylvanian outposts and chemical defenses.",
-        fe_string_idx: None,
+        co_right_portrait: "co_wfbetty_h_2",
+        co_matchup: "Co-Op Mode — Solar Empire & Western Frontier vs. Xylvania [Present Day]",
+        default_briefing: "Lead a combined Solar Empire and Western Frontier strike force against Xylvanian strongholds.",
+        fe_string_idx: Some(1178),
     },
     CampaignMissionMeta {
         code: "MP15",
-        short_title: "MP15: DESERT DUEL (SKIRMISH)",
-        full_title: "MULTIPLAYER MAP 15: DESERT DUEL (MP15)",
-        co_left_portrait: "co_aiwindsor_h",
-        co_right_portrait: "co_wfbetty_h_2",
-        co_matchup: "Skirmish Mode — Anglo Isles vs. Western Frontier",
-        default_briefing: "Armored desert warfare over oasis capture points and airfields.",
-        fe_string_idx: None,
+        short_title: "MP15: UNDER SIEGE (CO-OP)",
+        full_title: "CO-OP MAP 4: UNDER SIEGE (MP15)",
+        co_left_portrait: "co_tnova_h_2",
+        co_right_portrait: "co_wfaustin_h_2",
+        co_matchup: "Co-Op Mode — Tundran Territories & Western Frontier vs. Iron Legion",
+        default_briefing: "Hold the besieged fortress against waves of attacking armor until reinforcements arrive.",
+        fe_string_idx: Some(1179),
     },
     CampaignMissionMeta {
         code: "MP17",
-        short_title: "MP17: BAY OF DREAD (SKIRMISH)",
-        full_title: "MULTIPLAYER MAP 17: BAY OF DREAD (MP17)",
-        co_left_portrait: "co_s_aqira_h",
-        co_right_portrait: "co_ai_pierce_h",
-        co_matchup: "Skirmish Mode — Solar Empire vs. Anglo Isles",
-        default_briefing: "Naval dreadnought, submarine, and battleship showdown in the Bay of Dread.",
-        fe_string_idx: None,
+        short_title: "MP17: MELEE (SKIRMISH)",
+        full_title: "SKIRMISH MAP 6: MELEE (MP17)",
+        co_left_portrait: "co_sleiqo_h",
+        co_right_portrait: "co_l_ferrok_h",
+        co_matchup: "Skirmish Mode — Solar Empire vs. Iron Legion [200 Years Ago]",
+        default_briefing: "Close-quarters ancient battlefield melee for control of central capture points and heavy armor.",
+        fe_string_idx: Some(1171),
     },
 ];
 
@@ -1058,6 +1185,7 @@ pub struct TroopActor {
 pub struct View {
     pub data_dir: std::path::PathBuf,
     pub save_path: Option<std::path::PathBuf>,
+    pub controls_path: Option<std::path::PathBuf>,
     pub globe_models: Vec<Model>,
     pub active_briefing_vo: Option<usize>,
     pub movie_index: usize,
@@ -1070,8 +1198,22 @@ pub struct View {
     pub error: Option<String>,
     pub should_exit: bool,
     pub stage: FrontendStage,
+    pub last_stage: FrontendStage,
+    pub stage_frames: u32,
+    pub fe_graph: ObjectGraph,
+    pub fe_gui: bw_rust::frontend_gui::GuiScene,
     pub fe_runtime: FrontendRuntime,
+    pub active_gui_quads: Vec<bw_rust::frontend_gui::GuiCanvasQuad>,
+    pub show_native_gui_canvas: bool,
     pub fe_strings: Vec<String>,
+    pub tequila_profiles: Vec<bw_rust::tequila::EffectVisualProfile>,
+    pub tequila_effects: Vec<bw_rust::tequila::TequilaEffect>,
+    pub active_tequila_particles: Vec<bw_rust::tequila::LiveTequilaParticle>,
+    pub vfx_tequila_materials: Vec<Handle<StandardMaterial>>,
+    pub morphing_buildings: BTreeMap<ObjectId, bw_rust::original_scene::MorphingBuildingModels>,
+    pub two_player_enabled: bool,
+    pub p2_aim_yaw: f32,
+    pub net_peer: Option<bw_rust::net_sync::NetPeer>,
     pub credits_lines: Vec<String>,
     pub campaign_levels: Vec<String>,
     pub slots: [Option<SaveProfile>; 3],
@@ -1082,6 +1224,10 @@ pub struct View {
     pub mission2_selected_notice: String,
     pub multiplayer_index: usize,
     pub options_index: usize,
+    pub keybind_index: usize,
+    pub keybind_waiting: bool,
+    pub keybind_notice: String,
+    pub keybind_return_to_mission: bool,
     pub music_volume: f32,
     pub sfx_volume: f32,
     pub mouse_sensitivity: f32,
@@ -1095,7 +1241,17 @@ pub struct View {
     pub pause_menu_index: usize,
     pub troops: BTreeMap<ObjectId, TroopActor>,
     pub clips: BTreeMap<String, Animation>,
+    pub ground_physics: BTreeMap<ObjectId, bw_rust::vehicle_wheels::GroundVehiclePhysics>,
+    pub water_physics: BTreeMap<ObjectId, bw_rust::vehicle_wheels::WaterVehiclePhysics>,
+    pub camera_profiles: BTreeMap<ObjectId, bw_rust::vehicle_wheels::UnitCameraProfile>,
+    pub seat_slots: BTreeMap<ObjectId, Vec<bw_rust::vehicle_wheels::VehicleSeatSlot>>,
+    pub vehicle_wheel_offsets: BTreeMap<ObjectId, ([f32; 12], [f32; 12], f32)>,
+    pub barrel_roll_timers: BTreeMap<ObjectId, (f32, f32)>,
+    pub combat_roll_timers: BTreeMap<ObjectId, (f32, Motion, [f32; 2])>,
+    pub unit_headings_prev: BTreeMap<ObjectId, f32>,
     pub wheel_angles: BTreeMap<ObjectId, f32>,
+    pub vehicle_suspensions: BTreeMap<ObjectId, bw_rust::vehicle_wheels::SuspensionState>,
+    pub knockback_velocities: BTreeMap<ObjectId, [f32; 3]>,
     pub last_positions: BTreeMap<ObjectId, [f32; 3]>,
     pub smoothed_positions: BTreeMap<ObjectId, [f32; 3]>,
     pub smoothed_rotations: BTreeMap<ObjectId, Quat>,
@@ -1107,6 +1263,7 @@ pub struct View {
     pub active_music_track: Option<String>,
     pub sfx_wavs: BTreeMap<String, Vec<u8>>,
     pub sfx_handles: BTreeMap<String, Handle<AudioSource>>,
+    pub sfx_limiter: std::sync::Mutex<(u32, u32, BTreeMap<String, u32>)>,
     pub last_voice_key: Option<(usize, u64)>,
     pub last_fired: u64,
     pub last_hits: u64,
@@ -1158,6 +1315,77 @@ pub struct SceneEntity;
 pub struct FrontendGlobePart {
     pub local: Mat4,
     pub norm_scale: f32,
+    pub layer_kind: u8,
+}
+
+#[derive(Component)]
+pub struct FrontendBackdrop;
+
+#[derive(Component)]
+pub struct GlobeUnitRingIcon(pub usize);
+
+#[derive(Component)]
+pub struct WiiHandCursor;
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum MorphVariant {
+    DefaultIntact,
+    ArmyIntact(u32),
+    DeadModel,
+}
+
+#[derive(Component)]
+pub struct Player2Camera3d;
+
+#[derive(Component)]
+pub struct TequilaBillboard(pub usize);
+
+#[derive(Component)]
+pub struct FrontendGuiCanvasQuad(pub usize);
+
+#[derive(Component)]
+pub struct FrontendGuiCanvasText(pub usize);
+
+#[derive(Component)]
+pub struct SplitScreenDivider;
+
+pub fn army_id_to_faction_key(army_id: u32) -> &'static str {
+    match army_id {
+        1 => "eWesternFrontier",
+        2 => "eTundranTerritories",
+        3 => "eXylvania",
+        4 => "eSolarEmpire",
+        5 => "eUnderworld",
+        6 => "eAngloIsles",
+        _ => "eNeutral",
+    }
+}
+
+pub fn faction_key_to_army_id(faction: &str) -> u32 {
+    match faction {
+        "eWesternFrontier" => 1,
+        "eTundranTerritories" => 2,
+        "eXylvania" | "eXylvanian" => 3,
+        "eSolarEmpire" => 4,
+        "eUnderworld" | "eUnderWorld" => 5,
+        "eAngloIsles" => 6,
+        _ => 0,
+    }
+}
+
+fn extract_morphing_buildings(
+    graph: &ObjectGraph,
+) -> BTreeMap<ObjectId, bw_rust::original_scene::MorphingBuildingModels> {
+    let mut out = BTreeMap::new();
+    for obj in graph.objects.values() {
+        if obj.kind == "cMorphingBuilding"
+            && let Some(models) =
+                bw_rust::original_scene::resolve_morphing_building_models(graph, obj)
+        {
+            out.insert(obj.id, models);
+        }
+    }
+    out
 }
 
 #[derive(Component)]
@@ -1180,6 +1408,7 @@ pub struct Part {
     is_mobile: bool,
     is_unit: bool,
     keep_when_dead: bool,
+    morph_variant: Option<MorphVariant>,
 }
 
 #[derive(Component)]
@@ -1210,6 +1439,14 @@ pub struct SquadSlotHealthFill(pub usize);
 #[derive(Component, Clone, Copy, PartialEq, Eq)]
 pub enum UiPanelSlot {
     MenuRoot,
+    FullscreenStageOverlay,
+    WiiCenterLogoPanel,
+    WiiTitleOverlay,
+    WiiSaveOverlay,
+    WiiKeyboardOverlay,
+    WiiMainMenuOverlay,
+    WiiSubmenuOverlay,
+    WiiCampaignTabsRow,
     InGameHudRoot,
     Crosshair,
     CinematicTop,
@@ -1223,6 +1460,16 @@ pub enum UiPanelSlot {
 
 #[derive(Component, Clone, Copy, PartialEq, Eq)]
 pub enum UiTextSlot {
+    FullscreenStageTitle,
+    FullscreenStageSub,
+    WiiSaveCardPct(usize),
+    WiiSaveCardName(usize),
+    WiiSaveCardInfo(usize),
+    WiiSaveModalTitle,
+    WiiSaveModalBody,
+    WiiSaveModalContinue,
+    WiiKeyboardInputDisplay,
+    WiiMainMenuSubtitle,
     MenuHeader,
     MenuLeftTitle,
     MenuRightTitle,
@@ -1246,6 +1493,8 @@ pub enum UiTextSlot {
 
 #[derive(Component, Clone, Copy, PartialEq, Eq)]
 pub enum UiImageSlot {
+    FullscreenStageImage,
+    WiiSaveCardGrade(usize),
     MenuPortraitLeft,
     MenuPortraitRight,
     MenuGradeBadge,
@@ -1352,6 +1601,40 @@ fn crop_texture(
     }
 }
 
+fn clean_mono_to_wav(sample_rate: u32, pcm: &[i16]) -> Vec<u8> {
+    if pcm.is_empty() || sample_rate == 0 {
+        return pcm_to_wav(44_100, 1, &[]);
+    }
+    let target_rate = 44_100u32;
+    let mut cleaned: Vec<i16> = if sample_rate == target_rate {
+        pcm.iter().map(|&s| s.clamp(-30_000, 30_000)).collect()
+    } else {
+        let ratio = sample_rate as f64 / target_rate as f64;
+        let out_len = ((pcm.len() as f64) / ratio).round().max(1.0) as usize;
+        let mut buf = Vec::with_capacity(out_len);
+        for i in 0..out_len {
+            let src_pos = i as f64 * ratio;
+            let idx = src_pos.floor() as usize;
+            let frac = src_pos - idx as f64;
+            let s0 = pcm[idx.min(pcm.len() - 1)] as f64;
+            let s1 = pcm[(idx + 1).min(pcm.len() - 1)] as f64;
+            let val = s0 + (s1 - s0) * frac;
+            buf.push(val.round().clamp(-30_000.0, 30_000.0) as i16);
+        }
+        buf
+    };
+    let fade_samples = ((target_rate as usize) * 4 / 1000)
+        .min(cleaned.len() / 4)
+        .max(1);
+    for i in 0..fade_samples {
+        let gain = (i as f32) / (fade_samples as f32);
+        cleaned[i] = ((cleaned[i] as f32) * gain) as i16;
+        let end_idx = cleaned.len() - 1 - i;
+        cleaned[end_idx] = ((cleaned[end_idx] as f32) * gain) as i16;
+    }
+    pcm_to_wav(target_rate, 1, &cleaned)
+}
+
 fn extract_dnos_wavs(archive: &[u8]) -> BTreeMap<String, Vec<u8>> {
     let mut out = BTreeMap::new();
     let Ok(samples) = Samples::from_archive(archive) else {
@@ -1362,7 +1645,7 @@ fn extract_dnos_wavs(archive: &[u8]) -> BTreeMap<String, Vec<u8>> {
         if !out.contains_key(&lower)
             && let Ok(audio) = samples.decode(name)
         {
-            out.insert(lower, pcm_to_wav(audio.sample_rate, 1, &audio.pcm));
+            out.insert(lower, clean_mono_to_wav(audio.sample_rate, &audio.pcm));
         }
     }
     out
@@ -1621,11 +1904,10 @@ impl View {
         for unit in session.program.host.world.units.values() {
             if let Some(anim) = &unit.animation {
                 for clip_name in anim.bindings.values() {
-                    if !clips.contains_key(clip_name) {
-                        clips.insert(
-                            clip_name.clone(),
-                            animation::from_archive(archive, clip_name)?,
-                        );
+                    if !clips.contains_key(clip_name)
+                        && let Ok(clip) = animation::from_archive(archive, clip_name)
+                    {
+                        clips.insert(clip_name.clone(), clip);
                     }
                 }
             }
@@ -1650,22 +1932,42 @@ impl View {
             .filter(|e| e.gametype == "singleplayer")
             .map(|e| e.name.clone())
             .collect();
-        let mut fe_runtime = FrontendRuntime::load(&fe_graph, &fe_archive, &levels, 60.0)?;
-        fe_runtime.root("GlobeSelect", 100_000)?;
-        fe_runtime.construct_page("Start", 100_000)?;
-        fe_runtime.call_page_method("Start", "Open", &[], 100_000)?;
-
-        let mut globe_models = Vec::new();
-        for gname in ["Globe_new", "Globe_atmos"] {
-            if let Ok(gm) = bw_rust::model::from_archive(&fe_archive, gname) {
-                globe_models.push(gm);
-            }
-        }
-
         let fe_str_bytes = std::fs::read(data_dir.join("Strings/frontend2English.str"))
             .map_err(|e| e.to_string())?;
         let fe_lang = Language::parse(&fe_str_bytes)?;
         let fe_strings: Vec<String> = fe_lang.messages.into_iter().map(|m| m.text).collect();
+
+        let fe_gui = bw_rust::frontend_gui::GuiScene::from_graph(&fe_graph);
+        let mut fe_runtime = FrontendRuntime::load(&fe_graph, &fe_archive, &levels, 60.0)?;
+        fe_runtime.set_string_tables(fe_strings.clone(), Vec::new());
+        fe_runtime.init_shared_scripts(100_000)?;
+        let _ = fe_runtime.construct_all_pages(250_000);
+        fe_runtime.reset_page_stack("Start", 100_000)?;
+        fe_runtime.step_page_stack(1.0 / 60.0, 100_000)?;
+        let active_gui_quads = fe_gui
+            .evaluate_active_page_canvas(&fe_graph, &mut fe_runtime)
+            .unwrap_or_default();
+        let tequila_effects =
+            bw_rust::tequila::TequilaEffect::from_archive(archive).unwrap_or_default();
+        let tequila_profiles = tequila_effects
+            .iter()
+            .map(|e| e.summary_profile())
+            .collect();
+        let morphing_buildings = extract_morphing_buildings(graph);
+
+        let mut globe_models = Vec::new();
+        for gname in ["Globe_sat", "Globe_sat_clouds", "Globe_atmos"] {
+            if let Ok(gm) = bw_rust::model::from_archive(&fe_archive, gname) {
+                globe_models.push(gm);
+            }
+        }
+        if globe_models.is_empty() {
+            for gname in ["Globe_new", "Globe_atmos"] {
+                if let Ok(gm) = bw_rust::model::from_archive(&fe_archive, gname) {
+                    globe_models.push(gm);
+                }
+            }
+        }
 
         let credits_lines = std::fs::read(data_dir.join("Strings/creditsEnglish.str"))
             .ok()
@@ -1680,6 +1982,27 @@ impl View {
             .unwrap_or_default();
 
         let mut ui_textures = BTreeMap::new();
+        for (rel_path, key) in [
+            ("Startup/strap_16_9_832x456_English.btf", "startup_strap"),
+            ("Startup/ESRBWarning.btf", "startup_esrb"),
+            ("Loading/Backdrop.btf", "loading_backdrop"),
+            ("Loading/ObjButton_logo.btf", "loading_logo"),
+        ] {
+            if let Ok(bytes) = std::fs::read(data_dir.join(rel_path))
+                && let Ok(tex) = texture::decode_btf_first(&bytes)
+            {
+                ui_textures.insert(key.to_string(), tex);
+            }
+        }
+        for tex_name in fe_gui.textures.values() {
+            let key = tex_name.to_ascii_lowercase();
+            if !key.is_empty()
+                && !ui_textures.contains_key(&key)
+                && let Ok(tex) = texture::decode_named(&fe_archive, tex_name)
+            {
+                ui_textures.insert(key, tex);
+            }
+        }
         for gm in &globe_models {
             for node in &gm.nodes {
                 for surface in &node.surfaces {
@@ -1698,7 +2021,22 @@ impl View {
         }
         for name in [
             "bwii_logo",
+            "bwii_logo_mini",
             "bg_map03",
+            "wii_abutton",
+            "wii_abutton2",
+            "wii_abutton_glow",
+            "wii_bbutton2",
+            "cursor_point",
+            "cursor_point2",
+            "save_panel",
+            "panel_save",
+            "but_lrg_n",
+            "but_lrg_a",
+            "but_mid_n",
+            "but_mid_a",
+            "but_back_n",
+            "but_back_s",
             "logo_s_01",
             "logo_ai",
             "logo_f_01",
@@ -1981,10 +2319,34 @@ impl View {
             || std::env::var_os("BW_SKIP_MENU").is_some()
             || std::env::var_os("BW_LEVEL").is_some()
             || (std::env::var_os("BW_SMOKE").is_some() && !menu_smoke);
-        let stage = if skip_menu {
+        let stage = if let Ok(explicit_stage) = std::env::var("BW_START_STAGE") {
+            match explicit_stage.as_str() {
+                "BootLogos" => FrontendStage::BootLogos,
+                "IntroMovie" => FrontendStage::IntroMovie,
+                "Title" => FrontendStage::Title,
+                "SaveSelect" => FrontendStage::SaveSelect,
+                "NameEntry" => FrontendStage::NameEntry,
+                "MainMenu" => FrontendStage::MainMenu,
+                "CampaignSelect" => FrontendStage::CampaignSelect,
+                "MissionCutsceneIn" => FrontendStage::MissionCutsceneIn,
+                "MultiplayerInfo" => FrontendStage::MultiplayerInfo,
+                "Options" => FrontendStage::Options,
+                "Keybindings" => FrontendStage::Keybindings,
+                "ExtrasMenu" => FrontendStage::ExtrasMenu,
+                "UnitDossier" => FrontendStage::UnitDossier,
+                "ConceptGallery" => FrontendStage::ConceptGallery,
+                "MovieTheater" => FrontendStage::MovieTheater,
+                "Credits" => FrontendStage::Credits,
+                "Victory" => FrontendStage::Victory,
+                "Defeat" => FrontendStage::Defeat,
+                _ => FrontendStage::BootLogos,
+            }
+        } else if skip_menu {
             FrontendStage::InMission
-        } else {
+        } else if menu_smoke {
             FrontendStage::Title
+        } else {
+            FrontendStage::BootLogos
         };
         let smoke_frames = if menu_smoke { 260 } else { tail as u32 + 60 };
         let initial_player = session.program.host.world.player;
@@ -2007,9 +2369,18 @@ impl View {
         } else if !menu_smoke
             && !verify
             && replay.is_none()
-            && std::env::var_os("BW_OFFSCREEN").is_none()
+            && std::env::var_os("BW_OFFSCREEN").is_some()
         {
+            None
+        } else if !menu_smoke && !verify && replay.is_none() {
             Some(root.join("local/saves/bw2_saves.json"))
+        } else {
+            None
+        };
+        let controls_path = if let Some(explicit) = std::env::var_os("BW_CONTROLS_PATH") {
+            Some(std::path::PathBuf::from(explicit))
+        } else if save_path.is_some() {
+            Some(root.join("config/controls.json"))
         } else {
             None
         };
@@ -2033,9 +2404,15 @@ impl View {
 
         session.program.host.world.interactive_squad_formation = !verify && replay.is_none();
 
+        let ground_physics = bw_rust::vehicle_wheels::ground_vehicle_physics(graph);
+        let water_physics = bw_rust::vehicle_wheels::water_vehicle_physics(graph);
+        let camera_profiles = bw_rust::vehicle_wheels::unit_camera_profiles(graph);
+        let seat_slots = bw_rust::vehicle_wheels::vehicle_seat_slots(graph);
+
         Ok(Self {
             data_dir,
             save_path,
+            controls_path,
             globe_models,
             active_briefing_vo: None,
             movie_index: 0,
@@ -2048,8 +2425,22 @@ impl View {
             error: None,
             should_exit: false,
             stage,
+            last_stage: stage,
+            stage_frames: 0,
+            fe_graph,
+            fe_gui,
             fe_runtime,
+            active_gui_quads,
+            show_native_gui_canvas: false,
             fe_strings,
+            tequila_profiles,
+            tequila_effects,
+            active_tequila_particles: Vec::new(),
+            vfx_tequila_materials: Vec::new(),
+            morphing_buildings,
+            two_player_enabled: false,
+            p2_aim_yaw: 0.0,
+            net_peer: None,
             credits_lines,
             campaign_levels,
             slots,
@@ -2060,6 +2451,10 @@ impl View {
             mission2_selected_notice: String::new(),
             multiplayer_index: 0,
             options_index: 0,
+            keybind_index: 0,
+            keybind_waiting: false,
+            keybind_notice: String::new(),
+            keybind_return_to_mission: false,
             music_volume,
             sfx_volume,
             mouse_sensitivity,
@@ -2073,7 +2468,17 @@ impl View {
             pause_menu_index: 0,
             troops: BTreeMap::new(),
             clips,
+            ground_physics,
+            water_physics,
+            camera_profiles,
+            seat_slots,
+            vehicle_wheel_offsets: BTreeMap::new(),
+            barrel_roll_timers: BTreeMap::new(),
+            combat_roll_timers: BTreeMap::new(),
+            unit_headings_prev: BTreeMap::new(),
             wheel_angles: BTreeMap::new(),
+            vehicle_suspensions: BTreeMap::new(),
+            knockback_velocities: BTreeMap::new(),
             last_positions: BTreeMap::new(),
             smoothed_positions: BTreeMap::new(),
             smoothed_rotations: BTreeMap::new(),
@@ -2085,6 +2490,7 @@ impl View {
             active_music_track: None,
             sfx_wavs,
             sfx_handles: BTreeMap::new(),
+            sfx_limiter: std::sync::Mutex::new((0, 0, BTreeMap::new())),
             last_voice_key: None,
             last_fired: 0,
             last_hits: 0,
@@ -2140,18 +2546,35 @@ impl View {
         let mut session = Session::load_level(root, level_name, graph, archive)?;
         session.program.host.world.interactive_squad_formation =
             !self.verify && self.replay.is_none();
+        session.program.host.world.two_player_mode = self.two_player_enabled;
         self.water_height = extract_water_height(graph);
         self.skydome_name = extract_skydome_name(graph);
         self.current_level = level_name.to_string();
+        self.tequila_effects =
+            bw_rust::tequila::TequilaEffect::from_archive(archive).unwrap_or_default();
+        self.tequila_profiles = self
+            .tequila_effects
+            .iter()
+            .map(|e| e.summary_profile())
+            .collect();
+        self.active_tequila_particles.clear();
+        self.morphing_buildings = extract_morphing_buildings(graph);
+        self.ground_physics = bw_rust::vehicle_wheels::ground_vehicle_physics(graph);
+        self.water_physics = bw_rust::vehicle_wheels::water_vehicle_physics(graph);
+        self.camera_profiles = bw_rust::vehicle_wheels::unit_camera_profiles(graph);
+        self.seat_slots = bw_rust::vehicle_wheels::vehicle_seat_slots(graph);
+        self.vehicle_wheel_offsets.clear();
+        self.barrel_roll_timers.clear();
+        self.combat_roll_timers.clear();
+        self.unit_headings_prev.clear();
         self.clips.clear();
         for unit in session.program.host.world.units.values() {
             if let Some(anim) = &unit.animation {
                 for clip_name in anim.bindings.values() {
-                    if !self.clips.contains_key(clip_name) {
-                        self.clips.insert(
-                            clip_name.clone(),
-                            animation::from_archive(archive, clip_name)?,
-                        );
+                    if !self.clips.contains_key(clip_name)
+                        && let Ok(clip) = animation::from_archive(archive, clip_name)
+                    {
+                        self.clips.insert(clip_name.clone(), clip);
                     }
                 }
             }
@@ -2178,6 +2601,8 @@ impl View {
         }
         self.troops.clear();
         self.wheel_angles.clear();
+        self.vehicle_suspensions.clear();
+        self.knockback_velocities.clear();
         self.last_positions.clear();
         self.smoothed_positions.clear();
         self.smoothed_rotations.clear();
@@ -2205,6 +2630,7 @@ impl View {
             .world
             .props
             .contains_key(&placement.id);
+        let is_morphing_building = self.morphing_buildings.contains_key(&placement.id);
         let is_unit = self
             .session
             .program
@@ -2212,7 +2638,8 @@ impl View {
             .world
             .units
             .contains_key(&placement.id)
-            || is_prop;
+            || is_prop
+            || is_morphing_building;
         let is_animated_troop = self
             .session
             .program
@@ -2256,6 +2683,7 @@ impl View {
                             is_mobile: true,
                             is_unit: true,
                             keep_when_dead: false,
+                            morph_variant: None,
                         },
                     ));
                     actor_parts.push(cloned);
@@ -2284,6 +2712,7 @@ impl View {
                             is_mobile: true,
                             is_unit: true,
                             keep_when_dead: false,
+                            morph_variant: None,
                         },
                     ));
                 }
@@ -2306,12 +2735,30 @@ impl View {
                 || is_air_vehicle
                 || placement.kind == "cTroop";
             let mut wheel_radii = BTreeMap::new();
+            let mut w_xs = [
+                -1.45, -1.45, -1.45, -1.45, -1.45, -1.45, 1.45, 1.45, 1.45, 1.45, 1.45, 1.45,
+            ];
+            let mut w_zs = [
+                1.8, 1.1, 0.4, -0.4, -1.1, -1.8, 1.8, 1.1, 0.4, -0.4, -1.1, -1.8,
+            ];
+            let mut r_sum = 0.0f32;
+            let mut r_cnt = 0usize;
             if is_ground_vehicle && let Ok(slots) = bw_rust::vehicle_wheels::slots(source) {
-                for slot in slots {
+                for (slot_idx, slot) in slots.into_iter().enumerate() {
                     if let Some(part) = slot.part {
                         wheel_radii.insert(part.node_index, part.radius);
+                        if slot_idx < 12 {
+                            w_xs[slot_idx] = part.bind_translation[0];
+                            w_zs[slot_idx] = part.bind_translation[2];
+                            r_sum += part.radius;
+                            r_cnt += 1;
+                        }
                     }
                 }
+            }
+            if is_ground_vehicle && r_cnt > 0 {
+                self.vehicle_wheel_offsets
+                    .insert(placement.id, (w_xs, w_zs, r_sum / (r_cnt as f32)));
             }
             let has_child_fragments = !is_mobile
                 && (is_prop
@@ -2417,6 +2864,8 @@ impl View {
                             is_mobile,
                             is_unit,
                             keep_when_dead: !is_frag && has_child_fragments && is_foundation,
+                            morph_variant: is_morphing_building
+                                .then_some(MorphVariant::DefaultIntact),
                         },
                     ));
                 } else {
@@ -2425,6 +2874,107 @@ impl View {
                         Mesh3d(mesh_handle),
                         MeshMaterial3d(p.material.clone()),
                         Transform::from_matrix(root * p.transform),
+                    ));
+                }
+            }
+        }
+    }
+
+    pub fn spawn_morphing_variants(
+        &self,
+        commands: &mut Commands,
+        placement: &Placement,
+        root: Mat4,
+        render_models: &BTreeMap<String, RenderModel>,
+        source_models: &[Model],
+    ) {
+        let Some(models) = self.morphing_buildings.get(&placement.id) else {
+            return;
+        };
+        let mut spawned_dead = false;
+        for (faction, (intact_name, dead_opt)) in &models.by_faction {
+            let army_id = faction_key_to_army_id(faction);
+            if intact_name != &placement.model
+                && let (Some(rm), Some(src)) = (
+                    render_models.get(intact_name),
+                    source_models.iter().find(|m| &m.name == intact_name),
+                )
+            {
+                for p in &rm.parts {
+                    if is_hidden_subnode(src, p.node_index)
+                        || is_fragment_subnode(src, p.node_index)
+                    {
+                        continue;
+                    }
+                    commands.spawn((
+                        SceneEntity,
+                        Mesh3d(p.mesh.clone()),
+                        MeshMaterial3d(p.material.clone()),
+                        Transform::from_matrix(root * p.transform),
+                        Visibility::Hidden,
+                        Part {
+                            id: placement.id,
+                            root,
+                            local: p.transform,
+                            grounded: placement.stick_to_floor,
+                            bone: None,
+                            wheel_radius: None,
+                            rotor_axis: None,
+                            turret_role: 0,
+                            turret_yaw_pivot: [0.0, 0.0],
+                            turret_pivot: Vec3::ZERO,
+                            tread_mesh: None,
+                            tread_uvs: None,
+                            is_fragment: false,
+                            frag_vel: Vec3::ZERO,
+                            is_water_vehicle: false,
+                            is_mobile: false,
+                            is_unit: true,
+                            keep_when_dead: false,
+                            morph_variant: Some(MorphVariant::ArmyIntact(army_id)),
+                        },
+                    ));
+                }
+            }
+            if !spawned_dead
+                && let Some(dead_name) = dead_opt
+                && let (Some(rm), Some(src)) = (
+                    render_models.get(dead_name),
+                    source_models.iter().find(|m| &m.name == dead_name),
+                )
+            {
+                spawned_dead = true;
+                for p in &rm.parts {
+                    if is_hidden_subnode(src, p.node_index) {
+                        continue;
+                    }
+                    commands.spawn((
+                        SceneEntity,
+                        Mesh3d(p.mesh.clone()),
+                        MeshMaterial3d(p.material.clone()),
+                        Transform::from_matrix(root * p.transform),
+                        Visibility::Hidden,
+                        Part {
+                            id: placement.id,
+                            root,
+                            local: p.transform,
+                            grounded: placement.stick_to_floor,
+                            bone: None,
+                            wheel_radius: None,
+                            rotor_axis: None,
+                            turret_role: 0,
+                            turret_yaw_pivot: [0.0, 0.0],
+                            turret_pivot: Vec3::ZERO,
+                            tread_mesh: None,
+                            tread_uvs: None,
+                            is_fragment: false,
+                            frag_vel: Vec3::ZERO,
+                            is_water_vehicle: false,
+                            is_mobile: false,
+                            is_unit: true,
+                            keep_when_dead: true,
+                            morph_variant: Some(MorphVariant::DeadModel),
+                        },
                     ));
                 }
             }
@@ -2505,6 +3055,7 @@ impl View {
                     is_mobile,
                     is_unit,
                     keep_when_dead: false,
+                    morph_variant: None,
                 },
             ));
         }
@@ -2527,6 +3078,18 @@ impl View {
         };
         if let Ok(json) = serde_json::to_vec_pretty(&payload) {
             let _ = std::fs::write(path, json);
+        }
+    }
+
+    pub fn save_controls_to_disk(&self, controls: &bw_rust::controls::Controls) {
+        let Some(ref path) = self.controls_path else {
+            return;
+        };
+        if let Some(parent) = path.parent() {
+            let _ = std::fs::create_dir_all(parent);
+        }
+        if let Ok(json) = controls.to_json_pretty() {
+            let _ = std::fs::write(path, format!("{json}\n"));
         }
     }
 
@@ -2602,6 +3165,7 @@ impl View {
         self.music_duck = 1.0;
         self.seen_rewrite_effects = 0;
         self.active_explosions.clear();
+        self.active_tequila_particles.clear();
         self.destroyed_times.clear();
         self.locked_target = None;
         self.lock_toggled = false;
@@ -2817,10 +3381,46 @@ fn play_sfx_vol(commands: &mut Commands, view: &View, name: &str, volume: f32) {
     if std::env::var_os("BW_OFFSCREEN").is_some() || scaled <= 0.01 {
         return;
     }
-    if let Some(handle) = view.sfx_handles.get(&name.to_ascii_lowercase()) {
+    let key = name.to_ascii_lowercase();
+    let is_ui = key.starts_with("ui_") || key.starts_with("bugle_") || key.starts_with("cv_");
+    let min_gap = if is_ui {
+        3
+    } else if key.starts_with("pe_")
+        || key.starts_with("de_")
+        || key.starts_with("e_thunder")
+        || key.starts_with("e_lightning")
+    {
+        9
+    } else {
+        5
+    };
+    if let Ok(mut limiter) = view.sfx_limiter.lock() {
+        if limiter.0 != view.frames {
+            limiter.0 = view.frames;
+            limiter.1 = 0;
+        }
+        if !is_ui && limiter.1 >= 3 {
+            return;
+        }
+        if let Some(&last_f) = limiter.2.get(&key)
+            && view.frames.saturating_sub(last_f) < min_gap
+        {
+            return;
+        }
+        limiter.2.insert(key.clone(), view.frames);
+        if !is_ui {
+            limiter.1 += 1;
+        }
+    }
+    let headroom = if is_ui {
+        scaled.clamp(0.0, 0.85)
+    } else {
+        (scaled * 0.72).clamp(0.0, 0.75)
+    };
+    if let Some(handle) = view.sfx_handles.get(&key) {
         commands.spawn((
             AudioPlayer::new(handle.clone()),
-            PlaybackSettings::DESPAWN.with_volume(bevy::audio::Volume::Linear(scaled)),
+            PlaybackSettings::DESPAWN.with_volume(bevy::audio::Volume::Linear(headroom)),
         ));
     }
 }
@@ -3200,9 +3800,17 @@ pub fn verify_input(
     }
 }
 
+#[allow(clippy::type_complexity)]
 pub fn traces(
     view: Option<Res<View>>,
-    camera: Query<&Transform, (With<Camera3d>, Without<RifleTrace>)>,
+    camera: Query<
+        &Transform,
+        (
+            With<Camera3d>,
+            Without<Player2Camera3d>,
+            Without<RifleTrace>,
+        ),
+    >,
     mut traces: Query<(
         &RifleTrace,
         &mut Transform,
@@ -3366,26 +3974,49 @@ pub fn traces(
     }
 }
 
-#[allow(clippy::type_complexity)]
+#[allow(clippy::type_complexity, clippy::too_many_arguments)]
 pub fn markers(
     mut view: Option<ResMut<View>>,
     loaded: Res<Loaded>,
-    camera: Query<&Transform, With<Camera3d>>,
+    camera: Query<&Transform, (With<Camera3d>, Without<Player2Camera3d>)>,
+    mut terrain_meshes: Query<
+        &mut Visibility,
+        (
+            With<MeshMaterial3d<bw_rust::terrain_render::TerrainMaterial>>,
+            Without<SkydomePart>,
+            Without<WaterPlane>,
+            Without<FrontendGlobePart>,
+            Without<FrontendBackdrop>,
+            Without<GoldStar>,
+        ),
+    >,
     mut skydome: Query<
-        (&SkydomePart, &mut Transform),
+        (&SkydomePart, &mut Transform, &mut Visibility),
         (
             Without<Camera3d>,
             Without<GoldStar>,
             Without<FrontendGlobePart>,
+            Without<FrontendBackdrop>,
             Without<WaterPlane>,
         ),
     >,
     mut water: Query<
-        (&WaterPlane, &mut Transform),
+        (&WaterPlane, &mut Transform, &mut Visibility),
         (
             Without<Camera3d>,
             Without<SkydomePart>,
             Without<GoldStar>,
+            Without<FrontendGlobePart>,
+            Without<FrontendBackdrop>,
+        ),
+    >,
+    mut backdrop: Query<
+        (&FrontendBackdrop, &mut Transform, &mut Visibility),
+        (
+            Without<Camera3d>,
+            Without<SkydomePart>,
+            Without<GoldStar>,
+            Without<WaterPlane>,
             Without<FrontendGlobePart>,
         ),
     >,
@@ -3396,6 +4027,7 @@ pub fn markers(
             Without<SkydomePart>,
             Without<GoldStar>,
             Without<WaterPlane>,
+            Without<FrontendBackdrop>,
         ),
     >,
     mut markers: Query<
@@ -3404,6 +4036,7 @@ pub fn markers(
             Without<Camera3d>,
             Without<SkydomePart>,
             Without<FrontendGlobePart>,
+            Without<FrontendBackdrop>,
             Without<WaterPlane>,
         ),
     >,
@@ -3414,81 +4047,136 @@ pub fn markers(
     let Some(camera) = camera.iter().next() else {
         return;
     };
+    let in_mission = view.stage == FrontendStage::InMission;
+    let mission_vis = if in_mission {
+        Visibility::Visible
+    } else {
+        Visibility::Hidden
+    };
+    for mut tvis in &mut terrain_meshes {
+        if *tvis != mission_vis {
+            *tvis = mission_vis;
+        }
+    }
     let sky_base = Mat4::from_scale_rotation_translation(
         Vec3::splat(3500.0),
         Quat::IDENTITY,
         Vec3::new(camera.translation.x, -40.0, camera.translation.z),
     );
-    for (part, mut transform) in &mut skydome {
-        *transform = Transform::from_matrix(sky_base * part.0);
-    }
-    let t = view.frames as f32 * (1.0 / 60.0);
-    for (wp, mut transform) in &mut water {
-        if wp.layer == 0 {
-            let swell = (t * 1.35).sin() * 0.08;
-            transform.translation = Vec3::new(
-                (t * 0.4).cos() * 1.8,
-                wp.base_y + swell,
-                (t * 0.35).sin() * 1.8,
-            );
-        } else {
-            let ripple = (t * 2.1 + 1.2).sin() * 0.06;
-            transform.translation = Vec3::new(
-                (t * 0.75).sin() * 3.2,
-                wp.base_y + ripple,
-                (t * 0.65).cos() * 3.2,
-            );
-            transform.rotation = Quat::from_rotation_y((t * 0.12).sin() * 0.015);
+    for (part, mut transform, mut vis) in &mut skydome {
+        if in_mission {
+            *transform = Transform::from_matrix(sky_base * part.0);
+        }
+        if *vis != mission_vis {
+            *vis = mission_vis;
         }
     }
-    let in_mission = view.stage == FrontendStage::InMission;
+    let t = view.frames as f32 * (1.0 / 60.0);
+    for (wp, mut transform, mut vis) in &mut water {
+        if in_mission {
+            if wp.layer == 0 {
+                let swell = (t * 1.35).sin() * 0.08;
+                transform.translation = Vec3::new(
+                    (t * 0.4).cos() * 1.8,
+                    wp.base_y + swell,
+                    (t * 0.35).sin() * 1.8,
+                );
+            } else {
+                let ripple = (t * 2.1 + 1.2).sin() * 0.06;
+                transform.translation = Vec3::new(
+                    (t * 0.75).sin() * 3.2,
+                    wp.base_y + ripple,
+                    (t * 0.65).cos() * 3.2,
+                );
+                transform.rotation = Quat::from_rotation_y((t * 0.12).sin() * 0.015);
+            }
+        }
+        if *vis != mission_vis {
+            *vis = mission_vis;
+        }
+    }
     if in_mission {
+        for (_, _, mut vis) in &mut backdrop {
+            if *vis != Visibility::Hidden {
+                *vis = Visibility::Hidden;
+            }
+        }
         for (_, _, mut vis) in &mut globe {
             if *vis != Visibility::Hidden {
                 *vis = Visibility::Hidden;
             }
         }
     } else {
-        // Map selected campaign mission to original GlobeSelect continent index (1..=5)
-        let continent = match view.selected_mission {
-            0..=5 => 1,   // Solar Empire (Prologue & Campaign 1)
-            6..=8 => 3,   // Anglo Isles (Campaign 2)
-            9..=12 => 2,  // Western Frontier (Campaign 3)
-            13..=15 => 4, // Iron Legion / Tundran (Campaign 4)
-            _ => 5,       // Xylvania / Tundran (Campaign 5)
-        };
-        let _ = view.fe_runtime.global_call(
-            "GlobeSelectTarget",
-            &[bw_rust::lua50::Value::Number(continent as f64)],
-            100_000,
+        let show_globe = !matches!(
+            view.stage,
+            FrontendStage::BootLogos | FrontendStage::IntroMovie | FrontendStage::MissionCutsceneIn
         );
-        let _ = view
-            .fe_runtime
-            .global_call("GlobeSelectTargetUpdate", &[], 100_000);
-        let orient_mat = view
-            .fe_runtime
-            .global_call("GlobeSelectGetOrientation", &[], 100_000)
-            .ok()
-            .and_then(|vals| match vals.as_slice() {
-                [bw_rust::lua50::Value::Table(tid)] => view.fe_runtime.read_matrix4(*tid).ok(),
-                _ => None,
-            })
-            .map(|m| Mat4::from_cols_array_2d(&m).transpose())
-            .unwrap_or(Mat4::IDENTITY);
-        let idle_spin = if view.stage == FrontendStage::CampaignSelect {
-            Quat::IDENTITY
+        let bg_pos = camera.translation + camera.forward() * 24.5;
+        for (_, mut tf, mut vis) in &mut backdrop {
+            *tf = Transform::from_translation(bg_pos).with_rotation(camera.rotation);
+            let want = if show_globe {
+                Visibility::Visible
+            } else {
+                Visibility::Hidden
+            };
+            if *vis != want {
+                *vis = want;
+            }
+        }
+        if !show_globe {
+            for (_, _, mut vis) in &mut globe {
+                if *vis != Visibility::Hidden {
+                    *vis = Visibility::Hidden;
+                }
+            }
         } else {
-            Quat::from_rotation_y(view.frames as f32 * 0.008)
-        };
-        let globe_center = camera.translation + camera.forward() * 13.5;
-        let rot_mat = Mat4::from_quat(idle_spin) * orient_mat;
-        for (gpart, mut transform, mut vis) in &mut globe {
-            let base = Mat4::from_translation(globe_center)
-                * rot_mat
-                * Mat4::from_scale(Vec3::splat(gpart.norm_scale));
-            *transform = Transform::from_matrix(base * gpart.local);
-            if *vis != Visibility::Visible {
-                *vis = Visibility::Visible;
+            // Map selected campaign mission to original GlobeSelect continent index (1..=5)
+            let continent = match view.selected_mission {
+                0..=5 => 1,   // Solar Empire (Prologue & Campaign 1)
+                6..=8 => 3,   // Anglo Isles (Campaign 2)
+                9..=12 => 2,  // Western Frontier (Campaign 3)
+                13..=15 => 4, // Iron Legion / Tundran (Campaign 4)
+                _ => 5,       // Xylvania / Tundran (Campaign 5)
+            };
+            let _ = view.fe_runtime.global_call(
+                "GlobeSelectTarget",
+                &[bw_rust::lua50::Value::Number(continent as f64)],
+                100_000,
+            );
+            let _ = view
+                .fe_runtime
+                .global_call("GlobeSelectTargetUpdate", &[], 100_000);
+            let orient_mat = view
+                .fe_runtime
+                .global_call("GlobeSelectGetOrientation", &[], 100_000)
+                .ok()
+                .and_then(|vals| match vals.as_slice() {
+                    [bw_rust::lua50::Value::Table(tid)] => view.fe_runtime.read_matrix4(*tid).ok(),
+                    _ => None,
+                })
+                .map(|m| Mat4::from_cols_array_2d(&m).transpose())
+                .unwrap_or(Mat4::IDENTITY);
+            let idle_spin = if view.stage == FrontendStage::CampaignSelect {
+                Quat::IDENTITY
+            } else {
+                Quat::from_rotation_y(view.frames as f32 * 0.008)
+            };
+            let globe_center = camera.translation + camera.forward() * 13.0 + camera.up() * 0.22;
+            let rot_mat = Mat4::from_quat(idle_spin) * orient_mat;
+            let cloud_spin = Mat4::from_rotation_y(view.frames as f32 * 0.0025);
+            for (gpart, mut transform, mut vis) in &mut globe {
+                let (layer_rot, layer_scale) = match gpart.layer_kind {
+                    1 => (rot_mat * cloud_spin, gpart.norm_scale * 1.016),
+                    2 => (rot_mat, gpart.norm_scale * 1.045),
+                    _ => (rot_mat, gpart.norm_scale),
+                };
+                let base = Mat4::from_translation(globe_center)
+                    * layer_rot
+                    * Mat4::from_scale(Vec3::splat(layer_scale));
+                *transform = Transform::from_matrix(base * gpart.local);
+                if *vis != Visibility::Visible {
+                    *vis = Visibility::Visible;
+                }
             }
         }
     }
@@ -3537,7 +4225,7 @@ pub fn markers(
 
 pub fn lightning(
     view: Option<Res<View>>,
-    camera: Query<&Transform, With<Camera3d>>,
+    camera: Query<&Transform, (With<Camera3d>, Without<Player2Camera3d>)>,
     mut renderer: ResMut<bw_rust::mission_lightning_render::Renderer>,
     mut commands: Commands,
     mut meshes: ResMut<Assets<Mesh>>,
@@ -3583,9 +4271,33 @@ pub fn setup(
         view.ui_handles
             .insert(name, model_render::image(decoded, &mut images));
     }
+    let bg_map_tex = view.ui_handles.get("bg_map03").cloned();
+    let backdrop_mesh = meshes.add(Rectangle::new(52.0, 34.0));
+    let backdrop_mat = materials.add(StandardMaterial {
+        base_color: Color::srgb(0.26, 0.38, 0.62),
+        base_color_texture: bg_map_tex,
+        unlit: true,
+        cull_mode: None,
+        ..default()
+    });
+    commands.spawn((
+        FrontendBackdrop,
+        Mesh3d(backdrop_mesh),
+        MeshMaterial3d(backdrop_mat),
+        Transform::default(),
+        Visibility::Hidden,
+    ));
     let globe_models = std::mem::take(&mut view.globe_models);
     let mut base_globe_radius = 1.0f32;
     for (g_idx, gm) in globe_models.iter().enumerate() {
+        let name_upper = gm.name.to_ascii_uppercase();
+        let layer_kind = if name_upper.contains("CLOUD") {
+            1u8
+        } else if name_upper.contains("ATMOS") {
+            2u8
+        } else {
+            0u8
+        };
         if let Ok(rm) = model_render::build(gm, &view.ui_handles, &mut meshes, &mut materials) {
             if g_idx == 0 {
                 let mut max_r = 0.0f32;
@@ -3602,12 +4314,33 @@ pub fn setup(
                     base_globe_radius = max_r;
                 }
             }
-            let norm_scale = 5.2 / base_globe_radius;
+            let norm_scale = 5.0 / base_globe_radius;
             for p in &rm.parts {
+                if let Some(mut mat) = materials.get_mut(&p.material) {
+                    match layer_kind {
+                        0 => {
+                            mat.alpha_mode = AlphaMode::Opaque;
+                            mat.base_color = Color::srgb(1.08, 1.12, 1.18);
+                            mat.perceptual_roughness = 0.55;
+                            mat.reflectance = 0.35;
+                        }
+                        1 => {
+                            mat.alpha_mode = AlphaMode::Blend;
+                            mat.base_color = Color::srgba(1.0, 1.0, 1.0, 0.42);
+                            mat.unlit = true;
+                        }
+                        _ => {
+                            mat.alpha_mode = AlphaMode::Add;
+                            mat.base_color = Color::srgba(0.32, 0.68, 1.0, 0.36);
+                            mat.unlit = true;
+                        }
+                    }
+                }
                 commands.spawn((
                     FrontendGlobePart {
                         local: p.transform,
                         norm_scale,
+                        layer_kind,
                     },
                     Mesh3d(p.mesh.clone()),
                     MeshMaterial3d(p.material.clone()),
@@ -3721,7 +4454,7 @@ pub fn setup(
         )
     };
     // Helper that converts a decoded archive TXET chunk (or a 2x2 flipbook quadrant of one)
-    // into a soft-edged alpha-masked particle sprite texture.
+    // into a soft-edged alpha-masked particle sprite sprite texture.
     let mask_archive_vfx = |src: &texture::DecodedTexture,
                             quadrant: Option<usize>,
                             luma_to_alpha: bool,
@@ -3869,6 +4602,35 @@ pub fn setup(
             RifleTrace(i),
             Mesh3d(mesh_h),
             MeshMaterial3d(mat),
+            Transform::default(),
+            Visibility::Hidden,
+        ));
+    }
+    view.vfx_tequila_materials.clear();
+    for i in 0..64 {
+        let tex_h = if i % 3 == 2 {
+            smoke_frames[i % 4].clone()
+        } else {
+            fireball_frames[i % 4].clone()
+        };
+        let mat_h = materials.add(StandardMaterial {
+            base_color: Color::srgba(1.0, 0.78, 0.32, 0.9),
+            base_color_texture: Some(tex_h),
+            emissive: LinearRgba::new(3.2, 1.6, 0.4, 1.0),
+            alpha_mode: if i % 3 == 2 {
+                AlphaMode::Blend
+            } else {
+                AlphaMode::Add
+            },
+            unlit: true,
+            cull_mode: None,
+            ..default()
+        });
+        view.vfx_tequila_materials.push(mat_h.clone());
+        commands.spawn((
+            TequilaBillboard(i),
+            Mesh3d(billboard_mesh.clone()),
+            MeshMaterial3d(mat_h),
             Transform::default(),
             Visibility::Hidden,
         ));
@@ -4902,7 +5664,6 @@ pub fn setup(
             });
         });
 
-    let bg_map = view.ui_handles.get("bg_map03").cloned().unwrap_or_default();
     let bwii_logo = view
         .ui_handles
         .get("bwii_logo")
@@ -4928,6 +5689,44 @@ pub fn setup(
         .get("gradeph_s")
         .cloned()
         .unwrap_or_default();
+    let wii_a2 = view
+        .ui_handles
+        .get("wii_abutton2")
+        .or_else(|| view.ui_handles.get("wii_abutton"))
+        .cloned()
+        .unwrap_or_default();
+    let wii_b2 = view
+        .ui_handles
+        .get("wii_bbutton2")
+        .or_else(|| view.ui_handles.get("wii_bbutton"))
+        .cloned()
+        .unwrap_or_default();
+    let cursor_point = view
+        .ui_handles
+        .get("cursor_point")
+        .or_else(|| view.ui_handles.get("cursor_01"))
+        .cloned()
+        .unwrap_or_default();
+    let startup_strap = view
+        .ui_handles
+        .get("startup_strap")
+        .cloned()
+        .unwrap_or_default();
+
+    let ring_icon_keys = [
+        "wf_grunt01",
+        "s_grunt01",
+        "t_grunt01",
+        "x_grunt01",
+        "icon_anglogrunt",
+        "u_grunt01",
+        "wf_htnk01",
+        "s_htnk01",
+        "t_htnk01",
+        "x_htnk01",
+        "u_htnk01",
+        "s_gshp01",
+    ];
 
     commands
         .spawn((
@@ -4938,250 +5737,558 @@ pub fn setup(
                 height: percent(100),
                 flex_direction: FlexDirection::Column,
                 justify_content: JustifyContent::SpaceBetween,
-                padding: UiRect::all(px(28)),
                 ..default()
             },
-            BackgroundColor(Color::srgba(0.03, 0.05, 0.09, 0.42)),
+            BackgroundColor(Color::NONE),
             GlobalZIndex(200),
         ))
         .with_children(|menu| {
+            // 1. Orbiting Ring of 12 Faction Unit Icons around the 3D Satellite Globe
+            for (idx, key) in ring_icon_keys.iter().enumerate() {
+                let icon_h = view.ui_handles.get(*key).cloned().unwrap_or_default();
+                menu.spawn((
+                    GlobeUnitRingIcon(idx),
+                    ImageNode::new(icon_h).with_color(Color::srgba(0.95, 1.0, 0.96, 0.92)),
+                    Node {
+                        position_type: PositionType::Absolute,
+                        left: px(616),
+                        top: px(336),
+                        width: px(46),
+                        height: px(46),
+                        ..default()
+                    },
+                ));
+            }
+
+            // 2. Centered Top `BWii: BATTALION WARS 2` Logo over the 3D Globe (`Title`, `SaveSelect`, `NameEntry`, `MainMenu`)
             menu.spawn((
-                ImageNode::new(bg_map).with_color(Color::srgba(0.92, 0.95, 1.0, 0.24)),
+                UiPanelSlot::WiiCenterLogoPanel,
                 Node {
                     position_type: PositionType::Absolute,
-                    top: px(0),
+                    top: px(32),
                     left: px(0),
                     width: percent(100),
-                    height: percent(100),
-                    ..default()
-                },
-            ));
-
-            menu.spawn((
-                Node {
-                    width: percent(100),
-                    padding: UiRect::axes(px(18), px(12)),
-                    justify_content: JustifyContent::SpaceBetween,
+                    justify_content: JustifyContent::Center,
                     align_items: AlignItems::Center,
-                    border: UiRect::all(px(2)),
                     ..default()
                 },
-                BackgroundColor(Color::srgba(0.02, 0.04, 0.08, 0.84)),
-                BorderColor::all(Color::srgb(0.88, 0.68, 0.22)),
             ))
-            .with_children(|header| {
-                header
-                    .spawn(Node {
-                        column_gap: px(14),
-                        align_items: AlignItems::Center,
+            .with_children(|logo_row| {
+                logo_row.spawn((
+                    ImageNode::new(bwii_logo.clone()),
+                    Node {
+                        width: px(360),
+                        height: px(136),
                         ..default()
-                    })
-                    .with_children(|left| {
-                        left.spawn((
-                            ImageNode::new(bwii_logo),
+                    },
+                ));
+            });
+
+            // 3. Authentic Wii Title Screen (`FrontendStage::Title` — `a-only-title.png`)
+            menu.spawn((
+                UiPanelSlot::WiiTitleOverlay,
+                Node {
+                    position_type: PositionType::Absolute,
+                    left: px(0),
+                    top: px(0),
+                    width: percent(100),
+                    height: percent(100),
+                    flex_direction: FlexDirection::Column,
+                    justify_content: JustifyContent::FlexEnd,
+                    align_items: AlignItems::Center,
+                    padding: UiRect::bottom(px(34)),
+                    row_gap: px(16),
+                    ..default()
+                },
+            ))
+            .with_children(|title_ui| {
+                title_ui
+                    .spawn((
+                        Button,
+                        MenuItemButton(10),
+                        Node {
+                            padding: UiRect::axes(px(32), px(12)),
+                            column_gap: px(12),
+                            align_items: AlignItems::Center,
+                            justify_content: JustifyContent::Center,
+                            border: UiRect::all(px(2)),
+                            ..default()
+                        },
+                        BackgroundColor(Color::srgba(0.04, 0.14, 0.08, 0.86)),
+                        BorderColor::all(Color::srgb(0.55, 0.96, 0.62)),
+                    ))
+                    .with_children(|btn| {
+                        btn.spawn((
+                            Text::new("PLEASE PRESS"),
+                            TextFont {
+                                font_size: FontSize::Px(24.0),
+                                ..default()
+                            },
+                            TextColor(Color::WHITE),
+                        ));
+                        btn.spawn((
+                            ImageNode::new(wii_a2.clone()),
                             Node {
-                                width: px(150),
-                                height: px(56),
+                                width: px(34),
+                                height: px(34),
                                 ..default()
                             },
                         ));
-                        left.spawn((
-                            ImageNode::new(solar_logo),
+                        btn.spawn((
+                            Text::new("&"),
+                            TextFont {
+                                font_size: FontSize::Px(24.0),
+                                ..default()
+                            },
+                            TextColor(Color::WHITE),
+                        ));
+                        btn.spawn((
+                            ImageNode::new(wii_b2.clone()),
                             Node {
-                                width: px(48),
-                                height: px(48),
+                                width: px(34),
+                                height: px(34),
                                 ..default()
                             },
                         ));
                     });
-                header.spawn((
-                    UiTextSlot::MenuHeader,
-                    Text::new("BATTALION WARS 2 | TITLE SCREEN"),
+
+                title_ui
+                    .spawn((
+                        Button,
+                        MenuItemButton(11),
+                        Node {
+                            padding: UiRect::axes(px(18), px(7)),
+                            border: UiRect::all(px(1)),
+                            ..default()
+                        },
+                        BackgroundColor(Color::srgba(0.05, 0.12, 0.18, 0.78)),
+                        BorderColor::all(Color::srgb(0.48, 0.76, 0.92)),
+                    ))
+                    .with_children(|btn| {
+                        btn.spawn((
+                            Text::new("[ WATCH OPENING INTRO MOVIE (BWii_Intro.thp) ]"),
+                            TextFont {
+                                font_size: FontSize::Px(13.0),
+                                ..default()
+                            },
+                            TextColor(Color::srgb(0.84, 0.95, 1.0)),
+                        ));
+                    });
+
+                title_ui.spawn((
+                    Text::new("(C) 2007 NINTENDO. GAME DEVELOPED BY KUJU ENTERTAINMENT LTD."),
                     TextFont {
-                        font_size: FontSize::Px(20.0),
+                        font_size: FontSize::Px(14.0),
                         ..default()
                     },
-                    TextColor(Color::srgb(0.96, 0.84, 0.42)),
+                    TextColor(Color::srgb(0.92, 0.96, 0.92)),
                 ));
             });
 
-            menu.spawn(Node {
-                width: percent(100),
-                flex_grow: 1.0,
-                margin: UiRect::vertical(px(18)),
-                column_gap: px(22),
-                ..default()
-            })
-            .with_children(|body| {
-                body.spawn((
-                    Node {
-                        width: percent(44),
-                        padding: UiRect::all(px(18)),
-                        flex_direction: FlexDirection::Column,
-                        row_gap: px(10),
-                        border: UiRect::all(px(2)),
+            // 4. Authentic Wii Save Slot Selection (`FrontendStage::SaveSelect` — `save-select.png` & `boot-chord.png`)
+            menu.spawn((
+                UiPanelSlot::WiiSaveOverlay,
+                Node {
+                    position_type: PositionType::Absolute,
+                    left: px(0),
+                    top: px(182),
+                    width: percent(100),
+                    bottom: px(20),
+                    flex_direction: FlexDirection::Column,
+                    align_items: AlignItems::Center,
+                    justify_content: JustifyContent::SpaceBetween,
+                    ..default()
+                },
+                Visibility::Hidden,
+            ))
+            .with_children(|save_ui| {
+                // 3 horizontal Wii Save Cards (SAVE A, SAVE B, SAVE C)
+                save_ui
+                    .spawn(Node {
+                        column_gap: px(22),
+                        justify_content: JustifyContent::Center,
+                        align_items: AlignItems::Center,
                         ..default()
-                    },
-                    BackgroundColor(Color::srgba(0.02, 0.04, 0.08, 0.78)),
-                    BorderColor::all(Color::srgb(0.45, 0.65, 0.82)),
-                ))
-                .with_children(|left| {
-                    left.spawn((
-                        UiTextSlot::MenuLeftTitle,
-                        Text::new("SELECT OPTION"),
-                        TextFont {
-                            font_size: FontSize::Px(20.0),
+                    })
+                    .with_children(|cards| {
+                        for (slot_i, slot_letter) in
+                            ["SAVE A", "SAVE B", "SAVE C"].iter().enumerate()
+                        {
+                            cards
+                                .spawn((
+                                    Button,
+                                    MenuItemButton(20 + slot_i),
+                                    Node {
+                                        width: px(252),
+                                        height: px(188),
+                                        flex_direction: FlexDirection::Column,
+                                        justify_content: JustifyContent::SpaceBetween,
+                                        border: UiRect::all(px(3)),
+                                        ..default()
+                                    },
+                                    BackgroundColor(Color::srgba(0.76, 0.84, 0.80, 0.92)),
+                                    BorderColor::all(Color::srgb(0.28, 0.72, 0.38)),
+                                ))
+                                .with_children(|card| {
+                                    // Top Green Header Bar (`SAVE A` + `0%`)
+                                    card.spawn((
+                                        Node {
+                                            width: percent(100),
+                                            padding: UiRect::axes(px(12), px(7)),
+                                            justify_content: JustifyContent::SpaceBetween,
+                                            align_items: AlignItems::Center,
+                                            ..default()
+                                        },
+                                        BackgroundColor(Color::srgb(0.12, 0.46, 0.20)),
+                                    ))
+                                    .with_children(|hdr| {
+                                        hdr.spawn((
+                                            Text::new(*slot_letter),
+                                            TextFont {
+                                                font_size: FontSize::Px(18.0),
+                                                ..default()
+                                            },
+                                            TextColor(Color::srgb(0.98, 0.90, 0.35)),
+                                        ));
+                                        hdr.spawn((
+                                            UiTextSlot::WiiSaveCardPct(slot_i),
+                                            Text::new("0%"),
+                                            TextFont {
+                                                font_size: FontSize::Px(17.0),
+                                                ..default()
+                                            },
+                                            TextColor(Color::WHITE),
+                                        ));
+                                    });
+
+                                    // Center Profile Name & Campaign Progress
+                                    card.spawn(Node {
+                                        width: percent(100),
+                                        padding: UiRect::axes(px(14), px(8)),
+                                        flex_direction: FlexDirection::Column,
+                                        row_gap: px(6),
+                                        ..default()
+                                    })
+                                    .with_children(|mid| {
+                                        mid.spawn((
+                                            UiTextSlot::WiiSaveCardName(slot_i),
+                                            Text::new("EMPTY"),
+                                            TextFont {
+                                                font_size: FontSize::Px(21.0),
+                                                ..default()
+                                            },
+                                            TextColor(Color::srgb(0.06, 0.14, 0.08)),
+                                        ));
+                                        mid.spawn((
+                                            UiTextSlot::WiiSaveCardInfo(slot_i),
+                                            Text::new("NEW SAVE FILE"),
+                                            TextFont {
+                                                font_size: FontSize::Px(13.0),
+                                                ..default()
+                                            },
+                                            TextColor(Color::srgb(0.14, 0.26, 0.18)),
+                                        ));
+                                    });
+
+                                    // Bottom Faction Crest + Overall Grade Badge
+                                    card.spawn((
+                                        Node {
+                                            width: percent(100),
+                                            padding: UiRect::axes(px(12), px(6)),
+                                            justify_content: JustifyContent::SpaceBetween,
+                                            align_items: AlignItems::Center,
+                                            ..default()
+                                        },
+                                        BackgroundColor(Color::srgba(0.10, 0.24, 0.14, 0.22)),
+                                    ))
+                                    .with_children(|bot| {
+                                        bot.spawn((
+                                            ImageNode::new(solar_logo.clone()),
+                                            Node {
+                                                width: px(32),
+                                                height: px(32),
+                                                ..default()
+                                            },
+                                        ));
+                                        bot.spawn((
+                                            UiImageSlot::WiiSaveCardGrade(slot_i),
+                                            ImageNode::new(grade_s.clone()),
+                                            Node {
+                                                width: px(36),
+                                                height: px(36),
+                                                ..default()
+                                            },
+                                            Visibility::Hidden,
+                                        ));
+                                    });
+                                });
+                        }
+                    });
+
+                // Centered Wii Save Confirmation Modal (`CHANGE NAME` / `LOAD PROFILE`)
+                save_ui
+                    .spawn((
+                        Node {
+                            width: px(560),
+                            padding: UiRect::all(px(16)),
+                            flex_direction: FlexDirection::Column,
+                            align_items: AlignItems::Center,
+                            row_gap: px(10),
+                            border: UiRect::all(px(2)),
                             ..default()
                         },
-                        TextColor(Color::srgb(0.96, 0.82, 0.35)),
-                    ));
-                    for idx in 0..6 {
-                        left.spawn((
-                            Button,
-                            MenuItemButton(idx),
-                            Node {
-                                width: percent(100),
-                                padding: UiRect::axes(px(14), px(11)),
-                                border: UiRect::all(px(2)),
+                        BackgroundColor(Color::srgba(0.08, 0.22, 0.12, 0.90)),
+                        BorderColor::all(Color::srgb(0.46, 0.88, 0.54)),
+                    ))
+                    .with_children(|modal| {
+                        modal.spawn((
+                            UiTextSlot::WiiSaveModalTitle,
+                            Text::new("CHANGE NAME"),
+                            TextFont {
+                                font_size: FontSize::Px(19.0),
                                 ..default()
                             },
-                            BackgroundColor(Color::srgba(0.06, 0.11, 0.18, 0.92)),
-                            BorderColor::all(Color::srgb(0.32, 0.48, 0.65)),
+                            TextColor(Color::srgb(0.98, 0.88, 0.36)),
+                        ));
+                        modal.spawn((
+                            UiTextSlot::WiiSaveModalBody,
+                            Text::new("This is a new save file. You need to give it a name."),
+                            TextFont {
+                                font_size: FontSize::Px(15.0),
+                                ..default()
+                            },
+                            TextColor(Color::WHITE),
+                        ));
+                        modal
+                            .spawn(Node {
+                                column_gap: px(16),
+                                align_items: AlignItems::Center,
+                                margin: UiRect::top(px(4)),
+                                ..default()
+                            })
+                            .with_children(|btns| {
+                                btns.spawn((
+                                    Button,
+                                    MenuItemButton(24),
+                                    Node {
+                                        padding: UiRect::axes(px(28), px(10)),
+                                        border: UiRect::all(px(2)),
+                                        ..default()
+                                    },
+                                    BackgroundColor(Color::srgb(0.88, 0.56, 0.12)),
+                                    BorderColor::all(Color::srgb(1.0, 0.92, 0.48)),
+                                ))
+                                .with_children(|b| {
+                                    b.spawn((
+                                        UiTextSlot::WiiSaveModalContinue,
+                                        Text::new("CONTINUE"),
+                                        TextFont {
+                                            font_size: FontSize::Px(17.0),
+                                            ..default()
+                                        },
+                                        TextColor(Color::WHITE),
+                                    ));
+                                });
+
+                                btns.spawn((
+                                    Button,
+                                    MenuItemButton(23),
+                                    Node {
+                                        padding: UiRect::axes(px(16), px(10)),
+                                        border: UiRect::all(px(2)),
+                                        ..default()
+                                    },
+                                    BackgroundColor(Color::srgba(0.32, 0.12, 0.14, 0.90)),
+                                    BorderColor::all(Color::srgb(0.78, 0.42, 0.44)),
+                                ))
+                                .with_children(|b| {
+                                    b.spawn((
+                                        Text::new("CLEAR SLOT [DEL]"),
+                                        TextFont {
+                                            font_size: FontSize::Px(14.0),
+                                            ..default()
+                                        },
+                                        TextColor(Color::srgb(0.98, 0.84, 0.84)),
+                                    ));
+                                });
+
+                                btns.spawn((
+                                    Button,
+                                    MenuActionBtn::Secondary,
+                                    Node {
+                                        padding: UiRect::axes(px(16), px(10)),
+                                        border: UiRect::all(px(2)),
+                                        ..default()
+                                    },
+                                    BackgroundColor(Color::srgb(0.18, 0.12, 0.14)),
+                                    BorderColor::all(Color::srgb(0.65, 0.45, 0.48)),
+                                ))
+                                .with_children(|b| {
+                                    b.spawn((
+                                        Text::new("(B) BACK [ESC]"),
+                                        TextFont {
+                                            font_size: FontSize::Px(14.0),
+                                            ..default()
+                                        },
+                                        TextColor(Color::WHITE),
+                                    ));
+                                });
+                            });
+                    });
+            });
+
+            // 5. Authentic Wii Name Entry & On-Screen Keyboard (`FrontendStage::NameEntry` — `research-profile-name.png`)
+            menu.spawn((
+                UiPanelSlot::WiiKeyboardOverlay,
+                Node {
+                    position_type: PositionType::Absolute,
+                    left: px(0),
+                    top: px(188),
+                    width: percent(100),
+                    bottom: px(28),
+                    justify_content: JustifyContent::Center,
+                    align_items: AlignItems::Center,
+                    ..default()
+                },
+                Visibility::Hidden,
+            ))
+            .with_children(|kb_root| {
+                kb_root
+                    .spawn((
+                        Node {
+                            width: px(640),
+                            padding: UiRect::all(px(20)),
+                            flex_direction: FlexDirection::Column,
+                            align_items: AlignItems::Center,
+                            row_gap: px(14),
+                            border: UiRect::all(px(3)),
+                            ..default()
+                        },
+                        BackgroundColor(Color::srgba(0.76, 0.84, 0.80, 0.94)),
+                        BorderColor::all(Color::srgb(0.24, 0.68, 0.34)),
+                    ))
+                    .with_children(|kb| {
+                        kb.spawn((
+                            Node {
+                                width: percent(100),
+                                padding: UiRect::axes(px(14), px(8)),
+                                justify_content: JustifyContent::SpaceBetween,
+                                align_items: AlignItems::Center,
+                                ..default()
+                            },
+                            BackgroundColor(Color::srgb(0.12, 0.46, 0.20)),
                         ))
-                        .with_children(|btn| {
-                            btn.spawn((
-                                UiTextSlot::MenuItem(idx),
-                                Text::new(""),
+                        .with_children(|hdr| {
+                            hdr.spawn((
+                                Text::new("ENTER PROFILE NAME"),
                                 TextFont {
-                                    font_size: FontSize::Px(16.0),
+                                    font_size: FontSize::Px(19.0),
+                                    ..default()
+                                },
+                                TextColor(Color::srgb(0.98, 0.90, 0.35)),
+                            ));
+                            hdr.spawn((
+                                Text::new("TYPE ON KEYBOARD OR CLICK KEYS"),
+                                TextFont {
+                                    font_size: FontSize::Px(13.0),
                                     ..default()
                                 },
                                 TextColor(Color::WHITE),
                             ));
                         });
-                    }
-                });
 
-                body.spawn((
-                    Node {
-                        width: percent(56),
-                        padding: UiRect::all(px(20)),
-                        flex_direction: FlexDirection::Column,
-                        justify_content: JustifyContent::SpaceBetween,
-                        border: UiRect::all(px(2)),
-                        ..default()
-                    },
-                    BackgroundColor(Color::srgba(0.02, 0.04, 0.08, 0.80)),
-                    BorderColor::all(Color::srgb(0.88, 0.68, 0.22)),
-                ))
-                .with_children(|right| {
-                    right
-                        .spawn(Node {
-                            flex_direction: FlexDirection::Column,
-                            row_gap: px(12),
-                            ..default()
-                        })
-                        .with_children(|top| {
-                            top.spawn(Node {
-                                column_gap: px(16),
+                        // Dark Name Input Bar
+                        kb.spawn((
+                            Node {
+                                width: percent(100),
+                                padding: UiRect::axes(px(18), px(12)),
+                                justify_content: JustifyContent::Center,
                                 align_items: AlignItems::Center,
+                                border: UiRect::all(px(2)),
                                 ..default()
-                            })
-                            .with_children(|portraits| {
-                                portraits.spawn((
-                                    UiImageSlot::MenuPortraitLeft,
-                                    ImageNode::new(sleiqo_portrait),
-                                    Node {
-                                        width: px(84),
-                                        height: px(84),
-                                        ..default()
-                                    },
-                                ));
-                                portraits.spawn((
-                                    UiImageSlot::MenuPortraitRight,
-                                    ImageNode::new(ferrok_portrait),
-                                    Node {
-                                        width: px(84),
-                                        height: px(84),
-                                        ..default()
-                                    },
-                                ));
-                                portraits.spawn((
-                                    UiImageSlot::MenuGradeBadge,
-                                    ImageNode::new(grade_s.clone()),
-                                    Node {
-                                        width: px(72),
-                                        height: px(72),
-                                        ..default()
-                                    },
-                                    Visibility::Hidden,
-                                ));
-                                portraits.spawn((
-                                    UiImageSlot::MovieScreen,
-                                    ImageNode::new(grade_s),
-                                    Node {
-                                        width: px(360),
-                                        height: px(216),
-                                        ..default()
-                                    },
-                                    Visibility::Hidden,
-                                ));
-                            });
-
-                            top.spawn((
-                                UiTextSlot::MenuRightTitle,
-                                Text::new("BATTALION WARS 2"),
+                            },
+                            BackgroundColor(Color::srgba(0.06, 0.14, 0.09, 0.96)),
+                            BorderColor::all(Color::srgb(0.52, 0.94, 0.60)),
+                        ))
+                        .with_children(|bar| {
+                            bar.spawn((
+                                UiTextSlot::WiiKeyboardInputDisplay,
+                                Text::new("COMMANDER_"),
                                 TextFont {
-                                    font_size: FontSize::Px(22.0),
+                                    font_size: FontSize::Px(24.0),
                                     ..default()
                                 },
-                                TextColor(Color::srgb(0.98, 0.86, 0.38)),
-                            ));
-                            top.spawn((
-                                UiTextSlot::MenuRightBody,
-                                Text::new(""),
-                                TextFont {
-                                    font_size: FontSize::Px(16.0),
-                                    ..default()
-                                },
-                                TextColor(Color::srgb(0.90, 0.94, 0.98)),
-                            ));
-                            top.spawn((
-                                UiTextSlot::MenuRightStatus,
-                                Text::new(""),
-                                TextFont {
-                                    font_size: FontSize::Px(15.0),
-                                    ..default()
-                                },
-                                TextColor(Color::srgb(0.35, 0.95, 0.68)),
+                                TextColor(Color::srgb(0.98, 0.92, 0.42)),
                             ));
                         });
 
-                    right
-                        .spawn(Node {
-                            column_gap: px(14),
-                            margin: UiRect::top(px(12)),
+                        // 2 rows of 6 clickable Wii Keypad Buttons (`MenuItemButton(30..42)`)
+                        let key_labels = [
+                            "ABC", "DEF", "GHI", "JKL", "MNO", "PQRS", "TUV", "WXYZ", "123",
+                            "SPACE", "<- DEL", "CLEAR",
+                        ];
+                        for row in 0..2 {
+                            kb.spawn(Node {
+                                column_gap: px(10),
+                                justify_content: JustifyContent::Center,
+                                ..default()
+                            })
+                            .with_children(|rnode| {
+                                for col in 0..6 {
+                                    let k_idx = row * 6 + col;
+                                    rnode
+                                        .spawn((
+                                            Button,
+                                            MenuItemButton(30 + k_idx),
+                                            Node {
+                                                width: px(90),
+                                                padding: UiRect::axes(px(8), px(10)),
+                                                justify_content: JustifyContent::Center,
+                                                align_items: AlignItems::Center,
+                                                border: UiRect::all(px(2)),
+                                                ..default()
+                                            },
+                                            BackgroundColor(Color::srgba(0.92, 0.96, 0.94, 0.96)),
+                                            BorderColor::all(Color::srgb(0.24, 0.58, 0.32)),
+                                        ))
+                                        .with_children(|kbtn| {
+                                            kbtn.spawn((
+                                                Text::new(key_labels[k_idx]),
+                                                TextFont {
+                                                    font_size: FontSize::Px(15.0),
+                                                    ..default()
+                                                },
+                                                TextColor(Color::srgb(0.08, 0.18, 0.10)),
+                                            ));
+                                        });
+                                }
+                            });
+                        }
+
+                        // Bottom ACCEPT & BACK buttons
+                        kb.spawn(Node {
+                            column_gap: px(18),
+                            margin: UiRect::top(px(4)),
                             ..default()
                         })
                         .with_children(|actions| {
                             actions
                                 .spawn((
                                     Button,
-                                    MenuActionBtn::Primary,
+                                    MenuItemButton(42),
                                     Node {
-                                        padding: UiRect::axes(px(20), px(12)),
+                                        padding: UiRect::axes(px(32), px(11)),
                                         border: UiRect::all(px(2)),
                                         ..default()
                                     },
-                                    BackgroundColor(Color::srgb(0.14, 0.42, 0.24)),
-                                    BorderColor::all(Color::srgb(0.95, 0.82, 0.32)),
+                                    BackgroundColor(Color::srgb(0.88, 0.56, 0.12)),
+                                    BorderColor::all(Color::srgb(1.0, 0.92, 0.48)),
                                 ))
-                                .with_children(|btn| {
-                                    btn.spawn((
-                                        UiTextSlot::MenuPrimaryLabel,
-                                        Text::new("CONFIRM [ENTER]"),
+                                .with_children(|b| {
+                                    b.spawn((
+                                        Text::new("ACCEPT [ENTER]"),
                                         TextFont {
-                                            font_size: FontSize::Px(16.0),
+                                            font_size: FontSize::Px(17.0),
                                             ..default()
                                         },
                                         TextColor(Color::WHITE),
@@ -5192,41 +6299,630 @@ pub fn setup(
                                     Button,
                                     MenuActionBtn::Secondary,
                                     Node {
-                                        padding: UiRect::axes(px(18), px(12)),
+                                        padding: UiRect::axes(px(20), px(11)),
                                         border: UiRect::all(px(2)),
                                         ..default()
                                     },
                                     BackgroundColor(Color::srgb(0.18, 0.12, 0.14)),
                                     BorderColor::all(Color::srgb(0.65, 0.45, 0.48)),
                                 ))
-                                .with_children(|btn| {
-                                    btn.spawn((
-                                        UiTextSlot::MenuSecondaryLabel,
-                                        Text::new("BACK [ESC]"),
+                                .with_children(|b| {
+                                    b.spawn((
+                                        Text::new("(B) BACK [ESC]"),
                                         TextFont {
                                             font_size: FontSize::Px(15.0),
                                             ..default()
                                         },
-                                        TextColor(Color::srgb(0.92, 0.86, 0.86)),
+                                        TextColor(Color::WHITE),
                                     ));
                                 });
                         });
+                    });
+            });
+
+            // 6. Authentic Wii 2x2 Main Menu (`FrontendStage::MainMenu` — `campaign-ready.png` & `next-menu.png`)
+            menu.spawn((
+                UiPanelSlot::WiiMainMenuOverlay,
+                Node {
+                    position_type: PositionType::Absolute,
+                    left: px(0),
+                    top: px(210),
+                    width: percent(100),
+                    bottom: px(28),
+                    flex_direction: FlexDirection::Column,
+                    align_items: AlignItems::Center,
+                    justify_content: JustifyContent::SpaceBetween,
+                    ..default()
+                },
+                Visibility::Hidden,
+            ))
+            .with_children(|main_ui| {
+                let main_labels = [["CAMPAIGN", "NINTENDO WFC"], ["OPTIONS", "EXTRAS"]];
+                main_ui
+                    .spawn(Node {
+                        flex_direction: FlexDirection::Column,
+                        row_gap: px(18),
+                        align_items: AlignItems::Center,
+                        ..default()
+                    })
+                    .with_children(|grid| {
+                        for (r_idx, row_pair) in main_labels.iter().enumerate() {
+                            grid.spawn(Node {
+                                column_gap: px(26),
+                                justify_content: JustifyContent::Center,
+                                ..default()
+                            })
+                            .with_children(|row_node| {
+                                for (c_idx, label) in row_pair.iter().enumerate() {
+                                    let btn_idx = r_idx * 2 + c_idx;
+                                    row_node
+                                        .spawn((
+                                            Button,
+                                            MenuItemButton(50 + btn_idx),
+                                            Node {
+                                                width: px(268),
+                                                height: px(64),
+                                                justify_content: JustifyContent::Center,
+                                                align_items: AlignItems::Center,
+                                                border: UiRect::all(px(3)),
+                                                ..default()
+                                            },
+                                            BackgroundColor(Color::srgba(0.86, 0.92, 0.88, 0.94)),
+                                            BorderColor::all(Color::srgb(0.24, 0.68, 0.34)),
+                                        ))
+                                        .with_children(|btn| {
+                                            btn.spawn((
+                                                Text::new(*label),
+                                                TextFont {
+                                                    font_size: FontSize::Px(22.0),
+                                                    ..default()
+                                                },
+                                                TextColor(Color::srgb(0.08, 0.18, 0.10)),
+                                            ));
+                                        });
+                                }
+                            });
+                        }
+                    });
+
+                // Bottom active profile banner + SWITCH SAVE / QUIT buttons
+                main_ui
+                    .spawn((
+                        Node {
+                            padding: UiRect::axes(px(22), px(12)),
+                            flex_direction: FlexDirection::Column,
+                            align_items: AlignItems::Center,
+                            row_gap: px(8),
+                            border: UiRect::all(px(2)),
+                            ..default()
+                        },
+                        BackgroundColor(Color::srgba(0.04, 0.12, 0.08, 0.86)),
+                        BorderColor::all(Color::srgb(0.38, 0.78, 0.48)),
+                    ))
+                    .with_children(|footer| {
+                        footer.spawn((
+                            UiTextSlot::WiiMainMenuSubtitle,
+                            Text::new("ACTIVE COMMANDER PROFILE"),
+                            TextFont {
+                                font_size: FontSize::Px(15.0),
+                                ..default()
+                            },
+                            TextColor(Color::srgb(0.96, 0.88, 0.42)),
+                        ));
+                        footer
+                            .spawn(Node {
+                                column_gap: px(16),
+                                align_items: AlignItems::Center,
+                                ..default()
+                            })
+                            .with_children(|btns| {
+                                btns.spawn((
+                                    Button,
+                                    MenuItemButton(54),
+                                    Node {
+                                        padding: UiRect::axes(px(18), px(8)),
+                                        border: UiRect::all(px(2)),
+                                        ..default()
+                                    },
+                                    BackgroundColor(Color::srgba(0.12, 0.28, 0.18, 0.92)),
+                                    BorderColor::all(Color::srgb(0.45, 0.82, 0.55)),
+                                ))
+                                .with_children(|b| {
+                                    b.spawn((
+                                        Text::new("(B) SWITCH SAVE SLOT"),
+                                        TextFont {
+                                            font_size: FontSize::Px(14.0),
+                                            ..default()
+                                        },
+                                        TextColor(Color::WHITE),
+                                    ));
+                                });
+                                btns.spawn((
+                                    Button,
+                                    MenuItemButton(55),
+                                    Node {
+                                        padding: UiRect::axes(px(18), px(8)),
+                                        border: UiRect::all(px(2)),
+                                        ..default()
+                                    },
+                                    BackgroundColor(Color::srgba(0.28, 0.12, 0.14, 0.92)),
+                                    BorderColor::all(Color::srgb(0.75, 0.42, 0.45)),
+                                ))
+                                .with_children(|b| {
+                                    b.spawn((
+                                        Text::new("QUIT TO DESKTOP"),
+                                        TextFont {
+                                            font_size: FontSize::Px(14.0),
+                                            ..default()
+                                        },
+                                        TextColor(Color::WHITE),
+                                    ));
+                                });
+                            });
+                    });
+            });
+
+            // 7. Interactive 3D Globe Campaign & Submenu Overlay (`CampaignSelect`, `MultiplayerInfo`, `Options`, `ExtrasMenu`, etc.)
+            menu.spawn((
+                UiPanelSlot::WiiSubmenuOverlay,
+                Node {
+                    position_type: PositionType::Absolute,
+                    left: px(0),
+                    top: px(0),
+                    width: percent(100),
+                    height: percent(100),
+                    flex_direction: FlexDirection::Column,
+                    justify_content: JustifyContent::SpaceBetween,
+                    padding: UiRect::all(px(20)),
+                    ..default()
+                },
+                Visibility::Hidden,
+            ))
+            .with_children(|sub| {
+                // Top Header Bar
+                sub.spawn((
+                    Node {
+                        width: percent(100),
+                        padding: UiRect::axes(px(16), px(10)),
+                        justify_content: JustifyContent::SpaceBetween,
+                        align_items: AlignItems::Center,
+                        border: UiRect::all(px(2)),
+                        ..default()
+                    },
+                    BackgroundColor(Color::srgba(0.03, 0.10, 0.06, 0.86)),
+                    BorderColor::all(Color::srgb(0.42, 0.84, 0.50)),
+                ))
+                .with_children(|header| {
+                    header
+                        .spawn(Node {
+                            column_gap: px(12),
+                            align_items: AlignItems::Center,
+                            ..default()
+                        })
+                        .with_children(|left| {
+                            left.spawn((
+                                ImageNode::new(bwii_logo),
+                                Node {
+                                    width: px(132),
+                                    height: px(48),
+                                    ..default()
+                                },
+                            ));
+                            left.spawn((
+                                ImageNode::new(solar_logo),
+                                Node {
+                                    width: px(40),
+                                    height: px(40),
+                                    ..default()
+                                },
+                            ));
+                        });
+                    header.spawn((
+                        UiTextSlot::MenuHeader,
+                        Text::new("BATTALION WARS 2 | CAMPAIGN SELECT"),
+                        TextFont {
+                            font_size: FontSize::Px(19.0),
+                            ..default()
+                        },
+                        TextColor(Color::srgb(0.96, 0.88, 0.40)),
+                    ));
+                });
+
+                // Clickable 6-Continent Campaign Tabs Row (`MenuItemButton(60..66)`)
+                let continent_tabs = [
+                    "PROLOGUE (SP_0.1)",
+                    "C1: ANGLO ISLES",
+                    "C2: SOLAR EMPIRE",
+                    "C3: W. FRONTIER",
+                    "C4: IRON LEGION",
+                    "C5: TUNDRAN TERR.",
+                ];
+                sub.spawn((
+                    UiPanelSlot::WiiCampaignTabsRow,
+                    Node {
+                        width: percent(100),
+                        margin: UiRect::top(px(8)),
+                        column_gap: px(8),
+                        justify_content: JustifyContent::Center,
+                        ..default()
+                    },
+                ))
+                .with_children(|tabs| {
+                    for (t_idx, label) in continent_tabs.iter().enumerate() {
+                        tabs.spawn((
+                            Button,
+                            MenuItemButton(60 + t_idx),
+                            Node {
+                                padding: UiRect::axes(px(14), px(7)),
+                                border: UiRect::all(px(2)),
+                                ..default()
+                            },
+                            BackgroundColor(Color::srgba(0.06, 0.18, 0.11, 0.88)),
+                            BorderColor::all(Color::srgb(0.35, 0.72, 0.44)),
+                        ))
+                        .with_children(|tb| {
+                            tb.spawn((
+                                Text::new(*label),
+                                TextFont {
+                                    font_size: FontSize::Px(13.0),
+                                    ..default()
+                                },
+                                TextColor(Color::WHITE),
+                            ));
+                        });
+                    }
+                });
+
+                // Main Body with Open Center for the 3D Satellite Globe
+                sub.spawn(Node {
+                    width: percent(100),
+                    flex_grow: 1.0,
+                    margin: UiRect::top(px(10)),
+                    justify_content: JustifyContent::SpaceBetween,
+                    ..default()
+                })
+                .with_children(|body| {
+                    // Left Mission / Option List (`width: percent(36)`)
+                    body.spawn((
+                        Node {
+                            width: percent(36),
+                            padding: UiRect::all(px(14)),
+                            flex_direction: FlexDirection::Column,
+                            row_gap: px(8),
+                            border: UiRect::all(px(2)),
+                            ..default()
+                        },
+                        BackgroundColor(Color::srgba(0.03, 0.08, 0.05, 0.76)),
+                        BorderColor::all(Color::srgb(0.38, 0.76, 0.46)),
+                    ))
+                    .with_children(|left| {
+                        left.spawn((
+                            UiTextSlot::MenuLeftTitle,
+                            Text::new("SELECT MISSION"),
+                            TextFont {
+                                font_size: FontSize::Px(18.0),
+                                ..default()
+                            },
+                            TextColor(Color::srgb(0.96, 0.86, 0.36)),
+                        ));
+                        for idx in 0..6 {
+                            left.spawn((
+                                Button,
+                                MenuItemButton(idx),
+                                Node {
+                                    width: percent(100),
+                                    padding: UiRect::axes(px(12), px(10)),
+                                    border: UiRect::all(px(2)),
+                                    ..default()
+                                },
+                                BackgroundColor(Color::srgba(0.06, 0.14, 0.10, 0.90)),
+                                BorderColor::all(Color::srgb(0.32, 0.58, 0.40)),
+                            ))
+                            .with_children(|btn| {
+                                btn.spawn((
+                                    UiTextSlot::MenuItem(idx),
+                                    Text::new(""),
+                                    TextFont {
+                                        font_size: FontSize::Px(15.0),
+                                        ..default()
+                                    },
+                                    TextColor(Color::WHITE),
+                                ));
+                            });
+                        }
+                    });
+
+                    // Right Briefing & Action Card (`width: percent(42)`) leaving the middle 22% open over the 3D Globe
+                    body.spawn((
+                        Node {
+                            width: percent(42),
+                            padding: UiRect::all(px(16)),
+                            flex_direction: FlexDirection::Column,
+                            justify_content: JustifyContent::SpaceBetween,
+                            border: UiRect::all(px(2)),
+                            ..default()
+                        },
+                        BackgroundColor(Color::srgba(0.03, 0.08, 0.05, 0.78)),
+                        BorderColor::all(Color::srgb(0.88, 0.72, 0.24)),
+                    ))
+                    .with_children(|right| {
+                        right
+                            .spawn(Node {
+                                flex_direction: FlexDirection::Column,
+                                row_gap: px(10),
+                                ..default()
+                            })
+                            .with_children(|top| {
+                                top.spawn(Node {
+                                    column_gap: px(14),
+                                    align_items: AlignItems::Center,
+                                    ..default()
+                                })
+                                .with_children(|portraits| {
+                                    portraits.spawn((
+                                        UiImageSlot::MenuPortraitLeft,
+                                        ImageNode::new(sleiqo_portrait),
+                                        Node {
+                                            width: px(76),
+                                            height: px(76),
+                                            ..default()
+                                        },
+                                    ));
+                                    portraits.spawn((
+                                        UiImageSlot::MenuPortraitRight,
+                                        ImageNode::new(ferrok_portrait),
+                                        Node {
+                                            width: px(76),
+                                            height: px(76),
+                                            ..default()
+                                        },
+                                    ));
+                                    portraits.spawn((
+                                        UiImageSlot::MenuGradeBadge,
+                                        ImageNode::new(grade_s.clone()),
+                                        Node {
+                                            width: px(64),
+                                            height: px(64),
+                                            ..default()
+                                        },
+                                        Visibility::Hidden,
+                                    ));
+                                    portraits.spawn((
+                                        UiImageSlot::MovieScreen,
+                                        ImageNode::new(grade_s),
+                                        Node {
+                                            width: px(340),
+                                            height: px(204),
+                                            ..default()
+                                        },
+                                        Visibility::Hidden,
+                                    ));
+                                });
+
+                                top.spawn((
+                                    UiTextSlot::MenuRightTitle,
+                                    Text::new("BATTALION WARS 2"),
+                                    TextFont {
+                                        font_size: FontSize::Px(20.0),
+                                        ..default()
+                                    },
+                                    TextColor(Color::srgb(0.98, 0.86, 0.38)),
+                                ));
+                                top.spawn((
+                                    UiTextSlot::MenuRightBody,
+                                    Text::new(""),
+                                    TextFont {
+                                        font_size: FontSize::Px(14.5),
+                                        ..default()
+                                    },
+                                    TextColor(Color::srgb(0.92, 0.96, 0.94)),
+                                ));
+                                top.spawn((
+                                    UiTextSlot::MenuRightStatus,
+                                    Text::new(""),
+                                    TextFont {
+                                        font_size: FontSize::Px(13.5),
+                                        ..default()
+                                    },
+                                    TextColor(Color::srgb(0.45, 0.98, 0.68)),
+                                ));
+                            });
+
+                        right
+                            .spawn(Node {
+                                column_gap: px(12),
+                                margin: UiRect::top(px(10)),
+                                ..default()
+                            })
+                            .with_children(|actions| {
+                                actions
+                                    .spawn((
+                                        Button,
+                                        MenuActionBtn::Primary,
+                                        Node {
+                                            padding: UiRect::axes(px(20), px(10)),
+                                            border: UiRect::all(px(2)),
+                                            ..default()
+                                        },
+                                        BackgroundColor(Color::srgb(0.14, 0.46, 0.24)),
+                                        BorderColor::all(Color::srgb(0.98, 0.86, 0.34)),
+                                    ))
+                                    .with_children(|btn| {
+                                        btn.spawn((
+                                            UiTextSlot::MenuPrimaryLabel,
+                                            Text::new("CONFIRM [ENTER]"),
+                                            TextFont {
+                                                font_size: FontSize::Px(15.0),
+                                                ..default()
+                                            },
+                                            TextColor(Color::WHITE),
+                                        ));
+                                    });
+                                actions
+                                    .spawn((
+                                        Button,
+                                        MenuActionBtn::Secondary,
+                                        Node {
+                                            padding: UiRect::axes(px(16), px(10)),
+                                            border: UiRect::all(px(2)),
+                                            ..default()
+                                        },
+                                        BackgroundColor(Color::srgb(0.18, 0.12, 0.14)),
+                                        BorderColor::all(Color::srgb(0.65, 0.45, 0.48)),
+                                    ))
+                                    .with_children(|btn| {
+                                        btn.spawn((
+                                            UiTextSlot::MenuSecondaryLabel,
+                                            Text::new("(B) BACK [ESC]"),
+                                            TextFont {
+                                                font_size: FontSize::Px(14.0),
+                                                ..default()
+                                            },
+                                            TextColor(Color::srgb(0.94, 0.88, 0.88)),
+                                        ));
+                                    });
+                            });
+                    });
                 });
             });
+
+            // 8. Fullscreen Stage Overlay (`BootLogos`, `IntroMovie`, `MissionCutsceneIn`)
+            menu.spawn((
+                UiPanelSlot::FullscreenStageOverlay,
+                Node {
+                    position_type: PositionType::Absolute,
+                    left: px(0),
+                    top: px(0),
+                    width: percent(100),
+                    height: percent(100),
+                    flex_direction: FlexDirection::Column,
+                    justify_content: JustifyContent::Center,
+                    align_items: AlignItems::Center,
+                    ..default()
+                },
+                BackgroundColor(Color::BLACK),
+                GlobalZIndex(260),
+                Visibility::Hidden,
+            ))
+            .with_children(|fs| {
+                fs.spawn((
+                    UiImageSlot::FullscreenStageImage,
+                    ImageNode::new(startup_strap),
+                    Node {
+                        width: percent(100),
+                        height: percent(100),
+                        ..default()
+                    },
+                ));
+                fs.spawn((
+                    Button,
+                    MenuItemButton(70),
+                    Node {
+                        position_type: PositionType::Absolute,
+                        bottom: px(28),
+                        padding: UiRect::axes(px(24), px(12)),
+                        flex_direction: FlexDirection::Column,
+                        align_items: AlignItems::Center,
+                        row_gap: px(4),
+                        border: UiRect::all(px(2)),
+                        ..default()
+                    },
+                    BackgroundColor(Color::srgba(0.02, 0.06, 0.04, 0.84)),
+                    BorderColor::all(Color::srgb(0.55, 0.92, 0.62)),
+                ))
+                .with_children(|banner| {
+                    banner.spawn((
+                        UiTextSlot::FullscreenStageTitle,
+                        Text::new("NINTENDO / KUJU ENTERTAINMENT"),
+                        TextFont {
+                            font_size: FontSize::Px(18.0),
+                            ..default()
+                        },
+                        TextColor(Color::srgb(0.98, 0.88, 0.38)),
+                    ));
+                    banner.spawn((
+                        UiTextSlot::FullscreenStageSub,
+                        Text::new("Press [A / ENTER / SPACE / CLICK] to continue"),
+                        TextFont {
+                            font_size: FontSize::Px(14.0),
+                            ..default()
+                        },
+                        TextColor(Color::WHITE),
+                    ));
+                });
+            });
+
+            // 9. Native Frontend2_Level.xml GuiScene canvas quad overlay pool (rendered in bottom-right preview viewport on F3)
+            for idx in 0..48 {
+                menu.spawn((
+                    FrontendGuiCanvasQuad(idx),
+                    ImageNode::new(tex("hud_health_fill")),
+                    Node {
+                        position_type: PositionType::Absolute,
+                        left: px(0),
+                        top: px(0),
+                        width: px(0),
+                        height: px(0),
+                        border: UiRect::all(px(1)),
+                        justify_content: JustifyContent::Center,
+                        align_items: AlignItems::Center,
+                        ..default()
+                    },
+                    BackgroundColor(Color::NONE),
+                    BorderColor::all(Color::NONE),
+                    Visibility::Hidden,
+                ))
+                .with_children(|qnode| {
+                    qnode.spawn((
+                        FrontendGuiCanvasText(idx),
+                        Text::new(""),
+                        TextFont {
+                            font_size: FontSize::Px(10.0),
+                            ..default()
+                        },
+                        TextColor(Color::WHITE),
+                    ));
+                });
+            }
+
+            // 10. Custom Wii Remote Hand Pointer (`cursor_point`)
+            menu.spawn((
+                WiiHandCursor,
+                ImageNode::new(cursor_point),
+                Node {
+                    position_type: PositionType::Absolute,
+                    left: px(640),
+                    top: px(360),
+                    width: px(44),
+                    height: px(44),
+                    ..default()
+                },
+                GlobalZIndex(300),
+            ));
         });
+
+    commands.spawn((
+        SplitScreenDivider,
+        Node {
+            position_type: PositionType::Absolute,
+            left: px(0),
+            top: percent(50),
+            width: percent(100),
+            height: px(3),
+            ..default()
+        },
+        BackgroundColor(Color::srgba(0.95, 0.82, 0.32, 0.92)),
+        GlobalZIndex(180),
+        Visibility::Hidden,
+    ));
 }
 
-fn start_selected_movie(view: &mut View, images: &mut Assets<Image>) {
-    let Some(meta) = FMV_MOVIES.get(view.movie_index) else {
-        return;
-    };
-    let path = view.data_dir.join("Video").join(meta.filename);
+fn start_movie_by_filename(view: &mut View, images: &mut Assets<Image>, filename: &str) {
+    let path = view.data_dir.join("Video").join(filename);
     let Ok(info) = bw_rust::movie::Info::probe(&path) else {
         return;
     };
-    let Ok(wav) = info.audio_wav() else {
-        return;
-    };
+    let wav = info.audio_wav().ok();
     let Ok(decoder) = bw_rust::movie::Decoder::start(info.clone()) else {
         return;
     };
@@ -5246,15 +6942,15 @@ fn start_selected_movie(view: &mut View, images: &mut Assets<Image>) {
         "PlayVideo",
         &[
             bw_rust::lua50::Value::Number(1.0),
-            bw_rust::lua50::Value::String(meta.filename.to_string()),
+            bw_rust::lua50::Value::String(filename.to_string()),
         ],
         10_000,
     );
     view.active_movie = Some(ActiveMoviePlayer {
-        filename: meta.filename.to_string(),
+        filename: filename.to_string(),
         decoder: std::sync::Mutex::new(decoder),
         info,
-        wav: Some(wav),
+        wav,
         image: handle,
         pending: None,
         started: false,
@@ -5263,8 +6959,103 @@ fn start_selected_movie(view: &mut View, images: &mut Assets<Image>) {
     });
 }
 
+fn start_selected_movie(view: &mut View, images: &mut Assets<Image>) {
+    let Some(meta) = FMV_MOVIES.get(view.movie_index) else {
+        return;
+    };
+    start_movie_by_filename(view, images, meta.filename);
+}
+
+fn mission_intro_movie(level_code: &str) -> Option<&'static str> {
+    match level_code {
+        "SP_0.1" => Some("0.1_Prologue_1.THP"),
+        "SP_1.1" => Some("1.1_Anglo_Attack.THP"),
+        "SP_2.1" => Some("2.1_Learning_From_History.THP"),
+        "SP_3.1" => Some("3.1_A_Dish_Served_Cold.THP"),
+        "SP_4.1" => Some("4.1_We_Know_Only_War.THP"),
+        "SP_5.1" => Some("5.1_Enemy_At_The_Gates.THP"),
+        _ => None,
+    }
+}
+
+fn step_active_movie(
+    commands: &mut Commands,
+    view: &mut View,
+    images: &mut Assets<Image>,
+    audio_assets: &mut Assets<AudioSource>,
+    voice_sinks: &Query<Entity, With<VoiceTrackPlayer>>,
+    dt: f64,
+) -> bool {
+    let sfx_vol = view.sfx_volume;
+    let Some(movie) = view.active_movie.as_mut() else {
+        return true;
+    };
+    if !movie.started {
+        if let Ok(mut dec) = movie.decoder.lock()
+            && let Ok(Some(frame)) = dec.try_frame()
+        {
+            if let Some(mut img) = images.get_mut(&movie.image) {
+                img.data = Some(frame.rgba.clone());
+            }
+            movie.last_frame = frame.index;
+            movie.pending = Some(frame);
+            movie.started = true;
+            for entity in voice_sinks.iter() {
+                commands.entity(entity).despawn();
+            }
+            if std::env::var_os("BW_OFFSCREEN").is_none()
+                && let Some(wav) = movie.wav.take()
+            {
+                let handle = audio_assets.add(AudioSource { bytes: wav.into() });
+                commands.spawn((
+                    AudioPlayer::new(handle),
+                    PlaybackSettings::DESPAWN.with_volume(bevy::audio::Volume::Linear(sfx_vol)),
+                    VoiceTrackPlayer,
+                ));
+            }
+        }
+        return false;
+    }
+
+    movie.elapsed += dt;
+    for _ in 0..8 {
+        if movie.pending.is_none()
+            && let Ok(mut dec) = movie.decoder.lock()
+        {
+            movie.pending = dec.try_frame().ok().flatten();
+        }
+        let Some(frame) = &movie.pending else {
+            break;
+        };
+        if frame.index as f64 / movie.info.frame_rate > movie.elapsed {
+            break;
+        }
+        let frame = movie.pending.take().unwrap();
+        if let Some(mut img) = images.get_mut(&movie.image) {
+            img.data = Some(frame.rgba);
+        }
+        movie.last_frame = frame.index;
+    }
+    movie.last_frame + 1 >= movie.info.frames && movie.pending.is_none()
+}
+
 fn handle_menu_confirm(commands: &mut Commands, view: &mut View) {
     match view.stage {
+        FrontendStage::BootLogos => {
+            play_sfx(commands, view, "UI_FE_Open");
+            view.active_movie = None;
+            view.stage = FrontendStage::IntroMovie;
+        }
+        FrontendStage::IntroMovie => {
+            play_sfx(commands, view, "UI_FE_Open");
+            view.active_movie = None;
+            view.stage = FrontendStage::Title;
+        }
+        FrontendStage::MissionCutsceneIn => {
+            play_sfx(commands, view, "bugle_03");
+            view.active_movie = None;
+            view.stage = FrontendStage::InMission;
+        }
         FrontendStage::Title => {
             let _ = view
                 .fe_runtime
@@ -5353,8 +7144,13 @@ fn handle_menu_confirm(commands: &mut Commands, view: &mut View) {
                     view.pending_level = Some(meta.code.to_string());
                 } else {
                     view.reset_mission_state();
-                    view.stage = FrontendStage::InMission;
                 }
+                view.active_movie = None;
+                view.stage = if view.menu_smoke {
+                    FrontendStage::InMission
+                } else {
+                    FrontendStage::MissionCutsceneIn
+                };
             }
         }
         FrontendStage::MultiplayerInfo => {
@@ -5364,8 +7160,8 @@ fn handle_menu_confirm(commands: &mut Commands, view: &mut View) {
                     view.pending_level = Some(meta.code.to_string());
                 } else {
                     view.reset_mission_state();
-                    view.stage = FrontendStage::InMission;
                 }
+                view.stage = FrontendStage::InMission;
             }
         }
         FrontendStage::Options => {
@@ -5396,6 +7192,13 @@ fn handle_menu_confirm(commands: &mut Commands, view: &mut View) {
                     view.aim_assist_enabled = !view.aim_assist_enabled;
                 }
                 4 => {
+                    view.keybind_index = 0;
+                    view.keybind_waiting = false;
+                    view.keybind_return_to_mission = false;
+                    view.keybind_notice.clear();
+                    view.stage = FrontendStage::Keybindings;
+                }
+                5 => {
                     view.music_volume = 1.0;
                     view.sfx_volume = 1.0;
                     view.mouse_sensitivity = 1.0;
@@ -5406,6 +7209,19 @@ fn handle_menu_confirm(commands: &mut Commands, view: &mut View) {
                 }
             }
             view.save_to_disk();
+        }
+        FrontendStage::Keybindings => {
+            play_sfx(commands, view, "UI_FE_Popup");
+            view.keybind_waiting = !view.keybind_waiting;
+            if view.keybind_waiting {
+                let (_, label, _) =
+                    REBINDABLE_ACTIONS[view.keybind_index.min(REBINDABLE_ACTIONS.len() - 1)];
+                view.keybind_notice = format!(
+                    "WAITING FOR INPUT FOR [{label}]... Press any Keyboard Key or Gamepad Button (or [ESC] to cancel)."
+                );
+            } else {
+                view.keybind_notice = "Rebind cancelled.".into();
+            }
         }
         FrontendStage::ExtrasMenu => match view.extras_index {
             0 => {
@@ -5446,7 +7262,6 @@ fn handle_menu_confirm(commands: &mut Commands, view: &mut View) {
         }
         FrontendStage::MovieTheater => {
             play_sfx(commands, view, "UI_FE_Open");
-            // Signal movie start (handled in update where Assets<Image> is available)
             view.active_movie = None;
         }
         FrontendStage::Credits => {
@@ -5477,6 +7292,21 @@ fn handle_menu_confirm(commands: &mut Commands, view: &mut View) {
 
 fn handle_menu_back(commands: &mut Commands, view: &mut View) {
     match view.stage {
+        FrontendStage::BootLogos => {
+            play_sfx(commands, view, "UI_FE_Open");
+            view.active_movie = None;
+            view.stage = FrontendStage::IntroMovie;
+        }
+        FrontendStage::IntroMovie => {
+            play_sfx(commands, view, "UI_FE_Open");
+            view.active_movie = None;
+            view.stage = FrontendStage::Title;
+        }
+        FrontendStage::MissionCutsceneIn => {
+            play_sfx(commands, view, "bugle_03");
+            view.active_movie = None;
+            view.stage = FrontendStage::InMission;
+        }
         FrontendStage::Title => {
             view.should_exit = true;
         }
@@ -5498,6 +7328,18 @@ fn handle_menu_back(commands: &mut Commands, view: &mut View) {
         | FrontendStage::ExtrasMenu => {
             play_sfx(commands, view, "UI_FE_Close");
             view.stage = FrontendStage::MainMenu;
+        }
+        FrontendStage::Keybindings => {
+            play_sfx(commands, view, "UI_FE_Close");
+            if view.keybind_waiting {
+                view.keybind_waiting = false;
+                view.keybind_notice = "Rebind cancelled.".into();
+            } else if view.keybind_return_to_mission {
+                view.keybind_return_to_mission = false;
+                view.stage = FrontendStage::InMission;
+            } else {
+                view.stage = FrontendStage::Options;
+            }
         }
         FrontendStage::UnitDossier
         | FrontendStage::ConceptGallery
@@ -5526,7 +7368,7 @@ pub fn update(
         Res<ButtonInput<MouseButton>>,
         Option<Res<bevy::input::mouse::AccumulatedMouseMotion>>,
         Query<&Gamepad>,
-        Option<Res<bw_rust::controls::Controls>>,
+        Option<ResMut<bw_rust::controls::Controls>>,
     ),
     mut asset_res: (
         ResMut<Assets<Mesh>>,
@@ -5545,7 +7387,10 @@ pub fn update(
         (&mut Transform, &mut Visibility),
         (With<TargetLockBracket>, Without<Camera3d>, Without<Part>),
     >,
-    mut cameras: Query<(&mut Transform, &mut Projection), With<Camera3d>>,
+    mut cameras: Query<
+        (&mut Transform, &mut Projection),
+        (With<Camera3d>, Without<Player2Camera3d>),
+    >,
     mut hud: Query<&mut Text, With<Hud>>,
     mut fade: Query<
         &mut BackgroundColor,
@@ -5693,7 +7538,7 @@ pub fn update(
         ref mut action_buttons,
     ) = ui_queries;
 
-    let Some(controls) = controls else {
+    let Some(mut controls) = controls else {
         view.error = Some("Missing controls".into());
         return;
     };
@@ -5833,7 +7678,29 @@ pub fn update(
         },
     );
 
+    if view.stage != view.last_stage {
+        view.last_stage = view.stage;
+        view.stage_frames = 0;
+    } else {
+        view.stage_frames = view.stage_frames.saturating_add(1);
+    }
+
     if !in_mission {
+        for (_, _, mut vis) in &mut actors {
+            if *vis != Visibility::Hidden {
+                *vis = Visibility::Hidden;
+            }
+        }
+        for (_, _, mut vis) in &mut world_bars {
+            if *vis != Visibility::Hidden {
+                *vis = Visibility::Hidden;
+            }
+        }
+        for (_, mut vis) in &mut lock_bracket {
+            if *vis != Visibility::Hidden {
+                *vis = Visibility::Hidden;
+            }
+        }
         set_panel_vis(UiPanelSlot::Crosshair, Visibility::Hidden);
         set_panel_vis(UiPanelSlot::CinematicTop, Visibility::Hidden);
         set_panel_vis(UiPanelSlot::CinematicBottom, Visibility::Hidden);
@@ -5847,15 +7714,14 @@ pub fn update(
                 *c = BackgroundColor(Color::NONE);
             }
         }
-        let angle = view.frames as f32 * 0.003;
         let menu_center = Vec3::new(-415.0, 58.0, 260.0);
-        let menu_eye = menu_center + Vec3::new(angle.cos() * 32.0, 14.0, angle.sin() * 32.0);
+        let menu_eye = Vec3::new(-415.0, 58.6, 289.5);
         for (mut transform, _) in &mut cameras {
             *transform = Transform::from_translation(menu_eye).looking_at(menu_center, Vec3::Y);
         }
 
         if view.stage == FrontendStage::NameEntry {
-            if keys.just_pressed(KeyCode::Backspace) {
+            if keys.just_pressed(KeyCode::Backspace) || keys.just_pressed(KeyCode::Delete) {
                 view.name_buffer.pop();
                 play_sfx(&mut commands, view, "UI_FE_Navigate");
             }
@@ -5902,7 +7768,27 @@ pub fn update(
                     play_sfx(&mut commands, view, "UI_FE_Navigate");
                 }
             }
+        } else if view.stage == FrontendStage::Keybindings && view.keybind_waiting {
+            // Handled below so we can also check secondary_clicked / Escape
         } else {
+            if view.stage == FrontendStage::SaveSelect
+                && (keys.just_pressed(KeyCode::Delete) || keys.just_pressed(KeyCode::Backspace))
+            {
+                let sel = view.selected_slot;
+                view.slots[sel] = None;
+                view.save_to_disk();
+                play_sfx(&mut commands, view, "UI_FE_Close");
+            }
+            if view.stage == FrontendStage::Keybindings
+                && (keys.just_pressed(KeyCode::Delete) || keys.just_pressed(KeyCode::Backspace))
+            {
+                controls.reset_defaults();
+                view.save_controls_to_disk(&controls);
+                view.keybind_notice =
+                    "ALL KEYBINDINGS & GAMEPAD BUTTONS RESET TO DEFAULTS (SAVED TO config/controls.json)."
+                        .into();
+                play_sfx(&mut commands, view, "UI_FE_Popup");
+            }
             let up = keys.just_pressed(KeyCode::ArrowUp) || keys.just_pressed(KeyCode::KeyW);
             let down = keys.just_pressed(KeyCode::ArrowDown) || keys.just_pressed(KeyCode::KeyS);
             let left_key =
@@ -5912,19 +7798,27 @@ pub fn update(
             if up || down || left_key || right_key {
                 play_sfx(&mut commands, view, "UI_FE_Navigate");
                 match view.stage {
-                    FrontendStage::SaveSelect if up || down => {
-                        view.selected_slot = if down {
+                    FrontendStage::SaveSelect => {
+                        view.selected_slot = if down || right_key {
                             (view.selected_slot + 1) % 3
                         } else {
                             (view.selected_slot + 2) % 3
                         };
                     }
-                    FrontendStage::MainMenu if up || down => {
-                        view.main_menu_index = if down {
-                            (view.main_menu_index + 1) % 6
-                        } else {
-                            (view.main_menu_index + 5) % 6
-                        };
+                    FrontendStage::MainMenu => {
+                        if left_key || right_key {
+                            view.main_menu_index = if right_key {
+                                (view.main_menu_index + 1) % 6
+                            } else {
+                                (view.main_menu_index + 5) % 6
+                            };
+                        } else if up || down {
+                            view.main_menu_index = if down {
+                                (view.main_menu_index + 2) % 6
+                            } else {
+                                (view.main_menu_index + 4) % 6
+                            };
+                        }
                     }
                     FrontendStage::CampaignSelect => {
                         let count = CAMPAIGN_1_MISSIONS.len();
@@ -5984,6 +7878,22 @@ pub fn update(
                                 _ => {}
                             }
                             view.save_to_disk();
+                        }
+                    }
+                    FrontendStage::Keybindings => {
+                        let count = REBINDABLE_ACTIONS.len();
+                        if up || down {
+                            view.keybind_index = if down {
+                                (view.keybind_index + 1) % count
+                            } else {
+                                (view.keybind_index + count - 1) % count
+                            };
+                        } else if left_key || right_key {
+                            view.keybind_index = if right_key {
+                                (view.keybind_index + 6) % count
+                            } else {
+                                (view.keybind_index + count - 6) % count
+                            };
                         }
                     }
                     FrontendStage::ExtrasMenu if up || down => {
@@ -6058,34 +7968,105 @@ pub fn update(
         }
         if let Some(idx) = clicked_item {
             match view.stage {
+                FrontendStage::BootLogos
+                | FrontendStage::IntroMovie
+                | FrontendStage::MissionCutsceneIn => {
+                    handle_menu_confirm(&mut commands, view);
+                }
                 FrontendStage::Title => {
-                    handle_menu_confirm(&mut commands, view);
+                    if idx == 11 {
+                        play_sfx(&mut commands, view, "UI_FE_Open");
+                        view.active_movie = None;
+                        view.stage = FrontendStage::IntroMovie;
+                    } else {
+                        handle_menu_confirm(&mut commands, view);
+                    }
                 }
-                FrontendStage::SaveSelect if idx < 3 => {
-                    view.selected_slot = idx;
-                    handle_menu_confirm(&mut commands, view);
-                }
-                FrontendStage::NameEntry if idx == 0 => {
-                    handle_menu_confirm(&mut commands, view);
-                }
-                FrontendStage::MainMenu if idx < 6 => {
-                    view.main_menu_index = idx;
-                    handle_menu_confirm(&mut commands, view);
-                }
-                FrontendStage::CampaignSelect => {
-                    let page_start = (view.selected_mission / 6) * 6;
-                    let target = page_start + idx;
-                    if target < CAMPAIGN_1_MISSIONS.len() {
-                        if view.selected_mission != target {
-                            view.selected_mission = target;
-                            play_sfx(&mut commands, view, "UI_MissionHighlight");
-                            view.mission2_selected_notice.clear();
+                FrontendStage::SaveSelect => {
+                    if (20..23).contains(&idx) {
+                        let slot = idx - 20;
+                        if view.selected_slot != slot {
+                            view.selected_slot = slot;
+                            play_sfx(&mut commands, view, "UI_FE_Navigate");
                         } else {
                             handle_menu_confirm(&mut commands, view);
                         }
+                    } else if idx == 23 {
+                        let sel = view.selected_slot;
+                        view.slots[sel] = None;
+                        view.save_to_disk();
+                        play_sfx(&mut commands, view, "UI_FE_Close");
+                    } else if idx == 24 || idx < 3 {
+                        if idx < 3 {
+                            view.selected_slot = idx;
+                        }
+                        handle_menu_confirm(&mut commands, view);
                     }
                 }
-                FrontendStage::MultiplayerInfo => {
+                FrontendStage::NameEntry => {
+                    if (30..42).contains(&idx) {
+                        play_sfx(&mut commands, view, "UI_FE_Navigate");
+                        match idx {
+                            30..=38 => {
+                                let groups = [
+                                    "ABC", "DEF", "GHI", "JKL", "MNO", "PQRS", "TUV", "WXYZ", "123",
+                                ];
+                                let grp = groups[idx - 30].as_bytes();
+                                if let Some(last) = view.name_buffer.chars().last()
+                                    && let Some(pos) = grp.iter().position(|&b| b as char == last)
+                                {
+                                    view.name_buffer.pop();
+                                    view.name_buffer.push(grp[(pos + 1) % grp.len()] as char);
+                                } else if view.name_buffer.len() < 14 {
+                                    view.name_buffer.push(grp[0] as char);
+                                }
+                            }
+                            39 if view.name_buffer.len() < 14 => {
+                                view.name_buffer.push('_');
+                            }
+                            40 => {
+                                view.name_buffer.pop();
+                            }
+                            41 => {
+                                view.name_buffer.clear();
+                            }
+                            _ => {}
+                        }
+                    } else if idx == 42 || idx == 0 {
+                        handle_menu_confirm(&mut commands, view);
+                    }
+                }
+                FrontendStage::MainMenu => {
+                    if (50..56).contains(&idx) {
+                        view.main_menu_index = idx - 50;
+                        handle_menu_confirm(&mut commands, view);
+                    } else if idx < 6 {
+                        view.main_menu_index = idx;
+                        handle_menu_confirm(&mut commands, view);
+                    }
+                }
+                FrontendStage::CampaignSelect => {
+                    if (60..66).contains(&idx) {
+                        let continent_starts = [0usize, 1, 6, 9, 13, 16];
+                        view.selected_mission =
+                            continent_starts[idx - 60].min(CAMPAIGN_1_MISSIONS.len() - 1);
+                        view.mission2_selected_notice.clear();
+                        play_sfx(&mut commands, view, "UI_FE_Page");
+                    } else if idx < 6 {
+                        let page_start = (view.selected_mission / 6) * 6;
+                        let target = page_start + idx;
+                        if target < CAMPAIGN_1_MISSIONS.len() {
+                            if view.selected_mission != target {
+                                view.selected_mission = target;
+                                play_sfx(&mut commands, view, "UI_MissionHighlight");
+                                view.mission2_selected_notice.clear();
+                            } else {
+                                handle_menu_confirm(&mut commands, view);
+                            }
+                        }
+                    }
+                }
+                FrontendStage::MultiplayerInfo if idx < 6 => {
                     let page_start = (view.multiplayer_index / 6) * 6;
                     let target = page_start + idx;
                     if target < MULTIPLAYER_MAPS.len() {
@@ -6099,7 +8080,24 @@ pub fn update(
                 }
                 FrontendStage::Options if idx < 6 => {
                     view.options_index = idx;
+                    if idx == 5 {
+                        controls.reset_defaults();
+                        view.save_controls_to_disk(&controls);
+                    }
                     handle_menu_confirm(&mut commands, view);
+                }
+                FrontendStage::Keybindings if idx < 6 => {
+                    let page_start = (view.keybind_index / 6) * 6;
+                    let target = page_start + idx;
+                    if target < REBINDABLE_ACTIONS.len() {
+                        if view.keybind_index != target {
+                            view.keybind_index = target;
+                            view.keybind_waiting = false;
+                            play_sfx(&mut commands, view, "UI_FE_Navigate");
+                        } else {
+                            handle_menu_confirm(&mut commands, view);
+                        }
+                    }
                 }
                 FrontendStage::ExtrasMenu if idx < 5 => {
                     view.extras_index = idx;
@@ -6118,7 +8116,7 @@ pub fn update(
                     view.concept_index = idx;
                     play_sfx(&mut commands, view, "UI_FE_Navigate");
                 }
-                FrontendStage::MovieTheater => {
+                FrontendStage::MovieTheater if idx < 6 => {
                     let page_start = (view.movie_index / 6) * 6;
                     let target = page_start + idx;
                     if target < FMV_MOVIES.len() {
@@ -6127,7 +8125,7 @@ pub fn update(
                         start_selected_movie(view, images);
                     }
                 }
-                FrontendStage::Credits => {
+                FrontendStage::Credits if idx < 6 => {
                     if idx < 5 {
                         view.credits_page = idx;
                     } else {
@@ -6163,26 +8161,188 @@ pub fn update(
             }
         }
 
-        let confirm_key = keys.just_pressed(KeyCode::Enter)
-            || (view.stage != FrontendStage::NameEntry && keys.just_pressed(KeyCode::Space));
-        let back_key = keys.just_pressed(KeyCode::Escape);
-        if primary_clicked || confirm_key {
-            if view.stage == FrontendStage::MovieTheater {
-                play_sfx(&mut commands, view, "UI_FE_Open");
-                start_selected_movie(view, images);
-            } else {
-                handle_menu_confirm(&mut commands, view);
+        let mut keybind_consumed_input = false;
+        if view.stage == FrontendStage::Keybindings && view.keybind_waiting {
+            let (act_key, act_label, _) =
+                REBINDABLE_ACTIONS[view.keybind_index.min(REBINDABLE_ACTIONS.len() - 1)];
+            if keys.just_pressed(KeyCode::Escape) || secondary_clicked {
+                view.keybind_waiting = false;
+                view.keybind_notice = format!("Rebind for [{act_label}] cancelled.");
+                play_sfx(&mut commands, view, "UI_FE_Close");
+                keybind_consumed_input = true;
+            } else if let Some(new_key) = bw_rust::controls::detect_pressed_key(&keys) {
+                if controls.rebind_key(act_key, new_key).is_ok() {
+                    view.save_controls_to_disk(&controls);
+                    let kname = bw_rust::controls::key_name(new_key).unwrap_or("Key");
+                    view.keybind_notice = format!(
+                        "BOUND [{act_label}] TO KEYBOARD [{kname}]! (Saved to config/controls.json)"
+                    );
+                }
+                view.keybind_waiting = false;
+                play_sfx(&mut commands, view, "UI_FE_Popup");
+                keybind_consumed_input = true;
+            } else if let Some(new_btn) = pads
+                .iter()
+                .next()
+                .and_then(bw_rust::controls::detect_pressed_gamepad_button)
+            {
+                if controls.rebind_gamepad(act_key, new_btn).is_ok() {
+                    view.save_controls_to_disk(&controls);
+                    let bname = bw_rust::controls::button_name(new_btn).unwrap_or("Button");
+                    view.keybind_notice = format!(
+                        "BOUND [{act_label}] TO GAMEPAD [{bname}]! (Saved to config/controls.json)"
+                    );
+                }
+                view.keybind_waiting = false;
+                play_sfx(&mut commands, view, "UI_FE_Popup");
+                keybind_consumed_input = true;
             }
-        } else if secondary_clicked || back_key {
-            handle_menu_back(&mut commands, view);
+        }
+
+        if !keybind_consumed_input {
+            let pad_confirm = pads.iter().next().is_some_and(|p| {
+                p.just_pressed(GamepadButton::South) || p.just_pressed(GamepadButton::Start)
+            });
+            let pad_back = pads
+                .iter()
+                .next()
+                .is_some_and(|p| p.just_pressed(GamepadButton::East));
+            let confirm_key = keys.just_pressed(KeyCode::Enter)
+                || pad_confirm
+                || (!matches!(
+                    view.stage,
+                    FrontendStage::NameEntry | FrontendStage::Keybindings
+                ) && keys.just_pressed(KeyCode::Space));
+            let back_key = keys.just_pressed(KeyCode::Escape) || pad_back;
+            if primary_clicked || confirm_key {
+                if view.stage == FrontendStage::MovieTheater {
+                    play_sfx(&mut commands, view, "UI_FE_Open");
+                    start_selected_movie(view, images);
+                } else {
+                    if view.stage == FrontendStage::Options && view.options_index == 5 {
+                        controls.reset_defaults();
+                        view.save_controls_to_disk(&controls);
+                    }
+                    handle_menu_confirm(&mut commands, view);
+                }
+            } else if secondary_clicked || back_key {
+                handle_menu_back(&mut commands, view);
+            }
+        }
+
+        // Handle Fullscreen BootLogos, IntroMovie (`BWii_Intro.thp`), and MissionCutsceneIn
+        let hold_stage = std::env::var_os("BW_HOLD_STAGE").is_some();
+        let dt = time.delta_secs_f64().clamp(1.0 / 120.0, 0.1);
+        let mut fullscreen_img: Option<Handle<Image>> = None;
+        match view.stage {
+            FrontendStage::BootLogos => {
+                if view.stage_frames < 110 {
+                    fullscreen_img = view.ui_handles.get("startup_strap").cloned();
+                    set_text(
+                        UiTextSlot::FullscreenStageTitle,
+                        "WII REMOTE WRIST STRAP WARNING".into(),
+                    );
+                    set_text(
+                        UiTextSlot::FullscreenStageSub,
+                        "PLEASE FASTEN THE WRIST STRAP SECURELY - PRESS [A / ENTER / SPACE / CLICK] TO CONTINUE"
+                            .into(),
+                    );
+                } else if view.stage_frames < 220 || hold_stage {
+                    fullscreen_img = view.ui_handles.get("startup_esrb").cloned();
+                    set_text(
+                        UiTextSlot::FullscreenStageTitle,
+                        "(C) 2007 NINTENDO. GAME DEVELOPED BY KUJU ENTERTAINMENT LTD.".into(),
+                    );
+                    set_text(
+                        UiTextSlot::FullscreenStageSub,
+                        "LICENSED BY NINTENDO - OPENING INTRO MOVIE STARTING...".into(),
+                    );
+                } else {
+                    view.active_movie = None;
+                    view.stage = FrontendStage::IntroMovie;
+                }
+            }
+            FrontendStage::IntroMovie => {
+                if view.active_movie.is_none() {
+                    start_movie_by_filename(view, images, "BWii_Intro.thp");
+                }
+                let finished =
+                    step_active_movie(&mut commands, view, images, audio_assets, voice_sinks, dt);
+                fullscreen_img = view.active_movie.as_ref().map(|m| m.image.clone());
+                set_text(
+                    UiTextSlot::FullscreenStageTitle,
+                    "BATTALION WARS 2 - OPENING INTRO (BWii_Intro.thp)".into(),
+                );
+                set_text(
+                    UiTextSlot::FullscreenStageSub,
+                    "Press [A / B / ENTER / SPACE / ESC / CLICK] to skip to Title Screen".into(),
+                );
+                if finished && !hold_stage {
+                    view.active_movie = None;
+                    view.stage = FrontendStage::Title;
+                }
+            }
+            FrontendStage::MissionCutsceneIn => {
+                let target_code = view
+                    .pending_level
+                    .as_deref()
+                    .unwrap_or(&view.current_level)
+                    .to_string();
+                if let Some(movie_file) = mission_intro_movie(&target_code) {
+                    if view.active_movie.is_none() {
+                        start_movie_by_filename(view, images, movie_file);
+                    }
+                    let finished = step_active_movie(
+                        &mut commands,
+                        view,
+                        images,
+                        audio_assets,
+                        voice_sinks,
+                        dt,
+                    );
+                    fullscreen_img = view.active_movie.as_ref().map(|m| m.image.clone());
+                    set_text(
+                        UiTextSlot::FullscreenStageTitle,
+                        format!("CAMPAIGN CUTSCENE - {movie_file} ({target_code})"),
+                    );
+                    set_text(
+                        UiTextSlot::FullscreenStageSub,
+                        "Press [A / ENTER / SPACE / ESC / CLICK] to skip cutscene & deploy into battle"
+                            .into(),
+                    );
+                    if finished && !hold_stage {
+                        view.active_movie = None;
+                        view.stage = FrontendStage::InMission;
+                    }
+                } else {
+                    fullscreen_img = view
+                        .ui_handles
+                        .get("loading_backdrop")
+                        .or_else(|| view.ui_handles.get("bg_map03"))
+                        .cloned();
+                    set_text(
+                        UiTextSlot::FullscreenStageTitle,
+                        format!("LOADING OPERATION {target_code}..."),
+                    );
+                    set_text(
+                        UiTextSlot::FullscreenStageSub,
+                        "DEPLOYING BATTALION - PRESS [A / ENTER / SPACE / CLICK] TO BEGIN".into(),
+                    );
+                    if view.stage_frames >= 75 && !hold_stage {
+                        view.stage = FrontendStage::InMission;
+                    }
+                }
+            }
+            _ => {}
         }
 
         if view.stage == FrontendStage::InMission {
-            if view.active_briefing_vo.is_some() {
+            if view.active_briefing_vo.is_some() || view.active_movie.is_some() {
                 for entity in voice_sinks.iter() {
                     commands.entity(entity).despawn();
                 }
                 view.active_briefing_vo = None;
+                view.active_movie = None;
             }
             for (slot, _, mut vis) in ui_images.iter_mut() {
                 if matches!(
@@ -6201,9 +8361,183 @@ pub fn update(
                     *vis = Visibility::Hidden;
                 }
             }
+            set_panel_vis(UiPanelSlot::FullscreenStageOverlay, Visibility::Hidden);
             set_panel_vis(UiPanelSlot::MenuRoot, Visibility::Hidden);
             set_panel_vis(UiPanelSlot::InGameHudRoot, Visibility::Visible);
             return;
+        }
+
+        // Toggle visibility of the authentic Wii stage overlays
+        let is_fullscreen_stage = matches!(
+            view.stage,
+            FrontendStage::BootLogos | FrontendStage::IntroMovie | FrontendStage::MissionCutsceneIn
+        );
+        let is_center_logo_stage = matches!(
+            view.stage,
+            FrontendStage::Title
+                | FrontendStage::SaveSelect
+                | FrontendStage::NameEntry
+                | FrontendStage::MainMenu
+        );
+        let is_submenu_stage = matches!(
+            view.stage,
+            FrontendStage::CampaignSelect
+                | FrontendStage::MultiplayerInfo
+                | FrontendStage::Options
+                | FrontendStage::Keybindings
+                | FrontendStage::ExtrasMenu
+                | FrontendStage::UnitDossier
+                | FrontendStage::ConceptGallery
+                | FrontendStage::MovieTheater
+                | FrontendStage::Credits
+                | FrontendStage::Victory
+                | FrontendStage::Defeat
+        );
+        set_panel_vis(
+            UiPanelSlot::FullscreenStageOverlay,
+            if is_fullscreen_stage {
+                Visibility::Visible
+            } else {
+                Visibility::Hidden
+            },
+        );
+        set_panel_vis(
+            UiPanelSlot::WiiCenterLogoPanel,
+            if is_center_logo_stage {
+                Visibility::Visible
+            } else {
+                Visibility::Hidden
+            },
+        );
+        set_panel_vis(
+            UiPanelSlot::WiiTitleOverlay,
+            if view.stage == FrontendStage::Title {
+                Visibility::Visible
+            } else {
+                Visibility::Hidden
+            },
+        );
+        set_panel_vis(
+            UiPanelSlot::WiiSaveOverlay,
+            if view.stage == FrontendStage::SaveSelect {
+                Visibility::Visible
+            } else {
+                Visibility::Hidden
+            },
+        );
+        set_panel_vis(
+            UiPanelSlot::WiiKeyboardOverlay,
+            if view.stage == FrontendStage::NameEntry {
+                Visibility::Visible
+            } else {
+                Visibility::Hidden
+            },
+        );
+        set_panel_vis(
+            UiPanelSlot::WiiMainMenuOverlay,
+            if view.stage == FrontendStage::MainMenu {
+                Visibility::Visible
+            } else {
+                Visibility::Hidden
+            },
+        );
+        set_panel_vis(
+            UiPanelSlot::WiiSubmenuOverlay,
+            if is_submenu_stage {
+                Visibility::Visible
+            } else {
+                Visibility::Hidden
+            },
+        );
+        set_panel_vis(
+            UiPanelSlot::WiiCampaignTabsRow,
+            if view.stage == FrontendStage::CampaignSelect {
+                Visibility::Visible
+            } else {
+                Visibility::Hidden
+            },
+        );
+
+        // Update SaveSelect 3 horizontal Wii Save Cards + Modal
+        if view.stage == FrontendStage::SaveSelect {
+            for slot_i in 0..3 {
+                if let Some(p) = &view.slots[slot_i] {
+                    let completed_count = p
+                        .mission_grades
+                        .iter()
+                        .filter(|g| g.is_some())
+                        .count()
+                        .max(usize::from(p.sp_0_1_grade.is_some()));
+                    let pct = ((completed_count * 100) / 20)
+                        .clamp(if p.levels_done > 0 { 5 } else { 0 }, 100);
+                    set_text(UiTextSlot::WiiSaveCardPct(slot_i), format!("{pct}%"));
+                    set_text(UiTextSlot::WiiSaveCardName(slot_i), p.name.clone());
+                    set_text(
+                        UiTextSlot::WiiSaveCardInfo(slot_i),
+                        format!("{} / 20 MISSIONS READY", p.levels_done.clamp(1, 20)),
+                    );
+                } else {
+                    set_text(UiTextSlot::WiiSaveCardPct(slot_i), "0%".into());
+                    set_text(UiTextSlot::WiiSaveCardName(slot_i), "EMPTY".into());
+                    set_text(UiTextSlot::WiiSaveCardInfo(slot_i), "NEW SAVE FILE".into());
+                }
+            }
+            if let Some(p) = &view.slots[view.selected_slot] {
+                set_text(
+                    UiTextSlot::WiiSaveModalTitle,
+                    format!(
+                        "SAVE {} - COMMANDER {}",
+                        ['A', 'B', 'C'][view.selected_slot],
+                        p.name
+                    ),
+                );
+                set_text(
+                    UiTextSlot::WiiSaveModalBody,
+                    format!(
+                        "Profile loaded ({}/20 campaign missions unlocked). Press CONTINUE to enter the Main Menu.",
+                        p.levels_done.clamp(1, 20)
+                    ),
+                );
+                set_text(UiTextSlot::WiiSaveModalContinue, "CONTINUE".into());
+            } else {
+                set_text(UiTextSlot::WiiSaveModalTitle, "CHANGE NAME".into());
+                set_text(
+                    UiTextSlot::WiiSaveModalBody,
+                    "This is a new save file. You need to give it a name.".into(),
+                );
+                set_text(UiTextSlot::WiiSaveModalContinue, "CONTINUE".into());
+            }
+        }
+
+        // Update NameEntry keyboard display
+        if view.stage == FrontendStage::NameEntry {
+            set_text(
+                UiTextSlot::WiiKeyboardInputDisplay,
+                format!("NAME: {}_", view.name_buffer),
+            );
+        }
+
+        // Update MainMenu subtitle
+        if view.stage == FrontendStage::MainMenu {
+            let prof_name = view.slots[view.selected_slot]
+                .as_ref()
+                .map(|p| p.name.as_str())
+                .unwrap_or("COMMANDER");
+            let mode_desc = match view.main_menu_index {
+                0 => "CAMPAIGN - Command all 5 Battalion Wars 2 campaigns (20 missions)",
+                1 => "NINTENDO WFC - Play all 16 Assault, Skirmish & Co-Op maps",
+                2 => "OPTIONS - Configure Audio, Mouse Sensitivity & Keybindings",
+                3 => "EXTRAS - Unit Dossier, Concept Art, 15 .THP Movies & Credits",
+                4 => "SWITCH SAVE SLOT - Return to Save Slot selection",
+                _ => "QUIT - Exit to desktop",
+            };
+            set_text(
+                UiTextSlot::WiiMainMenuSubtitle,
+                format!(
+                    "SAVE {} ({prof_name})  |  {mode_desc}",
+                    ['A', 'B', 'C'][view.selected_slot]
+                ),
+            );
         }
 
         // Mission Briefing Voiceover (.adp) in CampaignSelect
@@ -6252,7 +8586,12 @@ pub fn update(
             }
         } else if view.active_briefing_vo.is_some() {
             view.active_briefing_vo = None;
-            if view.stage != FrontendStage::MovieTheater {
+            if !matches!(
+                view.stage,
+                FrontendStage::MovieTheater
+                    | FrontendStage::IntroMovie
+                    | FrontendStage::MissionCutsceneIn
+            ) {
                 for entity in voice_sinks.iter() {
                     commands.entity(entity).despawn();
                 }
@@ -6264,66 +8603,50 @@ pub fn update(
             if view.active_movie.is_none() {
                 start_selected_movie(view, images);
             }
-            let sfx_vol = view.sfx_volume;
-            let dt = time.delta_secs_f64().min(0.1);
-            if let Some(movie) = view.active_movie.as_mut() {
-                if !movie.started {
-                    if let Ok(mut dec) = movie.decoder.lock()
-                        && let Ok(Some(frame)) = dec.try_frame()
-                    {
-                        movie.pending = Some(frame);
-                        movie.started = true;
-                        for entity in voice_sinks.iter() {
-                            commands.entity(entity).despawn();
-                        }
-                        if std::env::var_os("BW_OFFSCREEN").is_none()
-                            && let Some(wav) = movie.wav.take()
-                        {
-                            let handle = audio_assets.add(AudioSource { bytes: wav.into() });
-                            commands.spawn((
-                                AudioPlayer::new(handle),
-                                PlaybackSettings::DESPAWN
-                                    .with_volume(bevy::audio::Volume::Linear(sfx_vol)),
-                                VoiceTrackPlayer,
-                            ));
-                        }
-                    }
-                } else {
-                    movie.elapsed += dt;
-                    for _ in 0..8 {
-                        if movie.pending.is_none()
-                            && let Ok(mut dec) = movie.decoder.lock()
-                        {
-                            movie.pending = dec.try_frame().ok().flatten();
-                        }
-                        let Some(frame) = &movie.pending else {
-                            break;
-                        };
-                        if frame.index as f64 / movie.info.frame_rate > movie.elapsed {
-                            break;
-                        }
-                        let frame = movie.pending.take().unwrap();
-                        if let Some(mut img) = images.get_mut(&movie.image) {
-                            img.data = Some(frame.rgba);
-                        }
-                        movie.last_frame = frame.index;
-                    }
-                }
-            }
+            let _ = step_active_movie(&mut commands, view, images, audio_assets, voice_sinks, dt);
         }
+
+        let target_fe_page = match view.stage {
+            FrontendStage::BootLogos | FrontendStage::IntroMovie => "StartPre",
+            FrontendStage::Title => "Start",
+            FrontendStage::SaveSelect => "LoadCampaignData",
+            FrontendStage::NameEntry => "Name",
+            FrontendStage::MainMenu => "Main",
+            FrontendStage::CampaignSelect | FrontendStage::MissionCutsceneIn => "CampaignS",
+            FrontendStage::MultiplayerInfo => "MapSelect",
+            FrontendStage::Options | FrontendStage::Keybindings => "COptions",
+            FrontendStage::ExtrasMenu => "Bonus",
+            FrontendStage::UnitDossier => "UnitInfo",
+            FrontendStage::ConceptGallery => "Art",
+            FrontendStage::MovieTheater => "Replay",
+            FrontendStage::Credits => "Credits",
+            FrontendStage::Victory | FrontendStage::Defeat => "MPStats",
+            FrontendStage::InMission => "Start",
+        };
+        let stack_top = view.fe_runtime.stack_state().ok().and_then(|s| s.top);
+        if view.fe_runtime.active_page() != Some(target_fe_page)
+            && stack_top.as_deref() != Some(target_fe_page)
+        {
+            let _ = view.fe_runtime.reset_page_stack(target_fe_page, 100_000);
+        }
+        let _ = view.fe_runtime.step_page_stack(1.0 / 60.0, 100_000);
 
         let profile_badge = view.slots[view.selected_slot]
             .as_ref()
             .map(|p| format!("PROFILE: {} [SLOT {}]", p.name, view.selected_slot + 1))
             .unwrap_or_else(|| "NO PROFILE LOADED".into());
         let stage_title = match view.stage {
+            FrontendStage::BootLogos => "BOOT SEQUENCE",
+            FrontendStage::IntroMovie => "OPENING INTRO MOVIE",
             FrontendStage::Title => "TITLE SCREEN",
             FrontendStage::SaveSelect => "SELECT SAVE SLOT",
             FrontendStage::NameEntry => "NEW GAME - ENTER NAME",
             FrontendStage::MainMenu => "MAIN MENU",
-            FrontendStage::CampaignSelect => "SOLAR EMPIRE CAMPAIGN SELECT",
+            FrontendStage::CampaignSelect => "WORLD GLOBE CAMPAIGN SELECT",
+            FrontendStage::MissionCutsceneIn => "CAMPAIGN INTRO CUTSCENE",
             FrontendStage::MultiplayerInfo => "NINTENDO WI-FI CONNECTION",
             FrontendStage::Options => "OPTIONS - AUDIO & CONTROLS",
+            FrontendStage::Keybindings => "KEYBINDINGS & CONTROLLER REMAPPING",
             FrontendStage::ExtrasMenu => "EXTRAS - ARCHIVES & DOSSIER",
             FrontendStage::UnitDossier => "UNIT DOSSIER - FACTION ENCYCLOPEDIA",
             FrontendStage::ConceptGallery => "PRODUCTION CONCEPT ART GALLERY",
@@ -6370,118 +8693,13 @@ pub fn update(
         let mut show_grade: Option<String> = None;
 
         match view.stage {
-            FrontendStage::Title => {
-                left_header = "BATTALION WARS 2".into();
-                active_count = 1;
-                selected_idx = 0;
-                item_texts[0] = "> PRESS A & B / CLICK OR PRESS ENTER TO BEGIN".into();
-                right_header = "ALL 5 CAMPAIGNS & 16 MULTIPLAYER MAPS".into();
-                right_desc = "Welcome to Battalion Wars 2!\n\n* Full 1-to-1 skeletal animations, textures, water physics, voiceover, music & SFX\n* Complete Wii Remote + Nunchuk controls remapped to Mouse & Keyboard\n* All 20 Single-Player Campaign Missions (SP_0.1 .. SP_5.4) + All 16 Multiplayer Maps (MP1 .. MP17)\n* 3D Interactive World Globe, Briefing Voiceovers, 15 .THP FMV Movies & Local Save Persistence".into();
-                right_status = "PLEASE PRESS [ENTER], [SPACE], OR CLICK TO OPEN SAVE SLOTS".into();
-                primary_text = "START GAME [ENTER]".into();
-                secondary_text = "QUIT [ESC]".into();
-            }
-            FrontendStage::SaveSelect => {
-                left_header = "SELECT A SAVE SLOT (Up/Down or Click)".into();
-                active_count = 3;
-                selected_idx = view.selected_slot;
-                for (i, item_text) in item_texts.iter_mut().enumerate().take(3) {
-                    *item_text = match &view.slots[i] {
-                        Some(p) => format!(
-                            "SLOT {} - {} | MISSIONS UNLOCKED: {}/20 {}",
-                            i + 1,
-                            p.name,
-                            p.levels_done.clamp(1, 20),
-                            p.sp_0_1_grade
-                                .as_deref()
-                                .map(|g| format!("({g})"))
-                                .unwrap_or_default()
-                        ),
-                        None => format!("SLOT {} - EMPTY [NEW GAME]", i + 1),
-                    };
-                }
-                right_header = format!("SAVE SLOT {}", view.selected_slot + 1);
-                if let Some(p) = &view.slots[view.selected_slot] {
-                    right_desc = format!(
-                        "Commander Profile: {}\nCompleted / Unlocked Campaign Missions: {}\n\nAvailable Campaigns (20 Missions):\n* Prologue: A Flash in the Pan (SP_0.1)\n* Campaign 1 (Anglo Isles): SP_1.1 .. SP_1.5\n* Campaign 2 (Solar Empire): SP_2.1 .. SP_2.3\n* Campaign 3 (Western Frontier): SP_3.1 .. SP_3.4\n* Campaign 4 (Iron Legion): SP_4.1 .. SP_4.3\n* Campaign 5 (Tundran Territories): SP_5.1 .. SP_5.4",
-                        p.name, p.levels_done,
-                    );
-                    right_status = "Press [ENTER] or Click to load this profile.".into();
-                    primary_text = "LOAD PROFILE [ENTER]".into();
-                    show_grade = p.sp_0_1_grade.clone();
-                } else {
-                    right_desc = view.fe_strings.get(944).cloned().unwrap_or_else(|| {
-                        "This is a new save file. You need to give it a name.".into()
-                    });
-                    right_status =
-                        "Press [ENTER] or Click to create a New Game profile in this slot.".into();
-                    primary_text = "NEW GAME [ENTER]".into();
-                }
-                secondary_text = "TITLE SCREEN [ESC]".into();
-            }
-            FrontendStage::NameEntry => {
-                left_header = "NEW GAME - PROFILE NAME".into();
-                active_count = 1;
-                selected_idx = 0;
-                item_texts[0] = format!("NAME: {}_", view.name_buffer);
-                right_header = "ENTER COMMANDER NAME".into();
-                right_desc = "This is a new save file. You need to give it a name.\n\nType A-Z or 0-9 on your keyboard (Backspace to edit), or keep the default name COMMANDER.".into();
-                right_status = format!("Current Name: {}", view.name_buffer);
-                primary_text = "CONFIRM & CREATE PROFILE [ENTER]".into();
-                secondary_text = "BACK TO SLOTS [ESC]".into();
-            }
-            FrontendStage::MainMenu => {
-                left_header = "MAIN MENU".into();
-                active_count = 6;
-                selected_idx = view.main_menu_index;
-                item_texts[0] = "1. CAMPAIGN (ALL 20 SP MISSIONS)".into();
-                item_texts[1] = "2. NINTENDO WFC (ALL 16 MP MAPS)".into();
-                item_texts[2] = "3. OPTIONS (CONTROLS & AUDIO)".into();
-                item_texts[3] = "4. EXTRAS (DOSSIER, MOVIES & GALLERY)".into();
-                item_texts[4] = "5. PROFILE & SAVE MENU".into();
-                item_texts[5] = "6. QUIT TO DESKTOP".into();
-                match view.main_menu_index {
-                    0 => {
-                        right_header = "SINGLE PLAYER CAMPAIGN (20 MISSIONS)".into();
-                        right_desc = "Command all 5 Battalion Wars 2 campaigns across 20 single-player missions!\n\n* Prologue: A Flash in the Pan (SP_0.1)\n* Campaign 1: Anglo Isles (SP_1.1 .. SP_1.5)\n* Campaign 2: Solar Empire (SP_2.1 .. SP_2.3)\n* Campaign 3: Western Frontier (SP_3.1 .. SP_3.4)\n* Campaign 4: Iron Legion Flashback (SP_4.1 .. SP_4.3)\n* Campaign 5: Tundran Territories (SP_5.1 .. SP_5.4)".into();
-                        right_status =
-                            "Press [ENTER] or Click to open Campaign Mission Select.".into();
-                        primary_text = "OPEN CAMPAIGN [ENTER]".into();
-                    }
-                    1 => {
-                        right_header = "NINTENDO WI-FI CONNECTION (16 MAPS)".into();
-                        right_desc = "Launch any of the 16 original Assault, Skirmish, and Co-Op multiplayer maps (MP1 through MP17) directly from the Battalion Wars 2 frontend.".into();
-                        right_status = "Press [ENTER] to open Multiplayer Map Select.".into();
-                        primary_text = "OPEN MULTIPLAYER [ENTER]".into();
-                    }
-                    2 => {
-                        right_header = "OPTIONS - AUDIO, SENSITIVITY & CONTROLS".into();
-                        right_desc = "Configure Music Volume, SFX Volume, Mouse Look Sensitivity, Target Lock Aim Assist, and inspect the complete Mouse & Keyboard control bindings.".into();
-                        right_status = "Press [ENTER] to open Options.".into();
-                        primary_text = "OPEN OPTIONS [ENTER]".into();
-                    }
-                    3 => {
-                        right_header = "EXTRAS - DOSSIER, CONCEPT ART, THP MOVIES & CREDITS".into();
-                        right_desc = "Browse the authentic 6-faction Unit Dossier (`fe_units_*_Level.res`), Concept Art Gallery (`fe_concept_Level.res`), all 15 `.THP` FMV Cutscenes (`Data/Video/*.THP`), and original Credits (`creditsEnglish.str`).".into();
-                        right_status = "Press [ENTER] to open Extras.".into();
-                        primary_text = "OPEN EXTRAS [ENTER]".into();
-                    }
-                    4 => {
-                        right_header = "PROFILE & SAVE MENU".into();
-                        right_desc =
-                            "Switch active save slot or start a new commander profile.".into();
-                        right_status = "Press [ENTER] to return to Save Slot selection.".into();
-                        primary_text = "SWITCH SLOT [ENTER]".into();
-                    }
-                    _ => {
-                        right_header = "QUIT BATTALION WARS 2".into();
-                        right_desc = "Exit to desktop.".into();
-                        right_status = "Press [ENTER] to quit.".into();
-                        primary_text = "QUIT GAME [ENTER]".into();
-                    }
-                }
-                secondary_text = "SAVE SLOTS [ESC]".into();
-            }
+            FrontendStage::BootLogos
+            | FrontendStage::IntroMovie
+            | FrontendStage::MissionCutsceneIn
+            | FrontendStage::Title
+            | FrontendStage::SaveSelect
+            | FrontendStage::NameEntry
+            | FrontendStage::MainMenu => {}
             FrontendStage::CampaignSelect => {
                 let profile_opt = view.slots[view.selected_slot].as_ref();
                 let total_missions = CAMPAIGN_1_MISSIONS.len();
@@ -6489,9 +8707,8 @@ pub fn update(
                 let page_start = (current_sel / 6) * 6;
                 let total_pages = total_missions.div_ceil(6);
                 let current_page = (current_sel / 6) + 1;
-                left_header = format!(
-                    "CAMPAIGN SELECT (PAGE {current_page}/{total_pages} | UP/DOWN/LEFT/RIGHT)"
-                );
+                left_header =
+                    format!("MISSIONS (PAGE {current_page}/{total_pages} | UP/DOWN/LEFT/RIGHT)");
                 active_count = (total_missions - page_start).min(6);
                 selected_idx = current_sel - page_start;
                 for (slot_i, item_text) in item_texts.iter_mut().enumerate().take(active_count) {
@@ -6536,7 +8753,7 @@ pub fn update(
                     )
                 };
                 primary_text = format!("LAUNCH {} [ENTER]", meta.code);
-                secondary_text = "MAIN MENU [ESC]".into();
+                secondary_text = "(B) MAIN MENU [ESC]".into();
             }
             FrontendStage::MultiplayerInfo => {
                 let total_maps = MULTIPLAYER_MAPS.len();
@@ -6568,16 +8785,27 @@ pub fn update(
                     right_portrait = h.clone();
                 }
                 right_header = meta.full_title.into();
+                let str_desc = meta
+                    .fe_string_idx
+                    .and_then(|idx| view.fe_strings.get(idx))
+                    .map(|s| clean_bw_text(s))
+                    .filter(|s| !s.trim().is_empty())
+                    .unwrap_or_else(|| meta.default_briefing.to_string());
+                let mode_label = if view.two_player_enabled {
+                    "2P LOCAL + UDP SYNC (P1 WASD + P2 IJKL / PORT 29450)"
+                } else {
+                    "1P SKIRMISH VS AI (PRESS [TAB] FOR 2P LOCAL + UDP SYNC)"
+                };
                 right_desc = format!(
-                    "{}\nCatalog Level: {} (@os:Data/CompoundFiles/{}.xml)\n\n{}",
-                    meta.co_matchup, meta.code, meta.code, meta.default_briefing
+                    "{}\nCatalog Level: {} (@os:Data/CompoundFiles/{}.xml)\nMode: {mode_label}\n\n{}",
+                    meta.co_matchup, meta.code, meta.code, str_desc
                 );
                 right_status = format!(
-                    "STATUS: UNLOCKED & PLAYABLE - Press [ENTER] or Click Launch to play {}!",
+                    "STATUS: UNLOCKED & PLAYABLE ({mode_label}) - Press [ENTER] or Click Launch to play {}!",
                     meta.code
                 );
                 primary_text = format!("LAUNCH {} [ENTER]", meta.code);
-                secondary_text = "MAIN MENU [ESC]".into();
+                secondary_text = "(B) MAIN MENU [ESC]".into();
             }
             FrontendStage::Options => {
                 left_header = "OPTIONS (Up/Down + Left/Right or Enter)".into();
@@ -6594,14 +8822,82 @@ pub fn update(
                         "DISABLED"
                     }
                 );
-                item_texts[4] = "5. RESET TO DEFAULTS".into();
-                item_texts[5] = "6. SAVE & RETURN TO MAIN MENU".into();
-                right_header = "MOUSE & KEYBOARD CONTROL SCHEME".into();
-                right_desc = "* Move / Strafe: W, A, S, D\n* Aim / Camera: Mouse Look or Q, E, Arrow Keys\n* Fire Primary Weapon: Left Mouse Button (LMB) or Space\n* Lock-On Target Assist: Hold Right Mouse Button (RMB) or Toggle Tab / L\n* Call Squad (Follow): C or F | Send Squad (Attack): Middle Mouse or G | Dismiss (Wait): X\n* Transfer Unit: T | Select Squad Slot: B / N or J / K or Z (All)\n* Load / Unload Transport: V / U | Pause Menu: P or Esc | Instant Victory: F1".into();
+                item_texts[4] = "5. CUSTOMIZE KEYBINDINGS & GAMEPAD [ENTER]".into();
+                item_texts[5] = "6. RESET ALL SETTINGS & CONTROLS TO DEFAULTS".into();
+                right_header = "ACTIVE KEYBOARD & GAMEPAD BINDINGS".into();
+                right_desc = format!(
+                    "{}\n\nSelect [5. CUSTOMIZE KEYBINDINGS & GAMEPAD] to interactively remap any of the 24 gameplay actions and save to `config/controls.json`.",
+                    controls.keyboard_help()
+                );
                 right_status =
-                    "Use [ENTER], [LEFT/RIGHT], or Click an option to adjust settings.".into();
-                primary_text = "ADJUST / CONFIRM [ENTER]".into();
-                secondary_text = "MAIN MENU [ESC]".into();
+                    "Use [ENTER], [LEFT/RIGHT], or Click an option to adjust settings or open Keybindings."
+                        .into();
+                primary_text = "ADJUST / OPEN [ENTER]".into();
+                secondary_text = "(B) MAIN MENU [ESC]".into();
+            }
+            FrontendStage::Keybindings => {
+                let total_actions = REBINDABLE_ACTIONS.len();
+                let current_sel = view.keybind_index.min(total_actions - 1);
+                let page_start = (current_sel / 6) * 6;
+                let total_pages = total_actions.div_ceil(6);
+                let current_page = (current_sel / 6) + 1;
+                left_header = format!(
+                    "KEYBINDINGS (PAGE {current_page}/{total_pages} | UP/DOWN/LEFT/RIGHT | ENTER TO REBIND)"
+                );
+                active_count = (total_actions - page_start).min(6);
+                selected_idx = current_sel - page_start;
+                for (slot_i, item_text) in item_texts.iter_mut().enumerate().take(active_count) {
+                    let act_i = page_start + slot_i;
+                    let (act_key, act_label, _) = REBINDABLE_ACTIONS[act_i];
+                    if view.keybind_waiting && act_i == current_sel {
+                        *item_text = format!(
+                            "{}. {}  >>> PRESS ANY KEY OR PAD BUTTON <<<",
+                            act_i + 1,
+                            act_label
+                        );
+                    } else {
+                        let k_lbl = controls.keys_label(act_key);
+                        let p_lbl = controls.gamepad_label(act_key);
+                        *item_text = format!(
+                            "{}. {}   KEY: [{}] | PAD: [{}]",
+                            act_i + 1,
+                            act_label,
+                            k_lbl,
+                            p_lbl
+                        );
+                    }
+                }
+
+                let (act_key, act_label, act_desc) = REBINDABLE_ACTIONS[current_sel];
+                right_header = format!("ACTION #{}: {}", current_sel + 1, act_label);
+                right_desc = format!(
+                    "{act_desc}\n\nCurrent Keyboard Binding(s): [{}]\nCurrent Gamepad Binding:     [{}]\nConfig File:                 `config/controls.json`\n\nHOW TO REMAP:\n* Press [ENTER] or Click an action row, then press any Keyboard Key or Gamepad Button.\n* Press [BACKSPACE] or [DELETE] while browsing to reset all 24 bindings to defaults.\n* Press [LEFT / RIGHT] to switch between the 4 action pages (Movement, Combat, Squad, Transport).",
+                    controls.keys_label(act_key),
+                    controls.gamepad_label(act_key),
+                );
+                right_status = if !view.keybind_notice.is_empty() {
+                    view.keybind_notice.clone()
+                } else if view.keybind_waiting {
+                    format!(
+                        "WAITING FOR INPUT FOR [{act_label}]... Press any Keyboard Key or Gamepad Button (or [ESC] to cancel)."
+                    )
+                } else {
+                    format!(
+                        "Selected: {act_label} — Press [ENTER] to rebind, [LEFT/RIGHT] for pages, or [BACKSPACE] to reset defaults."
+                    )
+                };
+                primary_text = if view.keybind_waiting {
+                    "WAITING FOR KEY / BUTTON...".into()
+                } else {
+                    format!("REBIND {} [ENTER]", act_label)
+                };
+                secondary_text = if view.keybind_waiting {
+                    "CANCEL REBIND [ESC]".into()
+                } else if view.keybind_return_to_mission {
+                    "(B) RESUME MISSION [ESC]".into()
+                } else {
+                    "(B) OPTIONS MENU [ESC]".into()
+                };
             }
             FrontendStage::ExtrasMenu => {
                 left_header = "EXTRAS & ARCHIVES".into();
@@ -6644,7 +8940,7 @@ pub fn update(
                         primary_text = "MAIN MENU [ENTER]".into();
                     }
                 }
-                secondary_text = "MAIN MENU [ESC]".into();
+                secondary_text = "(B) MAIN MENU [ESC]".into();
             }
             FrontendStage::UnitDossier => {
                 left_header = "SELECT FACTION (Up/Down) | UNIT (Left/Right/Enter)".into();
@@ -6676,7 +8972,7 @@ pub fn update(
                 right_status =
                     "Press [LEFT/RIGHT] or [ENTER] to cycle units in this faction, or [UP/DOWN] to switch factions.".into();
                 primary_text = "NEXT UNIT [ENTER / RIGHT]".into();
-                secondary_text = "EXTRAS MENU [ESC]".into();
+                secondary_text = "(B) EXTRAS MENU [ESC]".into();
             }
             FrontendStage::ConceptGallery => {
                 left_header = "CONCEPT ART GALLERY (Up/Down/Enter)".into();
@@ -6699,7 +8995,7 @@ pub fn update(
                 );
                 right_status = "Press [ENTER] or [UP/DOWN] to cycle concept art plates.".into();
                 primary_text = "NEXT PLATE [ENTER]".into();
-                secondary_text = "EXTRAS MENU [ESC]".into();
+                secondary_text = "(B) EXTRAS MENU [ESC]".into();
             }
             FrontendStage::MovieTheater => {
                 let total_movies = FMV_MOVIES.len();
@@ -6735,7 +9031,7 @@ pub fn update(
                 right_status =
                     "Press [ENTER] to restart movie, [UP/DOWN/LEFT/RIGHT] to switch movies, or [ESC] for Extras.".into();
                 primary_text = "RESTART MOVIE [ENTER]".into();
-                secondary_text = "EXTRAS MENU [ESC]".into();
+                secondary_text = "(B) EXTRAS MENU [ESC]".into();
             }
             FrontendStage::Credits => {
                 let per_page = 14usize;
@@ -6759,7 +9055,7 @@ pub fn update(
                 right_status =
                     "Press [ENTER] or [DOWN/RIGHT] to advance through the credits.".into();
                 primary_text = "NEXT PAGE [ENTER]".into();
-                secondary_text = "EXTRAS MENU [ESC]".into();
+                secondary_text = "(B) EXTRAS MENU [ESC]".into();
             }
             FrontendStage::Victory => {
                 let mission_idx = view.current_mission_index();
@@ -6803,7 +9099,7 @@ pub fn update(
                     next_meta.short_title, next_meta.code
                 );
                 primary_text = "CONTINUE TO CAMPAIGN SELECT [ENTER]".into();
-                secondary_text = "CAMPAIGN SELECT [ESC]".into();
+                secondary_text = "(B) CAMPAIGN SELECT [ESC]".into();
             }
             FrontendStage::Defeat => {
                 let mission_idx = view.current_mission_index();
@@ -6824,9 +9120,44 @@ pub fn update(
                 right_status =
                     "Press [ENTER] to retry the mission or [ESC] for Campaign Select.".into();
                 primary_text = "RETRY MISSION [ENTER]".into();
-                secondary_text = "CAMPAIGN SELECT [ESC]".into();
+                secondary_text = "(B) CAMPAIGN SELECT [ESC]".into();
             }
             FrontendStage::InMission => {}
+        }
+
+        if view.stage == FrontendStage::MultiplayerInfo
+            && (keys.just_pressed(KeyCode::Tab) || keys.just_pressed(KeyCode::F2))
+        {
+            view.two_player_enabled = !view.two_player_enabled;
+            view.session.program.host.world.two_player_mode = view.two_player_enabled;
+            if view.two_player_enabled && view.net_peer.is_none() {
+                view.net_peer =
+                    bw_rust::net_sync::NetPeer::bind("127.0.0.1:0", "127.0.0.1:29450", 1).ok();
+            }
+            play_sfx(&mut commands, view, "UI_FE_Popup");
+        }
+
+        if keys.just_pressed(KeyCode::F3) {
+            view.show_native_gui_canvas = !view.show_native_gui_canvas;
+            play_sfx(&mut commands, view, "UI_FE_Sub_Change");
+        }
+        view.active_gui_quads = {
+            let v = &mut **view;
+            v.fe_gui
+                .evaluate_active_page_canvas(&v.fe_graph, &mut v.fe_runtime)
+                .unwrap_or_default()
+        };
+        let active_quads = view.active_gui_quads.len();
+        if let Some(page) = view.fe_runtime.active_page() {
+            let active_sprites = view.fe_runtime.active_sprite_count();
+            let canvas_state = if view.show_native_gui_canvas {
+                "ON [F3]"
+            } else {
+                "OFF [F3]"
+            };
+            right_status = format!(
+                "{right_status}  [Frontend2 PageStack: {page} | {active_quads} GUI quads ({canvas_state}) | {active_sprites} sprites]"
+            );
         }
 
         set_text(UiTextSlot::MenuLeftTitle, left_header);
@@ -6849,8 +9180,46 @@ pub fn update(
         let in_movie_theater = view.stage == FrontendStage::MovieTheater;
         for (slot, mut img, mut vis) in ui_images.iter_mut() {
             match *slot {
+                UiImageSlot::FullscreenStageImage => {
+                    if let Some(ref h) = fullscreen_img {
+                        if img.image != *h {
+                            img.image = h.clone();
+                        }
+                        if *vis != Visibility::Inherited {
+                            *vis = Visibility::Inherited;
+                        }
+                    } else if *vis != Visibility::Hidden {
+                        *vis = Visibility::Hidden;
+                    }
+                }
+                UiImageSlot::WiiSaveCardGrade(slot_i) => {
+                    if view.stage == FrontendStage::SaveSelect
+                        && let Some(p) = &view.slots[slot_i]
+                        && let Some(g) = p
+                            .sp_0_1_grade
+                            .as_deref()
+                            .or_else(|| p.mission_grades.iter().find_map(|m| m.as_deref()))
+                    {
+                        let key = match g {
+                            "GRADE_S" | "S" => "gradeph_s",
+                            "GRADE_A" | "A" => "gradeph_a",
+                            "GRADE_B" | "B" => "gradeph_b",
+                            _ => "gradeph_c",
+                        };
+                        if let Some(h) = view.ui_handles.get(key)
+                            && img.image != *h
+                        {
+                            img.image = h.clone();
+                        }
+                        if *vis != Visibility::Inherited {
+                            *vis = Visibility::Inherited;
+                        }
+                    } else if *vis != Visibility::Hidden {
+                        *vis = Visibility::Hidden;
+                    }
+                }
                 UiImageSlot::MenuPortraitLeft => {
-                    if in_movie_theater {
+                    if !is_submenu_stage || in_movie_theater {
                         if *vis != Visibility::Hidden {
                             *vis = Visibility::Hidden;
                         }
@@ -6864,7 +9233,7 @@ pub fn update(
                     }
                 }
                 UiImageSlot::MenuPortraitRight => {
-                    if in_movie_theater {
+                    if !is_submenu_stage || in_movie_theater {
                         if *vis != Visibility::Hidden {
                             *vis = Visibility::Hidden;
                         }
@@ -6890,7 +9259,7 @@ pub fn update(
                     }
                 }
                 UiImageSlot::MenuGradeBadge => {
-                    if let Some(g) = &show_grade {
+                    if is_submenu_stage && let Some(g) = &show_grade {
                         let key = match g.as_str() {
                             "GRADE_S" | "S" => "gradeph_s",
                             "GRADE_A" | "A" => "gradeph_a",
@@ -6913,27 +9282,95 @@ pub fn update(
             }
         }
 
+        let active_continent_tab = match view.selected_mission {
+            0 => 0usize,
+            1..=5 => 1,
+            6..=8 => 2,
+            9..=12 => 3,
+            13..=15 => 4,
+            _ => 5,
+        };
         for (btn, interaction, mut bg, mut border, mut vis) in item_buttons.iter_mut() {
-            if btn.0 < active_count {
+            let idx = btn.0;
+            let (show_btn, is_selected, is_pill_style) = if idx < 6 {
+                (
+                    is_submenu_stage && idx < active_count,
+                    idx == selected_idx,
+                    false,
+                )
+            } else if (10..12).contains(&idx) {
+                (view.stage == FrontendStage::Title, idx == 10, false)
+            } else if (20..25).contains(&idx) {
+                let sel = if idx < 23 {
+                    view.selected_slot == (idx - 20)
+                } else {
+                    idx == 24
+                };
+                (
+                    view.stage == FrontendStage::SaveSelect,
+                    sel,
+                    idx < 23 || idx == 24,
+                )
+            } else if (30..43).contains(&idx) {
+                (view.stage == FrontendStage::NameEntry, idx == 42, true)
+            } else if (50..56).contains(&idx) {
+                (
+                    view.stage == FrontendStage::MainMenu,
+                    view.main_menu_index == (idx - 50),
+                    idx < 54,
+                )
+            } else if (60..66).contains(&idx) {
+                (
+                    view.stage == FrontendStage::CampaignSelect,
+                    (idx - 60) == active_continent_tab,
+                    false,
+                )
+            } else if idx == 70 {
+                (is_fullscreen_stage, true, false)
+            } else {
+                (false, false, false)
+            };
+
+            if show_btn {
                 if *vis != Visibility::Inherited {
                     *vis = Visibility::Inherited;
                 }
-                let is_selected = btn.0 == selected_idx;
-                let target_bg = if is_selected {
-                    Color::srgba(0.18, 0.34, 0.52, 0.96)
+                let (target_bg, target_border) = if is_pill_style {
+                    if is_selected {
+                        (
+                            Color::srgba(0.94, 0.64, 0.14, 0.96),
+                            BorderColor::all(Color::srgb(1.0, 0.94, 0.48)),
+                        )
+                    } else if *interaction == Interaction::Hovered {
+                        (
+                            Color::srgba(0.88, 0.78, 0.42, 0.95),
+                            BorderColor::all(Color::srgb(0.96, 0.88, 0.40)),
+                        )
+                    } else {
+                        (
+                            Color::srgba(0.82, 0.88, 0.84, 0.93),
+                            BorderColor::all(Color::srgb(0.24, 0.68, 0.34)),
+                        )
+                    }
+                } else if is_selected {
+                    (
+                        Color::srgba(0.14, 0.42, 0.22, 0.96),
+                        BorderColor::all(Color::srgb(0.98, 0.86, 0.32)),
+                    )
                 } else if *interaction == Interaction::Hovered {
-                    Color::srgba(0.11, 0.22, 0.34, 0.94)
+                    (
+                        Color::srgba(0.10, 0.30, 0.18, 0.94),
+                        BorderColor::all(Color::srgb(0.58, 0.92, 0.64)),
+                    )
                 } else {
-                    Color::srgba(0.05, 0.09, 0.15, 0.90)
+                    (
+                        Color::srgba(0.04, 0.12, 0.08, 0.88),
+                        BorderColor::all(Color::srgb(0.28, 0.56, 0.36)),
+                    )
                 };
                 if bg.0 != target_bg {
                     *bg = BackgroundColor(target_bg);
                 }
-                let target_border = BorderColor::all(if is_selected {
-                    Color::srgb(0.98, 0.82, 0.28)
-                } else {
-                    Color::srgb(0.28, 0.42, 0.58)
-                });
                 if *border != target_border {
                     *border = target_border;
                 }
@@ -6943,7 +9380,13 @@ pub fn update(
         }
 
         if std::env::var_os("BW_OFFSCREEN").is_none() {
-            let menu_vol = if in_movie_theater {
+            let menu_vol = if matches!(
+                view.stage,
+                FrontendStage::BootLogos
+                    | FrontendStage::IntroMovie
+                    | FrontendStage::MissionCutsceneIn
+                    | FrontendStage::MovieTheater
+            ) {
                 0.0
             } else {
                 0.22 * view.music_volume
@@ -6976,7 +9419,9 @@ pub fn update(
     for (slot, _, mut vis) in ui_images.iter_mut() {
         if matches!(
             *slot,
-            UiImageSlot::MenuPortraitLeft
+            UiImageSlot::FullscreenStageImage
+                | UiImageSlot::WiiSaveCardGrade(_)
+                | UiImageSlot::MenuPortraitLeft
                 | UiImageSlot::MenuPortraitRight
                 | UiImageSlot::MenuGradeBadge
                 | UiImageSlot::MovieScreen
@@ -7029,15 +9474,26 @@ pub fn update(
         play_sfx(&mut commands, view, "UI_FE_Popup");
     }
 
+    if !view.verify && view.replay.is_none() && !in_cutscene && keys.just_pressed(KeyCode::F4) {
+        view.pause_menu_open = false;
+        view.keybind_index = 0;
+        view.keybind_waiting = false;
+        view.keybind_return_to_mission = true;
+        view.keybind_notice.clear();
+        view.stage = FrontendStage::Keybindings;
+        play_sfx(&mut commands, view, "UI_FE_Popup");
+        return;
+    }
+
     if view.pause_menu_open {
         let up = keys.just_pressed(KeyCode::ArrowUp) || keys.just_pressed(KeyCode::KeyW);
         let down = keys.just_pressed(KeyCode::ArrowDown) || keys.just_pressed(KeyCode::KeyS);
         if up || down {
             play_sfx(&mut commands, view, "UI_FE_Navigate");
             view.pause_menu_index = if down {
-                (view.pause_menu_index + 1) % 5
+                (view.pause_menu_index + 1) % 6
             } else {
-                (view.pause_menu_index + 4) % 5
+                (view.pause_menu_index + 5) % 6
             };
         }
         if keys.just_pressed(KeyCode::Enter) || keys.just_pressed(KeyCode::Space) {
@@ -7046,19 +9502,29 @@ pub fn update(
                     view.pause_menu_open = false;
                 }
                 1 => {
-                    view.reset_mission_state();
+                    view.pause_menu_open = false;
+                    view.keybind_index = 0;
+                    view.keybind_waiting = false;
+                    view.keybind_return_to_mission = true;
+                    view.keybind_notice.clear();
+                    view.stage = FrontendStage::Keybindings;
+                    play_sfx(&mut commands, view, "UI_FE_Popup");
+                    return;
                 }
                 2 => {
+                    view.reset_mission_state();
+                }
+                3 => {
                     play_sfx(&mut commands, view, "bugle_03");
                     view.complete_mission_and_open_victory(100.0, 92.0, 88.0, "GRADE_S");
                     return;
                 }
-                3 => {
+                4 => {
                     view.pause_menu_open = false;
                     view.stage = FrontendStage::CampaignSelect;
                     return;
                 }
-                4 => {
+                5 => {
                     view.should_exit = true;
                     return;
                 }
@@ -7124,6 +9590,7 @@ pub fn update(
             view.session.program.host.positions[&view.session.program.host.world.player.unwrap()],
         );
     }
+    let mut sim_ticks = 0u32;
     while view.accumulator + 1e-12 >= 1.0 / 60.0 && view.error.is_none() && !view.pause_menu_open {
         if view.hold_replay_end && view.replay.as_ref().is_some_and(|r| r.is_empty()) {
             view.accumulator = 0.;
@@ -7266,6 +9733,7 @@ pub fn update(
         }
         match view.session.tick(1.0 / 60.0, input) {
             Ok(()) => {
+                sim_ticks += 1;
                 view.accumulator = (view.accumulator - 1.0 / 60.0).max(0.0);
                 view.recruit_pending = false;
                 view.send_pending = false;
@@ -7375,38 +9843,56 @@ pub fn update(
             Ok(Some(pose)) => {
                 let mut eye = Vec3::from_array(pose.position);
                 let mut anchor = Vec3::from_array(pose.look_at);
-                let target = if rig.chase_target().is_some() {
-                    let [agx, agz] = bw_rust::original_scene::source_to_grid(anchor.x, anchor.z);
-                    if let Some(ah) = loaded.ground.height(agx, agz) {
-                        let min_anchor_y = (ah * 2.0).max(view.water_height) + 1.15;
-                        if anchor.y < min_anchor_y {
-                            anchor.y = min_anchor_y;
-                        }
+                let [agx, agz] = bw_rust::original_scene::source_to_grid(anchor.x, anchor.z);
+                if let Some(ah) = loaded.ground.height(agx, agz) {
+                    let min_anchor_y = (ah * 2.0).max(view.water_height) + 1.15;
+                    if anchor.y < min_anchor_y {
+                        anchor.y = min_anchor_y;
                     }
+                }
+                let target = if let Some(chase_id) = rig.chase_target() {
                     let aim = Vec3::from_array(
                         host.world
                             .player_aim
                             .unwrap_or([0., 0., 1.])
                             .map(|v| v as f32),
                     );
-                    eye += Vec3::new(-aim.z, 0., aim.x).normalize_or_zero() * 0.85 + Vec3::Y * 1.45;
+                    if !view.verify
+                        && view.replay.is_none()
+                        && let Some(cprof) = view.camera_profiles.get(&chase_id).copied()
+                    {
+                        let look_h = cprof.cam_look_pos[1].clamp(1.2, 6.0);
+                        anchor.y = (anchor.y - 1.6) + look_h;
+                        let dist_back = (-cprof.cam_pos[2]).abs().clamp(6.0, 34.0);
+                        let height_above_look = (cprof.cam_pos[1] - look_h).clamp(0.8, 10.0);
+                        let right_vec = Vec3::new(-aim.z, 0.0, aim.x).normalize_or_zero();
+                        let lat = if cprof.cam_pos[0].abs() > 0.05 {
+                            cprof.cam_pos[0]
+                        } else {
+                            0.85
+                        };
+                        eye = anchor - aim * dist_back
+                            + right_vec * lat
+                            + Vec3::Y * height_above_look;
+                    } else {
+                        eye += Vec3::new(-aim.z, 0., aim.x).normalize_or_zero() * 0.85
+                            + Vec3::Y * 1.45;
+                    }
                     anchor + aim * 65.
                 } else {
                     anchor
                 };
-                if rig.chase_target().is_some() {
-                    if let Some(scene) = &host.world.collision
-                        && let Ok(Some((frac, _))) =
-                            scene.first_hit(anchor.to_array(), eye.to_array())
-                    {
-                        eye = anchor.lerp(eye, (frac as f32 - 0.05).max(0.05));
-                    }
-                    let [egx, egz] = bw_rust::original_scene::source_to_grid(eye.x, eye.z);
-                    if let Some(eh) = loaded.ground.height(egx, egz) {
-                        let min_eye_y = (eh * 2.0).max(view.water_height) + 1.6;
-                        if eye.y < min_eye_y {
-                            eye.y = min_eye_y;
-                        }
+                if rig.chase_target().is_some()
+                    && let Some(scene) = &host.world.collision
+                    && let Ok(Some((frac, _))) = scene.first_hit(anchor.to_array(), eye.to_array())
+                {
+                    eye = anchor.lerp(eye, (frac as f32 - 0.05).max(0.05));
+                }
+                let [egx, egz] = bw_rust::original_scene::source_to_grid(eye.x, eye.z);
+                if let Some(eh) = loaded.ground.height(egx, egz) {
+                    let min_eye_y = (eh * 2.0).max(view.water_height) + 1.6;
+                    if eye.y < min_eye_y {
+                        eye.y = min_eye_y;
                     }
                 }
                 let is_chase = rig.chase_target().is_some();
@@ -7488,6 +9974,8 @@ pub fn update(
         exp.age += step_dt;
         exp.age < exp.max_age
     });
+    view.active_tequila_particles
+        .retain_mut(|p| p.step(step_dt));
     view.destroyed_times.retain(|_, age| {
         *age += step_dt;
         *age < 2.2
@@ -7523,12 +10011,38 @@ pub fn update(
         } else {
             p[1]
         };
+        let exp_pos = Vec3::new(p[0], y, p[2]);
         view.active_explosions.push(ExplosionEffect {
-            pos: Vec3::new(p[0], y, p[2]),
+            pos: exp_pos,
             age: 0.0,
             max_age: 0.92,
             scale,
         });
+        if view.active_tequila_particles.len() < 56 && !view.tequila_effects.is_empty() {
+            let eff_idx = (view.frames as usize) % view.tequila_effects.len();
+            let burst = view.tequila_effects[eff_idx].spawn_burst(
+                [exp_pos.x, exp_pos.y, exp_pos.z],
+                scale,
+                view.frames.wrapping_add(eff_idx as u32 * 31),
+                12,
+            );
+            let cap = 64usize.saturating_sub(view.active_tequila_particles.len());
+            view.active_tequila_particles
+                .extend(burst.into_iter().take(cap));
+        }
+        if std::env::var_os("BW_OFFSCREEN").is_none() {
+            let dist = exp_pos.distance(cam_eye);
+            if dist < 260.0 {
+                let vol = (1.0 - dist / 260.0).clamp(0.15, 0.85) * 0.72;
+                let sfx = [
+                    "PE_Artillery_1",
+                    "PE_Bomb_1",
+                    "DE_Structure_1",
+                    "PE_Rocket_1",
+                ][(view.frames as usize + view.active_explosions.len()) % 4];
+                play_sfx_vol(&mut commands, view, sfx, vol);
+            }
+        }
     }
 
     let mut newly_destroyed: Vec<(ObjectId, [f32; 3], Option<ObjectId>, bool)> = Vec::new();
@@ -7577,14 +10091,19 @@ pub fn update(
                 + 1.2
         };
         let world_pos = Vec3::new(pos[0], y, pos[2]);
+        let feqt_factor = view
+            .tequila_profiles
+            .first()
+            .map(|p| (p.duration_seconds / 1.2).clamp(0.85, 1.35))
+            .unwrap_or(1.0);
         let (max_age, scale) = match base_id {
-            Some(ObjectId(550036818)) | Some(ObjectId(550035370)) => (0.78, 1.45),
+            Some(ObjectId(550036818)) | Some(ObjectId(550035370)) => (0.78 * feqt_factor, 1.45),
             Some(ObjectId(550035368))
             | Some(ObjectId(550026410))
             | Some(ObjectId(550026401))
-            | Some(ObjectId(550039972)) => (1.05, 2.15),
-            _ if !is_prop => (0.90, 1.65),
-            _ => (0.68, 1.15),
+            | Some(ObjectId(550039972)) => (1.05 * feqt_factor, 2.15),
+            _ if !is_prop => (0.90 * feqt_factor, 1.65),
+            _ => (0.68 * feqt_factor, 1.15),
         };
         view.active_explosions.push(ExplosionEffect {
             pos: world_pos,
@@ -7592,6 +10111,38 @@ pub fn update(
             max_age,
             scale,
         });
+        if view.active_tequila_particles.len() < 56 && !view.tequila_effects.is_empty() {
+            let eff_idx = (id.0 as usize) % view.tequila_effects.len();
+            let burst = view.tequila_effects[eff_idx].spawn_burst(
+                [world_pos.x, world_pos.y, world_pos.z],
+                scale,
+                (id.0 as u32).wrapping_add(view.frames),
+                12,
+            );
+            let cap = 64usize.saturating_sub(view.active_tequila_particles.len());
+            view.active_tequila_particles
+                .extend(burst.into_iter().take(cap));
+        }
+        // Apply radial explosion knockback impulse to nearby infantry
+        {
+            let v = &mut **view;
+            for &tid in v.troops.keys() {
+                if let Some(&tp) = v.session.program.host.positions.get(&tid) {
+                    let dx = tp[0] - pos[0];
+                    let dz = tp[2] - pos[2];
+                    let dist_sq = dx * dx + dz * dz;
+                    let blast_r = 6.5 * scale;
+                    if dist_sq < blast_r * blast_r && dist_sq > 1e-4 {
+                        let dist = dist_sq.sqrt();
+                        let strength = ((1.0 - dist / blast_r) * 7.5 * scale).clamp(0.5, 14.0);
+                        let kv = v.knockback_velocities.entry(tid).or_insert([0.0; 3]);
+                        kv[0] += (dx / dist) * strength;
+                        kv[1] += strength * 0.45;
+                        kv[2] += (dz / dist) * strength;
+                    }
+                }
+            }
+        }
 
         if std::env::var_os("BW_OFFSCREEN").is_none() {
             let dist = world_pos.distance(cam_eye);
@@ -7653,7 +10204,7 @@ pub fn update(
                     .as_ref()
                     .and_then(|q| q.current_audio())
             {
-                let wav = pcm_to_wav(audio.sample_rate, 1, &audio.pcm);
+                let wav = clean_mono_to_wav(audio.sample_rate, &audio.pcm);
                 let handle = audio_assets.add(AudioSource { bytes: wav.into() });
                 commands.spawn((
                     AudioPlayer::new(handle),
@@ -7784,6 +10335,11 @@ pub fn update(
                         max_age: 0.14,
                         scale: 0.42,
                     });
+                }
+                if let Some(phys) = view.ground_physics.get(&shot.shooter).copied() {
+                    let ratio = (phys.fire_impulse / phys.chassis_mass.max(10.0)).clamp(0.25, 2.2);
+                    let susp = view.vehicle_suspensions.entry(shot.shooter).or_default();
+                    susp.apply_recoil_impulse(-0.65 * ratio, -0.22 * ratio);
                 }
                 if matches!(
                     launch_sfx,
@@ -7941,10 +10497,392 @@ pub fn update(
             play_sfx(&mut commands, view, "UI_HUD_Objective_1");
         }
         view.last_objective_banner = obj_notif;
+
+        // 8. 3D Positional Capture-Point Flag Winch Audio
+        if view.frames % 30 == 0 {
+            let mut flag_vol = 0.0f32;
+            for (&cp_id, cp) in &view.session.program.host.world.capture_point_state {
+                if cp.direction != 0
+                    && cp.height > 0.0
+                    && cp.height < 100.0
+                    && let Some(&p) = view.session.program.host.positions.get(&cp_id)
+                {
+                    let d = Vec2::new(p[0] - cam_eye.x, p[2] - cam_eye.z).length();
+                    if d < 120.0 {
+                        flag_vol = flag_vol.max((1.0 - d / 120.0).clamp(0.12, 0.45));
+                    }
+                }
+            }
+            if flag_vol > 0.0 {
+                play_sfx_vol(&mut commands, view, "UI_HUD_Navigate", flag_vol * 0.45);
+            }
+        }
     }
 
     let interactive_smooth = !view.verify && view.replay.is_none();
+    let cam_look = view.smoothed_camera.map(|(_, look)| look);
+    let water_height = view.water_height;
     let mut active_troops = std::collections::BTreeSet::new();
+    let mut seated_visible_crew: BTreeMap<
+        ObjectId,
+        (ObjectId, bw_rust::vehicle_wheels::VehicleSeatSlot),
+    > = BTreeMap::new();
+
+    if interactive_smooth && !view.session.program.host.world.frozen {
+        if let Some(pid) = current_player_id {
+            if view.troops.contains_key(&pid)
+                && keys.just_pressed(KeyCode::Space)
+                && !view.combat_roll_timers.contains_key(&pid)
+            {
+                let mv = [action.input.strafe, action.input.forward];
+                let mv_mag = mv[0].hypot(mv[1]);
+                let is_locked = view.locked_target.is_some() || action.lock;
+                if is_locked && mv_mag > 0.15 {
+                    let roll_motion = if mv[0] < -0.35 {
+                        Motion::RollLeft
+                    } else if mv[0] > 0.35 {
+                        Motion::RollRight
+                    } else if mv[1] < -0.35 {
+                        Motion::RollBack
+                    } else {
+                        Motion::RollForward
+                    };
+                    let aim = view
+                        .session
+                        .program
+                        .host
+                        .world
+                        .player_aim
+                        .unwrap_or([0.0, 0.0, 1.0]);
+                    let yaw = (aim[0] as f32).atan2(aim[2] as f32);
+                    let fwd = mv[1] / mv_mag;
+                    let right = mv[0] / mv_mag;
+                    let burst = 14.5f32;
+                    let vx = (yaw.sin() * fwd - yaw.cos() * right) * burst;
+                    let vz = (yaw.cos() * fwd + yaw.sin() * right) * burst;
+                    view.combat_roll_timers
+                        .insert(pid, (0.62, roll_motion, [vx, vz]));
+                } else {
+                    view.combat_roll_timers
+                        .insert(pid, (0.58, Motion::JumpRise, [0.0, 0.0]));
+                }
+            } else if view
+                .session
+                .program
+                .host
+                .world
+                .flight_profiles
+                .contains_key(&pid)
+                && keys.just_pressed(KeyCode::Space)
+                && !view.barrel_roll_timers.contains_key(&pid)
+            {
+                let dir_sign = if action.input.strafe < -0.1 {
+                    -1.0
+                } else {
+                    1.0
+                };
+                view.barrel_roll_timers.insert(pid, (0.0, dir_sign));
+            } else if keys.just_pressed(KeyCode::Space)
+                && let Some(sub) = view.session.program.host.world.submarines.get_mut(&pid)
+            {
+                sub.submerged = !sub.submerged;
+            }
+        }
+
+        let mut finished_rolls = Vec::new();
+        let roll_ids: Vec<ObjectId> = view.combat_roll_timers.keys().copied().collect();
+        for rid in roll_ids {
+            let mut roll_vel = None;
+            if let Some((rem, motion, vel)) = view.combat_roll_timers.get_mut(&rid) {
+                *rem -= step_dt;
+                if *rem <= 0.0 {
+                    finished_rolls.push(rid);
+                } else {
+                    if matches!(
+                        *motion,
+                        Motion::JumpRise | Motion::JumpPose | Motion::JumpLand
+                    ) {
+                        *motion = if *rem > 0.38 {
+                            Motion::JumpRise
+                        } else if *rem > 0.16 {
+                            Motion::JumpPose
+                        } else {
+                            Motion::JumpLand
+                        };
+                    }
+                    if (vel[0].abs() + vel[1].abs()) > 0.1 {
+                        roll_vel = Some(*vel);
+                    }
+                }
+            }
+            if let Some(vel) = roll_vel
+                && let Some(p) = view.session.program.host.positions.get_mut(&rid)
+            {
+                let nx = p[0] + vel[0] * step_dt;
+                let nz = p[2] + vel[1] * step_dt;
+                let [gx, gz] = bw_rust::original_scene::source_to_grid(nx, nz);
+                if loaded.ground.height(gx, gz).is_some() {
+                    p[0] = nx;
+                    p[2] = nz;
+                }
+            }
+        }
+        for rid in finished_rolls {
+            view.combat_roll_timers.remove(&rid);
+        }
+
+        let sim_dt = (sim_ticks as f32) / 60.0;
+        let troop_ids: Vec<ObjectId> = view.troops.keys().copied().collect();
+        for tid in troop_ids {
+            if let Some(&carrier_id) = view.session.program.host.world.carrier_of.get(&tid) {
+                let carrier_alive = view
+                    .session
+                    .program
+                    .host
+                    .world
+                    .units
+                    .get(&carrier_id)
+                    .is_some_and(|cu| cu.active == Some(true) && cu.health > 0.0);
+                let seat_idx = view
+                    .session
+                    .program
+                    .host
+                    .world
+                    .passengers
+                    .get(&carrier_id)
+                    .and_then(|list| list.iter().position(|&p| p == tid))
+                    .unwrap_or(0);
+                if carrier_alive
+                    && let Some(slot) = view
+                        .seat_slots
+                        .get(&carrier_id)
+                        .and_then(|slots| slots.get(seat_idx))
+                        .copied()
+                    && slot.display.is_visible()
+                {
+                    seated_visible_crew.insert(tid, (carrier_id, slot));
+                    if sim_ticks > 0 {
+                        let c_heading = view
+                            .session
+                            .program
+                            .host
+                            .world
+                            .headings
+                            .get(&carrier_id)
+                            .copied()
+                            .unwrap_or(0.0);
+                        let prev_ch = view
+                            .unit_headings_prev
+                            .get(&carrier_id)
+                            .copied()
+                            .unwrap_or(c_heading);
+                        let mut d_cyaw = c_heading - prev_ch;
+                        while d_cyaw > std::f32::consts::PI {
+                            d_cyaw -= std::f32::consts::TAU;
+                        }
+                        while d_cyaw < -std::f32::consts::PI {
+                            d_cyaw += std::f32::consts::TAU;
+                        }
+                        let c_moving = view
+                            .session
+                            .program
+                            .host
+                            .positions
+                            .get(&carrier_id)
+                            .zip(view.last_positions.get(&carrier_id))
+                            .is_some_and(|(cp, lp)| (cp[0] - lp[0]).hypot(cp[2] - lp[2]) > 1e-3);
+                        let c_firing = view
+                            .session
+                            .combat
+                            .shots
+                            .iter()
+                            .rev()
+                            .take(4)
+                            .any(|s| s.shooter == carrier_id);
+                        let desired = if slot.is_driver {
+                            if d_cyaw > 0.012 {
+                                Motion::SteerLeft
+                            } else if d_cyaw < -0.012 {
+                                Motion::SteerRight
+                            } else if c_moving {
+                                Motion::SteerFront
+                            } else {
+                                Motion::DriveIdle
+                            }
+                        } else if slot.has_weapon && c_firing {
+                            Motion::GunnerFire
+                        } else {
+                            Motion::DriveIdle
+                        };
+                        if let Some(u) = view.session.program.host.world.units.get_mut(&tid)
+                            && let Some(anim) = &mut u.animation
+                        {
+                            let _ = anim.advance(sim_dt as f64);
+                            anim.select_with_fallback(desired);
+                        }
+                    }
+                    continue;
+                }
+            }
+            if sim_ticks == 0 {
+                continue;
+            }
+
+            let cur_p = view.session.program.host.positions.get(&tid).copied();
+            let prev_p = view.last_positions.get(&tid).copied().or(cur_p);
+            let heading = view
+                .session
+                .program
+                .host
+                .world
+                .headings
+                .get(&tid)
+                .copied()
+                .unwrap_or(0.0);
+            let prev_h = view
+                .unit_headings_prev
+                .insert(tid, heading)
+                .unwrap_or(heading);
+            let mut d_yaw = heading - prev_h;
+            while d_yaw > std::f32::consts::PI {
+                d_yaw -= std::f32::consts::TAU;
+            }
+            while d_yaw < -std::f32::consts::PI {
+                d_yaw += std::f32::consts::TAU;
+            }
+            let terrain_y = cur_p.map_or(water_height + 2.0, |p| {
+                let [gx, gz] = bw_rust::original_scene::source_to_grid(p[0], p[2]);
+                loaded
+                    .ground
+                    .height(gx, gz)
+                    .map_or(water_height, |h| h * 2.0)
+            });
+            let in_water = terrain_y < water_height - 0.35;
+            let roll_override = view.combat_roll_timers.get(&tid).map(|&(_, m, _)| m);
+            let kv_mag = view
+                .knockback_velocities
+                .get(&tid)
+                .map_or(0.0, |kv| kv[0].hypot(kv[2]) + kv[1].abs());
+            let is_reloading = view
+                .session
+                .combat
+                .weapon_bar_hud(tid)
+                .is_some_and(|(_, busy)| busy)
+                && view.session.combat.chaingun_hud(tid).is_none();
+            let is_player_locked =
+                Some(tid) == current_player_id && (view.locked_target.is_some() || action.lock);
+
+            if let Some(u) = view.session.program.host.world.units.get_mut(&tid)
+                && let Some(anim) = &mut u.animation
+            {
+                if u.health <= 0.0 {
+                    if in_water && anim.motion != Motion::WaterDeath {
+                        anim.select_with_fallback(Motion::WaterDeath);
+                    } else if !in_water && anim.motion == Motion::Death && anim.elapsed < 0.05 {
+                        let death_var = [
+                            Motion::Death,
+                            Motion::Death2,
+                            Motion::Death3,
+                            Motion::Death4,
+                            Motion::Death5,
+                        ][(tid.0 as usize) % 5];
+                        anim.select_with_fallback(death_var);
+                    }
+                    continue;
+                }
+                if u.active != Some(true) {
+                    continue;
+                }
+                if let Some(rm) = roll_override {
+                    anim.select_with_fallback(rm);
+                    continue;
+                }
+                if kv_mag > 0.22 {
+                    let km = if kv_mag > 2.2 {
+                        Motion::FallFlail
+                    } else if kv_mag > 0.65 {
+                        Motion::HitGround
+                    } else {
+                        Motion::Getup
+                    };
+                    anim.select_with_fallback(km);
+                    continue;
+                }
+                if is_reloading {
+                    anim.select_with_fallback(Motion::Reload);
+                    continue;
+                }
+                let (vx, vz) = cur_p
+                    .zip(prev_p)
+                    .map_or((0.0, 0.0), |(c, p)| (c[0] - p[0], c[2] - p[2]));
+                let ds = vx.hypot(vz);
+                let speed = ds / sim_dt.max(1.0 / 60.0);
+                if in_water {
+                    if speed > 0.35 {
+                        let fwd_dot = (vx * heading.sin() + vz * heading.cos()) / ds.max(1e-4);
+                        anim.select_with_fallback(if fwd_dot < -0.35 {
+                            Motion::SwimBack
+                        } else {
+                            Motion::Swim
+                        });
+                    } else {
+                        anim.select_with_fallback(Motion::TreadWater);
+                    }
+                } else if matches!(anim.motion, Motion::Fire | Motion::ForwardFire)
+                    && anim.elapsed < 0.38
+                {
+                    if speed > 0.8 {
+                        anim.select_with_fallback(Motion::ForwardFire);
+                    }
+                } else if speed > 0.35 {
+                    let fwd_dot = (vx * heading.sin() + vz * heading.cos()) / ds.max(1e-4);
+                    let right_dot = (vx * heading.cos() - vz * heading.sin()) / ds.max(1e-4);
+                    let is_running = speed > 2.2;
+                    let desired = if fwd_dot < -0.38 {
+                        if is_running {
+                            Motion::RunBack
+                        } else {
+                            Motion::WalkBack
+                        }
+                    } else if right_dot < -0.45 {
+                        if is_running {
+                            Motion::StrafeLeftRun
+                        } else {
+                            Motion::StrafeLeft
+                        }
+                    } else if right_dot > 0.45 {
+                        if is_running {
+                            Motion::StrafeRightRun
+                        } else {
+                            Motion::StrafeRight
+                        }
+                    } else if is_running {
+                        Motion::Run
+                    } else {
+                        Motion::Walk
+                    };
+                    anim.select_with_fallback(desired);
+                } else if anim.motion == Motion::Run && anim.elapsed > 0.20 {
+                    anim.select_with_fallback(Motion::RunStop);
+                } else if anim.motion == Motion::RunStop && anim.elapsed < 0.28 {
+                    // let RunStop finish
+                } else if d_yaw > 0.018 {
+                    anim.select_with_fallback(Motion::TurnLeft);
+                } else if d_yaw < -0.018 {
+                    anim.select_with_fallback(Motion::TurnRight);
+                } else if is_player_locked {
+                    anim.select_with_fallback(Motion::AlertIdle);
+                } else if ((time.elapsed_secs() as u32).wrapping_add(tid.0 as u32))
+                    .is_multiple_of(14)
+                {
+                    anim.select_with_fallback(Motion::ContextIdle);
+                } else {
+                    anim.select_with_fallback(Motion::Idle);
+                }
+            }
+        }
+    }
+
     let View {
         ref session,
         ref mut troops,
@@ -7952,7 +10890,9 @@ pub fn update(
         ..
     } = **view;
     let world_units = &session.program.host.world.units;
+    let world_headings = &session.program.host.world.headings;
     let host_positions = &session.program.host.positions;
+    let combat_shots = &session.combat.shots;
     let player_id = session.program.host.world.player;
     for (&id, troop) in troops.iter_mut() {
         let Some(unit) = world_units.get(&id) else {
@@ -7961,15 +10901,16 @@ pub fn update(
         let Some(anim) = &unit.animation else {
             continue;
         };
-        let alive_visible = unit.active == Some(true) && unit.health > 0.0;
-        let dying_visible =
-            unit.health <= 0.0 && anim.motion == Motion::Death && anim.elapsed < 2.8;
+        let is_seated_visible = seated_visible_crew.contains_key(&id);
+        let alive_visible = (unit.active == Some(true) || is_seated_visible) && unit.health > 0.0;
+        let dying_visible = unit.health <= 0.0 && anim.motion.is_death() && anim.elapsed < 2.8;
         if !alive_visible && !dying_visible {
             troop.last_pose_key = None;
             continue;
         }
         active_troops.insert(id);
-        let dist_sq = host_positions.get(&id).map_or(0.0, |p| {
+        let pos_ref_id = seated_visible_crew.get(&id).map_or(id, |(cid, _)| *cid);
+        let dist_sq = host_positions.get(&pos_ref_id).map_or(0.0, |p| {
             let dx = p[0] - cam_eye.x;
             let dz = p[2] - cam_eye.z;
             dx * dx + dz * dz
@@ -7980,15 +10921,17 @@ pub fn update(
         let Some(source_model) = loaded.models.get(troop.model_index) else {
             continue;
         };
-        let Some(clip_name) = anim.bindings.get(&anim.motion) else {
+        let Some(clip_name) = anim
+            .bindings
+            .get(&anim.motion)
+            .or_else(|| anim.bindings.get(&Motion::Idle))
+        else {
             continue;
         };
         let Some(clip) = clips.get(clip_name) else {
             continue;
         };
-        let Ok(sample_t) = anim.sample_time(clip) else {
-            continue;
-        };
+        let sample_t = anim.sample_time(clip).unwrap_or(0.0);
         let fps = if Some(id) == player_id || dist_sq < 65.0 * 65.0 {
             60.0
         } else if dist_sq < 130.0 * 130.0 {
@@ -7996,14 +10939,72 @@ pub fn update(
         } else {
             15.0
         };
+        let (aim_yaw, aim_pitch) = if interactive_smooth
+            && alive_visible
+            && (Some(id) == player_id || dist_sq < 55.0 * 55.0)
+        {
+            let target_pos = if Some(id) == player_id {
+                current_aim_target
+                    .and_then(|tid| host_positions.get(&tid).copied())
+                    .map(|tp| {
+                        let [gx, gz] = bw_rust::original_scene::source_to_grid(tp[0], tp[2]);
+                        let gy =
+                            (loaded.ground.height(gx, gz).unwrap_or(0.0) * 2.0).max(water_height);
+                        Vec3::new(tp[0], tp[1] + gy + 1.4, tp[2])
+                    })
+                    .or(cam_look)
+            } else {
+                combat_shots
+                    .iter()
+                    .rev()
+                    .find(|s| s.shooter == id)
+                    .map(|s| Vec3::from_array(s.to))
+            };
+            if let Some(tpos) = target_pos
+                && let Some(&up) = host_positions.get(&id)
+            {
+                let [gx, gz] = bw_rust::original_scene::source_to_grid(up[0], up[2]);
+                let gy = (loaded.ground.height(gx, gz).unwrap_or(0.0) * 2.0).max(water_height);
+                let uy = up[1] + gy + 1.4;
+                let dx = tpos.x - up[0];
+                let dz = tpos.z - up[2];
+                let dy = tpos.y - uy;
+                let dist_xz = (dx * dx + dz * dz).sqrt();
+                if dist_xz > 0.8 {
+                    let heading = world_headings.get(&id).copied().unwrap_or(0.0);
+                    let mut ry = dx.atan2(dz) - heading;
+                    while ry > std::f32::consts::PI {
+                        ry -= std::f32::consts::TAU;
+                    }
+                    while ry < -std::f32::consts::PI {
+                        ry += std::f32::consts::TAU;
+                    }
+                    let rp = -(dy / dist_xz).atan().clamp(-0.42, 0.42);
+                    (ry.clamp(-0.52, 0.52), rp)
+                } else {
+                    (0.0, 0.0)
+                }
+            } else {
+                (0.0, 0.0)
+            }
+        } else {
+            (0.0, 0.0)
+        };
         let motion_changed = troop
             .last_pose_key
             .is_some_and(|(prev_m, _)| prev_m != anim.motion);
-        let key = (anim.motion, (sample_t * fps) as u32);
+        let aim_hash =
+            (((aim_yaw + 1.0) * 25.0) as u32) ^ ((((aim_pitch + 1.0) * 25.0) as u32) << 8);
+        let key = (anim.motion, ((sample_t * fps) as u32) ^ (aim_hash << 16));
         if !motion_changed && troop.last_pose_key == Some(key) && !troop.last_pose.is_empty() {
             continue;
         }
-        let Ok(mut pose) = bw_rust::skinning::pose(source_model, Some((clip, sample_t))) else {
+        let Ok(mut pose) = bw_rust::skinning::pose_with_aim(
+            source_model,
+            Some((clip, sample_t)),
+            aim_yaw,
+            aim_pitch,
+        ) else {
             continue;
         };
         if interactive_smooth && troop.last_pose.len() == pose.len() {
@@ -8026,15 +11027,122 @@ pub fn update(
         }
         for p in &troop.parts {
             if source_model.nodes[p.node_index].has_skin_data
-                && let Ok(vertices) =
-                    bw_rust::skinning::deform(source_model, &pose, p.node_index, p.surface_index)
+                && let Ok((vertices, normals)) = bw_rust::skinning::deform_positions_and_normals(
+                    source_model,
+                    &pose,
+                    p.node_index,
+                    p.surface_index,
+                )
                 && let Some(mut mesh) = meshes.get_mut(&p.mesh)
             {
                 mesh.insert_attribute(Mesh::ATTRIBUTE_POSITION, vertices);
+                if let Some(norms) = normals {
+                    mesh.insert_attribute(Mesh::ATTRIBUTE_NORMAL, norms);
+                }
             }
         }
         troop.last_pose_key = Some(key);
         troop.last_pose = pose;
+    }
+
+    // 2-Player Local (`IJKL` move, `U`/`O` aim yaw, `H` fire, `Y` unit switch) + UDP Peer Sync (`NetPeer`)
+    if view.two_player_enabled {
+        let mut p2_mv = [0.0f32, 0.0f32];
+        if keys.pressed(KeyCode::KeyI) {
+            p2_mv[1] += 1.0;
+        }
+        if keys.pressed(KeyCode::KeyK) {
+            p2_mv[1] -= 1.0;
+        }
+        if keys.pressed(KeyCode::KeyJ) {
+            p2_mv[0] -= 1.0;
+        }
+        if keys.pressed(KeyCode::KeyL) {
+            p2_mv[0] += 1.0;
+        }
+        let mut p2_yaw_delta = 0.0f32;
+        if keys.pressed(KeyCode::KeyU) {
+            p2_yaw_delta += 2.2 * step_dt;
+        }
+        if keys.pressed(KeyCode::KeyO) {
+            p2_yaw_delta -= 2.2 * step_dt;
+        }
+        view.p2_aim_yaw += p2_yaw_delta;
+        let mut p2_fire = keys.pressed(KeyCode::KeyH);
+        if keys.just_pressed(KeyCode::KeyY)
+            && let Some(new_p2) = view.session.program.host.world.cycle_player2_unit()
+        {
+            if let Some(&h) = view.session.program.host.world.headings.get(&new_p2) {
+                view.p2_aim_yaw = h;
+            }
+            play_sfx(&mut commands, view, "UI_Ingame_Unit_Select");
+        }
+        let cur_frame = view.frames as u64;
+        if let Some(peer) = view.net_peer.as_mut() {
+            let mut btn_bits = u16::from(action.input.fire);
+            if p2_fire {
+                btn_bits |= 2;
+            }
+            let pkt = bw_rust::net_sync::PlayerInputPacket {
+                frame: cur_frame,
+                player_slot: 1,
+                buttons: btn_bits,
+                movement: p2_mv,
+                aim_yaw_delta: p2_yaw_delta,
+                aim_pitch_delta: 0.0,
+                score_p1: 0.0,
+                score_p2: 0.0,
+            };
+            let _ = peer.send_packet(&pkt);
+            for rx in peer.poll_packets() {
+                if rx.player_slot == 2 {
+                    p2_mv = rx.movement;
+                    view.p2_aim_yaw += rx.aim_yaw_delta;
+                    if (rx.buttons & 1) != 0 || (rx.buttons & 2) != 0 {
+                        p2_fire = true;
+                    }
+                }
+            }
+        }
+        if let Some(p2_id) = view.session.program.host.world.player2 {
+            let yaw = view.p2_aim_yaw;
+            let fwd = [yaw.sin(), yaw.cos()];
+            let right = [yaw.cos(), -yaw.sin()];
+            let world_vx = fwd[0] * p2_mv[1] + right[0] * p2_mv[0];
+            let world_vz = fwd[1] * p2_mv[1] + right[1] * p2_mv[0];
+            if world_vx.abs() > 1e-3 || world_vz.abs() > 1e-3 {
+                view.session
+                    .program
+                    .host
+                    .world
+                    .direct_velocity
+                    .insert(p2_id, [(world_vx * 6.0) as f64, (world_vz * 6.0) as f64]);
+                view.session
+                    .program
+                    .host
+                    .world
+                    .headings
+                    .insert(p2_id, world_vx.atan2(world_vz));
+            } else {
+                view.session
+                    .program
+                    .host
+                    .world
+                    .direct_velocity
+                    .remove(&p2_id);
+            }
+            if p2_fire && !view.session.program.host.world.frozen {
+                let aim_dir = [yaw.sin() as f64, 0.0, yaw.cos() as f64];
+                let aim_assist = view.aim_assist_enabled;
+                let s = &mut view.session;
+                let _ = s.combat.fire_unit_at_direction(
+                    &mut s.program.host,
+                    p2_id,
+                    aim_dir,
+                    aim_assist,
+                );
+            }
+        }
     }
 
     let current_positions: Vec<(ObjectId, [f32; 3])> = view
@@ -8050,29 +11158,36 @@ pub fn update(
     for (id, p) in &current_positions {
         let id = *id;
         let p = *p;
-        if let Some(prev) = view.last_positions.insert(id, p) {
+        let prev_opt = if sim_ticks > 0 || !view.last_positions.contains_key(&id) {
+            view.last_positions.insert(id, p)
+        } else {
+            view.last_positions.get(&id).copied()
+        };
+        if let Some(prev) = prev_opt {
             let ds = (p[0] - prev[0]).hypot(p[2] - prev[2]);
             if ds > 1e-4 && ds < 10.0 {
                 moving_units.insert(id);
-                *view.wheel_angles.entry(id).or_insert(0.0) += ds;
-                if Some(id) == player_id
-                    && !view.session.program.host.world.frozen
-                    && view.troops.contains_key(&id)
-                {
-                    player_step_delta += ds;
-                }
-                if ds > 0.04
-                    && (view.frames % 12) == 0
-                    && view.active_explosions.len() < 24
-                    && view.session.program.host.world.water_units.contains(&id)
-                {
-                    let water_y = view.water_height + 0.05;
-                    view.active_explosions.push(ExplosionEffect {
-                        pos: Vec3::new(p[0], water_y, p[2]),
-                        age: 0.32,
-                        max_age: 0.56,
-                        scale: 1.15,
-                    });
+                if sim_ticks > 0 {
+                    *view.wheel_angles.entry(id).or_insert(0.0) += ds;
+                    if Some(id) == player_id
+                        && !view.session.program.host.world.frozen
+                        && view.troops.contains_key(&id)
+                    {
+                        player_step_delta += ds;
+                    }
+                    if ds > 0.04
+                        && (view.frames % 12) == 0
+                        && view.active_explosions.len() < 24
+                        && view.session.program.host.world.water_units.contains(&id)
+                    {
+                        let water_y = view.water_height + 0.05;
+                        view.active_explosions.push(ExplosionEffect {
+                            pos: Vec3::new(p[0], water_y, p[2]),
+                            age: 0.32,
+                            max_age: 0.56,
+                            scale: 1.15,
+                        });
+                    }
                 }
             }
         }
@@ -8116,6 +11231,15 @@ pub fn update(
             .collect();
 
         for &(id, mut target_p, is_troop) in &active_mobile {
+            if let Some(kv) = view.knockback_velocities.get_mut(&id) {
+                target_p[0] += kv[0] * 0.12;
+                target_p[1] = (target_p[1] + kv[1] * 0.08).max(0.0);
+                target_p[2] += kv[2] * 0.12;
+                let damp = (1.0 - step_dt * 6.5).clamp(0.0, 0.95);
+                kv[0] *= damp;
+                kv[1] *= damp;
+                kv[2] *= damp;
+            }
             if interactive_smooth && Some(id) != player_id {
                 let min_sep = if is_troop { 1.35f32 } else { 5.2f32 };
                 let mut push_x = 0.0f32;
@@ -8225,17 +11349,71 @@ pub fn update(
                 } else {
                     0.0
                 };
+                let speed = if moving_units.contains(&id) { 6.0 } else { 0.0 };
+                let [cx, cz] = bw_rust::original_scene::source_to_grid(p[0], p[2]);
+                let center_y = loaded.ground.height(cx, cz).map_or(0.0, |h| h * 2.0);
+                let (w_xs, w_zs, avg_r) = view.vehicle_wheel_offsets.get(&id).copied().unwrap_or((
+                    [
+                        -1.45, -1.45, -1.45, -1.45, -1.45, -1.45, 1.45, 1.45, 1.45, 1.45, 1.45,
+                        1.45,
+                    ],
+                    [
+                        1.8, 1.1, 0.4, -0.4, -1.1, -1.8, 1.8, 1.1, 0.4, -0.4, -1.1, -1.8,
+                    ],
+                    0.55,
+                ));
+                let sin_h = heading.sin();
+                let cos_h = heading.cos();
+                let mut wheel_deltas = [0.0f32; 12];
+                for i in 0..12 {
+                    let wx = p[0] + w_xs[i] * cos_h + w_zs[i] * sin_h;
+                    let wz = p[2] - w_xs[i] * sin_h + w_zs[i] * cos_h;
+                    let [wgx, wgz] = bw_rust::original_scene::source_to_grid(wx, wz);
+                    wheel_deltas[i] = if let Some(wh) = loaded.ground.height(wgx, wgz) {
+                        ((wh * 2.0) - center_y).clamp(-0.45, 0.45)
+                    } else {
+                        -pitch * (w_zs[i] * 0.12) + roll * (w_xs[i] * 0.10)
+                    };
+                }
+                let gphys = view.ground_physics.get(&id).copied();
+                let (heave, pitch_s, roll_s) = {
+                    let susp = view.vehicle_suspensions.entry(id).or_default();
+                    susp.step_with_physics(
+                        step_dt.max(1.0 / 60.0),
+                        speed,
+                        pitch,
+                        roll,
+                        &wheel_deltas,
+                        avg_r,
+                        gphys.as_ref(),
+                    );
+                    (susp.heave, susp.pitch, susp.roll)
+                };
+                if let Some(sm) = view.smoothed_positions.get_mut(&id) {
+                    sm[1] += heave;
+                }
                 Quat::from_rotation_y(heading)
-                    * Quat::from_rotation_x(pitch)
-                    * Quat::from_rotation_z(roll)
+                    * Quat::from_rotation_x(pitch_s)
+                    * Quat::from_rotation_z(roll_s)
             } else if is_water && interactive_smooth {
+                let wphys = view.water_physics.get(&id).copied().unwrap_or_default();
                 let phase = (id.0 as f32) * 0.37;
-                let wave_pitch = (elapsed_t * 1.7 + phase).sin() * 0.025;
-                let wave_roll = (elapsed_t * 1.3 + phase * 1.7).cos() * 0.032;
+                let wave_pitch =
+                    (elapsed_t * wphys.bob_speed * 0.68 + phase).sin() * wphys.bob_pitch_amount;
+                let wave_roll = (elapsed_t * wphys.bob_speed * 0.52 + phase * 1.7).cos()
+                    * wphys.bob_roll_amount;
                 Quat::from_rotation_y(heading)
                     * Quat::from_rotation_x(wave_pitch)
                     * Quat::from_rotation_z(wave_roll)
             } else if is_air && interactive_smooth {
+                let fp = view
+                    .session
+                    .program
+                    .host
+                    .world
+                    .flight_profiles
+                    .get(&id)
+                    .copied();
                 let prev_q = view
                     .smoothed_rotations
                     .get(&id)
@@ -8250,16 +11428,55 @@ pub fn update(
                 while d_yaw < -std::f32::consts::PI {
                     d_yaw += std::f32::consts::TAU;
                 }
-                let bank = (-d_yaw * 1.8).clamp(-0.48, 0.48);
+                let max_bank = fp.map_or(0.48, |f| f.max_tilt_sideways);
+                let bank_fac = fp.map_or(1.8, |f| f.bank_factor * 1.5);
+                let mut pitch_tilt = fp.map_or(0.06, |f| f.cruise_tilt_forward);
+                let mut strafe_bank = 0.0f32;
+                if Some(id) == current_player_id
+                    && let Some(f) = fp
+                {
+                    let mv = [action.input.strafe, action.input.forward];
+                    if mv[1] > 0.05 {
+                        pitch_tilt = f.cruise_tilt_forward
+                            + (f.max_tilt_forward - f.cruise_tilt_forward) * mv[1];
+                    } else if mv[1] < -0.05 {
+                        pitch_tilt = -f.max_tilt_backward * (-mv[1]);
+                    }
+                    strafe_bank = -mv[0] * f.max_tilt_sideways * 0.75;
+                }
+                let mut roll_angle = (-d_yaw * bank_fac + strafe_bank).clamp(-max_bank, max_bank);
+                let dur = fp.map_or(1.5, |f| f.barrel_roll_duration);
+                let rad = fp.map_or(4.0, |f| f.barrel_roll_radius);
+                let barrel_state =
+                    if let Some((elapsed_roll, dir_sign)) = view.barrel_roll_timers.get_mut(&id) {
+                        *elapsed_roll += step_dt;
+                        let prog = (*elapsed_roll / dur).clamp(0.0, 1.0);
+                        Some((prog, *dir_sign))
+                    } else {
+                        None
+                    };
+                if let Some((prog, dir_sign)) = barrel_state {
+                    let angle = prog * std::f32::consts::TAU * dir_sign;
+                    roll_angle += angle;
+                    if let Some(sm) = view.smoothed_positions.get_mut(&id) {
+                        let lat = (prog * std::f32::consts::TAU).sin() * rad * 0.25 * dir_sign;
+                        sm[0] += heading.cos() * lat;
+                        sm[2] -= heading.sin() * lat;
+                    }
+                    if prog >= 1.0 {
+                        view.barrel_roll_timers.remove(&id);
+                    }
+                }
                 Quat::from_rotation_y(heading)
-                    * Quat::from_rotation_x(0.06)
-                    * Quat::from_rotation_z(bank)
+                    * Quat::from_rotation_x(pitch_tilt)
+                    * Quat::from_rotation_z(roll_angle)
             } else {
                 Quat::from_rotation_y(heading)
             };
 
+            let in_barrel_roll = view.barrel_roll_timers.contains_key(&id);
             let rot_entry = view.smoothed_rotations.entry(id).or_insert(target_rot);
-            if !interactive_smooth {
+            if !interactive_smooth || in_barrel_roll {
                 *rot_entry = target_rot;
             } else {
                 *rot_entry = rot_entry.slerp(target_rot, rot_alpha);
@@ -8327,6 +11544,84 @@ pub fn update(
         }
     }
 
+    if interactive_smooth {
+        for (&tid, &(carrier_id, slot)) in &seated_visible_crew {
+            if let Some(&cp) = view
+                .smoothed_positions
+                .get(&carrier_id)
+                .or_else(|| view.session.program.host.positions.get(&carrier_id))
+            {
+                let crot = view
+                    .smoothed_rotations
+                    .get(&carrier_id)
+                    .copied()
+                    .unwrap_or_else(|| {
+                        let ch = view
+                            .session
+                            .program
+                            .host
+                            .world
+                            .headings
+                            .get(&carrier_id)
+                            .copied()
+                            .unwrap_or(0.0);
+                        Quat::from_rotation_y(ch)
+                    });
+                let seat_rot = if slot.has_weapon
+                    && !slot.is_driver
+                    && let Some(&(tyaw, _)) = turret_aim.get(&carrier_id)
+                {
+                    crot * Quat::from_rotation_y(tyaw)
+                } else {
+                    crot
+                };
+                let world_offset = seat_rot * Vec3::from_array(slot.local_offset);
+                let mut sp = [
+                    cp[0] + world_offset.x,
+                    cp[1] + world_offset.y,
+                    cp[2] + world_offset.z,
+                ];
+                let carrier_is_air_or_water = view
+                    .session
+                    .program
+                    .host
+                    .world
+                    .non_ground_units
+                    .contains(&carrier_id)
+                    || view
+                        .session
+                        .program
+                        .host
+                        .world
+                        .water_units
+                        .contains(&carrier_id);
+                if carrier_is_air_or_water {
+                    let [gx, gz] = bw_rust::original_scene::source_to_grid(sp[0], sp[2]);
+                    let gy = loaded.ground.height(gx, gz).map_or(0.0, |h| h * 2.0);
+                    sp[1] -= gy;
+                }
+                view.smoothed_positions.insert(tid, sp);
+                view.smoothed_rotations.insert(tid, seat_rot);
+            }
+        }
+        let jump_entries: Vec<(ObjectId, f32, Motion)> = view
+            .combat_roll_timers
+            .iter()
+            .map(|(&rid, &(rem, motion, _))| (rid, rem, motion))
+            .collect();
+        for (rid, rem, motion) in jump_entries {
+            if matches!(
+                motion,
+                Motion::JumpRise | Motion::JumpPose | Motion::JumpLand
+            ) && let Some(sp) = view.smoothed_positions.get_mut(&rid)
+            {
+                let t = (1.0 - (rem / 0.58).clamp(0.0, 1.0)) * std::f32::consts::PI;
+                sp[1] += t.sin() * 1.35;
+            }
+        }
+    }
+
+    let host = &view.session.program.host;
     let rotor_angle = if interactive_smooth {
         time.elapsed_secs() * 26.0
     } else {
@@ -8336,6 +11631,9 @@ pub fn update(
     let mut bomber_parts = 0;
     for (part, mut transform, mut visibility) in &mut actors {
         if !part.is_unit && !part.is_mobile {
+            if !part.is_fragment && *visibility != Visibility::Visible {
+                *visibility = Visibility::Visible;
+            }
             continue;
         }
         if part.is_fragment {
@@ -8407,6 +11705,43 @@ pub fn update(
                 }
                 continue;
             }
+        } else if let Some(mvar) = part.morph_variant {
+            let (is_dead, army_id) = host
+                .world
+                .morphing_building_visual_state(part.id)
+                .unwrap_or((false, 0));
+            let has_dead_model = view
+                .morphing_buildings
+                .get(&part.id)
+                .is_some_and(|m| m.by_faction.values().any(|(_, d)| d.is_some()));
+            let has_army_model = view
+                .morphing_buildings
+                .get(&part.id)
+                .is_some_and(|m| m.by_faction.contains_key(army_id_to_faction_key(army_id)));
+            let should_show = if is_dead {
+                if has_dead_model {
+                    mvar == MorphVariant::DeadModel
+                } else {
+                    part.keep_when_dead && mvar == MorphVariant::DefaultIntact
+                }
+            } else {
+                match mvar {
+                    MorphVariant::DeadModel => false,
+                    MorphVariant::ArmyIntact(a) => a == army_id,
+                    MorphVariant::DefaultIntact => !has_army_model || army_id == 0,
+                }
+            };
+            let target_vis = if should_show {
+                Visibility::Visible
+            } else {
+                Visibility::Hidden
+            };
+            if *visibility != target_vis {
+                *visibility = target_vis;
+            }
+            if !part.is_mobile {
+                continue;
+            }
         } else if let Some(u) = host
             .world
             .units
@@ -8466,7 +11801,9 @@ pub fn update(
                     .ground
                     .height(x, z)
                     .map_or(view.water_height, |h| (h * 2.0).max(view.water_height));
-                if p[1] < surface_y {
+                if let Some(sub) = host.world.submarines.get(&part.id) {
+                    p[1] = view.water_height - sub.depth;
+                } else if p[1] < surface_y {
                     p[1] += surface_y;
                 }
                 if interactive_smooth {
@@ -8500,7 +11837,20 @@ pub fn update(
         } else if let Some(radius) = part.wheel_radius {
             let dist = view.wheel_angles.get(&part.id).copied().unwrap_or(0.0);
             let spin = Mat4::from_rotation_x(dist / radius.max(0.25));
-            Transform::from_matrix(root * part.local * spin)
+            let defl = view.vehicle_suspensions.get(&part.id).map_or(0.0, |s| {
+                let is_right = usize::from(part.local.w_axis.x >= 0.0);
+                let axle = if part.local.w_axis.z > 0.6 {
+                    0
+                } else if part.local.w_axis.z < -0.6 {
+                    5
+                } else {
+                    2
+                };
+                s.wheel_deflections[(axle * 2 + is_right).min(11)]
+            });
+            Transform::from_matrix(
+                root * Mat4::from_translation(Vec3::new(0.0, defl, 0.0)) * part.local * spin,
+            )
         } else if part.turret_role > 0 {
             let (rel_yaw, rel_pitch) = turret_aim.get(&part.id).copied().unwrap_or((0.0, 0.0));
             let yp = Vec3::new(part.turret_yaw_pivot[0], 0.0, part.turret_yaw_pivot[1]);
@@ -8800,14 +12150,52 @@ pub fn update(
             .unwrap_or(""),
     )
     .replace('_', " ");
+    let timer_prefix = if let Some(secs) = host.world.timer_seconds {
+        let s = secs.max(0.0).ceil() as u32;
+        format!("TIME {:02}:{:02} | ", s / 60, s % 60)
+    } else {
+        String::new()
+    };
+    let mp_score_prefix = if host.world.is_multiplayer {
+        let p1_army = player_id
+            .and_then(|pid| host.world.units.get(&pid))
+            .map(|u| u.army.as_str())
+            .unwrap_or("");
+        let mut p1_score = 0.0;
+        let mut p2_score = 0.0;
+        for army in [
+            "eWesternFrontier",
+            "eTundranTerritories",
+            "eXylvanian",
+            "eSolarEmpire",
+            "eUnderWorld",
+            "eAngloIsles",
+        ] {
+            let dead = host.world.army_health_total(army, true);
+            if !p1_army.is_empty() && (army == p1_army || host.world.same_allegiance(army, p1_army))
+            {
+                p2_score += dead;
+            } else {
+                p1_score += dead;
+            }
+        }
+        let opp_tag = if host.world.two_player_mode {
+            "P2"
+        } else {
+            "AI"
+        };
+        format!("SCORE P1 {:.0} : {:.0} {opp_tag} | ", p1_score, p2_score)
+    } else {
+        String::new()
+    };
     set_text(
         UiTextSlot::ObjectiveBanner,
         if frozen_cutscene {
             "CINEMATIC SEQUENCE | Press [Enter] or [Esc] to Skip".into()
         } else if !notification.is_empty() {
-            format!("{notification} | {guidance_str}")
+            format!("{timer_prefix}{mp_score_prefix}{notification} | {guidance_str}")
         } else {
-            guidance_str
+            format!("{timer_prefix}{mp_score_prefix}{guidance_str}")
         },
     );
 
@@ -9001,7 +12389,23 @@ pub fn update(
         && let Some(punit) = host.world.units.get(&pid)
     {
         let hp_pct = (punit.health / punit.max_health.max(1.0) * 100.0).clamp(0.0, 100.0) as f32;
-        set_text(UiTextSlot::PlayerStatus, p_label.to_string());
+        if let Some(sub) = host.world.submarines.get(&pid) {
+            let o2_pct = (sub.oxygen / sub.max_oxygen.max(1.0) * 100.0).clamp(0.0, 100.0);
+            let dive_tag = if sub.submerged {
+                "SUBMERGED"
+            } else {
+                "SURFACED"
+            };
+            set_text(
+                UiTextSlot::PlayerStatus,
+                format!(
+                    "{p_label} [{dive_tag} -{:.0}m | O2 {o2_pct:.0}%]",
+                    sub.depth
+                ),
+            );
+        } else {
+            set_text(UiTextSlot::PlayerStatus, p_label.to_string());
+        }
         set_text(UiTextSlot::PlayerHpText, format!("{hp_pct:.0}%"));
         for (mut node, mut bg) in player_hp_fills.iter_mut() {
             node.width = Val::Percent(hp_pct);
@@ -9167,7 +12571,7 @@ pub fn update(
     set_text(
         UiTextSlot::SquadStatus,
         format!(
-            "ORDER: {squad_mode} | [C/F] Call  [MMB/G] Attack  [X] Wait  [T] Transfer  [P] Pause  [F1] Victory"
+            "ORDER: {squad_mode} | [C/F] Call  [MMB/G] Attack  [X] Wait  [T] Transfer  [P] Pause  [F4] Keybindings  [F1] Victory"
         ),
     );
 
@@ -9182,6 +12586,7 @@ pub fn update(
     if view.pause_menu_open {
         let items = [
             "RESUME MISSION",
+            "KEYBINDINGS & CONTROLLER REMAPPING (F4)",
             "RESTART MISSION (R)",
             "COMPLETE MISSION & OPEN VICTORY DEBRIEFING",
             "RETURN TO CAMPAIGN MISSION SELECT MENU",
@@ -9237,7 +12642,7 @@ pub fn update(
         "Player control"
     };
     let next_hud = format!(
-        "{} | {phase} | {:.1}s | {} scripts | Squad {} | Hits {}/{} | [P] Menu [F1] Victory {}",
+        "{} | {phase} | {:.1}s | {} scripts | Squad {} | Hits {}/{} | [P] Menu [F4] Keys [F1] Victory {}",
         view.current_level,
         host.time,
         view.session.scheduler.threads.len(),
@@ -9347,5 +12752,331 @@ pub fn update(
             "FIRST_MISSION_MOVEMENT_RENDER_PASS scripts={} player_parts={player_parts} start={start:?} end={p:?}; not combat/victory acceptance",
             view.session.scheduler.threads.len()
         );
+    }
+}
+
+#[allow(clippy::type_complexity, clippy::too_many_arguments)]
+pub fn sync_overlays_and_splitscreen(
+    view: Option<Res<View>>,
+    loaded: Res<Loaded>,
+    windows: Query<&Window, With<bevy::window::PrimaryWindow>>,
+    mut materials: ResMut<Assets<StandardMaterial>>,
+    mut p1_cam: Query<
+        (&mut Camera, &Transform),
+        (
+            With<Camera3d>,
+            Without<Player2Camera3d>,
+            Without<TequilaBillboard>,
+        ),
+    >,
+    mut p2_cam: Query<
+        (&mut Camera, &mut Transform),
+        (With<Player2Camera3d>, Without<TequilaBillboard>),
+    >,
+    mut tequila_billboards: Query<
+        (&TequilaBillboard, &mut Transform, &mut Visibility),
+        (
+            Without<Camera3d>,
+            Without<Player2Camera3d>,
+            Without<FrontendGuiCanvasQuad>,
+            Without<SplitScreenDivider>,
+        ),
+    >,
+    mut gui_quads: Query<
+        (
+            &FrontendGuiCanvasQuad,
+            &mut Node,
+            &mut ImageNode,
+            &mut BackgroundColor,
+            &mut BorderColor,
+            &mut Visibility,
+        ),
+        (
+            Without<TequilaBillboard>,
+            Without<SplitScreenDivider>,
+            Without<GlobeUnitRingIcon>,
+            Without<WiiHandCursor>,
+        ),
+    >,
+    mut gui_texts: Query<(&FrontendGuiCanvasText, &mut Text, &mut TextColor)>,
+    mut ring_icons: Query<
+        (&GlobeUnitRingIcon, &mut Node, &mut Visibility),
+        (
+            Without<TequilaBillboard>,
+            Without<FrontendGuiCanvasQuad>,
+            Without<SplitScreenDivider>,
+            Without<WiiHandCursor>,
+        ),
+    >,
+    mut hand_cursor: Query<
+        (&mut Node, &mut Visibility),
+        (
+            With<WiiHandCursor>,
+            Without<TequilaBillboard>,
+            Without<FrontendGuiCanvasQuad>,
+            Without<SplitScreenDivider>,
+            Without<GlobeUnitRingIcon>,
+        ),
+    >,
+    mut divider: Query<
+        &mut Visibility,
+        (
+            With<SplitScreenDivider>,
+            Without<TequilaBillboard>,
+            Without<FrontendGuiCanvasQuad>,
+            Without<GlobeUnitRingIcon>,
+            Without<WiiHandCursor>,
+        ),
+    >,
+) {
+    let Some(view) = view else {
+        return;
+    };
+    let in_mission = view.stage == FrontendStage::InMission;
+    let cam_rot = p1_cam
+        .iter()
+        .next()
+        .map(|(_, t)| t.rotation)
+        .unwrap_or(Quat::IDENTITY);
+
+    // 0. Animate Orbiting Ring of 12 Faction Unit Icons around the 3D Globe & Wii Remote Hand Pointer
+    let win_logical = windows
+        .iter()
+        .next()
+        .map(|w| (w.width(), w.height(), w.cursor_position()))
+        .unwrap_or((1280.0, 720.0, None));
+    let show_ring = matches!(
+        view.stage,
+        FrontendStage::Title
+            | FrontendStage::SaveSelect
+            | FrontendStage::NameEntry
+            | FrontendStage::MainMenu
+    );
+    let ring_cx = win_logical.0 * 0.50;
+    let ring_cy = win_logical.1 * 0.51;
+    let ring_rx = (win_logical.1 * 0.34).clamp(190.0, 260.0);
+    let ring_ry = (win_logical.1 * 0.34).clamp(190.0, 260.0);
+    let base_angle = (view.frames as f32) * 0.0085;
+    for (icon, mut node, mut vis) in &mut ring_icons {
+        if !show_ring {
+            if *vis != Visibility::Hidden {
+                *vis = Visibility::Hidden;
+            }
+            continue;
+        }
+        let a = base_angle + (icon.0 as f32) * (std::f32::consts::TAU / 12.0);
+        let ix = ring_cx + a.cos() * ring_rx - 23.0;
+        let iy = ring_cy + a.sin() * ring_ry - 23.0;
+        node.left = px(ix.round());
+        node.top = px(iy.round());
+        if *vis != Visibility::Visible {
+            *vis = Visibility::Visible;
+        }
+    }
+    let show_cursor = !in_mission
+        && !matches!(
+            view.stage,
+            FrontendStage::BootLogos | FrontendStage::IntroMovie | FrontendStage::MissionCutsceneIn
+        );
+    for (mut node, mut vis) in &mut hand_cursor {
+        if !show_cursor {
+            if *vis != Visibility::Hidden {
+                *vis = Visibility::Hidden;
+            }
+            continue;
+        }
+        let (cx, cy) = win_logical.2.map(|p| (p.x, p.y)).unwrap_or_else(|| {
+            let t = (view.frames as f32) * 0.025;
+            (
+                win_logical.0 * 0.54 + t.cos() * 48.0,
+                win_logical.1 * 0.64 + (t * 1.4).sin() * 24.0,
+            )
+        });
+        node.left = px((cx - 8.0).round());
+        node.top = px((cy - 4.0).round());
+        if *vis != Visibility::Visible {
+            *vis = Visibility::Visible;
+        }
+    }
+
+    // 1. Sync live FEQT Tequila particles to 3D billboards & per-particle StandardMaterials
+    for (tb, mut transform, mut vis) in &mut tequila_billboards {
+        if !in_mission {
+            if *vis != Visibility::Hidden {
+                *vis = Visibility::Hidden;
+            }
+            continue;
+        }
+        if let Some(p) = view.active_tequila_particles.get(tb.0) {
+            let r = p.current_radius();
+            if r > 0.03 {
+                let [cr, cg, cb, ca] = p.current_rgba();
+                if let Some(mat_h) = view.vfx_tequila_materials.get(tb.0)
+                    && let Some(mut mat) = materials.get_mut(mat_h)
+                {
+                    mat.base_color = Color::srgba(cr, cg, cb, ca.clamp(0.05, 0.96));
+                    mat.emissive =
+                        LinearRgba::new(cr * 3.8 * ca, cg * 3.2 * ca, cb * 2.4 * ca, 1.0);
+                }
+                *transform = Transform {
+                    translation: Vec3::from_array(p.pos),
+                    rotation: cam_rot * Quat::from_rotation_z(p.spin * p.age),
+                    scale: Vec3::splat(r),
+                };
+                if *vis != Visibility::Visible {
+                    *vis = Visibility::Visible;
+                }
+                continue;
+            }
+        }
+        if *vis != Visibility::Hidden {
+            *vis = Visibility::Hidden;
+        }
+    }
+
+    // 2. Sync Native Frontend2_Level.xml GuiScene Canvas Quads to Bevy UI Nodes
+    let show_gui_canvas =
+        !in_mission && view.show_native_gui_canvas && !view.active_gui_quads.is_empty();
+    let mut text_map: BTreeMap<usize, (String, Color)> = BTreeMap::new();
+    for (fq, mut node, mut img, mut bg, mut border, mut vis) in &mut gui_quads {
+        if !show_gui_canvas {
+            if *vis != Visibility::Hidden {
+                *vis = Visibility::Hidden;
+            }
+            continue;
+        }
+        if let Some(quad) = view.active_gui_quads.get(fq.0) {
+            // Render in a crisp 320x240 native canvas overlay anchored in the bottom-right corner
+            let ox = 932.0f32;
+            let oy = 456.0f32;
+            let sx = 0.50f32;
+            let sy = 0.50f32;
+            node.left = px((ox + quad.pos[0] * sx).round());
+            node.top = px((oy + quad.pos[1] * sy).round());
+            node.width = px((quad.size[0] * sx).max(2.0).round());
+            node.height = px((quad.size[1] * sy).max(2.0).round());
+            let [r, g, b, a] = quad.rgba;
+            let col = Color::srgba_u8(r, g, b, a.max(96));
+            if let Some(ref tname) = quad.texture_name {
+                let key = tname.to_ascii_lowercase();
+                if let Some(h) = view
+                    .ui_handles
+                    .get(&key)
+                    .or_else(|| view.ui_handles.get(tname))
+                {
+                    img.image = h.clone();
+                    img.color = Color::srgba_u8(r.max(180), g.max(180), b.max(180), a.max(190));
+                    *bg = BackgroundColor(Color::NONE);
+                } else {
+                    img.color = Color::NONE;
+                    *bg = BackgroundColor(col);
+                }
+            } else {
+                img.color = Color::NONE;
+                *bg = BackgroundColor(Color::srgba_u8(r, g, b, (a / 2).clamp(35, 160)));
+            }
+            match &quad.kind {
+                bw_rust::frontend_gui::GuiQuadKind::Button { selected } => {
+                    *border = BorderColor::all(if *selected {
+                        Color::srgb(0.98, 0.86, 0.28)
+                    } else {
+                        Color::srgba(0.45, 0.68, 0.88, 0.65)
+                    });
+                }
+                bw_rust::frontend_gui::GuiQuadKind::TextBox { text } => {
+                    *border = BorderColor::all(Color::srgba(0.35, 0.55, 0.72, 0.35));
+                    text_map.insert(fq.0, (clean_bw_text(text), col));
+                }
+                _ => {
+                    *border = BorderColor::all(Color::srgba(0.28, 0.42, 0.58, 0.25));
+                }
+            }
+            if *vis != Visibility::Visible {
+                *vis = Visibility::Visible;
+            }
+        } else if *vis != Visibility::Hidden {
+            *vis = Visibility::Hidden;
+        }
+    }
+    for (ft, mut txt, mut tcol) in &mut gui_texts {
+        if let Some((s, c)) = text_map.remove(&ft.0) {
+            if txt.0 != s {
+                txt.0 = s;
+            }
+            if tcol.0 != c {
+                tcol.0 = c;
+            }
+        } else if !txt.0.is_empty() {
+            txt.0.clear();
+        }
+    }
+
+    // 3. Sync Dual-Viewport Split-Screen Camera3d & Divider for 2-Player Co-Op/Skirmish
+    let split_active =
+        in_mission && view.two_player_enabled && view.session.program.host.world.player2.is_some();
+    for mut div_vis in &mut divider {
+        let target = if split_active {
+            Visibility::Visible
+        } else {
+            Visibility::Hidden
+        };
+        if *div_vis != target {
+            *div_vis = target;
+        }
+    }
+    let win_phys = windows
+        .iter()
+        .next()
+        .map(|w| (w.physical_width(), w.physical_height()))
+        .unwrap_or((1280, 720));
+    if split_active && win_phys.0 >= 4 && win_phys.1 >= 4 {
+        let half_h = (win_phys.1 / 2).max(1);
+        for (mut cam, _) in &mut p1_cam {
+            cam.viewport = Some(bevy::camera::Viewport {
+                physical_position: UVec2::new(0, 0),
+                physical_size: UVec2::new(win_phys.0, half_h),
+                ..default()
+            });
+        }
+        if let Some(p2_id) = view.session.program.host.world.player2
+            && let Some(&p2_pos) = view
+                .smoothed_positions
+                .get(&p2_id)
+                .or_else(|| view.session.program.host.positions.get(&p2_id))
+        {
+            let [gx, gz] = bw_rust::original_scene::source_to_grid(p2_pos[0], p2_pos[2]);
+            let gy = (loaded.ground.height(gx, gz).unwrap_or(0.0) * 2.0).max(view.water_height);
+            let p2_world = Vec3::new(p2_pos[0], p2_pos[1] + gy, p2_pos[2]);
+            let yaw = view.p2_aim_yaw;
+            let fwd = Vec3::new(yaw.sin(), 0.0, yaw.cos());
+            let eye = p2_world - fwd * 9.5 + Vec3::Y * 4.2;
+            let look = p2_world + fwd * 12.0 + Vec3::Y * 1.8;
+            for (mut cam, mut tf) in &mut p2_cam {
+                if !cam.is_active {
+                    cam.is_active = true;
+                }
+                cam.order = 1;
+                cam.viewport = Some(bevy::camera::Viewport {
+                    physical_position: UVec2::new(0, half_h),
+                    physical_size: UVec2::new(win_phys.0, win_phys.1.saturating_sub(half_h).max(1)),
+                    ..default()
+                });
+                *tf = Transform::from_translation(eye).looking_at(look, Vec3::Y);
+            }
+        }
+    } else {
+        for (mut cam, _) in &mut p1_cam {
+            if cam.viewport.is_some() {
+                cam.viewport = None;
+            }
+        }
+        for (mut cam, _) in &mut p2_cam {
+            if cam.is_active {
+                cam.is_active = false;
+            }
+            if cam.viewport.is_some() {
+                cam.viewport = None;
+            }
+        }
     }
 }

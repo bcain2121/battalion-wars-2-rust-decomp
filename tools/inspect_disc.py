@@ -11,24 +11,45 @@ class WBFS:
         self.path = Path(path)
         self.file = self.path.open('rb')
         h = self.file.read(12)
-        if len(h) != 12 or h[:4] != b'WBFS':
-            raise ValueError('Not a WBFS image')
-        self.host_shift, self.block_shift = h[8:10]
-        if not 9 <= self.host_shift <= self.block_shift <= 26:
-            raise ValueError('Unsupported sector geometry')
-        self.block_size = 1 << self.block_shift
-        table = self.file.read((1 << self.host_shift) - 12)
-        slots = [i for i, value in enumerate(table) if value]
-        if slots != [0]:
-            raise ValueError(f'Expected one disc in slot zero, found {slots}')
-        self.file.seek(1 << self.host_shift)
-        self.header = self.file.read(256)
-        # libwbfs addresses a maximum dual-layer Wii disc in 0x8000-byte sectors.
-        count = (143432 * 2) >> (self.block_shift - 15)
-        raw = self.file.read(count * 2)
-        self.mapping = struct.unpack(f'>{count}H', raw)
+        if len(h) == 12 and h[:4] == b'WBFS':
+            self.is_iso = False
+            self.host_shift, self.block_shift = h[8:10]
+            if not 9 <= self.host_shift <= self.block_shift <= 26:
+                raise ValueError('Unsupported sector geometry')
+            self.block_size = 1 << self.block_shift
+            table = self.file.read((1 << self.host_shift) - 12)
+            slots = [i for i, value in enumerate(table) if value]
+            if slots != [0]:
+                raise ValueError(f'Expected one disc in slot zero, found {slots}')
+            self.file.seek(1 << self.host_shift)
+            self.header = self.file.read(256)
+            # libwbfs addresses a maximum dual-layer Wii disc in 0x8000-byte sectors.
+            count = (143432 * 2) >> (self.block_shift - 15)
+            raw = self.file.read(count * 2)
+            self.mapping = struct.unpack(f'>{count}H', raw)
+        else:
+            self.file.seek(0)
+            header = self.file.read(256)
+            if len(header) == 256 and header[0x18:0x1c] == bytes.fromhex('5d1c9ea3'):
+                self.is_iso = True
+                self.header = header
+                self.file_size = self.path.stat().st_size
+                self.host_shift = 0
+                self.block_size = 0x8000
+                self.mapping = ()
+            else:
+                self.file.close()
+                raise ValueError('Not a WBFS image')
 
     def read(self, offset, size):
+        if self.is_iso:
+            if offset < 0 or size < 0 or offset + size > self.file_size:
+                raise ValueError('Disc read out of range')
+            self.file.seek(offset)
+            data = self.file.read(size)
+            if len(data) != size:
+                raise ValueError('Truncated ISO read')
+            return data
         if offset < 0 or size < 0 or offset + size > len(self.mapping) * self.block_size:
             raise ValueError('Disc read out of range')
         out = bytearray()
@@ -66,11 +87,13 @@ class WBFS:
                     certificate_size=cert_size, certificate_offset=cert * 4,
                     hash_table_offset=h3 * 4, data_offset=data * 4,
                     data_size=data_size * 4))
-        return dict(format='WBFS', file_size=self.path.stat().st_size,
+        return dict(format='ISO' if self.is_iso else 'WBFS', file_size=self.path.stat().st_size,
             disc_id=self.header[:6].decode('ascii'),
             title=self.header[32:96].split(b'\0')[0].decode('ascii'),
-            host_sector_size=1 << self.host_shift, wbfs_block_size=self.block_size,
-            mapped_blocks=sum(bool(x) for x in self.mapping), partitions=partitions)
+            host_sector_size=0 if self.is_iso else (1 << self.host_shift),
+            wbfs_block_size=self.block_size,
+            mapped_blocks=0 if self.is_iso else sum(bool(x) for x in self.mapping),
+            partitions=partitions)
 
 
 def main():

@@ -14,6 +14,7 @@ pub mod dsp_audio;
 pub mod first_mission;
 pub mod frontend;
 pub mod frontend_environment;
+pub mod frontend_gui;
 pub mod frontend_runtime;
 pub mod frontend_sprites;
 pub mod frontend_stack;
@@ -61,12 +62,14 @@ pub mod model_node_kind;
 pub mod model_render;
 pub mod movie;
 pub mod navigation;
+pub mod net_sync;
 pub mod original_scene;
 pub mod scenario;
 #[cfg(feature = "viewer")]
 pub mod skinning;
 pub mod skirmish;
 pub mod sound_samples;
+pub mod tequila;
 pub mod terrain;
 #[cfg(feature = "viewer")]
 pub mod terrain_render;

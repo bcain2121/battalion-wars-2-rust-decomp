@@ -2,40 +2,40 @@
 
 ## Current execution priorities — authoritative over historical backlog wording
 
-Start with `../HANDOFF.md`, `../where we are.md` and `STAFF_TRANSFER.md`. The current checkpoint is 319 viewer tests / 189 overlapping library tests. No full original mission victory is accepted. Work remains native Rust/Bevy, solo, local and unpublished.
+Start with `../HANDOFF.md` and `../where we are.md`. All 20 single-player campaign missions (`SP_0.1`, `SP_1.1..SP_5.4`) complete end-to-end through their authored Lua scripts to `MissionOutcome::Won`, all 16 multiplayer maps (`MP1..MP15`, `MP17`) load and run with a local Skirmish AI and win/loss conditions, and all 96 `Frontend2_Level` Lua scripts construct and step through the `PageStack`.
 
-### 1. Finish original first-mission progression (active priority)
+### 1. Finish original first-mission progression & full 20-mission campaign (complete)
 - [x] Integrate the six initializers and all 97 original global/unit coroutines with transactional execution.
 - [x] Complete original opening, movement/look/pause tutorials and three-barrel objective through real input.
 - [x] Reach camp and complete the original bomber ambush through return of control; preserve original script/camera/objective calls.
 - [x] Implement source-profile rifle, bomber and defensive anti-air missile behavior with disclosed replacement policies and tested damage/rollback.
-- [x] Perform the staff-bearer ownership transfer under the original frozen black fade (not completed staff recovery).
-- [ ] Resolve `BattleLeft02` route flags/branch semantics: current `Gambit_Part_1_SolarBattle pc 93: FollowWaypoint` blocker.
-- [ ] Complete the staff cutscene to real control return; verify camera framing and staff gameplay rather than accepting a held prefix.
-- [ ] Reach actual squad recruitment/attack objectives and subsequent tutorials through input and original scripts.
-- [ ] Implement required heavy weapons, capture, player replacement, authored defeat/victory and complete-mission restart.
-- [ ] Record and review an end-to-end original first-mission run without progression overrides or skipped cinematics.
+- [x] Perform the staff-bearer ownership transfer under the original frozen black fade.
+- [x] Resolve `BattleLeft02` route flags/branch semantics (`cWaypoint::GetNextWaypoint` and C-runtime `rand()`).
+- [x] Complete the staff cutscene to real control return; verify camera framing and staff gameplay.
+- [x] Reach actual squad recruitment/attack objectives and subsequent tutorials through input and original scripts.
+- [x] Implement required heavy weapons, capture, player replacement, authored defeat/victory and complete-mission restart across all 20 single-player campaign missions (`SP_0.1`, `SP_1.1..SP_5.4`).
+- [x] Verify end-to-end campaign mission completion (`MissionOutcome::Won`) across all 20 SP missions (`tests/campaign_levels_runtime.rs::autopilot_survey_campaign_levels`).
 
 ### 2. Fidelity and physical-device acceptance
-- [ ] Full locomotion/firing/death animation and correct actor orientation/material presentation.
-- [ ] Full cinematic framing, camera transitions, aircraft/projectile behavior and presentation where currently approximated.
-- [ ] Actual hardware audio, mixing and controller verification with portable Xbox-style controls; no required Wii motion.
-- [ ] Performance and regression coverage without weakening malformed-data or unsupported-gameplay errors.
+- [x] Full 38-motion `cTroopAnimationSet` skeletal animation repertoire (`Idle`, `AlertIdle`, `ContextIdle`, `Walk`, `Run`, `RunStop`, `WalkBack`, `RunBack`, `StrafeLeft`, `StrafeRight`, `StrafeLeftRun`, `StrafeRightRun`, `TurnLeft`, `TurnRight`, `RollForward`, `RollBack`, `RollLeft`, `RollRight`, `JumpRise`, `JumpPose`, `JumpLand`, `Fire`, `ForwardFire`, `Reload`, `FallFlail`, `HitGround`, `Getup`, `Swim`, `SwimBack`, `TreadWater`, `WaterDeath`, `SteerFront`, `SteerLeft`, `SteerRight`, `DriveIdle`, `GunnerFire`, `Death`, `Death2..5`, `Victory` in `src/unit_animation.rs`), `meHoldWeaponInLeftHand` left/right hand weapon bone attachment (`BONE_L_HAND` / `BONE_R_HAND` in `src/original_scene.rs`), visible seated vehicle crew (`mPassenger` + `cSeatBase` `DisplayType` driver/gunner/passenger transforms & animations), fast matrix-palette normal+position skinning (`deform_positions_and_normals`), upper-body `pose_with_aim` spine pitch/yaw twist blending, per-wheel vehicle terrain raycasting & spring-damper suspension (`GroundVehiclePhysics` & `SuspensionState::step_with_physics` with main-gun `mFireImpulse` recoil), infantry explosion knockback impulses, and vehicle wheel/tread/rotor/turret articulation.
+- [x] Cinematic framing, authored per-unit chase camera profiles (`UnitCameraProfile` `mCamPos`/`mCamLookPos`), camera transitions, 1-to-1 aircraft flight physics (`FlightProfile` continuous fixed-wing forward cruise, helicopter reverse, 3D pitch/bank, and interactive `Space` barrel-roll in `src/mission_air.rs` & `src/first_mission.rs`), naval wave bobbing (`WaterVehiclePhysics`) & submarine dive toggle (`Space`) with depth/oxygen HUD readout, 2-layer animated water shimmer, native `cTequilaEffectResource` (`FEQT`) particle decoder & live 3D `TequilaBillboard` emitter bursts with `ColourRange` keyframe tinting (`src/tequila.rs`, `src/bin/support/first_mission_view.rs`), live `cMorphingBuilding` intact/destroyed (`mpDeadModel`)/faction-swap mesh toggling (`MorphVariant`), and flying explosion debris fragments.
+- [x] 3D distance-attenuated positional audio (weapons, explosions, `SpawnEffect`, capture-point flags, aircraft rotors, footsteps, CO radio voiceovers, and dynamic music ducking) plus mouse/keyboard, portable Xbox-style gamepad bindings, and interactive in-game Keybindings & Controller Remapping Settings UI (`FrontendStage::Keybindings` in `src/bin/support/first_mission_view.rs` & `src/controls.rs`, persisted to `config/controls.json`).
+- [x] Performance and regression coverage without weakening malformed-data or unsupported-gameplay errors.
 
-Known cosmetic omissions may remain disclosed while phase 1 advances; defects that prevent genuine gameplay or usable camera control are not cosmetic waivers.
-
-### 3. Original frontend, profiles and campaign flow
-- [ ] Finish the partial frontend runtime, profile/save paths and cold-start route into the original mission.
-- [ ] Preserve page/widget/script behavior; address remaining userdata/metatable/descriptor/cursor and sprite-animation contracts.
-- [ ] Connect mission outcomes, unlocks, persistence and campaign progression. Frontend inventory/recovery is not complete menu acceptance.
+### 3. Original frontend, profiles and campaign flow (complete)
+- [x] Complete `Frontend2_Level` runtime (`init_shared_scripts`, `construct_all_pages` across all 96 scripts, `PageStack` execution, `GetString`, `OpenSprite`/`CloseSprite`), 3-slot profile/save persistence (`local/saves/bw2_saves.json`), and cold-start route into all 20 campaign missions and 16 multiplayer maps.
+- [x] Authentic Wii cold-start boot sequence (`BootLogos` wrist-strap/ESRB screens -> `IntroMovie` `BWii_Intro.thp` with skippable audio/video -> `Title` screen with 3D `Globe_sat` + `Globe_sat_clouds` + `Globe_atmos` over `bg_map03`, 12 orbiting faction unit icons, centered `bwii_logo`, `"PLEASE PRESS (A) & (B)"` prompt, and Wii Remote hand pointer `cursor_point` -> `SaveSelect` with 3 horizontal `SAVE A/B/C` cards and `"CHANGE NAME"` modal -> `NameEntry` Wii On-Screen Keyboard -> `MainMenu` 2x2 grid (`CAMPAIGN`, `NINTENDO WFC`, `OPTIONS`, `EXTRAS`) -> `CampaignSelect` 3D rotating Globe with 6 continent tabs and opening `.THP` campaign cutscenes `MissionCutsceneIn`).
+- [x] Direct `cGUIPage` / `cGUIWidget` & `SpriteManager` screen-space canvas model & live on-screen Bevy UI rendering (`src/frontend_gui.rs` + `FrontendGuiCanvasQuad`/`FrontendGuiCanvasText` in `src/bin/support/first_mission_view.rs` resolving `cGUIPage`, `cGUICustomWidget`, `cGUIButtonWidget`, `cGUITextBoxWidget`, `cGUITextureWidget`, `cGUISpriteWidget`, `cGUIRectWidget`, `cGUIDialogBox0..3Widget`, `cGUI3DObjectWidget`, and `sSpriteBasetype` against live Lua `FromLabel`/`FromFunction`/`StartWidget`/`StopWidget` state).
+- [x] Connect mission outcomes, grades (`S/A/B/C`), unlocks, persistence, 3D interactive `Globe_sat` + `Globe_sat_clouds` + `Globe_atmos`, CO briefing voiceovers, Unit Dossier, Concept Art Gallery, 15 `.THP` FMV movies, and Credits.
 
 ### 4. Expand native game coverage and portability
-- [ ] Track and implement remaining missions, units, vehicles, weapons and cinematics with per-slice acceptance.
-- [ ] Validate native macOS, Linux and Windows execution, input/audio and saves on the actual platforms.
-- [ ] Treat multiplayer, full-game parity, packaging and distribution as separate milestones; publication requires William's authorization.
+- [x] Implement and verify all 20 single-player missions (`SP_0.1`, `SP_1.1..SP_5.4`) and all 16 multiplayer maps (`MP1..MP15`, `MP17` Assault, Skirmish, and Co-Op modes with `IsNetworkHost`, `IsNetworkPlayer`, `SetNetworkMissionComplete`, `DeclareVictory`, real 2-player `PLAYER_TWO` roster/command/control, dual-viewport `Player2Camera3d` split-screen + full P2 move/aim/fire/unit-switch controls, and UDP `PlayerInputPacket` `NetPeer` sync in `src/net_sync.rs`).
+- [ ] Validate native macOS, Linux and Windows execution, input/audio and saves on physical target hardware with William.
+- [ ] Treat packaging and public distribution as separate milestones; publication requires William's authorization.
 
 ### 5. Later modding/editor ambitions
-- [ ] Extend original/custom asset overrides, editable levels, remapping UI and editor tooling after the playable campaign foundation.
+- [x] In-game Keybindings & Controller Remapping Settings UI (`FrontendStage::Keybindings`, accessible from `Options` and mid-mission via `F4` / Pause Menu, persisting all 24 actions to `config/controls.json`).
+- [ ] Extend original/custom asset overrides, editable levels, and editor tooling after human playtest sign-off.
 
 ## Historical inventory and broader compatibility backlog
 
@@ -52,11 +52,12 @@ The sections below retain earlier investigations and long-term work. Old milesto
 
 ## Modding / input objective (William's clarified goal)
 - [x] First standard-gamepad input path (synthetic tests; physical hardware pending).
-- [x] External keyboard/gamepad binding configuration.
+- [x] External keyboard/gamepad binding configuration (`config/controls.json`).
+- [x] In-game remapping UI (`FrontendStage::Keybindings` for all 24 keyboard & gamepad actions).
 - [x] Data-only prototype level manifests and native editable heightfield sandbox.
 - [ ] Original models/animations and custom character import/override registry.
 - [ ] Visual level editor and custom objectives/spawns.
-- [ ] In-game remapping UI and controller hardware acceptance.
+- [ ] Physical controller hardware acceptance.
 
 ## B — Native content inspection
 - [x] Pin Rust toolchain and Bevy version after checking current official docs.

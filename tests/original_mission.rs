@@ -565,7 +565,7 @@ fn original_unit_animation_bindings_and_death_playback() {
     for unit in host.world.units.values() {
         if let Some(player) = &unit.animation {
             troops += 1;
-            assert_eq!(player.bindings.len(), 5);
+            assert!(player.bindings.len() >= 5);
             for name in player.bindings.values() {
                 if !clips.contains_key(name) {
                     clips.insert(

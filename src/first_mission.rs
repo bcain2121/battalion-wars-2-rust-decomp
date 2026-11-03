@@ -189,13 +189,18 @@ impl Session {
                 .and_then(|u| u.forward_speed)
                 .unwrap_or(0.0);
             if let Some(fp) = world.flight_profiles.get(&player).copied() {
-                if forward != 0.0 || right != 0.0 {
-                    let fwd_v = if forward >= 0.0 {
+                if forward != 0.0
+                    || right != 0.0
+                    || (world.interactive_squad_formation && fp.min_speed > 0.0)
+                {
+                    let fwd_v = if forward > 0.0 {
                         (fp.cruise_speed + (fp.max_speed - fp.cruise_speed) * forward) * forward
+                    } else if forward == 0.0 && fp.min_speed > 0.0 {
+                        fp.cruise_speed
                     } else if fp.min_speed > 0.0 {
                         fp.min_speed
                     } else {
-                        forward * fp.cruise_speed
+                        forward * fp.backward_max_speed
                     };
                     let str_v = right * fp.strafe_speed;
                     world.direct_velocity.insert(

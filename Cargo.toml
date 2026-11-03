@@ -6,9 +6,15 @@ rust-version = "1.95"
 publish = false
 default-run = "bw-rust"
 
-# Optimize collision/navigation, VM, and Bevy rendering for 60 FPS in dev builds.
+# Optimize collision/navigation, VM, and Bevy rendering for 60 FPS in dev builds
+# while keeping target/ disk usage small (line-tables-only for workspace, no debuginfo for deps).
 [profile.dev]
 opt-level = 2
+debug = "line-tables-only"
+
+[profile.dev.package."*"]
+opt-level = 2
+debug = false
 
 [features]
 viewer = ["dep:bevy"]

@@ -19,10 +19,24 @@ pub struct TerrainMaterial {
     #[sampler(3)]
     pub second: Handle<Image>,
 }
+pub const TERRAIN_SHADER_HANDLE: Handle<Shader> =
+    bevy::asset::uuid_handle!("7a91c4e2-3b8d-4f1a-9e2c-5d6f8a0b1c2d");
+
 impl Material for TerrainMaterial {
     fn fragment_shader() -> ShaderRef {
-        "shaders/terrain.wgsl".into()
+        TERRAIN_SHADER_HANDLE.into()
     }
+}
+
+pub fn register_shader(app: &mut App) {
+    let mut shaders = app.world_mut().resource_mut::<Assets<Shader>>();
+    let _ = shaders.insert(
+        &TERRAIN_SHADER_HANDLE,
+        Shader::from_wgsl(
+            include_str!("../assets/shaders/terrain.wgsl"),
+            "shaders/terrain.wgsl",
+        ),
+    );
 }
 
 pub fn spawn(

@@ -11,6 +11,7 @@ const RAD_TO_DEG: f32 = 57.295776;
 #[derive(Debug, Clone)]
 pub struct Environment {
     counts: BTreeMap<String, usize>,
+    level_game_types: Vec<i32>,
     frame_rate: f32,
     controller_errors_disabled: bool,
     pub video_mode: i32,
@@ -23,6 +24,49 @@ pub struct Environment {
     pub current_mission_attempted: bool,
     pub current_mission_completed: bool,
     pub current_fmv_out_seen: bool,
+    pub num_global_strings: usize,
+    pub global_strings: Vec<String>,
+    pub frontend_strings: Vec<String>,
+    pub font_kern_factors: BTreeMap<i32, f32>,
+    pub screen_ratio: i32,
+    pub cursor_position: (f32, f32),
+    pub cursor_roll: f32,
+    pub cursor_state: i32,
+    pub elapsed_time: f32,
+    pub rng_state: u32,
+    pub levels_done: u32,
+    pub levels_attempted_or_done: u32,
+    pub selected_level: i32,
+    pub selected_slot: u32,
+    pub current_level: i32,
+    pub current_mp_profile: u32,
+    pub profile_names: [String; 4],
+    pub profile_undo_buffer: String,
+    pub slot_times: [f32; 4],
+    pub card_error: i32,
+    pub sp_save_valid: bool,
+    pub mp_save_valid: bool,
+    pub general_purpose_flags: u32,
+    pub unlock_flags: u32,
+    pub unlock_seen_flags: u32,
+    pub mission_status: u32,
+    pub mission_stats: BTreeMap<i32, (f32, f32, f32, i32)>,
+    pub current_mission_stats: (f32, f32, f32, i32),
+    pub music_volume: f32,
+    pub sfx_volume: f32,
+    pub co_voice_volume: f32,
+    pub co_subtitles: bool,
+    pub movie_subtitles: bool,
+    pub field_toggle: i32,
+    pub follow_mode: i32,
+    pub tutorial_mode: bool,
+    pub homebutton_blocked: bool,
+    pub is_client_or_server: u32,
+    pub network_status: i32,
+    pub tmp_store: f64,
+    pub active_widgets: BTreeMap<u64, bool>,
+    pub widget_values: BTreeMap<(u64, String), Value>,
+    pub launched_level: Option<i32>,
 }
 
 impl Environment {
@@ -32,13 +76,26 @@ impl Environment {
             return Err("Unsupported frontend frame rate".into());
         }
         let mut counts = BTreeMap::new();
+        let mut level_game_types = Vec::with_capacity(catalog.entries.len());
         for entry in &catalog.entries {
             *counts.entry(entry.gametype.clone()).or_insert(0) += 1;
+            let gt = match entry.gametype.as_str() {
+                "frontend" => 0,
+                "frontend2" => 1,
+                "singleplayer" => 2,
+                "skirmish" => 3,
+                "assault" => 4,
+                "co-op" => 5,
+                "mini-game" => 6,
+                _ => 7,
+            };
+            level_game_types.push(gt);
         }
         // Lazy singleton constructor 0x8024c870 writes 1 to the disabled byte.
         // This is a fresh frontend environment, not imported mid-session state.
         Ok(Self {
             counts,
+            level_game_types,
             frame_rate,
             controller_errors_disabled: true,
             video_mode: 0,
@@ -51,11 +108,94 @@ impl Environment {
             current_mission_attempted: false,
             current_mission_completed: false,
             current_fmv_out_seen: false,
+            num_global_strings: 778,
+            global_strings: Vec::new(),
+            frontend_strings: Vec::new(),
+            font_kern_factors: BTreeMap::new(),
+            screen_ratio: 0,
+            cursor_position: (0.0, 0.0),
+            cursor_roll: 0.0,
+            cursor_state: 0,
+            elapsed_time: 0.0,
+            rng_state: 0x1234_5678,
+            levels_done: 20,
+            levels_attempted_or_done: 20,
+            selected_level: 1,
+            selected_slot: 1,
+            current_level: 1,
+            current_mp_profile: 1,
+            profile_names: [
+                String::new(),
+                "COMMANDER".to_string(),
+                "BATTLER".to_string(),
+                String::new(),
+            ],
+            profile_undo_buffer: "COMMANDER".to_string(),
+            slot_times: [0.0, 3600.0, 1800.0, 0.0],
+            card_error: 0,
+            sp_save_valid: true,
+            mp_save_valid: true,
+            general_purpose_flags: 0,
+            unlock_flags: 0,
+            unlock_seen_flags: 0,
+            mission_status: 1, // GAMESTATUS.FRONTEND
+            mission_stats: BTreeMap::new(),
+            current_mission_stats: (95.0, 95.0, 95.0, 5), // GRADE.S = 5
+            music_volume: 1.0,
+            sfx_volume: 1.0,
+            co_voice_volume: 1.0,
+            co_subtitles: true,
+            movie_subtitles: true,
+            field_toggle: 1,
+            follow_mode: 0,
+            tutorial_mode: true,
+            homebutton_blocked: false,
+            is_client_or_server: 0,
+            network_status: 6, // NETWORK.OK
+            tmp_store: 0.0,
+            active_widgets: BTreeMap::new(),
+            widget_values: BTreeMap::new(),
+            launched_level: None,
         })
     }
 
     pub fn controller_errors_enabled(&self) -> bool {
         !self.controller_errors_disabled
+    }
+
+    pub fn set_string_tables(
+        &mut self,
+        global_strings: Vec<String>,
+        frontend_strings: Vec<String>,
+    ) {
+        if !global_strings.is_empty() {
+            self.num_global_strings = global_strings.len();
+        }
+        self.global_strings = global_strings;
+        self.frontend_strings = frontend_strings;
+    }
+
+    pub fn lookup_string(&self, id: usize) -> String {
+        if id < self.num_global_strings {
+            self.global_strings
+                .get(id)
+                .cloned()
+                .unwrap_or_else(|| format!("GSTR_{id}"))
+        } else {
+            let local = id - self.num_global_strings;
+            self.frontend_strings
+                .get(local)
+                .cloned()
+                .unwrap_or_else(|| format!("FESTR_{local}"))
+        }
+    }
+
+    fn next_random(&mut self) -> f32 {
+        self.rng_state = self
+            .rng_state
+            .wrapping_mul(1664525)
+            .wrapping_add(1013904223);
+        (self.rng_state >> 8) as f32 / ((1u32 << 24) as f32)
     }
 
     /// Reads a 4x4 row-major matrix from a 1-indexed 4x4 Lua table (`0x800e4c6c`).
@@ -158,6 +298,15 @@ impl Environment {
         ]
     }
 
+    fn widget_handle(val: &Value) -> u64 {
+        match val {
+            Value::Object(id) => id.0,
+            Value::Number(n) => *n as u64,
+            Value::LightUserdata(h) => *h,
+            _ => 0,
+        }
+    }
+
     pub fn call(&mut self, name: &str, args: &[Value]) -> Result<Vec<Value>> {
         match (name, args) {
             ("EnableControllerErrorMessages", [value]) => {
@@ -203,6 +352,84 @@ impl Environment {
             ("ceil", [Value::Number(x)]) => Ok(vec![Value::Number(x.ceil())]),
             ("floor", [Value::Number(x)]) => Ok(vec![Value::Number(x.floor())]),
             ("rint", [Value::Number(x)]) => Ok(vec![Value::Number((*x as i32) as f64)]),
+            // 0x800ddecc: GetNumGlobalStrings()
+            ("GetNumGlobalStrings", []) => Ok(vec![Value::Number(self.num_global_strings as f64)]),
+            ("GetString" | "GetStringFromTable", [Value::Number(id)]) => {
+                let idx = (*id as isize).max(0) as usize;
+                Ok(vec![Value::String(self.lookup_string(idx))])
+            }
+            ("GetString" | "GetStringFromTable", [Value::String(s)]) => {
+                Ok(vec![Value::String(s.clone())])
+            }
+            ("FormatString", [fmt, rest @ ..]) => {
+                let mut out = match fmt {
+                    Value::String(s) => s.clone(),
+                    Value::Number(id) => self.lookup_string((*id as isize).max(0) as usize),
+                    _ => String::new(),
+                };
+                for arg in rest {
+                    let rep = match arg {
+                        Value::String(s) => s.clone(),
+                        Value::Number(n) => {
+                            if n.fract() == 0.0 {
+                                format!("{}", *n as i64)
+                            } else {
+                                format!("{n}")
+                            }
+                        }
+                        Value::Boolean(b) => b.to_string(),
+                        _ => String::new(),
+                    };
+                    if let Some(pos) = out.find("%s").or_else(|| out.find("%d")) {
+                        out.replace_range(pos..pos + 2, &rep);
+                    } else {
+                        out.push_str(&rep);
+                    }
+                }
+                Ok(vec![Value::String(out)])
+            }
+            ("GetCharFromString", [Value::String(s), Value::Number(idx)]) => {
+                let i = (*idx as isize).max(0) as usize;
+                let ch = s
+                    .chars()
+                    .nth(i)
+                    .or_else(|| i.checked_sub(1).and_then(|j| s.chars().nth(j)))
+                    .map(|c| c.to_string())
+                    .unwrap_or_default();
+                Ok(vec![Value::String(ch)])
+            }
+            ("GetLanguageStr", []) => Ok(vec![Value::String("English".into())]),
+            ("GetRegionStr", []) => Ok(vec![Value::String("US".into())]),
+            ("GetVersionStr", []) => Ok(vec![Value::String("1.0".into())]),
+            // 0x800de298: SetFontKernFactor(font_id, factor)
+            ("SetFontKernFactor", [Value::Number(id), Value::Number(factor)]) => {
+                self.font_kern_factors.insert(*id as i32, *factor as f32);
+                Ok(vec![])
+            }
+            // 0x800dd6a8: GetScreenRatio()
+            ("GetScreenRatio", []) => Ok(vec![Value::Number(self.screen_ratio as f64)]),
+            ("GetCursorPosition", []) => Ok(vec![
+                Value::Number(self.cursor_position.0 as f64),
+                Value::Number(self.cursor_position.1 as f64),
+            ]),
+            ("GetCursorRoll", []) => Ok(vec![Value::Number(self.cursor_roll as f64)]),
+            ("SetCursorState", [Value::Number(state)]) => {
+                self.cursor_state = *state as i32;
+                Ok(vec![])
+            }
+            ("GetTime", []) => {
+                self.elapsed_time += 1.0 / self.frame_rate.max(1.0);
+                Ok(vec![Value::Number(self.elapsed_time as f64)])
+            }
+            ("GetRandom", [Value::Number(max)]) => {
+                let r = (self.next_random() * (*max as f32)).floor();
+                Ok(vec![Value::Number(r as f64)])
+            }
+            ("GetRandom", [Value::Number(min), Value::Number(max)]) => {
+                let span = (*max - *min).max(0.0) as f32;
+                let r = *min as f32 + (self.next_random() * span).floor();
+                Ok(vec![Value::Number(r as f64)])
+            }
             // 0x800d5654..0x800d6d94: THP Video playback
             ("PlayVideo", [Value::Number(mode), rest @ ..]) => {
                 self.video_mode = *mode as i32;
@@ -213,7 +440,7 @@ impl Environment {
                 } else if let Some(Value::String(name)) = rest.first() {
                     self.video_filename = Some(name.clone());
                     if self.video_total_frames == 0 {
-                        self.video_total_frames = 600;
+                        self.video_total_frames = 60;
                     }
                 }
                 Ok(vec![])
@@ -256,11 +483,392 @@ impl Environment {
             ("GetCurrentMissionCompleted", []) => {
                 Ok(vec![Value::Boolean(self.current_mission_completed)])
             }
+            ("SetCurrentFMVOutSeen", []) => {
+                self.current_fmv_out_seen = true;
+                Ok(vec![])
+            }
             ("SetCurrentFMVOutSeen", [val]) => {
                 self.current_fmv_out_seen = !matches!(val, Value::Nil | Value::Boolean(false));
                 Ok(vec![])
             }
             ("GetCurrentFMVOutSeen", []) => Ok(vec![Value::Boolean(self.current_fmv_out_seen)]),
+            // Persistent campaign & save slot state
+            ("GetPersistentData", []) => Ok(vec![
+                Value::Number(self.levels_done as f64),
+                Value::Number(self.selected_level as f64),
+                Value::Number(self.selected_slot as f64),
+            ]),
+            ("GetLevelsDone", []) => Ok(vec![Value::Number(self.levels_done as f64)]),
+            ("SetLevelsDone", [Value::Number(n)]) => {
+                self.levels_done = (*n as i32).max(0) as u32;
+                self.levels_attempted_or_done = self.levels_attempted_or_done.max(self.levels_done);
+                Ok(vec![])
+            }
+            ("GetLevelsAttemptedOrDone", []) => {
+                Ok(vec![Value::Number(self.levels_attempted_or_done as f64)])
+            }
+            ("RegisterMissionAttempt", [Value::Number(level)]) => {
+                let lvl = (*level as i32).max(0) as u32;
+                self.levels_attempted_or_done = self.levels_attempted_or_done.max(lvl);
+                self.current_mission_attempted = true;
+                Ok(vec![])
+            }
+            ("SetSelectedSlot", [Value::Number(slot)]) => {
+                self.selected_slot = (*slot as i32).clamp(1, 3) as u32;
+                Ok(vec![])
+            }
+            ("StartNewSlot", []) => {
+                let idx = (self.selected_slot as usize).min(3);
+                self.profile_names[idx] = "NEW COMMANDER".to_string();
+                self.levels_done = 0;
+                self.levels_attempted_or_done = 0;
+                Ok(vec![])
+            }
+            ("GetProfileName", [Value::Number(slot)]) => {
+                let idx = (*slot as isize).clamp(0, 3) as usize;
+                Ok(vec![Value::String(self.profile_names[idx].clone())])
+            }
+            ("SetProfileName", [Value::String(name)]) => {
+                let idx = (self.selected_slot as usize).min(3);
+                self.profile_names[idx] = name.clone();
+                Ok(vec![])
+            }
+            ("ClearProfile", [Value::Number(slot)]) => {
+                let idx = (*slot as isize).clamp(0, 3) as usize;
+                self.profile_names[idx].clear();
+                self.slot_times[idx] = 0.0;
+                Ok(vec![])
+            }
+            ("SaveProfileToUndoBuffer", []) => {
+                let idx = (self.selected_slot as usize).min(3);
+                self.profile_undo_buffer = self.profile_names[idx].clone();
+                Ok(vec![])
+            }
+            ("RestoreProfileFromUndoBuffer", []) => {
+                let idx = (self.selected_slot as usize).min(3);
+                self.profile_names[idx] = self.profile_undo_buffer.clone();
+                Ok(vec![])
+            }
+            ("GetProfileNameCheckResult", []) => Ok(vec![Value::Number(0.0)]),
+            ("GetSlotTime", [Value::Number(slot_zero_based)]) => {
+                let idx = (*slot_zero_based as isize + 1).clamp(0, 3) as usize;
+                Ok(vec![Value::Number(self.slot_times[idx] as f64)])
+            }
+            ("GetCardError", []) => Ok(vec![Value::Number(self.card_error as f64)]),
+            ("ClearCardError", []) => {
+                self.card_error = 0;
+                Ok(vec![])
+            }
+            ("CheckSaveFile" | "CreateSaveFile" | "WriteSaveFile" | "DeleteSaveFile", []) => {
+                self.card_error = 0;
+                Ok(vec![])
+            }
+            ("CheckNANDResources", [_, _]) => {
+                self.card_error = 0;
+                Ok(vec![])
+            }
+            ("GetGameSaveValid", []) => Ok(vec![Value::Boolean(self.sp_save_valid)]),
+            ("GetGameSaveValid", [kind]) => {
+                let valid = if matches!(kind, Value::Number(n) if (*n as i32) == 2) {
+                    self.mp_save_valid
+                } else {
+                    self.sp_save_valid
+                };
+                Ok(vec![Value::Boolean(valid)])
+            }
+            ("SetGameSaveValid", [val]) => {
+                self.sp_save_valid = !matches!(val, Value::Nil | Value::Boolean(false));
+                Ok(vec![])
+            }
+            ("SetGameSaveValid", [kind, val]) => {
+                let valid = !matches!(val, Value::Nil | Value::Boolean(false));
+                if matches!(kind, Value::Number(n) if (*n as i32) == 2) {
+                    self.mp_save_valid = valid;
+                } else {
+                    self.sp_save_valid = valid;
+                }
+                Ok(vec![])
+            }
+            ("GetGeneralPurposeFlags", []) => {
+                Ok(vec![Value::Number(self.general_purpose_flags as f64)])
+            }
+            ("SetGeneralPurposeFlags", [Value::Number(flags)]) => {
+                self.general_purpose_flags = *flags as u32;
+                Ok(vec![])
+            }
+            ("GetUnlockFlags", []) => Ok(vec![Value::Number(self.unlock_flags as f64)]),
+            ("SetUnlockFlags", [Value::Number(flags)]) => {
+                self.unlock_flags = *flags as u32;
+                Ok(vec![])
+            }
+            ("GetUnlockSeenFlags", []) => Ok(vec![Value::Number(self.unlock_seen_flags as f64)]),
+            ("SetUnlockSeenFlags", [Value::Number(flags)]) => {
+                self.unlock_seen_flags = *flags as u32;
+                Ok(vec![])
+            }
+            ("AddUnlockFlag", [Value::Number(flags), Value::Number(bit)]) => {
+                let bit_idx = (*bit as u32).min(31);
+                let next = (*flags as u32) | (1u32 << bit_idx);
+                Ok(vec![Value::Number(next as f64)])
+            }
+            ("RemoveUnlockFlag", [Value::Number(flags), Value::Number(bit)]) => {
+                let bit_idx = (*bit as u32).min(31);
+                let next = (*flags as u32) & !(1u32 << bit_idx);
+                Ok(vec![Value::Number(next as f64)])
+            }
+            ("TestUnlockFlag", [Value::Number(flags), Value::Number(bit)]) => {
+                let bit_idx = (*bit as u32).min(31);
+                let set = ((*flags as u32) & (1u32 << bit_idx)) != 0;
+                Ok(vec![Value::Boolean(set)])
+            }
+            ("TestAnyUnlockFlag", [Value::Number(flags)]) => {
+                Ok(vec![Value::Boolean((*flags as u32) != 0)])
+            }
+            ("GetCurrentLevel", []) => Ok(vec![Value::Number(self.current_level as f64)]),
+            ("SetCurrentLevel", [Value::Number(level)]) => {
+                self.current_level = *level as i32;
+                Ok(vec![])
+            }
+            ("GetLevelGameType", [Value::Number(level)]) => {
+                let idx = (*level as isize).max(0) as usize;
+                let gt = self.level_game_types.get(idx).copied().unwrap_or(2);
+                Ok(vec![Value::Number(gt as f64)])
+            }
+            ("GetMissionStatus", []) => Ok(vec![Value::Number(self.mission_status as f64)]),
+            ("SetMissionStatus", [Value::Number(status)]) => {
+                self.mission_status = *status as u32;
+                Ok(vec![])
+            }
+            ("TestMissionStatus", [Value::Number(mask)]) => {
+                let m = *mask as u32;
+                let matched = if m == 0 {
+                    self.mission_status == 0
+                } else {
+                    (self.mission_status & m) != 0
+                };
+                Ok(vec![Value::Boolean(matched)])
+            }
+            ("GetMissionData", []) => {
+                let (s, p, t, g) = self.current_mission_stats;
+                Ok(vec![
+                    Value::Number(s as f64),
+                    Value::Number(p as f64),
+                    Value::Number(t as f64),
+                    Value::Number(g as f64),
+                ])
+            }
+            ("GetStoredMissionData", [Value::Number(level)]) => {
+                let (s, p, t, g) = self
+                    .mission_stats
+                    .get(&(*level as i32))
+                    .copied()
+                    .unwrap_or((90.0, 90.0, 90.0, 4));
+                Ok(vec![
+                    Value::Number(s as f64),
+                    Value::Number(p as f64),
+                    Value::Number(t as f64),
+                    Value::Number(g as f64),
+                ])
+            }
+            ("SetCurrentMissionStats", [Value::Number(grade)]) => {
+                self.current_mission_stats.3 = *grade as i32;
+                self.mission_stats
+                    .insert(self.selected_level, self.current_mission_stats);
+                Ok(vec![])
+            }
+            ("LoadCurrentMissionStats", [Value::Number(level)]) => {
+                self.selected_level = *level as i32;
+                Ok(vec![])
+            }
+            (
+                "SetMissionComplete",
+                [
+                    Value::Number(level),
+                    Value::Number(speed),
+                    Value::Number(power),
+                    Value::Number(tech),
+                    Value::Number(grade),
+                ],
+            ) => {
+                let entry = (*speed as f32, *power as f32, *tech as f32, *grade as i32);
+                self.current_mission_stats = entry;
+                self.mission_stats.insert(*level as i32, entry);
+                Ok(vec![])
+            }
+            ("GetObjectivesResult", []) => Ok(vec![
+                Value::Number(1.0),
+                Value::Number(1.0),
+                Value::Number(1.0),
+            ]),
+            ("TriggerFrameSave" | "BlockHomebutton" | "UnblockHomebutton" | "ResetToIPL", []) => {
+                self.homebutton_blocked = name == "BlockHomebutton";
+                Ok(vec![])
+            }
+            // Audio & settings natives
+            ("StartMusic", [..]) => Ok(vec![Value::Boolean(true)]),
+            ("StopMusic", []) => Ok(vec![]),
+            ("CheckMusicFinished", []) => Ok(vec![Value::Boolean(false)]),
+            ("SetMusicVolume" | "SetMusicVolumeS", [Value::Number(v), ..]) => {
+                self.music_volume = *v as f32;
+                Ok(vec![])
+            }
+            ("GetMusicVolume", []) => Ok(vec![Value::Number(self.music_volume as f64)]),
+            ("SetSFXVolume", [Value::Number(v)]) => {
+                self.sfx_volume = *v as f32;
+                Ok(vec![])
+            }
+            ("GetSFXVolume", []) => Ok(vec![Value::Number(self.sfx_volume as f64)]),
+            ("SetCOVoiceVolume", [Value::Number(v)]) => {
+                self.co_voice_volume = *v as f32;
+                Ok(vec![])
+            }
+            ("GetCOVoiceVolume", []) => Ok(vec![Value::Number(self.co_voice_volume as f64)]),
+            ("SetCOSubtitles", [val]) => {
+                self.co_subtitles =
+                    !matches!(val, Value::Nil | Value::Boolean(false) | Value::Number(0.0));
+                Ok(vec![])
+            }
+            ("GetCOSubtitles", []) => Ok(vec![Value::Number(u8::from(self.co_subtitles) as f64)]),
+            ("SetMovieSubtitles", [val]) => {
+                self.movie_subtitles =
+                    !matches!(val, Value::Nil | Value::Boolean(false) | Value::Number(0.0));
+                Ok(vec![])
+            }
+            ("GetMovieSubtitles", []) => {
+                Ok(vec![Value::Number(u8::from(self.movie_subtitles) as f64)])
+            }
+            ("SetFieldToggle", [Value::Number(v)]) => {
+                self.field_toggle = *v as i32;
+                Ok(vec![])
+            }
+            ("GetFieldToggle", []) => Ok(vec![Value::Number(self.field_toggle as f64)]),
+            ("SetFollowMode", [Value::Number(v)]) => {
+                self.follow_mode = *v as i32;
+                Ok(vec![])
+            }
+            ("GetFollowMode", []) => Ok(vec![Value::Number(self.follow_mode as f64)]),
+            ("SetTutorialMode", [val]) => {
+                self.tutorial_mode =
+                    !matches!(val, Value::Nil | Value::Boolean(false) | Value::Number(0.0));
+                Ok(vec![])
+            }
+            ("GetTutorialMode", []) => Ok(vec![Value::Number(u8::from(self.tutorial_mode) as f64)]),
+            ("InitSettings" | "ApplySettings" | "EndSettings", []) => Ok(vec![]),
+            ("PlaySound", [_]) => Ok(vec![]),
+            ("PlayEffect", [_, _, _, _, _]) => Ok(vec![]),
+            // Widget state helpers
+            ("StartWidget", [_, widget, _]) => {
+                let h = Self::widget_handle(widget);
+                if h != 0 {
+                    self.active_widgets.insert(h, true);
+                }
+                Ok(vec![])
+            }
+            ("StopWidget", [widget]) => {
+                let h = Self::widget_handle(widget);
+                if h != 0 {
+                    self.active_widgets.insert(h, false);
+                }
+                Ok(vec![])
+            }
+            ("GetWidgetValue", [widget, Value::String(field)]) => {
+                let h = Self::widget_handle(widget);
+                let v = self
+                    .widget_values
+                    .get(&(h, field.clone()))
+                    .cloned()
+                    .unwrap_or(Value::Number(1.0));
+                Ok(vec![v])
+            }
+            ("SetWidgetValue", [widget, Value::String(field), val]) => {
+                let h = Self::widget_handle(widget);
+                self.widget_values.insert((h, field.clone()), val.clone());
+                Ok(vec![])
+            }
+            ("SetListBoxData", [..]) => Ok(vec![]),
+            // Multiplayer & network state helpers
+            ("GetCurrentMPProfile", []) => Ok(vec![Value::Number(self.current_mp_profile as f64)]),
+            ("SetCurrentMPProfile", [Value::Number(p)]) => {
+                self.current_mp_profile = (*p as i32).max(1) as u32;
+                Ok(vec![])
+            }
+            ("GetIsClientOrServer", []) => Ok(vec![Value::Number(self.is_client_or_server as f64)]),
+            ("SetIsClientOrServer", [Value::Number(v)]) => {
+                self.is_client_or_server = *v as u32;
+                Ok(vec![])
+            }
+            ("GetNetworkStatus", []) => Ok(vec![Value::Number(self.network_status as f64)]),
+            ("GetNetworkErrorCode", []) => Ok(vec![Value::Number(0.0)]),
+            ("RequestNetworkOpen", [_]) => {
+                self.network_status = 6; // NETWORK.OK
+                Ok(vec![])
+            }
+            ("RequestNetworkClose", []) => Ok(vec![]),
+            (
+                "RequestLoadMultiPlayer"
+                | "RequestCreateMultiPlayer"
+                | "RequestSaveMultiPlayer"
+                | "RequestDeleteMultiPlayer"
+                | "DontSaveMultiPlayer",
+                [],
+            ) => {
+                self.card_error = 0;
+                Ok(vec![])
+            }
+            ("MultiPlayerNeedsSaving", []) => Ok(vec![Value::Boolean(false)]),
+            ("GetMPPageFromCode", []) => Ok(vec![Value::String("Play".into())]),
+            ("GetMPStatistics", [_, _, _]) => Ok(vec![Value::Number(0.0)]),
+            ("UpdateMPStatistics", []) => Ok(vec![]),
+            ("UpdateMPUnlockStatus", [_]) => Ok(vec![Value::Boolean(false)]),
+            ("GetOwnRank", [..]) => Ok(vec![Value::Number(1.0)]),
+            ("GetRankIncreased" | "GetRankDecreased", [_]) => Ok(vec![Value::Boolean(false)]),
+            ("ResetRankChange", [_]) => Ok(vec![]),
+            ("GetRankFromDiff", [_]) => Ok(vec![Value::Number(1.0)]),
+            ("GetSkill", []) => Ok(vec![Value::Number(1000.0)]),
+            ("GetSkillUncertainty", []) => Ok(vec![Value::Number(100.0)]),
+            ("GetFriendKey", [..]) => Ok(vec![Value::String("0000-0000-0000".into())]),
+            ("GetFriendName", [_]) => Ok(vec![Value::String(String::new())]),
+            ("SetFriendName" | "SetFriendRank", [_, _]) => Ok(vec![]),
+            ("GetFriendRank", [_]) => Ok(vec![Value::Number(1.0)]),
+            ("GetFriendStatusCode", [..]) => Ok(vec![Value::Number(0.0)]),
+            ("GetFriendStatusStringTag", [..]) => Ok(vec![Value::String(String::new())]),
+            ("SetOwnStatusStringTag" | "RemoveOwnStatusStringTag", [..]) => Ok(vec![]),
+            ("AddFriend", [..]) => Ok(vec![Value::Boolean(true)]),
+            ("DeleteFriend", [_]) => Ok(vec![]),
+            ("IsOkToChangeFriends", []) => Ok(vec![Value::Boolean(true)]),
+            ("StartMatchMaking", [..]) => Ok(vec![Value::Boolean(true)]),
+            ("StopMatchMaking" | "startSearching" | "LeaveMPGame", []) => Ok(vec![]),
+            ("CheckMatchMaking", []) => Ok(vec![Value::Number(0.0)]),
+            ("IsNetworkPlayer", [Value::Number(idx)]) => Ok(vec![Value::Boolean(*idx == 0.0)]),
+            ("GetPlayerInformationReady", [_]) => Ok(vec![Value::Boolean(true)]),
+            ("GetPlayerInformation", [Value::Number(idx)]) => {
+                let p = *idx as i32;
+                let name = if p == 1 { "COMMANDER" } else { "OPPONENT" };
+                let army = if p == 1 { 1.0 } else { 2.0 };
+                Ok(vec![
+                    Value::String(name.into()),
+                    Value::Number(army),
+                    Value::Number(1.0),
+                    Value::Number(0.0),
+                    Value::Number(0.0),
+                    Value::Number(0.0),
+                    Value::Number(0.0),
+                    Value::Number(1000.0),
+                    Value::Number(100.0),
+                ])
+            }
+            ("GetFriendlyArmy", []) => Ok(vec![Value::Number(1.0)]),
+            ("GetEnemyArmy", []) => Ok(vec![Value::Number(2.0)]),
+            ("GetFriendlyScoreTotals", []) => Ok(vec![Value::Number(100.0)]),
+            ("GetEnemyScoreTotals", []) => Ok(vec![Value::Number(0.0)]),
+            ("GetTmpStore", []) => Ok(vec![Value::Number(self.tmp_store)]),
+            ("SetTmpStore", [Value::Number(v)]) => {
+                self.tmp_store = *v;
+                Ok(vec![])
+            }
+            ("UpdateRematch", [_]) => Ok(vec![Value::Number(1.0)]),
+            ("IQuit" | "OtherPlayerQuit", []) => Ok(vec![Value::Boolean(false)]),
+            ("WaitFor", [_]) => Ok(vec![]),
             // 0x800e50ec: RotationToVector(rx_deg, ry_deg, rz_deg)
             ("RotationToVector", [Value::Number(rx), Value::Number(ry), Value::Number(rz)]) => {
                 let (sx, cx) = ((*rx * DEG_TO_RAD) as f32).sin_cos();
@@ -301,14 +909,12 @@ impl Environment {
                 if dist_sq <= r * r {
                     let dz = (r * r - dist_sq).sqrt();
                     Ok(vec![
-                        Value::Boolean(true),
                         Value::Number((gx + dx) as f64),
                         Value::Number((gy + dy) as f64),
                         Value::Number((gz - dz) as f64),
                     ])
                 } else {
                     Ok(vec![
-                        Value::Boolean(false),
                         Value::Number(0.0),
                         Value::Number(0.0),
                         Value::Number(0.0),
@@ -438,6 +1044,104 @@ impl Environment {
                 Self::write_matrix4(vm, *target_id, &target)?;
                 Ok(vec![])
             }
+            // QuadraticBezier(x0, y0, x1, y1, steps, arc_offset, out_tbl)
+            (
+                "QuadraticBezier",
+                [
+                    Value::Number(x0),
+                    Value::Number(y0),
+                    Value::Number(x1),
+                    Value::Number(y1),
+                    Value::Number(steps),
+                    Value::Number(offset),
+                    Value::Table(out_id),
+                ],
+            ) => {
+                let n = (*steps as isize).clamp(1, 128) as usize;
+                let dx = *x1 - *x0;
+                let dy = *y1 - *y0;
+                let len = (dx * dx + dy * dy).sqrt().max(1.0);
+                let nx = -dy / len;
+                let ny = dx / len;
+                let cx = (*x0 + *x1) * 0.5 + nx * *offset;
+                let cy = (*y0 + *y1) * 0.5 + ny * *offset;
+                vm.table_set(*out_id, Value::String("n".into()), Value::Number(n as f64))?;
+                for i in 1..=n {
+                    let t = if n > 1 {
+                        (i - 1) as f64 / (n - 1) as f64
+                    } else {
+                        0.0
+                    };
+                    let u = 1.0 - t;
+                    let bx = u * u * *x0 + 2.0 * u * t * cx + t * t * *x1;
+                    let by = u * u * *y0 + 2.0 * u * t * cy + t * t * *y1;
+                    let pt_id = vm.tables.len();
+                    vm.tables.push(Default::default());
+                    vm.table_set(pt_id, Value::Number(1.0), Value::Number(bx))?;
+                    vm.table_set(pt_id, Value::Number(2.0), Value::Number(by))?;
+                    vm.table_set(*out_id, Value::Number(i as f64), Value::Table(pt_id))?;
+                }
+                Ok(vec![])
+            }
+            // Mission stats breakdown tables for Victory / Defeat screens
+            ("GetMissionSpeedData", [Value::Table(tbl_id)]) => {
+                for (idx, val) in [(1, 180.0), (2, 600.0), (3, 165.0), (4, 165.0)] {
+                    vm.table_set(*tbl_id, Value::Number(idx as f64), Value::Number(val))?;
+                }
+                Ok(vec![])
+            }
+            ("GetMissionPowerData" | "GetMissionTechniqueData", [Value::Table(tbl_id)]) => {
+                for (idx, val) in [
+                    (1, 10.0),
+                    (2, 10.0),
+                    (3, 4.0),
+                    (4, 4.0),
+                    (5, 2.0),
+                    (6, 2.0),
+                    (7, 0.0),
+                    (8, 0.0),
+                    (9, 1.0),
+                    (10, 1.0),
+                ] {
+                    vm.table_set(*tbl_id, Value::Number(idx as f64), Value::Number(val))?;
+                }
+                Ok(vec![])
+            }
+            // Sun / lighting colour tables for Victory / Defeat globe backdrop
+            (
+                "GetSunDirection"
+                | "GetSunAmbientColour"
+                | "GetSunDirectionalColour"
+                | "GetAntiSunDirectionalColour",
+                [Value::Table(tbl_id)],
+            ) => {
+                let defaults = if name == "GetSunDirection" {
+                    [90.0, 0.0, 0.0]
+                } else {
+                    [50.0, 50.0, 50.0]
+                };
+                for (i, v) in defaults.into_iter().enumerate() {
+                    vm.table_set(*tbl_id, Value::Number((i + 1) as f64), Value::Number(v))?;
+                }
+                Ok(vec![])
+            }
+            (
+                "SetSunDirection"
+                | "SetSunAmbientColour"
+                | "SetSunDirectionalColour"
+                | "SetAntiSunDirectionalColour",
+                [Value::Table(_)],
+            ) => Ok(vec![]),
+            ("RunLevel", [Value::Number(level)]) => {
+                self.launched_level = Some(*level as i32);
+                vm.globals
+                    .insert("FrontendDone".into(), Value::Boolean(true));
+                vm.globals.insert("PageDone".into(), Value::Boolean(true));
+                Ok(vec![])
+            }
+            ("OpenPage" | "UpdatePage" | "RenderPage" | "ClosePage", [Value::Table(_)]) => {
+                Ok(vec![])
+            }
             _ => self.call(name, args),
         }
     }
@@ -488,6 +1192,108 @@ impl Environment {
                 ][..],
             ),
             ("VIDEO", &[("OFF", 0), ("ONCE", 1), ("LOOPED", 2)][..]),
+            ("Build", &[("Debug", 0), ("Release", 1), ("Final", 2)][..]),
+            (
+                "CARD",
+                &[
+                    ("NONE", 0),
+                    ("Access", 1),
+                    ("AllocFailed", 2),
+                    ("Busy", 3),
+                    ("Corrupt", 4),
+                    ("ECCCritical", 5),
+                    ("Exists", 6),
+                    ("Invalid", 7),
+                    ("MaxFD", 8),
+                    ("NoBlocks", 9),
+                    ("NoBlocksMP", 10),
+                    ("NoInodes", 11),
+                    ("NoExists", 12),
+                    ("NotEmpty", 13),
+                    ("OpenFD", 14),
+                    ("Authentication", 15),
+                    ("Unknown", 16),
+                    ("FatalError", 17),
+                    ("NotReady", 18),
+                    ("InitFailed", 19),
+                    ("NoMemory", 20),
+                    ("WriteError", 21),
+                    ("ReadError", 22),
+                    ("CRCError", 23),
+                    ("UnknownOp", 24),
+                    ("UnknownOpState", 25),
+                    ("UnknownError", 26),
+                ][..],
+            ),
+            (
+                "GRADE",
+                &[("NONE", 1), ("C", 2), ("B", 3), ("A", 4), ("S", 5)][..],
+            ),
+            (
+                "MATCHRESULT",
+                &[("Started", 0), ("S", 1), ("C", 2), ("Lost", 3)][..],
+            ),
+            (
+                "MissionData",
+                &[
+                    ("TroopDeaths", 2),
+                    ("GroundDeaths", 4),
+                    ("AirDeaths", 6),
+                    ("WaterDeaths", 8),
+                    ("CurrentTime", 3),
+                ][..],
+            ),
+            (
+                "NETWORK",
+                &[
+                    ("UNKNOWN", 0),
+                    ("Initialising", 1),
+                    ("GetServers", 2),
+                    ("LoginFailed", 3),
+                    ("InterfaceFailed", 4),
+                    ("DHCPFailed", 5),
+                    ("OK", 6),
+                    ("Creating", 7),
+                    ("CreateFailed", 8),
+                    ("Joining", 9),
+                    ("JoinFailed", 10),
+                    ("LostConnection", 11),
+                ][..],
+            ),
+            ("PLAYER_INDEX", &[("One", 1), ("Two", 2)][..]),
+            ("CursorState", &[("Normal", 0), ("Selected", 1)][..]),
+            (
+                "constant",
+                &[
+                    ("ONCE", 0),
+                    ("LOOPED", 1),
+                    ("FILENAME", 0),
+                    ("PLAYER_ONE", 0),
+                    ("MISSIONOVER_LOSE", 0),
+                    ("MISSIONOVER_PLAYER1_WINS", 1),
+                ][..],
+            ),
+            ("eFieldToggle", &[("Off", 0), ("On", 1)][..]),
+            ("eModeAction", &[("Follow", 0), ("Wait", 1)][..]),
+            (
+                "eNameCheckResults",
+                &[("Allowed", 0), ("NotAllowed", 1)][..],
+            ),
+            (
+                "eRematchStatus",
+                &[("Pending", 0), ("Yes", 1), ("No", 2)][..],
+            ),
+            (
+                "eWiiMatchingStatus",
+                &[
+                    ("Success", 0),
+                    ("Busy", 1),
+                    ("BusyThread", 2),
+                    ("Connecting", 3),
+                    ("ConnectionProblem", 4),
+                    ("Failure", 5),
+                ][..],
+            ),
         ] {
             if vm.globals.contains_key(table) {
                 return Err(format!("Frontend constant table already exists: {table}"));
@@ -504,10 +1310,15 @@ impl Environment {
         for name in [
             "GetFramesPerSecond",
             "GetNumOfGameType",
+            "GetCursorPosition",
             "GetCursorRoll",
+            "SetCursorState",
             "EnableControllerErrorMessages",
             "OpenSprite",
             "CloseSprite",
+            "GetSprite",
+            "MoveSprite",
+            "DrawSprite",
             "BuildType",
             "sin",
             "cos",
@@ -518,6 +1329,18 @@ impl Environment {
             "ceil",
             "floor",
             "rint",
+            "GetNumGlobalStrings",
+            "GetString",
+            "GetStringFromTable",
+            "FormatString",
+            "GetCharFromString",
+            "GetLanguageStr",
+            "GetRegionStr",
+            "GetVersionStr",
+            "SetFontKernFactor",
+            "GetScreenRatio",
+            "GetTime",
+            "GetRandom",
             "PlayVideo",
             "IsVideoFinished",
             "GetTotalFrames",
@@ -531,6 +1354,143 @@ impl Environment {
             "GetCurrentMissionCompleted",
             "SetCurrentFMVOutSeen",
             "GetCurrentFMVOutSeen",
+            "GetPersistentData",
+            "GetLevelsDone",
+            "SetLevelsDone",
+            "GetLevelsAttemptedOrDone",
+            "RegisterMissionAttempt",
+            "SetSelectedSlot",
+            "StartNewSlot",
+            "GetProfileName",
+            "SetProfileName",
+            "ClearProfile",
+            "SaveProfileToUndoBuffer",
+            "RestoreProfileFromUndoBuffer",
+            "GetProfileNameCheckResult",
+            "GetSlotTime",
+            "GetCardError",
+            "ClearCardError",
+            "CheckSaveFile",
+            "CreateSaveFile",
+            "WriteSaveFile",
+            "DeleteSaveFile",
+            "CheckNANDResources",
+            "GetGameSaveValid",
+            "SetGameSaveValid",
+            "GetGeneralPurposeFlags",
+            "SetGeneralPurposeFlags",
+            "GetUnlockFlags",
+            "SetUnlockFlags",
+            "GetUnlockSeenFlags",
+            "SetUnlockSeenFlags",
+            "AddUnlockFlag",
+            "RemoveUnlockFlag",
+            "TestUnlockFlag",
+            "TestAnyUnlockFlag",
+            "GetCurrentLevel",
+            "SetCurrentLevel",
+            "GetLevelGameType",
+            "GetMissionStatus",
+            "SetMissionStatus",
+            "TestMissionStatus",
+            "GetMissionData",
+            "GetStoredMissionData",
+            "SetCurrentMissionStats",
+            "LoadCurrentMissionStats",
+            "SetMissionComplete",
+            "GetMissionSpeedData",
+            "GetMissionPowerData",
+            "GetMissionTechniqueData",
+            "GetObjectivesResult",
+            "TriggerFrameSave",
+            "BlockHomebutton",
+            "UnblockHomebutton",
+            "ResetToIPL",
+            "StartMusic",
+            "StopMusic",
+            "CheckMusicFinished",
+            "SetMusicVolume",
+            "SetMusicVolumeS",
+            "GetMusicVolume",
+            "SetSFXVolume",
+            "GetSFXVolume",
+            "SetCOVoiceVolume",
+            "GetCOVoiceVolume",
+            "SetCOSubtitles",
+            "GetCOSubtitles",
+            "SetMovieSubtitles",
+            "GetMovieSubtitles",
+            "SetFieldToggle",
+            "GetFieldToggle",
+            "SetFollowMode",
+            "GetFollowMode",
+            "SetTutorialMode",
+            "GetTutorialMode",
+            "InitSettings",
+            "ApplySettings",
+            "EndSettings",
+            "PlaySound",
+            "PlayEffect",
+            "StartWidget",
+            "StopWidget",
+            "GetWidgetValue",
+            "SetWidgetValue",
+            "SetListBoxData",
+            "GetCurrentMPProfile",
+            "SetCurrentMPProfile",
+            "GetIsClientOrServer",
+            "SetIsClientOrServer",
+            "GetNetworkStatus",
+            "GetNetworkErrorCode",
+            "RequestNetworkOpen",
+            "RequestNetworkClose",
+            "RequestLoadMultiPlayer",
+            "RequestCreateMultiPlayer",
+            "RequestSaveMultiPlayer",
+            "RequestDeleteMultiPlayer",
+            "DontSaveMultiPlayer",
+            "MultiPlayerNeedsSaving",
+            "GetMPPageFromCode",
+            "GetMPStatistics",
+            "UpdateMPStatistics",
+            "UpdateMPUnlockStatus",
+            "GetOwnRank",
+            "GetRankIncreased",
+            "GetRankDecreased",
+            "ResetRankChange",
+            "GetRankFromDiff",
+            "GetSkill",
+            "GetSkillUncertainty",
+            "GetFriendKey",
+            "GetFriendName",
+            "SetFriendName",
+            "GetFriendRank",
+            "SetFriendRank",
+            "GetFriendStatusCode",
+            "GetFriendStatusStringTag",
+            "SetOwnStatusStringTag",
+            "RemoveOwnStatusStringTag",
+            "AddFriend",
+            "DeleteFriend",
+            "IsOkToChangeFriends",
+            "StartMatchMaking",
+            "StopMatchMaking",
+            "CheckMatchMaking",
+            "startSearching",
+            "LeaveMPGame",
+            "IsNetworkPlayer",
+            "GetPlayerInformationReady",
+            "GetPlayerInformation",
+            "GetFriendlyArmy",
+            "GetEnemyArmy",
+            "GetFriendlyScoreTotals",
+            "GetEnemyScoreTotals",
+            "GetTmpStore",
+            "SetTmpStore",
+            "UpdateRematch",
+            "IQuit",
+            "OtherPlayerQuit",
+            "WaitFor",
             "MatrixMultiply",
             "RotationToVector",
             "GlobeLatLonToOrientationMatrix",
@@ -540,6 +1500,20 @@ impl Environment {
             "GlobeSelectCalcTargetOrientation",
             "CalcGlobeInterection",
             "GlobePickRegionFromMap",
+            "QuadraticBezier",
+            "GetSunDirection",
+            "SetSunDirection",
+            "GetSunAmbientColour",
+            "SetSunAmbientColour",
+            "GetSunDirectionalColour",
+            "SetSunDirectionalColour",
+            "GetAntiSunDirectionalColour",
+            "SetAntiSunDirectionalColour",
+            "RunLevel",
+            "OpenPage",
+            "UpdatePage",
+            "RenderPage",
+            "ClosePage",
         ] {
             vm.globals.insert(name.into(), Value::Native(name.into()));
         }

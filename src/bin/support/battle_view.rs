@@ -81,7 +81,7 @@ impl BattleView {
             .filter(|p| {
                 p.kind == "cTroop"
                     && world.units.get(&p.id).is_some_and(|u| {
-                        u.animation.as_ref().is_some_and(|a| a.bindings.len() == 5)
+                        u.animation.as_ref().is_some_and(|a| a.bindings.len() >= 5)
                     })
             })
             .collect::<Vec<_>>();

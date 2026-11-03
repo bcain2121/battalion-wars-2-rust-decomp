@@ -5,12 +5,79 @@ Requires cryptography. Keys and extracted outputs must remain in ignored local/.
 import argparse
 from collections import Counter
 from functools import lru_cache
+import gzip
 import hashlib
 import json
+import os
 from pathlib import Path
 import struct
+import sys
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from inspect_disc import WBFS
+
+EXPECTED_KEY_SHA256 = 'de38aeab4fe0c36d828a47e6fd315100e7ce234d3b00aa25e6ad6f5ff2824af8'
+DOLPHIN_IOSC_ANCHOR = bytes.fromhex('f8246c58bae75003')
+
+
+def resolve_common_key(key_file: Path | None = None) -> bytes:
+    candidates = []
+    if key_file is not None:
+        candidates.append(key_file)
+    repo_root = Path(__file__).resolve().parents[1]
+    default_local_key = repo_root / 'local' / 'tools' / 'common-key.bin'
+    candidates.append(default_local_key)
+    for path in candidates:
+        if path.is_file():
+            raw = path.read_bytes().strip()
+            if len(raw) == 32:
+                try:
+                    raw = bytes.fromhex(raw.decode('ascii'))
+                except Exception:
+                    pass
+            if len(raw) == 16:
+                return raw
+
+    env_hex = os.environ.get('BW_WII_COMMON_KEY', '').strip()
+    if len(env_hex) == 32:
+        raw = bytes.fromhex(env_hex)
+        if len(raw) == 16:
+            return raw
+
+    for keys_bin in [
+        Path.home() / 'Library' / 'Application Support' / 'Dolphin' / 'Wii' / 'keys.bin',
+        Path.home() / '.dolphin-emu' / 'Wii' / 'keys.bin',
+        repo_root / 'keys.bin',
+    ]:
+        if keys_bin.is_file() and keys_bin.stat().st_size >= 0x124:
+            raw = keys_bin.read_bytes()[0x114:0x124]
+            if hashlib.sha256(raw).hexdigest() == EXPECTED_KEY_SHA256:
+                default_local_key.parent.mkdir(parents=True, exist_ok=True)
+                default_local_key.write_bytes(raw)
+                return raw
+
+    for dolphin_bin in [
+        Path('/Applications/Dolphin.app/Contents/MacOS/Dolphin'),
+        Path.home() / 'Applications' / 'Dolphin.app' / 'Contents' / 'MacOS' / 'Dolphin',
+        repo_root / 'local' / 'tools' / 'Dolphin.app' / 'Contents' / 'MacOS' / 'Dolphin',
+    ]:
+        if dolphin_bin.is_file():
+            blob = dolphin_bin.read_bytes()
+            pos = blob.find(DOLPHIN_IOSC_ANCHOR)
+            while pos != -1:
+                start = max(0, pos - 512)
+                end = min(len(blob) - 16, pos + 512)
+                for i in range(start, end):
+                    cand = blob[i:i + 16]
+                    if hashlib.sha256(cand).hexdigest() == EXPECTED_KEY_SHA256:
+                        default_local_key.parent.mkdir(parents=True, exist_ok=True)
+                        default_local_key.write_bytes(cand)
+                        return cand
+                pos = blob.find(DOLPHIN_IOSC_ANCHOR, pos + 1)
+
+    raise ValueError(
+        'Could not locate 16-byte Wii common key. Supply --key-file local/tools/common-key.bin, '
+        'install Dolphin.app in /Applications, or set BW_WII_COMMON_KEY.'
+    )
 
 
 def decrypt(key, iv, data):
@@ -102,18 +169,41 @@ def parse_fst(raw, partition_size):
     return entries
 
 
+def decompress_gz_tree(extract_root: Path):
+    data_root = extract_root / 'Data'
+    target_root = data_root if data_root.is_dir() else extract_root
+    count = 0
+    for gz_path in sorted(target_root.rglob('*.gz')):
+        stem_path = gz_path.with_suffix('')
+        if not stem_path.exists():
+            with gzip.open(gz_path, 'rb') as src:
+                payload = src.read()
+            with stem_path.open('xb') as dst:
+                dst.write(payload)
+            count += 1
+    return count
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument('image', type=Path)
-    ap.add_argument('--key-file', required=True, type=Path)
-    ap.add_argument('--output', required=True, type=Path)
+    ap.add_argument('image', nargs='?', type=Path)
+    ap.add_argument('--key-file', type=Path)
+    ap.add_argument('--output', type=Path)
     ap.add_argument('--extract-system', type=Path)
     ap.add_argument('--extract-file', action='append', default=[])
+    ap.add_argument('--extract-all', action='store_true')
+    ap.add_argument('--decompress-only', action='store_true')
     ap.add_argument('--extract-root', type=Path)
     args = ap.parse_args()
-    key = args.key_file.read_bytes()
-    if len(key) != 16:
-        raise ValueError('Expected 16-byte key')
+    if args.decompress_only:
+        if not args.extract_root:
+            raise ValueError('--extract-root required with --decompress-only')
+        decompressed = decompress_gz_tree(args.extract_root)
+        print(json.dumps({'decompressed_gz_files': decompressed}, indent=2))
+        return
+    if not args.image:
+        raise ValueError('image is required unless --decompress-only is set')
+    key = resolve_common_key(args.key_file)
     disc = WBFS(args.image)
     try:
         part = Partition(disc, key)
@@ -131,8 +221,24 @@ def main():
         if args.extract_system:
             args.extract_system.mkdir(parents=True, exist_ok=True)
             for name, data in [('main.dol', binary), ('fst.bin', fst)]:
-                with (args.extract_system / name).open('xb') as f:
-                    f.write(data)
+                dest = args.extract_system / name
+                if not dest.exists():
+                    with dest.open('xb') as f:
+                        f.write(data)
+        if args.extract_all:
+            if not args.extract_root:
+                raise ValueError('--extract-root required with --extract-all')
+            total = len(files)
+            for idx, entry in enumerate(files, 1):
+                dest = args.extract_root / entry['path']
+                if not dest.exists():
+                    dest.parent.mkdir(parents=True, exist_ok=True)
+                    with dest.open('xb') as f:
+                        f.write(part.read(entry['offset'], entry['size']))
+                if idx == 1 or idx % 500 == 0 or idx == total:
+                    print(f'Extracting disc files: {idx}/{total} ({idx * 100 // total}%)', file=sys.stderr, flush=True)
+            print('Decompressing .gz compound and startup archives...', file=sys.stderr, flush=True)
+            decompress_gz_tree(args.extract_root)
         for name in args.extract_file:
             if not args.extract_root:
                 raise ValueError('--extract-root required')
@@ -151,8 +257,9 @@ def main():
                 entry_point=struct.unpack_from('>I', dh, 0xe0)[0]),
             h0_checked_clusters=len(part.checked_clusters),
             integrity_scope='H0 for accessed clusters only; not full-disc or H1/H2/H3 verification', files=files)
-        args.output.parent.mkdir(parents=True, exist_ok=True)
-        args.output.write_text(json.dumps(output, indent=2) + '\n')
+        if args.output:
+            args.output.parent.mkdir(parents=True, exist_ok=True)
+            args.output.write_text(json.dumps(output, indent=2) + '\n')
         print(json.dumps({k: v for k, v in output.items() if k != 'files'}, indent=2))
     finally:
         disc.file.close()

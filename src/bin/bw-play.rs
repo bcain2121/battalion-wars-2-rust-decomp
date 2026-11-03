@@ -468,26 +468,27 @@ fn main() {
         );
         return;
     }
-    App::new()
-        .add_plugins(
-            DefaultPlugins
-                .set(AssetPlugin {
-                    file_path: std::fs::canonicalize("assets")
-                        .expect("local assets directory")
-                        .to_string_lossy()
-                        .into_owned(),
-                    ..default()
-                })
-                .set(WindowPlugin {
-                    primary_window: Some(Window {
-                        title: "Battalion Wars Rust — first playable prototype".into(),
-                        resolution: (1280, 800).into(),
-                        ..default()
-                    }),
+    let mut app = App::new();
+    app.add_plugins(
+        DefaultPlugins
+            .set(AssetPlugin {
+                file_path: std::fs::canonicalize("assets")
+                    .expect("local assets directory")
+                    .to_string_lossy()
+                    .into_owned(),
+                ..default()
+            })
+            .set(WindowPlugin {
+                primary_window: Some(Window {
+                    title: "Battalion Wars Rust — first playable prototype".into(),
+                    resolution: (1280, 800).into(),
                     ..default()
                 }),
-        )
-        .add_plugins(MaterialPlugin::<TerrainMaterial>::default())
+                ..default()
+            }),
+    );
+    terrain_render::register_shader(&mut app);
+    app.add_plugins(MaterialPlugin::<TerrainMaterial>::default())
         .insert_resource(ClearColor(Color::srgb(0.09, 0.13, 0.18)))
         .insert_resource(controls)
         .insert_resource(WorldData {

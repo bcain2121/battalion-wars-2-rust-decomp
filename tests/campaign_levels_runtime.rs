@@ -410,10 +410,56 @@ fn probe_multiplayer_levels_loading() {
                     w.entering_vehicle.len(),
                     w.orders.len()
                 );
+                if w.player.is_none() {
+                    failures.push(format!(
+                        "{level}: expected Player 1 controlled unit after cutscene skip"
+                    ));
+                }
                 if !saw_ai_orders {
                     failures.push(format!(
                         "{level}: Skirmish AI issued no orders in 300 frames"
                     ));
+                }
+                if level == "MP7" {
+                    let w = &mut session.program.host.world;
+                    let p1_army = w
+                        .player
+                        .and_then(|p| w.units.get(&p))
+                        .map(|u| u.army.clone())
+                        .unwrap_or_default();
+                    let mut killed = 0;
+                    for u in w.units.values_mut() {
+                        if u.army != p1_army && !u.army.is_empty() && u.health > 0.0 {
+                            u.health = 0.0;
+                            killed += 1;
+                            if killed >= 5 {
+                                break;
+                            }
+                        }
+                    }
+                    w.timer_seconds = Some(0.0);
+                    for frame in 300..360 {
+                        let mut input = Input::default();
+                        if frame % 15 == 0 {
+                            input.confirm = true;
+                        }
+                        if let Err(err) = session.tick(1.0 / 60.0, input) {
+                            failures.push(format!("MP7 win check tick {frame}: {err}"));
+                            break;
+                        }
+                        if session.program.host.world.mission_complete.is_some() {
+                            break;
+                        }
+                    }
+                    if !matches!(
+                        session.program.host.world.mission_complete,
+                        Some(bw_rust::mission_world::MissionOutcome::Won { .. })
+                    ) {
+                        failures.push(format!(
+                            "MP7: expected MissionOutcome::Won after timer expiry with score lead, got {:?}",
+                            session.program.host.world.mission_complete
+                        ));
+                    }
                 }
             }
             Err(err) => {

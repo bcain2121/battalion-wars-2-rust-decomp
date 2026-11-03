@@ -279,6 +279,61 @@ pub fn decode_named(archive: &[u8], wanted: &str) -> Result<DecodedTexture> {
     result.ok_or_else(|| format!("Texture not found: {wanted}"))
 }
 
+pub fn decode_btf_first(btf: &[u8]) -> Result<DecodedTexture> {
+    use crate::archive::chunks;
+    for group in chunks(btf)? {
+        if group.tag != *b"FTBG" {
+            continue;
+        }
+        let entries = group.payload.get(4..).ok_or("Missing texture count")?;
+        for texture in chunks(entries)? {
+            if texture.tag != *b"DXTG" {
+                continue;
+            }
+            let p = texture.payload;
+            if p.len() < 120 {
+                return Err("Short texture header".into());
+            }
+            let end = p[..32].iter().position(|b| *b == 0).unwrap_or(32);
+            let name = std::str::from_utf8(&p[..end]).map_err(|e| e.to_string())?;
+            let width = u32::from_be_bytes(p[32..36].try_into().unwrap()) as usize;
+            let height = u32::from_be_bytes(p[36..40].try_into().unwrap()) as usize;
+            let mips = chunks(&p[112..])?;
+            let indexed = matches!(&p[52..56], b"\0\0\x34P" | b"\0\0\x38P");
+            let palette = if indexed {
+                let palette = mips.first().ok_or("Missing palette")?;
+                if palette.tag != *b" LAP" {
+                    return Err("Indexed texture has no palette".into());
+                }
+                palette.payload
+            } else {
+                &[]
+            };
+            let mip = mips.get(usize::from(indexed)).ok_or("Missing mip")?;
+            if mip.tag != *b" PIM" {
+                return Err(format!("Unsupported palette/mip layout for {name}"));
+            }
+            let rgba = match &p[52..56] {
+                b"1TXD" => decode_cmpr(mip.payload, width, height)?,
+                b"8R8A" => decode_rgba8(mip.payload, width, height)?,
+                b"\0\0\x34P" => decode_tiled(mip.payload, width, height, TiledFormat::C4, palette)?,
+                b"\0\0\x38P" => decode_tiled(mip.payload, width, height, TiledFormat::C8, palette)?,
+                b"\0\0\x34I" => decode_tiled(mip.payload, width, height, TiledFormat::I4, palette)?,
+                b"\0\0\x38I" => decode_tiled(mip.payload, width, height, TiledFormat::I8, palette)?,
+                b"\0\x34AI" => decode_tiled(mip.payload, width, height, TiledFormat::Ia4, palette)?,
+                b"\0\x38AI" => decode_tiled(mip.payload, width, height, TiledFormat::Ia8, palette)?,
+                _ => return Err(format!("Unsupported format for {name}")),
+            };
+            return Ok(DecodedTexture {
+                width,
+                height,
+                rgba,
+            });
+        }
+    }
+    Err("No DXTG texture found in BTF".into())
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
